@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header/Header';
+import Feed from './pages/Feed/Feed';
+import Home from './pages/Home/Home';
+import './index.scss';
 
-function App() {
+const App: React.FC = () => {
+  const isAuth = false;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      {isAuth ? <Feed /> : <Home />}
+    </>
   );
-}
+};
 
 export default App;
