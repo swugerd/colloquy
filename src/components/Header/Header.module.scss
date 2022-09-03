@@ -52,6 +52,14 @@
       background: darken($elem, 3%);
     }
   }
+  &__messages-btn--wrapped {
+    border-left: 0.2rem solid rgba(44, 44, 44, 0.7);
+    transition: 0.1s linear;
+    border-radius: 0 3rem 3rem 0;
+    &:hover {
+      background: darken($elem, 3%);
+    }
+  }
   &__messages-img {
     padding: 1.5rem;
   }
@@ -86,14 +94,20 @@
   &__profile-notify {
     margin-right: 3rem;
     height: 100%;
+    position: relative;
   }
   &__profile-info {
     display: flex;
     align-items: center;
     height: 100%;
+    cursor: pointer;
+  }
+  &__notify-indicator {
+    position: relative;
   }
   &__profile-image {
     margin-right: 1rem;
+    position: relative;
     & img {
       border-radius: 50%;
     }

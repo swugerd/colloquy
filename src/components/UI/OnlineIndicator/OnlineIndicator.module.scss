@@ -1,0 +1,41 @@
+@import '../../../scss/variables.scss';
+
+.indicator {
+  border-radius: 50%;
+  position: absolute;
+  bottom: -0.2rem;
+  right: -0.2rem;
+}
+
+.mobile-indicator {
+  position: absolute;
+  bottom: -0.2rem;
+  right: -0.2rem;
+}
+
+.header-indicator {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 3px solid $sub-bg;
+}
+
+.pc-online {
+  background: $green-main;
+}
+
+.pc-dnd {
+  background: $red-light;
+}
+
+.pc-afk {
+  background: $yellow;
+}
+
+.pc-offline {
+  background: $semi-white;
+}
+
+.mobile {
+  width: 1.7rem;
+  height: 1.7rem;
+}
