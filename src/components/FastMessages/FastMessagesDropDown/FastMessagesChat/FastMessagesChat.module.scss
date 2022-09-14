@@ -1,0 +1,112 @@
+@import '../../../../scss/variables.scss';
+
+.wrapper-top {
+    border-bottom: 2px solid $bg-main;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.wrapper-content {
+    overflow-y: scroll;
+    max-height: 32rem;
+    padding: 1.5rem;
+    &::-webkit-scrollbar {
+        background: transparent;
+        width: 0.3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+        border: 1rem solid rgba(0, 0, 0, 0);
+        background-color: $green-main;
+        border-radius: 1rem;
+    }
+}
+
+.user-name {
+    color: $white;
+    font-family: 'Montserrat';
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: 11.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.user-link {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+.full-chat {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1.5rem;
+    object-fit: contain;
+}
+
+.arrow {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+
+.message-wrapper {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.message-text {
+    font-family: 'OpenSans';
+    color: $white;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 1rem 1rem .5rem 1rem;
+    border-radius: 1rem;
+    width: fit-content;
+    max-width: 19rem;
+    position: relative;
+}
+
+.left-margin {
+    margin-left: 4rem;
+}
+
+.my-message {
+    background: $green-main;
+}
+
+.other-message {
+    background: $green-sub;
+}
+
+.read-status {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: $white;
+    margin-right: 0.3rem;
+}
+
+.image-shadow {
+    border-radius: 0.3rem;
+    background: rgba(44, 44, 44, 0.3);
+}
+
+.message-action {
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem 0.3rem;
+}
+
+.wrapper-bottom {
+    padding: 1rem 1.5rem;
+}
+
+.input-block {
+    position: relative;
+}

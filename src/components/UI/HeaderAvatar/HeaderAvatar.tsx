@@ -1,31 +1,33 @@
 import React from 'react';
 import OnlineIndicator from '../OnlineIndicator/OnlineIndicator';
 import s from './HeaderAvatar.module.scss';
-import sFM from '../../FastMessages/FastMessages.module.scss';
 
 type HeaderAvatarProps = {
-  hasIndicator: boolean;
   hasDelete: boolean;
   className: string;
   img: string;
   title: string;
+  indicatorClass?: string;
 };
 
 const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
-  hasIndicator,
   className,
   img,
   title,
   hasDelete,
+  indicatorClass,
 }) => {
+
   return (
-    <div className={className} title={title}>
-      <img src={img} alt="profile" />
-      {hasIndicator && (
-        <OnlineIndicator type="pc-online" cName="header-indicator" isMobile={false} />
-      )}
+    <div className={s[className]} title={title}>
+      <div className={s['image-block']}>
+        <img src={img} alt="profile" />
+        {indicatorClass && (
+          <OnlineIndicator type="pc-online" cName={indicatorClass} isMobile={false} />
+        )}
+      </div>
       {hasDelete && (
-        <div className={sFM['cross']}>
+        <div className={s['cross']}>
           <svg
             width="17"
             height="17"
@@ -38,7 +40,7 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
               x2="12.0357"
               y2="12.0355"
               stroke="white"
-              stroke-linecap="round"
+              strokeLinecap="round"
             />
             <line
               x1="12.0356"
@@ -46,7 +48,7 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
               x2="4.96458"
               y2="12.0355"
               stroke="white"
-              stroke-linecap="round"
+              strokeLinecap="round"
             />
           </svg>
         </div>

@@ -7,7 +7,7 @@ import patterns from '../../assets/img/header/patterns.svg';
 import achieve from '../../assets/img/header/achieve.svg';
 import theme from '../../assets/img/header/theme.svg';
 import notify from '../../assets/img/header/notify.svg';
-import ebalo from '../../assets/img/header/ebalo.png';
+import ebalo from '../../assets/img/test/image.png';
 import arrow from '../../assets/img/header/arrow.svg';
 
 import s from './Header.module.scss';
@@ -16,6 +16,7 @@ import FastMessages from './../FastMessages/FastMessages';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 
 const Header: React.FC = () => {
+
   const notifies = 99;
   const achieveIndicator = 12;
 
@@ -68,13 +69,13 @@ const Header: React.FC = () => {
               </button>
               <div className={`${s['header__profile-info']} ${s['header-hover']}`}>
                 <HeaderAvatar
-                  hasIndicator={true}
                   hasDelete={false}
-                  className={s['header__profile-image']}
+                  className={'header__profile-image'}
                   img={ebalo}
+                  indicatorClass={'header-indicator'}
                   title="Олег"
                 />
-                <span className={s['header__profile-name']}>Олег</span>
+                <span className={s['header__profile-name']} title='Максимилиан'>Максимилиан</span>
                 <button className={s['header__profile-arrow']}>
                   <img src={arrow} alt="arrow" />
                 </button>

@@ -1,0 +1,38 @@
+@import '../../../../scss/variables.scss';
+
+.wrapper-top {
+    border-bottom: 2px solid $bg-main;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.wrapper-heading {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    color: $white;
+    font-size: 2rem;
+    margin-right: auto;
+}
+
+.wrapper-content {
+    overflow-y: scroll;
+    max-height: 32rem;
+    &::-webkit-scrollbar {
+        background: transparent;
+        width: 0.3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+        border: 1rem solid rgba(0, 0, 0, 0);
+        background-color: $green-main;
+        border-radius: 1rem;
+    }
+}
+
+.wrapper-bottom {
+    padding: 1rem 1.5rem;
+}
+
+.input-block {
+    position: relative;
+}

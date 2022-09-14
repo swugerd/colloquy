@@ -1,0 +1,23 @@
+@import '../../../scss/variables.scss';
+
+.chat {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 1.5rem;
+    transition: .2s linear;
+    width: 100%;
+    &:hover {
+        background: darken($elem, 3%);
+    }
+}
+
+.chat-name {
+    font-family: 'Montserrat';
+    font-weight: 400;
+    color: $white;
+    font-size: 1.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
