@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/header/logo.svg';
 import music from '../../assets/img/header/music.svg';
@@ -7,15 +7,22 @@ import patterns from '../../assets/img/header/patterns.svg';
 import achieve from '../../assets/img/header/achieve.svg';
 import theme from '../../assets/img/header/theme.svg';
 import notify from '../../assets/img/header/notify.svg';
-import ebalo from '../../assets/img/test/image.png';
+import ebalo from '../../assets/uploads/test/image.png';
 import arrow from '../../assets/img/header/arrow.svg';
 
 import s from './Header.module.scss';
 import Notify from '../UI/Notify/Notify';
 import FastMessages from './../FastMessages/FastMessages';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
+import MusicDropDown from '../MusicDropDown/MusicDropDown';
 
 const Header: React.FC = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const dropDownHandler = () => {
+    setIsOpen(!isOpen);
+  }
 
   const notifies = 99;
   const achieveIndicator = 12;
@@ -35,9 +42,12 @@ const Header: React.FC = () => {
           <div className={s.header__right}>
             <div className={s.header__act}>
               <FastMessages />
-              <button className={`${s['header__music-btn']} ${s['header-hover']}`}>
-                <img className={s['header-icon']} src={music} alt="music" />
-              </button>
+              <div className={`${s['header__music-btn']} ${s['header-hover']} ${isOpen ? s['active'] : ''}`}>
+                <Link to='/music-dd' onClick={dropDownHandler}>
+                  <img className={s['header-icon']} src={music} alt="music" />
+                </Link>
+                {isOpen && <MusicDropDown />}
+              </div>
             </div>
             <div className={s.header__actions}>
               <button className={`${s['header__actions-shop']} ${s['header-hover']}`}>

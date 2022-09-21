@@ -54,9 +54,9 @@ const FastMessagesChat: React.FC = () => {
                 }
             </div>
             <div className={s['wrapper-bottom']}>
-                <div className={s['input-block']}>
-                    <Input className='fm-input-send' type='text' placeholder='Сообщение...' inputType='send' />
-                </div>
+                {/* <div className={s['input-block']}>
+                </div> */}
+                <Input className='fm-input-send' type='text' placeholder='Сообщение...' inputType='send' />
             </div>
         </>
     )

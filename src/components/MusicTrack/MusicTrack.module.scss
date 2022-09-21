@@ -1,0 +1,99 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: .2s linear;
+    border-radius: 1rem;
+    &.active {
+        background: rgba(0, 0, 0, .3);
+    }
+    &:hover {
+        background: rgba(44, 44, 44, .5);
+    }
+}
+
+.track-img {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1rem;
+    & img {
+        border-radius: .5rem;
+        object-fit: cover;
+    }
+}
+
+.track-info {
+    display: flex;
+    align-items: center;
+    font-family: 'OpenSans';
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.track-title {
+    margin-right: 1rem;
+    color: $white;
+    max-width: 18rem;
+}
+
+.track-author {
+    margin-left: 1rem;
+    color: $green-main;
+    max-width: 10rem;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.track-author, .track-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.separator {
+    color: $white;
+}
+
+.track-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.track-time {
+    font-family: 'OpenSans';
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $white;
+    margin-right: 1rem;
+}
+
+.forward {
+    width: 1.8rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+}
+
+.delete {
+    width: 1.5rem;
+    height: 1.5rem;
+    & svg path {
+        transition: .2s linear;
+    }
+    &:hover svg path {
+        stroke: $white;
+    }
+}
+
+.forward {
+    & svg path {
+        transition: .2s linear;
+    }
+    &:hover svg path {
+        fill: $white;
+    }
+}

@@ -1,0 +1,15 @@
+@import '../../../scss/variables.scss';
+
+.wrapper {
+    max-height: 38.7rem;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        background: transparent;
+        width: 0.3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+        border: 1rem solid rgba(0, 0, 0, 0);
+        background-color: $green-main;
+        border-radius: 1rem;
+    }
+}

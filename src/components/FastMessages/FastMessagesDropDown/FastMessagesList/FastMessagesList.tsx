@@ -17,7 +17,7 @@ const FastMessagesList: React.FC<FastMessagesListProps> = ({ onClick }) => {
         name: string;
         img: string;
     }[] = [
-            { id: 1, name: 'Максимилиан Рабадонович', img: '../../assets/img/test/image.png' },
+            { id: 1, name: 'Максимилиан Рабадонович', img: '../../assets/img/header/ebalo.png' },
             { id: 2, name: 'Пашок Кубыркин', img: '../../assets/img/header/ebalo.png' },
             { id: 3, name: 'Димон шкаф', img: '../../assets/img/header/ebalo.png' },
             { id: 4, name: 'Олег Киреев', img: '../../assets/img/header/ebalo.png' },
@@ -41,9 +41,9 @@ const FastMessagesList: React.FC<FastMessagesListProps> = ({ onClick }) => {
                 }
             </div>
             <div className={s['wrapper-bottom']}>
-                <div className={s['input-block']}>
-                    <Input className='fm-input-search' type='text' placeholder='Поиск' inputType='search' />
-                </div>
+                {/* <div className={s['input-block']}>
+                </div> */}
+                <Input className='fm-input-search' type='text' placeholder='Поиск' inputType='search' />
             </div>
         </>
     )

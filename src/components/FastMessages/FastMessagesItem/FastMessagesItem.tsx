@@ -2,7 +2,7 @@ import React from 'react'
 import HeaderAvatar from '../../UI/HeaderAvatar/HeaderAvatar';
 import s from './FastMessagesItem.module.scss'
 import sIndicator from '../../UI/OnlineIndicator/OnlineIndicator.module.scss'
-import ebalo from '../../../assets/img/test/image.png'
+import ebalo from '../../../assets/uploads/test/image.png'
 import { Link } from 'react-router-dom';
 
 type FastMessagesItemProps = {

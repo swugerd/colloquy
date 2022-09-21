@@ -10,7 +10,7 @@ type InputProps = {
     className: string;
     placeholder: string;
     type: string;
-    inputType: string;
+    inputType: 'send' | 'search' | 'default';
     classOptions?: {
         searchIcon: string;
         closeIcon: string;
@@ -21,7 +21,7 @@ type InputProps = {
     };
 }
 
-const Input: React.FC<InputProps> = ({ className, placeholder, type, inputType, classOptions = {
+const Input: React.FC<InputProps> = ({ className, placeholder, type = 'default', inputType, classOptions = {
     searchIcon: 'search-icon',
     closeIcon: 'close-icon',
     paperclipIcon: 'paperclip-icon',
@@ -46,16 +46,15 @@ const Input: React.FC<InputProps> = ({ className, placeholder, type, inputType, 
         }
     }
 
-    console.log(className);
-
-
     return (
         <>
             {inputType === 'default' && (
-                < input className={`${s['input']} ${s[className]}`} type={type} placeholder={placeholder} value={value} onChange={changeValueHandler} />
+                <div className={s['input-block']}>
+                    < input className={`${s['input']} ${s[className]}`} type={type} placeholder={placeholder} value={value} onChange={changeValueHandler} />
+                </div>
             )}
             {inputType === 'search' && (
-                <>
+                <div className={s['input-block']}>
                     <img className={s[searchIcon]} src={search} alt='icon' />
                     < input className={`${s['input']} ${s[className]}`} type={type} placeholder={placeholder} value={value} onChange={changeValueHandler} ref={inputRef} />
                     <button className={`${s[closeIcon]} ${value && s.active}`} onClick={clearInputHandler}>
@@ -64,10 +63,10 @@ const Input: React.FC<InputProps> = ({ className, placeholder, type, inputType, 
                             <line x1="12.0356" y1="4.96443" x2="4.96458" y2="12.0355" stroke="white" strokeLinecap="round" />
                         </svg>
                     </button>
-                </>
+                </div>
             )}
             {inputType === 'send' && (
-                <>
+                <div className={s['input-block']}>
                     <button className={s[paperclipIcon]}>
                         <img src={paperclip} alt='icon' />
                     </button>
@@ -81,7 +80,7 @@ const Input: React.FC<InputProps> = ({ className, placeholder, type, inputType, 
                     <button className={s[sendIcon]}>
                         <img src={send} alt="send" />
                     </button>
-                </>
+                </div>
             )}
         </>
 
