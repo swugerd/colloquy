@@ -15,25 +15,30 @@ const FastMessages: React.FC = () => {
     name: string;
     img: string;
   }[] = [
-      { id: 1, name: 'Олег', img: '../../assets/img/header/ebalo.png' },
-      { id: 2, name: 'Паша', img: '../../assets/img/header/ebalo.png' },
-      { id: 3, name: 'Дима', img: '../../assets/img/header/ebalo.png' },
-    ];
+    { id: 1, name: 'Олег', img: '../../assets/img/header/ebalo.png' },
+    { id: 2, name: 'Паша', img: '../../assets/img/header/ebalo.png' },
+    { id: 3, name: 'Дима', img: '../../assets/img/header/ebalo.png' },
+  ];
 
   const [isOpen, setIsOpen] = useState(false);
   const openDropDownHandler = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   const dropDownRef = useRef<HTMLDivElement>(null);
   const fMsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
-      if ((dropDownRef.current && !e.composedPath().includes(dropDownRef.current)) && (fMsRef.current && !e.composedPath().includes(fMsRef.current))) {
+      if (
+        dropDownRef.current &&
+        !e.composedPath().includes(dropDownRef.current) &&
+        fMsRef.current &&
+        !e.composedPath().includes(fMsRef.current)
+      ) {
         setIsOpen(false);
       }
-    }
+    };
     document.body.addEventListener('click', handleOutsideClick);
     return () => document.body.removeEventListener('click', handleOutsideClick);
   }, []);
@@ -52,12 +57,14 @@ const FastMessages: React.FC = () => {
               title={name}
             />
           ))}
-          <FastMessagesBtn className={s['header__messages-btn--wrapped']} onClick={openDropDownHandler} />
+          <FastMessagesBtn
+            className={s['header__messages-btn--wrapped']}
+            onClick={openDropDownHandler}
+          />
         </div>
       ) : (
         <FastMessagesBtn className={s['header__messages-btn']} onClick={openDropDownHandler} />
-      )
-      }
+      )}
       {isOpen && <FastMessagesDropDown onClick={openDropDownHandler} ref={dropDownRef} />}
     </>
   );

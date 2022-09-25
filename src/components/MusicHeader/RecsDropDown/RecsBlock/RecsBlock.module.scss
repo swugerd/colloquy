@@ -1,0 +1,26 @@
+@import '../../../../scss/variables.scss';
+
+.wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.block {
+  display: grid;
+  grid-template: repeat(2, 5rem) / repeat(3, 22.5rem);
+  max-height: 10rem;
+  max-width: 47.7rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.title {
+  font-family: 'OpenSans';
+  font-size: 1.4rem;
+  color: $white;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

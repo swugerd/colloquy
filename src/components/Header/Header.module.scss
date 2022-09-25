@@ -36,27 +36,13 @@
     height: 5rem;
     width: 5rem;
   }
-  &__logo-title {
-  }
   &__act {
     display: flex;
     align-items: center;
     height: 100%;
     position: relative;
   }
-  
-  &__music-btn {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    & > a {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
+
   &__actions {
     height: 100%;
     display: flex;
@@ -138,7 +124,8 @@
   border-bottom: 3px solid transparent;
   border-top: 3px solid transparent;
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     border-bottom: 3px solid $green-main;
     border-radius: 2px;
   }

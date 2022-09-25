@@ -14,16 +14,12 @@ import s from './Header.module.scss';
 import Notify from '../UI/Notify/Notify';
 import FastMessages from './../FastMessages/FastMessages';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
-import MusicDropDown from '../MusicDropDown/MusicDropDown';
+import MusicDropDown from '../MusicHeader/MusicDropDown/MusicDropDown';
+import MusicHeader from '../MusicHeader/MusicHeader';
+import ShopHeader from '../ShopHeader/ShopHeader';
+import PatternsHeader from '../PatternsHeader/PatternsHeader';
 
 const Header: React.FC = () => {
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const dropDownHandler = () => {
-    setIsOpen(!isOpen);
-  }
-
   const notifies = 99;
   const achieveIndicator = 12;
 
@@ -42,20 +38,11 @@ const Header: React.FC = () => {
           <div className={s.header__right}>
             <div className={s.header__act}>
               <FastMessages />
-              <div className={`${s['header__music-btn']} ${s['header-hover']} ${isOpen ? s['active'] : ''}`}>
-                <Link to='/music-dd' onClick={dropDownHandler}>
-                  <img className={s['header-icon']} src={music} alt="music" />
-                </Link>
-                {isOpen && <MusicDropDown />}
-              </div>
+              <MusicHeader />
             </div>
             <div className={s.header__actions}>
-              <button className={`${s['header__actions-shop']} ${s['header-hover']}`}>
-                <img className={s['header-icon']} src={shop} alt="shop" />
-              </button>
-              <button className={`${s['header__actions-patterns']} ${s['header-hover']}`}>
-                <img className={s['header-icon']} src={patterns} alt="patterns" />
-              </button>
+              <ShopHeader />
+              <PatternsHeader />
               <button className={`${s['header__actions-achieve']} ${s['header-hover']}`}>
                 <div className={s['header__notify-indicator']}>
                   <img className={s['header-icon']} src={achieve} alt="achieve" />
@@ -85,7 +72,9 @@ const Header: React.FC = () => {
                   indicatorClass={'header-indicator'}
                   title="Олег"
                 />
-                <span className={s['header__profile-name']} title='Максимилиан'>Максимилиан</span>
+                <span className={s['header__profile-name']} title="Максимилиан">
+                  Максимилиан
+                </span>
                 <button className={s['header__profile-arrow']}>
                   <img src={arrow} alt="arrow" />
                 </button>

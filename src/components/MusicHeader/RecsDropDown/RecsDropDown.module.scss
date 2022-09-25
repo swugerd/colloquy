@@ -1,0 +1,7 @@
+.wrapper {
+  max-height: 37rem;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

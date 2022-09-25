@@ -1,0 +1,91 @@
+@import '../../../scss/variables.scss';
+
+.wrapper {
+  height: 57rem;
+  width: 50rem;
+  position: absolute;
+  bottom: -774%;
+  background: $elem;
+  padding: 2rem;
+  border-radius: 0 0 2rem 2rem;
+}
+
+.wrapper-top {
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat';
+  font-size: 2rem;
+  font-weight: 600;
+  color: $white;
+  margin-bottom: 1rem;
+}
+
+.separator {
+  margin: 0 1rem;
+}
+
+.heading-currency {
+  margin-right: 0;
+}
+
+.heading {
+  margin-right: auto;
+}
+
+.my-count {
+  color: $green-main;
+}
+
+.all-count::before {
+  content: '/';
+  margin: 0 0.5rem;
+}
+
+.currency {
+  display: flex;
+  align-items: center;
+  color: $green-main;
+  margin-left: auto;
+}
+
+.amount {
+  margin-right: 1rem;
+}
+
+.currency-icon {
+  width: 1.7rem;
+  height: 3rem;
+}
+
+.wrapper-content {
+  height: 45.5rem;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.wrapper-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-align: center;
+  & a {
+    width: 100%;
+  }
+}
+
+.arrow-icon {
+  width: 2rem;
+  height: 1.2rem;
+  margin: 0 auto;
+}

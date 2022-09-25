@@ -1,0 +1,89 @@
+@import '../../../scss/variables.scss';
+
+.playlists {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  max-width: 47.7rem;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.create {
+  min-width: 12.5rem;
+  min-height: 12.5rem;
+  border-radius: 1rem;
+  background: $green-main;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  & svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: baseline;
+  font-family: 'OpenSans';
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.heading,
+.separator {
+  color: $white;
+}
+
+.separator {
+  margin: 0 1rem;
+}
+
+.title {
+  color: $green-main;
+  margin-right: 1rem;
+}
+
+.remove {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.remove svg path {
+  transition: 0.2s linear;
+}
+
+.remove:hover svg path {
+  stroke: $white;
+}
+
+.forward {
+  width: 1.8rem;
+  height: 1.5rem;
+}
+
+.forward svg path {
+  transition: 0.2s linear;
+}
+
+.forward:hover svg path {
+  fill: $white;
+}
+
+.wrapper {
+  max-height: 20rem;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}

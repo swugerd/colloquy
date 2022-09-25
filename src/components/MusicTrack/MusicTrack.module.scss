@@ -1,99 +1,157 @@
 @import '../../scss/variables.scss';
 
 .wrapper {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: .2s linear;
-    border-radius: 1rem;
-    &.active {
-        background: rgba(0, 0, 0, .3);
-    }
-    &:hover {
-        background: rgba(44, 44, 44, .5);
-    }
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s linear;
+  border-radius: 1rem;
+  &.active {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  &:hover {
+    background: rgba(44, 44, 44, 0.5);
+  }
+}
+
+.recs-wrapper {
+  max-width: 22.5rem;
 }
 
 .track-img {
-    width: 4rem;
-    height: 4rem;
-    margin-right: 1rem;
-    & img {
-        border-radius: .5rem;
-        object-fit: cover;
-    }
+  height: 4rem;
+  min-width: 4rem;
+  max-width: 4rem;
+  margin-right: 1rem;
+  & img {
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
 }
 
 .track-info {
-    display: flex;
-    align-items: center;
-    font-family: 'OpenSans';
-    font-size: 1.2rem;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  font-family: 'OpenSans';
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.track-recs {
+  display: flex;
+  flex-direction: column;
+  font-family: 'OpenSans';
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: auto;
 }
 
 .track-title {
-    margin-right: 1rem;
-    color: $white;
-    max-width: 18rem;
+  margin-right: 1rem;
+  color: $white;
+  max-width: 18rem;
+}
+
+.recs-title {
+  margin-right: 0;
+  color: $white;
+  max-width: 12rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .track-author {
-    margin-left: 1rem;
-    color: $green-main;
-    max-width: 10rem;
-    &:hover {
-        text-decoration: underline;
-    }
+  margin-left: 1rem;
+  margin-right: auto;
+  color: $green-main;
+  max-width: 10rem;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.track-author, .track-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.track-author,
+.track-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .separator {
-    color: $white;
+  color: $white;
 }
 
 .track-actions {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-items: flex-end;
+}
+
+.recs-actions {
+  display: flex;
+  flex-direction: column;
+  min-height: 4rem;
+  justify-content: space-between;
+  align-self: flex-start;
 }
 
 .track-time {
-    font-family: 'OpenSans';
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: $white;
-    margin-right: 1rem;
+  color: $white;
+  margin-right: 1rem;
+}
+
+.recs-time {
+  color: $semi-white;
+  margin-right: 0;
+}
+
+.recs-author {
+  color: $green-main;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10rem;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .forward {
-    width: 1.8rem;
-    height: 1.5rem;
-    margin-right: 1rem;
+  width: 1.8rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+}
+
+.recs-forward {
+  width: 1.8rem;
+  height: 1.5rem;
+  & svg path {
+    transition: 0.2s linear;
+  }
+  &:hover svg path {
+    fill: $white;
+  }
 }
 
 .delete {
-    width: 1.5rem;
-    height: 1.5rem;
-    & svg path {
-        transition: .2s linear;
-    }
-    &:hover svg path {
-        stroke: $white;
-    }
+  width: 1.5rem;
+  height: 1.5rem;
+  & svg path {
+    transition: 0.2s linear;
+  }
+  &:hover svg path {
+    stroke: $white;
+  }
 }
 
 .forward {
-    & svg path {
-        transition: .2s linear;
-    }
-    &:hover svg path {
-        fill: $white;
-    }
+  & svg path {
+    transition: 0.2s linear;
+  }
+  &:hover svg path {
+    fill: $white;
+  }
 }
