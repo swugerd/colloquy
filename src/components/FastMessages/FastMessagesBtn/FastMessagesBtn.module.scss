@@ -1,11 +1,11 @@
 @import '../../../scss/variables.scss';
 
 .header {
-      &__messages-img {
-        padding: 1.5rem;
-      }
-      .header-msgs {
-        min-width: 2rem;
-        min-height: 2rem;
-      }
+  &__messages-img {
+    padding: 1.5rem;
+  }
+  .header-msgs {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
 }

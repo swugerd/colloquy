@@ -1,0 +1,119 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+  padding: 1rem;
+  background: $green-main;
+  border-radius: 2rem;
+  width: 12.6rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.pattern-items {
+  display: grid;
+  grid-template:
+    'header header' 2rem
+    'sidebar content' 5rem;
+  grid-gap: 0.5rem;
+}
+
+.item1,
+.item2,
+.item3 {
+  background: $white;
+  border-radius: 0.5rem;
+}
+
+.item1 {
+  grid-area: header;
+}
+
+.item2 {
+  grid-area: sidebar;
+}
+
+.item3 {
+  grid-area: content;
+}
+
+.action-btn {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & svg,
+  & img {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.delete-btn {
+  left: 1rem;
+  top: 1rem;
+}
+
+.forward-btn {
+  right: 3.5rem;
+  top: 1rem;
+}
+
+.settings-btn {
+  right: 1rem;
+  top: 1rem;
+}
+
+.inp-disabled {
+  opacity: 0;
+  position: absolute;
+  left: -0.5rem;
+  bottom: -0.5rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  &:checked ~ .custom-btn {
+    background: $green-light;
+  }
+}
+
+.custom-btn {
+  border-radius: 50%;
+  outline: 0.5rem solid rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.radio-btn {
+  position: absolute;
+}
+
+.custom-btn-small {
+  width: 1rem;
+  height: 1rem;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  max-width: 11rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-family: 'OpenSans';
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $white;
+}
+
+.edit-btn img {
+  width: 1.2rem;
+  height: 1.2rem;
+}

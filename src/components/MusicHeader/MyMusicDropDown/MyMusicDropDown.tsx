@@ -1,10 +1,18 @@
 import React from 'react';
 import ebalo from '../../../assets/uploads/test/image2.png';
 import MusicTrack from '../../MusicTrack/MusicTrack';
+import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 import s from './MyMusicDropDown.module.scss';
 
 const MyMusicDropDown: React.FC = () => {
-  const tracks = [
+  const tracks: {
+    id: number;
+    img: string;
+    title: string;
+    author: string;
+    time: number;
+    file: string;
+  }[] = [
     { id: 1, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
     {
       id: 2,
@@ -24,11 +32,16 @@ const MyMusicDropDown: React.FC = () => {
     { id: 10, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 1234, file: '' },
     { id: 11, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 1234, file: '' },
   ];
+
   return (
-    <div className={s['wrapper']}>
-      {tracks.map(({ id, img, title, author, time }) => (
-        <MusicTrack img={ebalo} title={title} author={author} time={time} key={id} isRecs={false} />
-      ))}
+    <div className={`${s['wrapper']} ${tracks.length ? '' : s['nothing']}`}>
+      {tracks.length ? (
+        tracks.map(({ id, img, title, author, time }) => (
+          <MusicTrack img={img} title={title} author={author} time={time} key={id} isRecs={false} />
+        ))
+      ) : (
+        <NotFoundBlock className={'music-nothing'} text={'У вас ещё нету музыки'} />
+      )}
     </div>
   );
 };

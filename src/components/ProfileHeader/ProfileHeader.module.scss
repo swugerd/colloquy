@@ -1,0 +1,38 @@
+@import '../../scss/variables.scss';
+
+.header__profile-info {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+  & > button {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.header__profile-name {
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 2rem;
+  color: $white;
+  margin-right: 1rem;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-hover {
+  transition: 0.2s linear;
+  box-sizing: border-box;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid transparent;
+
+  &:hover,
+  &.active {
+    border-bottom: 3px solid $green-main;
+    border-radius: 2px;
+  }
+}

@@ -2,12 +2,13 @@ import React, { useRef, useState } from 'react';
 import s from './PatternsHeader.module.scss';
 import patterns from '../../assets/img/header/patterns.svg';
 import useOnClickOutside from './../../hooks/useOnClickOutside';
+import PatternsDropDown from './PatternsDropDown/PatternsDropDown';
 
 const PatternsHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  //   useOnClickOutside(ref, () => setIsOpen(false));
+  useOnClickOutside(ref, () => setIsOpen(false));
 
   return (
     <div
@@ -18,7 +19,7 @@ const PatternsHeader: React.FC = () => {
       <button onClick={() => setIsOpen(!isOpen)}>
         <img className={s['header-icon']} src={patterns} alt="patterns" />
       </button>
-      {}
+      {isOpen && <PatternsDropDown />}
     </div>
   );
 };

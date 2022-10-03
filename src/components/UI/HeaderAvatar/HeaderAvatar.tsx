@@ -17,7 +17,6 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   hasDelete,
   indicatorClass,
 }) => {
-
   return (
     <div className={s[className]} title={title}>
       <div className={s['image-block']}>

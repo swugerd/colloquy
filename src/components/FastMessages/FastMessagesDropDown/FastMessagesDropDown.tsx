@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import ebalo from '../../../assets/img/header/ebalo.png';
 import close from '../../../assets/img/icons/close.svg';
 import HeaderAvatar from '../../UI/HeaderAvatar/HeaderAvatar';
@@ -12,23 +12,23 @@ import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import FastMessagesList from './FastMessagesList/FastMessagesList';
 import FastMessagesChat from './FastMessagesChat/FastMessagesChat';
 
-
 type FastMessagesDropDownProps = {
-    onClick: React.MouseEventHandler<HTMLAnchorElement>;
-}
+  onClick: React.MouseEventHandler<HTMLAnchorElement>;
+};
 
-const FastMessagesDropDown = React.forwardRef<HTMLDivElement, FastMessagesDropDownProps>(({ onClick }, ref) => {
-
+const FastMessagesDropDown = React.forwardRef<HTMLDivElement, FastMessagesDropDownProps>(
+  ({ onClick }, ref) => {
     return (
-        <div ref={ref} className={s.wrapper}>
-            {
-                <Routes>
-                    <Route path='/fms' element={<FastMessagesList onClick={onClick} />} />
-                    <Route path='/fms/:dialogId' element={<FastMessagesChat />} />
-                </Routes>
-            }
-        </div>
-    )
-})
+      <div ref={ref} className={s.wrapper}>
+        {
+          <Routes>
+            <Route path="/fms" element={<FastMessagesList onClick={onClick} />} />
+            <Route path="/fms/:dialogId" element={<FastMessagesChat />} />
+          </Routes>
+        }
+      </div>
+    );
+  },
+);
 
-export default FastMessagesDropDown
+export default FastMessagesDropDown;

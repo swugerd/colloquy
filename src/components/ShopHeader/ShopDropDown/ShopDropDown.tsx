@@ -5,6 +5,7 @@ import s from './ShopDropDown.module.scss';
 import ebalo from '../../../assets/uploads/test/image2.png';
 import smile from '../../../assets/uploads/test/smile.png';
 import classNames from 'classnames';
+import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 
 const ShopDropDown: React.FC = () => {
   const categories = [
@@ -51,6 +52,10 @@ const ShopDropDown: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
 
+  const hasProducts = categories
+    .map((category) => category.products.length)
+    .reduce((prev, current) => prev + current, 0);
+
   // Переделать переключение радио кнопок
 
   const indexHandler = (index: number, categoryIndex: number): any => {
@@ -66,60 +71,78 @@ const ShopDropDown: React.FC = () => {
       myCount={3}
       allCount={55}
       currency={2550}>
-      {categories.map(({ id, type, title, count, products }, categoryIndex) => (
-        <div className={s['category']} key={id}>
-          <h6 className={s['heading']}>
-            {title}
-            <span className={s['separator']}>&mdash;</span>
-            <span className={s['my-count']}>{products.length}</span>
-            <span className={s['all-count']}>{count}</span>
-          </h6>
-          <div className={s['wrapper']}>
-            {products.map(({ id, img, name }, index) => (
-              <div
-                className={`${s['item']} ${type === 'bg' ? s['item-big'] : s['item-small']}`}
-                title={name}
-                onClick={type !== 'emoji' ? () => indexHandler(index, categoryIndex) : () => {}}
-                key={id}>
-                <div
-                  className={classNames({
-                    [s['item-img']]: true,
-                    [s['img-small']]: type === 'sounds',
-                    [s['img-big']]: type === 'bg',
-                    [s['img-very-small']]: type === 'emoji',
-                  })}>
-                  {type !== 'emoji' && (
+      {hasProducts ? (
+        categories.map(({ id, type, title, count, products }, categoryIndex) => (
+          <div className={s['category']} key={id}>
+            {products.length ? (
+              <h6 className={s['heading']}>
+                {title}
+                <span className={s['separator']}>&mdash;</span>
+                <span className={s['my-count']}>{products.length}</span>
+                <span className={s['all-count']}>{count}</span>
+              </h6>
+            ) : (
+              // <NotFoundBlock className={'shop-nothing'} text={'У вас ещё нету товаров'} />
+              ''
+            )}
+            <div className={`${s['wrapper']} ${products.length ? '' : s['nothing']}`}>
+              {products.length
+                ? products.map(({ id, img, name }, index) => (
                     <div
-                      className={classNames({
-                        [s['radio-btn']]: true,
-                        [s['radio-btn-small']]: type === 'sounds',
-                        [s['radio-btn-big']]: type === 'bg',
-                      })}>
-                      <input
-                        type="radio"
-                        name={type}
-                        className={s['inp-disabled']}
-                        checked={selectedIndex === index && categoryIndex === selectedCategoryIndex}
-                        onChange={() => setSelectedIndex(index)}
-                      />
+                      className={`${s['item']} ${type === 'bg' ? s['item-big'] : s['item-small']}`}
+                      title={name}
+                      onClick={
+                        type !== 'emoji' ? () => indexHandler(index, categoryIndex) : () => {}
+                      }
+                      key={id}>
                       <div
                         className={classNames({
-                          [s['custom-btn']]: true,
-                          [s['custom-btn-small']]: type === 'sounds',
-                          [s['custom-btn-big']]: type === 'bg',
-                        })}></div>
+                          [s['item-img']]: true,
+                          [s['img-small']]: type === 'sounds',
+                          [s['img-big']]: type === 'bg',
+                          [s['img-very-small']]: type === 'emoji',
+                        })}>
+                        {type !== 'emoji' && (
+                          <div
+                            className={classNames({
+                              [s['radio-btn']]: true,
+                              [s['radio-btn-small']]: type === 'sounds',
+                              [s['radio-btn-big']]: type === 'bg',
+                            })}>
+                            <input
+                              type="radio"
+                              name={type}
+                              className={s['inp-disabled']}
+                              checked={
+                                selectedIndex === index && categoryIndex === selectedCategoryIndex
+                              }
+                              onChange={() => setSelectedIndex(index)}
+                            />
+                            <div
+                              className={classNames({
+                                [s['custom-btn']]: true,
+                                [s['custom-btn-small']]: type === 'sounds',
+                                [s['custom-btn-big']]: type === 'bg',
+                              })}></div>
+                          </div>
+                        )}
+                        <img src={img} alt="product" />
+                      </div>
+                      <span
+                        className={`${s['name']} ${
+                          type === 'bg' ? s['name-big'] : s['name-small']
+                        }`}>
+                        {name}
+                      </span>
                     </div>
-                  )}
-                  <img src={img} alt="product" />
-                </div>
-                <span className={`${s['name']} ${type === 'bg' ? s['name-big'] : s['name-small']}`}>
-                  {name}
-                </span>
-              </div>
-            ))}
+                  ))
+                : ''}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <NotFoundBlock className={'shop-nothing'} text={'У вас ещё нету товаров'} />
+      )}
     </DropDownLayout>
   );
 };

@@ -1,13 +1,22 @@
 @import '../../../scss/variables.scss';
 
 .wrapper {
-  height: 57rem;
+  max-height: 56.5rem;
   width: 50rem;
   position: absolute;
-  bottom: -774%;
+  top: 7.7rem;
   background: $elem;
   padding: 2rem;
   border-radius: 0 0 2rem 2rem;
+}
+
+.wrapper-notify {
+  max-height: 45rem;
+  width: 32rem;
+  overflow-y: hidden;
+  .wrapper-content {
+    max-height: 33rem;
+  }
 }
 
 .wrapper-top {
@@ -58,8 +67,9 @@
 }
 
 .wrapper-content {
-  height: 45.5rem;
+  max-height: 45.5rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     background: transparent;
     width: 0.3rem;

@@ -1,21 +1,20 @@
 @import '../../../scss/variables.scss';
 
 .wrapper {
-    background: $sub-bg;
-    position: absolute;
-    left: 0;
-    top: 7rem;
-    border-radius: 2rem;
-    min-width: 25rem;
-    max-width: 25rem;
+  background: $sub-bg;
+  position: absolute;
+  left: 0;
+  top: 7rem;
+  border-radius: 2rem;
+  min-width: 25rem;
+  max-width: 25rem;
 }
 
-
 .close {
-    width: 1.5rem;
-    height: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .user-image-block {
-    position: relative;
+  position: relative;
 }

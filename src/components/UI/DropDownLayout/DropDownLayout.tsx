@@ -6,11 +6,12 @@ import gemIcon from '../../../assets/img/icons/gem.svg';
 
 type DropDownLayoutProps = {
   title: string;
-  myCount: number;
-  allCount: number;
+  myCount?: number;
+  allCount?: number;
   currency?: number;
   link: string;
   linkText: string;
+  isNotify?: boolean;
   children: React.ReactNode;
 };
 
@@ -21,10 +22,11 @@ const DropDownLayout: React.FC<DropDownLayoutProps> = ({
   currency,
   link,
   linkText,
+  isNotify,
   children,
 }) => {
   return (
-    <div className={s['wrapper']}>
+    <div className={`${s['wrapper']} ${isNotify ? s['wrapper-notify'] : ''}`}>
       <div className={s['wrapper-top']}>
         <h5 className={currency ? s['heading-currency'] : s['heading']}>{title}</h5>
         {currency ? (
@@ -41,11 +43,13 @@ const DropDownLayout: React.FC<DropDownLayoutProps> = ({
               </div>
             </div>
           </>
-        ) : (
+        ) : allCount || myCount ? (
           <div className={s['quantity']}>
             <span className={s['my-count']}>{myCount}</span>
             <span className={s['all-count']}>{allCount}</span>
           </div>
+        ) : (
+          ''
         )}
       </div>
       <div className={s['wrapper-content']}>{children}</div>

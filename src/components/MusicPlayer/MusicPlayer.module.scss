@@ -1,186 +1,190 @@
 @import '../../scss/variables.scss';
 
 .player {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .player-pannel {
-    display: flex;
-    align-items: center;
-    margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
 }
 
-.prev-track, .next-track {
-    width: 1.5rem;
-    height: 1.5rem;
+.prev-track,
+.next-track {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
-.play-track, .pause-track {
-    width: 2rem;
-    height: 2rem;
-    margin: 0 1.5rem;
+.play-track,
+.pause-track {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 1.5rem;
 }
 
 .next-track {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .track-wrapper {
-    display: flex;
-    align-items: center;
-    margin-right: 2.5rem;
+  display: flex;
+  align-items: center;
+  margin-right: 2.5rem;
 }
 
 .track-img {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 1.5rem;
-    & img {
-        border-radius: .5rem;
-        object-fit: cover;
-    }
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1.5rem;
+  & img {
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
 }
 
-.track-name, .track-author, .track-time {
-    font-family: 'OpenSans';
-    font-size: 1.2rem;
+.track-name,
+.track-author,
+.track-time {
+  font-family: 'OpenSans';
+  font-size: 1.2rem;
 }
 
 .track-name {
-    color: $white;
-    font-weight: 500;
+  color: $white;
+  font-weight: 500;
 }
 
 .track-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .track-author {
-    color: $green-main;
-    font-weight: 600;
+  color: $green-main;
+  font-weight: 600;
 }
 
 .track-time {
-    color: $white;
+  color: $white;
 }
 
 .track-info {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 
 .play-line {
-    width: 20rem;
-    height: 0.3rem;
-    border-radius: 1rem;
-    background: $semi-white;
-    position: relative;
-    cursor: pointer;
+  width: 20rem;
+  height: 0.3rem;
+  border-radius: 1rem;
+  background: $semi-white;
+  position: relative;
+  cursor: pointer;
 }
 
 .play-line-complete {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    background: $white;
-    border-radius: 1rem;
-    height: 0.3rem;
-    width: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  background: $white;
+  border-radius: 1rem;
+  height: 0.3rem;
+  width: 50%;
 }
 
 .volume-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    &:hover .volume-line {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  &:hover .volume-line {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .volume-icon {
-    width: 2rem;
-    height: 1.5rem;
-    margin-top: .3rem;
+  width: 2rem;
+  height: 1.5rem;
+  margin-top: 0.3rem;
 }
 
 .volume-line {
-    height: 3rem;
-    width: 0.3rem;
-    border-radius: 1rem;
-    background: $semi-white;
-    position: relative;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(30%);
-    transition: .1s linear;
+  height: 3rem;
+  width: 0.3rem;
+  border-radius: 1rem;
+  background: $semi-white;
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(30%);
+  transition: 0.1s linear;
 }
 
 .volume-line-complete {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 50%;
-    background: $white;
-    border-radius: 1rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 50%;
+  background: $white;
+  border-radius: 1rem;
 }
 
 .volume-line-point {
-    height: 0.5rem;
-    width: 0.5rem;
-    background: $white;
-    border-radius: 50%;
-    position: absolute;
-    left: -0.1rem;
-    top: 50%;
-    transform: translateY(-50%);
+  height: 0.5rem;
+  width: 0.5rem;
+  background: $white;
+  border-radius: 50%;
+  position: absolute;
+  left: -0.1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .track-actions {
-    display: grid;
-    grid-template: repeat(2, 1.6rem) / repeat(2, 1.6rem);
-    grid-gap: 1.5rem;
-    & button svg path {
-        transition: .2s linear;
-    }
-    & button:hover svg path {
-        fill: $white;
-    }
+  display: grid;
+  grid-template: repeat(2, 1.6rem) / repeat(2, 1.6rem);
+  grid-gap: 1.5rem;
+  & button svg path {
+    transition: 0.2s linear;
+  }
+  & button:hover svg path {
+    fill: $white;
+  }
 }
 
 .repeat-icon {
-    order: 3;
-    width: 1.5rem;
-    height: 1.5rem;
+  order: 3;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .shuffle-icon {
-    order: 4;
-    width: 1.5rem;
-    height: 1.5rem;
+  order: 4;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .forward-icon {
-    order: 2;
-    width: 1.8rem;
-    height: 1.5rem;
+  order: 2;
+  width: 1.8rem;
+  height: 1.5rem;
 }
 
 .add-icon {
-    order: 1;
-    width: 1.5rem;
-    height: 1.5rem;
-    & svg line {
-        transition: .2s linear;
-    }
-    &:hover svg line {
-        stroke: $white;
-    }
+  order: 1;
+  width: 1.5rem;
+  height: 1.5rem;
+  & svg line {
+    transition: 0.2s linear;
+  }
+  &:hover svg line {
+    stroke: $white;
+  }
 }

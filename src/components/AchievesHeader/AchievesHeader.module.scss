@@ -1,0 +1,38 @@
+@import '../../scss/variables.scss';
+
+.header__actions-achieve {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3.5rem;
+  position: relative;
+  & > button {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.header__notify-indicator {
+  position: relative;
+}
+
+.header-hover {
+  transition: 0.2s linear;
+  box-sizing: border-box;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid transparent;
+
+  &:hover,
+  &.active {
+    border-bottom: 3px solid $green-main;
+    border-radius: 2px;
+  }
+}
+
+.header-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}

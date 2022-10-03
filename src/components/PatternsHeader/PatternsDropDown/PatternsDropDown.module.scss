@@ -1,0 +1,36 @@
+@import '../../../scss/variables.scss';
+
+.add-pattern {
+  padding: 2.5rem 4.3rem;
+  background: $green-main;
+  border-radius: 2rem;
+  width: 12.6rem;
+  height: 9.5rem;
+  cursor: pointer;
+  & svg {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.heading {
+  font-family: 'Montserrat';
+  font-size: 1.6rem;
+  color: $white;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 4rem;
+  grid-row-gap: 1rem;
+}
+
+.wrapper-nothing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+}
