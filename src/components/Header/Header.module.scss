@@ -3,7 +3,7 @@
 
 .header {
   background: $sub-bg;
-  &__nav {
+  &__inner {
     display: flex;
     align-items: center;
     height: 8rem;
@@ -73,6 +73,13 @@
     &:hover {
       background: darken($elem, 3%);
     }
+  }
+}
+
+.center {
+  justify-content: center;
+  & .header__logo {
+    margin-right: 0;
   }
 }
 

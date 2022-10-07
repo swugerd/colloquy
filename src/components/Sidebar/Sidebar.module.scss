@@ -1,0 +1,25 @@
+@import '../../scss/variables.scss';
+
+.sidebar {
+  border-radius: 2rem;
+  padding: 1.5rem;
+  background: $sub-bg;
+  width: fit-content;
+  font-family: 'Montserrat';
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-top: 1.5rem;
+  }
+}
+
+.nav-img {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+}

@@ -26,6 +26,6 @@
   }
 }
 
-:global(.active) {
+:global(.nav-link.active) {
   color: $green-main;
 }

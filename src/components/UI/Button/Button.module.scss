@@ -1,0 +1,35 @@
+@import '../../../scss/variables.scss';
+
+.button {
+  border-radius: 1rem;
+  background: $green-main;
+  display: block;
+}
+
+.auth-btn {
+  width: 29rem;
+  padding: 1.2rem 1.5rem;
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 600;
+  & + & {
+    margin-left: 3rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .auth-btn {
+    font-size: 1.8rem;
+    width: 22rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .auth-btn {
+    font-size: 1.6rem;
+    width: 20rem;
+    & + & {
+      margin: 2rem 0 0 0;
+    }
+  }
+}

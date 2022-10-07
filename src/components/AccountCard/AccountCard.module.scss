@@ -1,0 +1,120 @@
+@import '../../scss/variables.scss';
+
+.account {
+  padding: 1.5rem;
+  background: $elem;
+  border-radius: 2rem;
+  width: 19rem;
+  display: flex;
+  flex-direction: column;
+  & + & {
+    margin-left: 2rem;
+  }
+}
+
+.account-image {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin: 0 auto 1.5rem;
+  & img {
+    border-radius: 50%;
+  }
+}
+
+.name {
+  font-family: 'Montserrat';
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: $white;
+  margin-bottom: 1.5rem;
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button {
+  border-radius: 1rem;
+  padding: 0.5rem 2rem;
+  & + & {
+    margin-left: 1rem;
+  }
+  & img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warn {
+  background: $red-light;
+}
+
+.success {
+  background: $green-main;
+  & img {
+    transform: rotate(270deg);
+  }
+}
+
+.card {
+  opacity: 1;
+}
+
+.modal-card {
+  opacity: 1;
+}
+
+@media (max-width: 756px) {
+  .account {
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
+    padding: 2rem;
+    & + & {
+      margin: 2rem 0 0 0;
+    }
+  }
+  .buttons {
+    flex-direction: column;
+    margin-left: auto;
+  }
+  .button {
+    padding: 1rem 2rem;
+    & + & {
+      margin: 1.5rem 0 0 0;
+    }
+  }
+  .account-image {
+    margin: 0 1.5rem 0 0;
+  }
+  .name {
+    margin-bottom: 0;
+    max-width: 20rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .account-image {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+  }
+  .account {
+    padding: 1rem;
+    width: fit-content;
+  }
+  .name {
+    font-size: 1.4rem;
+    width: 14rem;
+  }
+  .buttons {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,123 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+  height: 89.3vh;
+  position: relative;
+}
+
+.wrapper-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row-reverse;
+  height: inherit;
+  font-family: 'Montserrat';
+}
+
+.title {
+  font-size: 3.2rem;
+  margin-bottom: 2.5rem;
+  color: $white;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.info {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: $semi-white;
+  width: 40rem;
+  text-align: center;
+  margin: 1rem auto 0;
+}
+
+.accounts-list {
+  display: flex;
+  align-items: center;
+  // margin-bottom: 2rem;
+}
+
+.center {
+  justify-content: center;
+}
+
+.more-accs {
+  background: $green-main;
+  border-radius: 1rem;
+  width: 5rem;
+  height: 5rem;
+  margin-left: 4rem;
+}
+
+.dots {
+  width: 3.4rem;
+  height: 0.8rem;
+}
+
+.modal-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1150px) {
+  .title {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .wrapper-inner {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .remember-screen {
+    margin-top: 6.5rem;
+  }
+  .row {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-list {
+    flex-direction: column;
+  }
+  .more-accs {
+    margin: 2rem 0 0 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .title {
+    font-size: 2rem;
+    width: 30rem;
+    margin: 0 auto 2.5rem;
+  }
+  .row {
+    flex-direction: column;
+  }
+  .remember-screen {
+    margin-top: 3rem;
+  }
+  .more-accs {
+    margin-top: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .dots {
+    width: 2.4rem;
+    height: 0.5rem;
+  }
+  .info {
+    font-size: 1.2rem;
+    width: 28rem;
+  }
+}
