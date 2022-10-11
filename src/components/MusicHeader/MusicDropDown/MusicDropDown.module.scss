@@ -21,11 +21,10 @@
   font-family: 'Montserrat';
   font-weight: 600;
   transition: 0.2s linear;
+  &.active {
+    color: $green-main;
+  }
   & + & {
     margin-left: 1.5rem;
   }
-}
-
-:global(.nav-link.active) {
-  color: $green-main;
 }

@@ -39,15 +39,17 @@
 .action-btn {
   background: rgba(0, 0, 0, 0.7);
   border-radius: 0.5rem;
-  padding: 0.5rem;
   position: absolute;
   width: 2rem;
   height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  & svg,
-  & img {
+  .trash {
+    fill: $semi-white;
+    stroke: $semi-white;
+  }
+  & svg {
     width: 1.2rem;
     height: 1.2rem;
   }
@@ -56,16 +58,38 @@
 .delete-btn {
   left: 1rem;
   top: 1rem;
+  & svg path {
+    transition: 0.2s linear;
+  }
+  &:hover {
+    & svg .trash {
+      fill: $white;
+      stroke: $white;
+    }
+  }
 }
 
 .forward-btn {
   right: 3.5rem;
   top: 1rem;
+  & svg path {
+    transition: 0.2s linear;
+  }
+  &:hover svg path {
+    fill: $white;
+  }
 }
 
 .settings-btn {
   right: 1rem;
   top: 1rem;
+  & svg path {
+    fill: $semi-white;
+    transition: 0.2s linear;
+  }
+  &:hover svg path {
+    fill: $white;
+  }
 }
 
 .inp-disabled {
@@ -113,7 +137,24 @@
   color: $white;
 }
 
-.edit-btn img {
-  width: 1.2rem;
-  height: 1.2rem;
+.edit-btn {
+  &:hover svg path {
+    stroke: $white;
+  }
+  &:hover svg path:not(:first-child) {
+    fill: $white;
+  }
+  & svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  & path {
+    transition: 0.2s linear;
+  }
+  & path {
+    stroke: $semi-white;
+  }
+  & path:not(:first-child) {
+    fill: $semi-white;
+  }
 }

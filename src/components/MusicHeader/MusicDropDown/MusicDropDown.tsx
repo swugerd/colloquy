@@ -17,6 +17,8 @@ const MusicDropDown: React.FC<MusicDropDownProps> = ({ setState }) => {
     { id: 3, title: 'Рекомендации', path: '/recs-dd' },
   ];
 
+  // Сделать навлинки для музыки и сайдбара + ещё раз проверить все иконки на ховеры и классы .active
+
   return (
     <div className={s['wrapper']}>
       <MusicPlayer />
@@ -28,7 +30,12 @@ const MusicDropDown: React.FC<MusicDropDownProps> = ({ setState }) => {
       />
       <div className={s['nav']}>
         {links.map(({ id, title, path }) => (
-          <NavLink to={path} key={id} className={s['nav-link']}>
+          <NavLink
+            to={path}
+            key={id}
+            className={({ isActive }) =>
+              isActive ? `${s['active']} ${s['nav-link']}` : s['nav-link']
+            }>
             {title}
           </NavLink>
         ))}

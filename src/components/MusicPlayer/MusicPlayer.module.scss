@@ -16,6 +16,9 @@
 .next-track {
   width: 1.5rem;
   height: 1.5rem;
+  & svg {
+    vertical-align: baseline;
+  }
 }
 
 .play-track,

@@ -18,8 +18,13 @@
   width: 2rem;
   height: 2rem;
   margin-right: 0.5rem;
-  & img {
+  & svg {
     vertical-align: baseline;
+    & path,
+    rect,
+    circle {
+      transition: 0.2s linear;
+    }
   }
 }
 
@@ -39,6 +44,43 @@
     opacity: 1;
     width: 60%;
   }
+  &:hover .settings svg path,
+  &:hover .switch-acc svg rect,
+  &:hover .switch-acc svg path:last-child,
+  &:hover .activity svg circle {
+    fill: $green-main;
+  }
+  &:hover .activity svg .activity-stroke,
+  &:hover .exit svg path {
+    stroke: $green-main;
+  }
+
+  &:hover .arrow svg path {
+    stroke: $green-main;
+  }
+
+  &:hover .text {
+    color: $green-main;
+  }
+
+  & a,
+  span {
+    transition: 0.2s linear;
+    &:hover {
+      color: $green-main;
+    }
+  }
+}
+
+.settings,
+.switch-acc,
+.activity,
+.exit {
+  display: block;
+}
+
+.exit-link {
+  width: 80%;
 }
 
 .activity-item {
@@ -73,6 +115,9 @@
 
 .arrow {
   margin-left: 1rem;
+  & svg path {
+    transition: 0.2s linear;
+  }
 }
 
 .status-item {

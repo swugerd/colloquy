@@ -6,7 +6,7 @@ import gemIcon from '../../assets/img/icons/gem.svg';
 type AchievementProps = {
   id: number;
   type: 'easy' | 'standard' | 'hard' | 'secret';
-  img: string;
+  img: React.ReactNode;
   name: string;
   desc: string;
   myProgress: number;
@@ -54,7 +54,7 @@ const Achievement: React.FC<AchievementProps> = ({
             [s['hard-icon']]: type === 'hard',
             [s['secret-icon']]: type === 'secret',
           })}>
-          <img src={img} alt="achievement" />
+          {img}
         </div>
         <span className={s['name']}>{name}</span>
       </div>
@@ -86,7 +86,33 @@ const Achievement: React.FC<AchievementProps> = ({
         <div className={s['reward']}>
           <span>{reward}</span>
           <div className={s['reward-icon']}>
-            <img src={gemIcon} alt="gem" />
+            <svg
+              width="11"
+              height="15"
+              viewBox="0 0 11 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3 4.79997L5.1 3.59998L7.2 4.79997V10.2L5.1 11.4L3 10.2V4.79997Z"
+                fill="white"
+              />
+              <path
+                d="M9.90028 2.7L5.10029 0L0.300293 2.7L2.70029 4.2L5.10029 2.7L7.50029 4.2L9.90028 2.7Z"
+                fill="white"
+              />
+              <path
+                d="M9.90028 12.3L5.10029 15L0.300293 12.3L2.70029 10.8L5.10029 12.3L7.50029 10.8L9.90028 12.3Z"
+                fill="white"
+              />
+              <path
+                d="M7.80029 10.1999V4.79993L10.2003 3.29993V11.6999L7.80029 10.1999Z"
+                fill="white"
+              />
+              <path
+                d="M2.3999 10.1999V4.79993L-9.53674e-05 3.29993V11.6999L2.3999 10.1999Z"
+                fill="white"
+              />
+            </svg>
           </div>
         </div>
       </div>

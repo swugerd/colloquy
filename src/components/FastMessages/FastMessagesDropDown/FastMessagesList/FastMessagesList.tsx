@@ -32,7 +32,15 @@ const FastMessagesList: React.FC<FastMessagesListProps> = ({ onClick }) => {
       <div className={s['wrapper-top']}>
         <h6 className={s['wrapper-heading']}>Чаты</h6>
         <Link className={s.close} onClick={onClick} to="/">
-          <img src={close} alt="close" />
+          <svg
+            width="30"
+            height="30"
+            viewBox="0 0 30 30"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 2L2 28" stroke="white" strokeWidth="4" strokeLinecap="round" />
+            <path d="M2 2L28 28" stroke="white" strokeWidth="4" strokeLinecap="round" />
+          </svg>
         </Link>
       </div>
       <div className={`${s['wrapper-content']} ${chats.length ? '' : s['nothing']}`}>

@@ -21,7 +21,8 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 
 const App: React.FC = () => {
-  const isAuth = false;
+  // Переделать все иконки img в svg
+  const isAuth = true;
   return (
     <>
       {isAuth ? (

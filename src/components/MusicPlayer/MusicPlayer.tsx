@@ -17,7 +17,18 @@ const MusicPlayer: React.FC = () => {
     <div className={s['player']}>
       <div className={s['player-pannel']}>
         <button className={s['prev-track']}>
-          <img src={switchTrackIcon} alt="prev-track" />
+          <svg
+            width="25"
+            height="29"
+            viewBox="0 0 25 29"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M25 25.1356V3.86437C25 2.24185 23.1697 1.29459 21.8451 2.23154L6.80849 12.8672C5.68172 13.6641 5.68173 15.3359 6.80849 16.1328L21.8451 26.7685C23.1697 27.7054 25 26.7581 25 25.1356Z"
+              fill="white"
+            />
+            <path d="M2 3V26" stroke="white" strokeWidth="4" strokeLinecap="round" />
+          </svg>
         </button>
         <button className={s['play-track']}>
           <img src={playIcon} alt="play" />
@@ -26,7 +37,18 @@ const MusicPlayer: React.FC = () => {
                     <img src={pauseIcon} alt="pause" />
                 </button> */}
         <button className={s['next-track']}>
-          <img src={switchTrackIcon} alt="next-track" />
+          <svg
+            width="25"
+            height="29"
+            viewBox="0 0 25 29"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M25 25.1356V3.86437C25 2.24185 23.1697 1.29459 21.8451 2.23154L6.80849 12.8672C5.68172 13.6641 5.68173 15.3359 6.80849 16.1328L21.8451 26.7685C23.1697 27.7054 25 26.7581 25 25.1356Z"
+              fill="white"
+            />
+            <path d="M2 3V26" stroke="white" strokeWidth="4" strokeLinecap="round" />
+          </svg>
         </button>
       </div>
       <div className={s['track-wrapper']}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/img/header/logo.svg';
+import logo from '../../assets/img/icons/logo.svg';
 import music from '../../assets/img/header/music.svg';
 import shop from '../../assets/img/header/shop.svg';
 import patterns from '../../assets/img/header/patterns.svg';
@@ -22,7 +22,7 @@ import NotifyHeader from '../NotifyHeader/NotifyHeader';
 import ProfileHeader from '../ProfileHeader/ProfileHeader';
 
 const Header: React.FC = () => {
-  const isAuth = false;
+  const isAuth = true;
   return (
     <>
       {isAuth ? (

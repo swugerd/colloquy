@@ -78,7 +78,7 @@
   transform: translateY(-50%) rotate(45deg);
   border-radius: 0.5rem;
   background: $green-light;
-  img {
+  svg {
     width: 2rem;
     height: 2rem;
     transform: rotate(-45deg);
@@ -167,7 +167,8 @@
 .reward-icon {
   width: 1rem;
   height: 1.5rem;
-  & img {
+  margin-bottom: 0.2rem;
+  & svg {
     vertical-align: baseline;
   }
 }
