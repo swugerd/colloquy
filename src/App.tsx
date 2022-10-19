@@ -19,10 +19,17 @@ import Games from './pages/Games/Games';
 import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import { selectIsAuth } from './redux/auth/selector';
+import { useSelector } from 'react-redux';
+import Settings from './pages/Settings/Settings';
+import Notifies from './pages/Notifies/Notifies';
+import Achievements from './pages/Achievements/Achievements';
+import Shop from './pages/Shop/Shop';
+import Constructor from './pages/Constructor/Constructor';
 
 const App: React.FC = () => {
-  // Переделать все иконки img в svg
-  const isAuth = true;
+  const { isAuth } = useSelector(selectIsAuth);
+
   return (
     <>
       {isAuth ? (
@@ -41,18 +48,32 @@ const App: React.FC = () => {
             <Route path="/music" element={<Music />} />
             <Route path="/apps" element={<Apps />} />
             <Route path="/games" element={<Games />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/notifies" element={<Notifies />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/constructor" element={<Constructor />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>
       ) : (
         <>
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div
+            style={{
+              position: 'relative',
+              minHeight: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </>
       )}
     </>

@@ -44,18 +44,21 @@ const AccountCard: React.FC<AccountCardProps> = ({ id, name, img, className }) =
               fill="white"
             />
             <path
+              className={s['trash-path']}
               d="M7.55556 12.2593L8.48148 25.2222"
               stroke="black"
               strokeWidth="2"
               strokeLinecap="round"
             />
             <path
+              className={s['trash-path']}
               d="M12.1852 25.2222L12.1852 12.2593"
               stroke="black"
               strokeWidth="2"
               strokeLinecap="round"
             />
             <path
+              className={s['trash-path']}
               d="M16.8148 12.2593L15.8889 25.2222"
               stroke="black"
               strokeWidth="2"

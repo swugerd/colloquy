@@ -1,0 +1,17 @@
+@import '../../scss/variables.scss';
+
+.feed {
+  height: 200rem;
+  background: $sub-bg;
+  width: 75rem;
+  margin: 0 4.5rem;
+}
+
+.options {
+  height: 50rem;
+  background: $sub-bg;
+  width: 38rem;
+  position: sticky;
+  right: 0;
+  top: calc($header-height + 2rem);
+}

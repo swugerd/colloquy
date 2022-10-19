@@ -20,9 +20,11 @@ import PatternsHeader from '../PatternsHeader/PatternsHeader';
 import AchievesHeader from '../AchievesHeader/AchievesHeader';
 import NotifyHeader from '../NotifyHeader/NotifyHeader';
 import ProfileHeader from '../ProfileHeader/ProfileHeader';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/auth/selector';
 
 const Header: React.FC = () => {
-  const isAuth = true;
+  const { isAuth } = useSelector(selectIsAuth);
   return (
     <>
       {isAuth ? (
@@ -31,7 +33,7 @@ const Header: React.FC = () => {
             <div className={s['header__inner']}>
               <div className={s['header__left']}>
                 <div className={s['header__logo']}>
-                  <Link className={s['header__logo-link']} to="/">
+                  <Link className={s['header__logo-link']} to="/feed">
                     <img className={s['header__logo-img']} src={logo} alt="logo" />
                     <span className={s['header__logo-title']}>colloquy</span>
                   </Link>

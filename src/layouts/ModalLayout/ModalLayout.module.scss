@@ -9,6 +9,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,5 +35,21 @@
   & li > div {
     background: rgba(44, 44, 44, 0.5);
     margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-modal {
+    max-height: 60rem;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 0.3rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      border: 1rem solid rgba(0, 0, 0, 0);
+      background-color: $green-main;
+      border-radius: 1rem;
+    }
   }
 }

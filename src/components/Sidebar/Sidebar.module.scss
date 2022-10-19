@@ -4,10 +4,15 @@
   border-radius: 2rem;
   padding: 1.5rem;
   background: $sub-bg;
-  width: fit-content;
+  min-width: $sidebar-width;
   font-family: 'Montserrat';
   font-size: 1.8rem;
   font-weight: 600;
+  position: sticky;
+  left: 0;
+  height: fit-content;
+  top: calc($header-height + 2rem);
+  z-index: 99;
 }
 
 .nav-item {

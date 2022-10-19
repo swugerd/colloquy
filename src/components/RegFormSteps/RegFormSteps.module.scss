@@ -1,0 +1,15 @@
+@import '../../scss/variables.scss';
+
+.input-block {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  font-family: 'OpenSans';
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: $white;
+  margin-bottom: 1rem;
+  display: block;
+  width: fit-content;
+}

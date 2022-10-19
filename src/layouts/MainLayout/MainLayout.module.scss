@@ -4,3 +4,12 @@
   background: $bg-main;
   min-height: 100vh;
 }
+
+.main {
+  padding-top: calc($header-height + 2rem);
+  display: flex;
+}
+
+.content {
+  display: flex;
+}

@@ -18,6 +18,7 @@ type FastMessagesDropDownProps = {
 
 const FastMessagesDropDown = React.forwardRef<HTMLDivElement, FastMessagesDropDownProps>(
   ({ onClick }, ref) => {
+    const components = [<FastMessagesList onClick={onClick} />, <FastMessagesChat />];
     return (
       <div ref={ref} className={s.wrapper}>
         {

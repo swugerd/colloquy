@@ -11,6 +11,7 @@ type InputProps = {
   placeholder: string;
   type: string;
   inputType: 'send' | 'search' | 'default';
+  id?: string;
   classOptions?: {
     searchIcon: string;
     closeIcon: string;
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   type = 'default',
   inputType,
+  id,
   classOptions = {
     searchIcon: 'search-icon',
     closeIcon: 'close-icon',
@@ -60,6 +62,7 @@ const Input: React.FC<InputProps> = ({
             placeholder={placeholder}
             value={value}
             onChange={changeValueHandler}
+            id={id}
           />
         </div>
       )}
@@ -86,6 +89,7 @@ const Input: React.FC<InputProps> = ({
             value={value}
             onChange={changeValueHandler}
             ref={inputRef}
+            id={id}
           />
           <button className={`${s[closeIcon]} ${value && s.active}`} onClick={clearInputHandler}>
             <svg
@@ -137,6 +141,7 @@ const Input: React.FC<InputProps> = ({
             placeholder={placeholder}
             value={value}
             onChange={changeValueHandler}
+            id={id}
           />
           <button className={s[smileIcon]}>
             <svg

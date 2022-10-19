@@ -33,6 +33,22 @@
   }
 }
 
+.auth-input {
+  background: $bg-main;
+  padding: 1.2rem;
+  color: $white;
+  font-family: 'OpenSans';
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
 .search-icon {
   position: absolute;
   top: 50%;

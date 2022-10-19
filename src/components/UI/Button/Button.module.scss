@@ -12,9 +12,31 @@
   text-align: center;
   font-size: 2.4rem;
   font-weight: 600;
+  font-family: 'Montserrat';
   & + & {
     margin-left: 3rem;
   }
+}
+
+.log-btn {
+  padding: 0.8rem;
+  width: 15rem;
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 600;
+  font-family: 'Montserrat';
+  margin: 0 auto;
+}
+
+.reg-btn {
+  padding: 0.8rem;
+  width: 22rem;
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 600;
+  font-family: 'Montserrat';
+  margin: 0 auto;
+  color: $white;
 }
 
 @media (max-width: 1150px) {

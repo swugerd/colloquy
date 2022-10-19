@@ -22,7 +22,7 @@ const PatternsDropDown: React.FC = () => {
       title={'Шаблоны'}
       myCount={3}
       allCount={3}
-      link={'patterns'}
+      link={'constructor'}
       linkText={'Открыть конструктор'}>
       <h6 className={s['heading']}>Все шаблоны</h6>
       {patterns.length ? (

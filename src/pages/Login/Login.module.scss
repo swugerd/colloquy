@@ -1,0 +1,45 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login {
+  padding: 2rem;
+  background: $elem;
+  border-radius: 2rem;
+  margin-bottom: 3rem;
+  width: 40rem;
+}
+
+.title {
+  text-align: center;
+  font-family: 'Montserrat';
+  color: $white;
+  margin-bottom: 1.5rem;
+  font-size: 3.2rem;
+  font-weight: 500;
+}
+
+.input-block {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  font-family: 'OpenSans';
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: $white;
+  margin-bottom: 1.5rem;
+  display: block;
+  width: fit-content;
+}
+
+.link {
+  font-family: 'Montserrat';
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: $green-main;
+}

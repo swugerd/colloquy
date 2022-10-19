@@ -3,10 +3,14 @@
 
 .header {
   background: $sub-bg;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 100;
   &__inner {
     display: flex;
     align-items: center;
-    height: 8rem;
+    height: $header-height;
   }
   &__left {
     display: flex;

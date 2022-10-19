@@ -12,8 +12,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <div className={`${s['wrapper']}`}>
       <Header />
       <div className="container">
-        <Sidebar />
-        <div className={s['content']}>{children}</div>
+        <div className={s['content']}>
+          <Sidebar />
+          <main className={s['main']}>{children}</main>
+        </div>
       </div>
     </div>
   );

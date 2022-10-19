@@ -1,8 +1,14 @@
 import React from 'react';
+import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Profile.module.scss';
 
 const Profile: React.FC = () => {
-  return <div>Profile</div>;
+  useSetPageTitle('Профиль');
+  return (
+    <>
+      <div className={s['profile']}>profile</div>
+    </>
+  );
 };
 
 export default Profile;

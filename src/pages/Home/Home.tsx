@@ -12,23 +12,23 @@ const Home: React.FC = () => {
   const accounts: { id: number; img: string; name: string }[] = [
     { id: 1, img, name: 'Пашок Кубыркин' },
     { id: 2, img, name: 'Овыфлвфы врфыоврыфол' },
-    { id: 3, img, name: 'Жесткий Пашок' },
+    { id: 3, img, name: 'да нет' },
     { id: 4, img, name: 'Жесткий Пашок' },
     { id: 5, img, name: 'Жесткий Пашок' },
-    { id: 6, img, name: 'Жесткий Пашок' },
+    // { id: 6, img, name: 'Жесткий Пашок' },
   ];
   useSetPageTitle('Главная');
 
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   return (
-    <div className={s['wrapper']}>
+    <>
       <div className={`container ${s['wrapper-inner']}`}>
         <div className={s['main-screen']}>
           <h2 className={s['title']}>Что вы хотите сделать?</h2>
           <div className={s['row']}>
-            <Button className={'auth-btn'} text={'Войти'} link={'login'} />
-            <Button className={'auth-btn'} text={'Зарегистрироваться'} link={'register'} />
+            <Button className={'auth-btn'} text={'Войти'} link={'/login'} />
+            <Button className={'auth-btn'} text={'Зарегистрироваться'} link={'/register'} />
           </div>
           {accounts.length ? (
             ''
@@ -81,7 +81,7 @@ const Home: React.FC = () => {
           </ul>
         </ModalLayout>
       )}
-    </div>
+    </>
   );
 };
 

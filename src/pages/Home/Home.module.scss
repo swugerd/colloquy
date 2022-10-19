@@ -1,16 +1,11 @@
 @import '../../scss/variables.scss';
 
-.wrapper {
-  height: 89.3vh;
-  position: relative;
-}
-
 .wrapper-inner {
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-direction: row-reverse;
-  height: inherit;
+  min-height: inherit;
   font-family: 'Montserrat';
 }
 
@@ -62,7 +57,7 @@
 .modal-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: auto;
   grid-gap: 3rem;
   margin-bottom: 2rem;
 }
@@ -92,6 +87,11 @@
   }
   .more-accs {
     margin: 2rem 0 0 0;
+  }
+  .modal-list {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    grid-gap: 2rem;
   }
 }
 

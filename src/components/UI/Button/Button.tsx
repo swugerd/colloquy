@@ -6,17 +6,20 @@ type ButtonProps = {
   className: string;
   text: string;
   link?: string;
+  onClick?: () => void;
 };
 
-const Button: React.FC<ButtonProps> = ({ className, text, link }) => {
+const Button: React.FC<ButtonProps> = ({ className, text, link, onClick }) => {
   return (
     <>
       {link ? (
-        <Link className={`${s['button']} ${s[className]}`} to={`/${link}`}>
+        <Link className={`${s['button']} ${s[className]}`} to={link} onClick={onClick}>
           {text}
         </Link>
       ) : (
-        <button className={`${s['button']} ${s[className]}`}>{text}</button>
+        <button className={`${s['button']} ${s[className]}`} onClick={onClick}>
+          {text}
+        </button>
       )}
     </>
   );
