@@ -16,7 +16,8 @@ const Register: React.FC = () => {
   const dispatch = useDispatch();
   const [index, setIndex] = useState(0);
   const steps = [<FirstStep />, <SecondStep />, <ThirdStep />];
-  const titles = ['Начёнм с основ', 'Расскажите о себе', 'Загрузим аватар'];
+  const titles = ['Начнём с основ', 'Расскажите о себе', 'Загрузим аватар'];
+  const progress = [33, 66, 100];
   const regHandler = () => {
     setIndex(index + 1);
     if (index === 2) dispatch(setIsAuth(true));
@@ -25,9 +26,11 @@ const Register: React.FC = () => {
     <div className={s['wrapper']}>
       <div className={s['login']}>
         <h2 className={s['title']}>Регистрация</h2>
-        <div className={s['indicator-block']}>
+        <div className={`${s['indicator-block']} ${index === 2 ? s['margin'] : ''}`}>
           <h5 className={s['indicator-title']}>{titles[index]}</h5>
-          <div className={s['indicator']}></div>
+          <div className={s['indicator']}>
+            <div className={s['indicator-complete']} style={{ width: `${progress[index]}%` }}></div>
+          </div>
         </div>
         {steps[index]}
         <Button

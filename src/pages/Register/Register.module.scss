@@ -64,3 +64,45 @@
   border-radius: 1rem;
   margin: 0 auto;
 }
+
+.indicator-complete {
+  background: $green-main;
+  height: inherit;
+  border-radius: inherit;
+  transition: 0.2s linear;
+}
+
+.back {
+  font-family: 'Montserrat';
+  font-size: 2.4rem;
+  color: $green-main;
+  font-weight: 600;
+  margin: 1.5rem auto 0;
+}
+
+.margin {
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 500px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .indicator-title {
+    font-size: 1.8rem;
+  }
+
+  .link {
+    font-size: 1.8rem;
+  }
+
+  .login {
+    margin-bottom: 2rem;
+    width: 30rem;
+  }
+
+  .back {
+    font-size: 1.6rem;
+  }
+}

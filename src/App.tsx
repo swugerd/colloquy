@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/Header/Header';
 import Feed from './pages/Feed/Feed';
 import Home from './pages/Home/Home';
 import './index.scss';
 import MainLayout from './layouts/MainLayout/MainLayout';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Profile from './pages/Profile/Profile';
 import Friends from './pages/Friends/Friends';
 import Groups from './pages/Groups/Groups';
@@ -29,13 +29,11 @@ import Constructor from './pages/Constructor/Constructor';
 
 const App: React.FC = () => {
   const { isAuth } = useSelector(selectIsAuth);
-
   return (
     <>
       {isAuth ? (
         <MainLayout>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/friends" element={<Friends />} />
@@ -66,6 +64,8 @@ const App: React.FC = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              paddingTop: '10rem',
+              paddingBottom: '1rem',
             }}>
             <Routes>
               <Route path="/" element={<Home />} />

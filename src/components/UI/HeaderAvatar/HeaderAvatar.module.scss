@@ -71,3 +71,12 @@
   max-height: 3rem;
   margin-right: 1rem;
 }
+
+.post {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
+  & div img {
+    object-fit: cover;
+  }
+}

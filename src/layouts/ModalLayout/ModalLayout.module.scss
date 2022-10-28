@@ -42,6 +42,7 @@
   .accounts-modal {
     max-height: 60rem;
     overflow-y: scroll;
+    padding: 2rem 1rem;
     &::-webkit-scrollbar {
       background: transparent;
       width: 0.3rem;

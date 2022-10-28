@@ -1,17 +1,63 @@
 @import '../../scss/variables.scss';
 
 .feed {
-  height: 200rem;
   background: $sub-bg;
   width: 75rem;
   margin: 0 4.5rem;
+  border-radius: 2rem;
+  padding: 1.5rem;
+}
+
+.side-content {
+  top: calc($header-height + 2rem);
+}
+
+.stories {
+  height: 38rem;
+  background: $sub-bg;
+  width: 38rem;
+  margin-bottom: 2rem;
+  border-radius: 2rem;
 }
 
 .options {
   height: 50rem;
   background: $sub-bg;
   width: 38rem;
-  position: sticky;
-  right: 0;
-  top: calc($header-height + 2rem);
+  border-radius: 2rem;
+}
+
+.hidden {
+  margin: 1.5rem 0;
+  font-family: 'OpenSans';
+}
+
+.img {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin: 1.5rem auto 1.5rem;
+  & svg path {
+    fill: $green-main;
+  }
+  & svg path:first-child {
+    stroke: $green-main;
+  }
+}
+
+.text {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: $white;
+  & span {
+    color: $green-main;
+  }
+}
+
+.return {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 auto;
+  color: $green-main;
 }

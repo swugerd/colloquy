@@ -2,6 +2,7 @@ import React from 'react';
 import s from './MusicTrack.module.scss';
 import ebalo from '../../assets/uploads/test/image2.png';
 import { Link } from 'react-router-dom';
+import formatTime from '../../utils/formatTime';
 
 type MusicTrackProps = {
   img: string;
@@ -12,8 +13,6 @@ type MusicTrackProps = {
 };
 
 const MusicTrack: React.FC<MusicTrackProps> = ({ img, title, author, time, isRecs }) => {
-  const timeString = new Date(time * 1000).toISOString().slice(14, 19);
-
   return (
     <div className={`${s['wrapper']} ${isRecs && s['recs-wrapper']}`}>
       <div className={s['track-img']}>
@@ -27,7 +26,7 @@ const MusicTrack: React.FC<MusicTrackProps> = ({ img, title, author, time, isRec
         <Link className={isRecs ? s['recs-author'] : s['track-author']} to="/" title={author}>
           {author}
         </Link>
-        <span className={`${s['track-time']} ${isRecs && s['recs-time']}`}>{timeString}</span>
+        <span className={`${s['track-time']} ${isRecs && s['recs-time']}`}>{formatTime(time)}</span>
       </div>
       <div className={isRecs ? s['recs-actions'] : s['track-actions']}>
         <button className={isRecs ? s['recs-forward'] : s['forward']}>

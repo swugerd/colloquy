@@ -43,3 +43,22 @@
   font-weight: 500;
   color: $green-main;
 }
+
+@media (max-width: 500px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .label {
+    font-size: 1.4rem;
+  }
+
+  .link {
+    font-size: 1.8rem;
+  }
+
+  .login {
+    margin-bottom: 2rem;
+    width: 30rem;
+  }
+}

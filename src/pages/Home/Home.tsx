@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../../components/UI/Button/Button';
 import s from './Home.module.scss';
 import img from '../../assets/uploads/test/image.png';
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
     { id: 5, img, name: 'Жесткий Пашок' },
     // { id: 6, img, name: 'Жесткий Пашок' },
   ];
-  useSetPageTitle('Главная');
+  useSetPageTitle('Главная - colloquy');
 
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);

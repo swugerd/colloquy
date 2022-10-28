@@ -1,0 +1,405 @@
+@import '../../scss/variables.scss';
+
+.post {
+  padding: 1rem;
+  background: $elem;
+  border-radius: 1rem;
+  font-family: 'OpenSans';
+  &:not(:first-child) {
+    margin: 1.5rem 0 1.5rem;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.hide {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.user-name {
+  font-family: 'Montserrat';
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: $white;
+}
+
+.post-date {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $semi-white;
+}
+
+.content {
+  margin-bottom: 1.5rem;
+}
+
+.post-text {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: $white;
+  margin-bottom: 1rem;
+}
+
+.post-images {
+  display: grid;
+  grid-gap: 2rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid $sub-bg;
+  border-radius: 0.2rem;
+  &-one {
+    grid-template-rows: 34rem;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'first';
+  }
+  &-two {
+    grid-template-rows: 34rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'first second';
+  }
+  &-three {
+    grid-template-rows: repeat(2, 16rem);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'first second'
+      'first third';
+  }
+  &-four {
+    grid-template-rows: repeat(2, 16rem);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      'first second'
+      'third fourth';
+  }
+  &-five {
+    grid-template-rows: repeat(3, 16rem);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      'first third'
+      'first fourth'
+      'second fifth';
+  }
+  &-six {
+    grid-template-rows: 34rem 16rem;
+    grid-template-columns: repeat(4, 16rem);
+    grid-template-areas:
+      'first first second second'
+      'third fourth fifth sixth';
+  }
+}
+
+.post-image {
+  img {
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+}
+
+.post-video {
+  video {
+    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+    background: black;
+    object-fit: cover;
+    &:fullscreen {
+      object-fit: contain;
+    }
+  }
+}
+
+.post-videos {
+  display: grid;
+  grid-gap: 2rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid $sub-bg;
+  border-radius: 0.2rem;
+  &-one {
+    grid-template-rows: 34rem;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'first';
+  }
+  &-two {
+    grid-template-rows: 34rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'first second';
+  }
+  &-three {
+    grid-template-rows: repeat(2, 16rem);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'first second'
+      'first third';
+  }
+}
+
+.grid-area {
+  &-0 {
+    grid-area: first;
+  }
+  &-1 {
+    grid-area: second;
+  }
+  &-2 {
+    grid-area: third;
+  }
+  &-3 {
+    grid-area: fourth;
+  }
+  &-4 {
+    grid-area: fifth;
+  }
+  &-5 {
+    grid-area: sixth;
+  }
+}
+
+.last-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.last-circle::before {
+    border-radius: 50%;
+  }
+  &.post-voice::before {
+    &::before {
+      border-radius: 2rem;
+    }
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1rem;
+    background: rgb(0, 0, 0, 0.8);
+  }
+}
+
+.last-voice {
+  margin-top: 2rem;
+  & span {
+    font-size: 1.6rem;
+  }
+}
+
+.last-circle {
+  width: 12.5rem !important;
+  height: 12.5rem !important;
+  margin-left: 3rem;
+  & span {
+    font-size: 2.4rem;
+  }
+}
+
+.more {
+  color: $white;
+  z-index: 2;
+  font-size: 4rem;
+  font-weight: 500;
+  position: absolute;
+}
+
+.media-wrapper {
+  display: flex;
+  align-items: center;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid $sub-bg;
+  border-radius: 0.2rem;
+}
+
+.post-circles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35rem;
+}
+
+.circles-separator {
+  padding-right: 1.5rem;
+  border-right: 1px solid $sub-bg;
+}
+
+.post-voices {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 35rem;
+}
+
+.post-voice.last-media::before {
+  border-radius: 2rem;
+}
+
+.post-circle {
+  width: 17.5rem;
+  height: 17.5rem;
+  &.last-media::before {
+    border-radius: 50%;
+  }
+  & video {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.post-only-media {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid $sub-bg;
+  border-radius: 0.2rem;
+  & .post-voice.last-media span {
+    font-size: 2rem;
+  }
+}
+
+.post-track {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.play-btn {
+  margin-right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.track-name {
+  color: $white;
+  max-width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-separator {
+  color: $white;
+  margin: 0 0.5rem;
+}
+
+.track-author {
+  color: $green-main;
+  margin-right: 1rem;
+  max-width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-time {
+  color: $semi-white;
+}
+
+.more-btn {
+  display: flex;
+  align-items: center;
+  & svg {
+    width: 3.5rem;
+    height: 1rem;
+    & circle {
+      fill: $semi-white;
+    }
+  }
+}
+
+.more-text {
+  color: $semi-white;
+  margin-right: 1.5rem;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions-info {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-left: 1.5rem;
+  }
+  &:last-child {
+    margin-left: auto;
+  }
+  & svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  & span {
+    margin-left: 0.5rem;
+    font-size: 1.6rem;
+    color: $semi-white;
+    font-weight: 500px;
+  }
+}
+
+.likes {
+  & svg path,
+  & span {
+    transition: 0.2s linear;
+  }
+  & svg path {
+    fill: $semi-white;
+  }
+  &.active svg path {
+    fill: $green-main;
+  }
+  &.active span {
+    color: $green-main;
+  }
+}
+
+.forwards {
+  & svg path {
+    fill: $semi-white;
+  }
+}
+
+.comments {
+  & svg path {
+    stroke: $semi-white;
+  }
+}
+
+.views {
+  & svg path,
+  & svg circle {
+    fill: $semi-white;
+  }
+}

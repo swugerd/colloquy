@@ -4,6 +4,7 @@
   border-radius: 1rem;
   background: $green-main;
   display: block;
+  font-family: 'Montserrat';
 }
 
 .auth-btn {
@@ -12,7 +13,6 @@
   text-align: center;
   font-size: 2.4rem;
   font-weight: 600;
-  font-family: 'Montserrat';
   & + & {
     margin-left: 3rem;
   }
@@ -24,7 +24,6 @@
   text-align: center;
   font-size: 2.4rem;
   font-weight: 600;
-  font-family: 'Montserrat';
   margin: 0 auto;
 }
 
@@ -34,15 +33,36 @@
   text-align: center;
   font-size: 2.4rem;
   font-weight: 600;
-  font-family: 'Montserrat';
   margin: 0 auto;
   color: $white;
+}
+
+.not-found {
+  padding: 1rem 1.5rem;
+  width: 18rem;
+  font-size: 2.4rem;
+  text-align: center;
+  font-weight: 600;
 }
 
 @media (max-width: 1150px) {
   .auth-btn {
     font-size: 1.8rem;
     width: 22rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .not-found {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .not-found {
+    width: 12rem;
+    font-size: 1.6rem;
+    padding: 0.8rem 1.3rem;
   }
 }
 
@@ -53,5 +73,13 @@
     & + & {
       margin: 2rem 0 0 0;
     }
+  }
+  .log-btn {
+    font-size: 1.6rem;
+    width: 10rem;
+  }
+  .reg-btn {
+    font-size: 1.6rem;
+    width: 15rem;
   }
 }

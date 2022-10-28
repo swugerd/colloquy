@@ -13,3 +13,141 @@
   display: block;
   width: fit-content;
 }
+
+.required {
+  color: $green-main;
+}
+
+.gender {
+  height: 4rem;
+  width: 7.5rem;
+  border-radius: 1rem;
+  background: $bg-main;
+}
+
+.radio-btn {
+  position: relative;
+  & + & {
+    margin-left: 1rem;
+  }
+}
+
+.inp-disabled {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7.5rem;
+  height: 4rem;
+  cursor: pointer;
+  &:checked ~ .custom-btn svg path:not(:first-child) {
+    stroke: $green-main;
+  }
+  &:checked ~ .custom-btn svg circle,
+  &:checked ~ .custom-btn svg .path {
+    fill: $green-main;
+  }
+}
+
+.custom-btn {
+  border-radius: 1rem;
+  background-color: $bg-main;
+  width: 7.5rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-block {
+  margin-bottom: 1.5rem;
+}
+
+.file {
+  cursor: pointer;
+}
+
+.uploaded-photo {
+  width: 25rem;
+  height: 25rem;
+  margin: 0 auto 1rem;
+  background: $green-main;
+  border: 0.5rem solid $white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    border-radius: inherit;
+    object-fit: cover;
+  }
+}
+
+.photo {
+  width: 25rem;
+  height: 25rem;
+  margin: 0 auto 1rem;
+  background: $green-main;
+  border: 0.5rem solid $white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
+}
+
+.text {
+  font-family: 'Montserrat';
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: $white;
+  text-align: center;
+  & span {
+    color: $green-main;
+  }
+}
+
+@media (max-width: 500px) {
+  .label {
+    font-size: 1.4rem;
+  }
+  .custom-btn {
+    width: 6rem;
+    height: 4rem;
+    & svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  .inp-disabled {
+    width: 6rem;
+    height: 4rem;
+  }
+  .photo,
+  .uploaded-photo {
+    width: 12.5rem;
+    height: 12.5rem;
+  }
+  .text {
+    font-size: 1.2rem;
+  }
+}
