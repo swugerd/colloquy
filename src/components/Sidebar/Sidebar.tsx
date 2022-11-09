@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import useWindowSize from '../../hooks/useWindowResize';
 import s from './Sidebar.module.scss';
 
 const Sidebar: React.FC = () => {
+  const { width } = useWindowSize();
   const links = [
     {
       id: 1,
@@ -308,7 +310,7 @@ const Sidebar: React.FC = () => {
       path: 'games',
     },
   ];
-  return (
+  return width > 1150 ? (
     <aside className={s['sidebar']}>
       <nav className={s['nav']}>
         <ul className={s['nav-list']}>
@@ -327,6 +329,8 @@ const Sidebar: React.FC = () => {
         </ul>
       </nav>
     </aside>
+  ) : (
+    <></>
   );
 };
 

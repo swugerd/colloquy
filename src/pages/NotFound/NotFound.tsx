@@ -21,7 +21,7 @@ const NotFound: React.FC = () => {
         </svg>
       </div>
       <div className={s['block']}>
-        <h1 className={s['title']}>404</h1>
+        <h2 className={s['title']}>404</h2>
         <h2 className={s['sub-title']}>Страница не найдена!</h2>
         <p className={s['text']}>
           Этот адрес ведет на несуществующую страницу, проверьте, возможно вы допустили ошибку в

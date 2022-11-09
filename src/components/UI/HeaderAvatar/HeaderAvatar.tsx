@@ -3,11 +3,12 @@ import OnlineIndicator from '../OnlineIndicator/OnlineIndicator';
 import s from './HeaderAvatar.module.scss';
 
 type HeaderAvatarProps = {
-  hasDelete: boolean;
+  hasDelete?: boolean;
   className: string;
   img: string;
   title: string;
-  indicatorClass?: string;
+  indicatorClass?: ['sm-indicator' | 'md-indicator', 'border-elem' | 'border-sub-bg'];
+  onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline';
 };
 
 const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
@@ -16,13 +17,14 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   title,
   hasDelete,
   indicatorClass,
+  onlineType,
 }) => {
   return (
     <div className={s[className]} title={title}>
       <div className={s['image-block']}>
         <img src={img} alt="profile" />
         {indicatorClass && (
-          <OnlineIndicator type="pc-online" cName={indicatorClass} isMobile={false} />
+          <OnlineIndicator onlineType={onlineType} cName={indicatorClass} isMobile={false} />
         )}
       </div>
       {hasDelete && (

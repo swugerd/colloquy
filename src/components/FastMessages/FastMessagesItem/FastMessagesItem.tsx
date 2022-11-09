@@ -16,11 +16,11 @@ const FastMessagesItem: React.FC<FastMessagesItemProps> = ({ id, name, img, onCl
   return (
     <Link className={s['chat']} to={`/fms/${id}`} title={name}>
       <HeaderAvatar
-        hasDelete={false}
-        className={'chat-image'}
+        className="chat-image"
         img={ebalo}
-        title={name}
-        indicatorClass="fm-list-indicator"
+        title={'image'}
+        indicatorClass={['sm-indicator', 'border-sub-bg']}
+        onlineType="pc-offline"
       />
       <span className={s['chat-name']}>{name}</span>
     </Link>

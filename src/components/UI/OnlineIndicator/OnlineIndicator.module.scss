@@ -13,10 +13,22 @@
   right: -0.2rem;
 }
 
-.header-indicator {
+.sm-indicator {
   width: 1.3rem;
   height: 1.3rem;
+}
+
+.md-indicator {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.border-sub-bg {
   border: 3px solid $sub-bg;
+}
+
+.border-elem {
+  border: 3px solid $elem;
 }
 
 .pc-online {
@@ -40,20 +52,14 @@
   height: 1.7rem;
 }
 
-.border-elem {
-  width: 1.3rem;
-  height: 1.3rem;
-  border: 3px solid $elem;
-}
+// .fm-indicator {
+//   width: 1.2rem;
+//   height: 1.2rem;
+//   border: 3px solid $sub-bg;
+// }
 
-.fm-indicator {
-  width: 1.2rem;
-  height: 1.2rem;
-  border: 3px solid $sub-bg;
-}
-
-.fm-list-indicator {
-  width: 1.3rem;
-  height: 1.3rem;
-  border: 3px solid $sub-bg;
-}
+// .fm-list-indicator {
+//   width: 1.3rem;
+//   height: 1.3rem;
+//   border: 3px solid $sub-bg;
+// }

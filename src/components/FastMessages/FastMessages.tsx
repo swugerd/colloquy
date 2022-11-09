@@ -15,8 +15,8 @@ const FastMessages: React.FC = () => {
     name: string;
     img: string;
   }[] = [
-    // { id: 1, name: 'Олег', img: '../../assets/img/header/ebalo.png' },
-    // { id: 2, name: 'Паша', img: '../../assets/img/header/ebalo.png' },
+    { id: 1, name: 'Олег', img: '../../assets/img/header/ebalo.png' },
+    { id: 2, name: 'Паша', img: '../../assets/img/header/ebalo.png' },
     { id: 3, name: 'Дима', img: '../../assets/img/header/ebalo.png' },
   ];
 
@@ -46,16 +46,19 @@ const FastMessages: React.FC = () => {
     <>
       {chats.length ? (
         <div className={sFM['fast-messages']} ref={fMsRef}>
-          {chats.map(({ id, name, img }) => (
-            <HeaderAvatar
-              hasDelete={true}
-              className={'fast-message'}
-              key={id}
-              img={ebalo}
-              indicatorClass={'border-elem'}
-              title={name}
-            />
-          ))}
+          {chats.map(({ id, name, img }) => {
+            return (
+              <HeaderAvatar
+                hasDelete={true}
+                className={'fast-message'}
+                key={id}
+                img={ebalo}
+                indicatorClass={['sm-indicator', 'border-elem']}
+                title={name}
+                onlineType={'pc-afk'}
+              />
+            );
+          })}
           <FastMessagesBtn
             className={s['header__messages-btn--wrapped']}
             onClick={openDropDownHandler}

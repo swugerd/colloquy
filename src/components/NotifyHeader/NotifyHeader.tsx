@@ -29,7 +29,7 @@ const NotifyHeader: React.FC = () => {
               strokeWidth="2"
             />
           </svg>
-          {notifies > 0 && <Notify cName="header-notify" count={notifies} hasImage={false} />}
+          {notifies > 0 && <Notify cName="header" count={notifies} hasImage={false} />}
         </div>
       </button>
       {isOpen && <NotifyDropDown />}

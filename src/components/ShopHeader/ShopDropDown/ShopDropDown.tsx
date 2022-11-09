@@ -6,6 +6,7 @@ import ebalo from '../../../assets/uploads/test/image2.png';
 import smile from '../../../assets/uploads/test/smile.png';
 import classNames from 'classnames';
 import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
+import RadioButton from '../../UI/RadioButton/RadioButton';
 
 const ShopDropDown: React.FC = () => {
   const categories = [
@@ -103,28 +104,17 @@ const ShopDropDown: React.FC = () => {
                           [s['img-very-small']]: type === 'emoji',
                         })}>
                         {type !== 'emoji' && (
-                          <div
+                          <RadioButton
                             className={classNames({
-                              [s['radio-btn']]: true,
-                              [s['radio-btn-small']]: type === 'sounds',
-                              [s['radio-btn-big']]: type === 'bg',
-                            })}>
-                            <input
-                              type="radio"
-                              name={type}
-                              className={s['inp-disabled']}
-                              checked={
-                                selectedIndex === index && categoryIndex === selectedCategoryIndex
-                              }
-                              onChange={() => setSelectedIndex(index)}
-                            />
-                            <div
-                              className={classNames({
-                                [s['custom-btn']]: true,
-                                [s['custom-btn-small']]: type === 'sounds',
-                                [s['custom-btn-big']]: type === 'bg',
-                              })}></div>
-                          </div>
+                              'radio-btn-small': type === 'sounds',
+                              'radio-btn-big': type === 'bg',
+                            })}
+                            checked={
+                              selectedIndex === index && categoryIndex === selectedCategoryIndex
+                            }
+                            onChange={() => setSelectedIndex(index)}
+                            name={'product'}
+                          />
                         )}
                         <img src={img} alt="product" />
                       </div>

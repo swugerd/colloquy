@@ -1,0 +1,29 @@
+@import '../../scss/variables.scss';
+
+.story {
+  max-width: 14rem;
+  height: 19rem;
+  border-radius: 1rem;
+  border: 4px solid $green-main;
+  position: relative;
+  cursor: pointer;
+  &:hover .user {
+    opacity: 1;
+  }
+}
+
+.user {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0.5rem;
+  opacity: 0;
+  transition: 0.2s linear;
+}
+
+.user-name {
+  font-family: 'Montserrat';
+  font-size: 1.6rem;
+  color: $white;
+  font-weight: 500;
+}

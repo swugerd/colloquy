@@ -3,6 +3,7 @@ import s from './Pattern.module.scss';
 import trashIcon from '../../assets/img/icons/trash.svg';
 import settingsIcon from '../../assets/img/icons/settings.svg';
 import editIcon from '../../assets/img/icons/edit.svg';
+import RadioButton from '../UI/RadioButton/RadioButton';
 
 type PatternProps = {
   id: number;
@@ -15,11 +16,6 @@ const Pattern: React.FC<PatternProps> = ({ id, name, hasRadio, index }) => {
   // Переделать верстку под каждый шаблон индивидуально
   // Нарисовать свгшки
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const indexHandler = (index: number) => {
-    setSelectedIndex(index);
-    console.log(index);
-  };
 
   return (
     <div className={s['pattern']}>
@@ -134,16 +130,11 @@ const Pattern: React.FC<PatternProps> = ({ id, name, hasRadio, index }) => {
           </svg>
         </button>
         {hasRadio && (
-          <div className={s['radio-btn']}>
-            <input
-              type="radio"
-              name="pattern"
-              className={`${s['inp-disabled']}`}
-              checked={selectedIndex === index}
-              onChange={() => indexHandler(index)}
-            />
-            <div className={`${s['custom-btn']} ${s['custom-btn-small']}`}></div>
-          </div>
+          <RadioButton
+            checked={selectedIndex === index}
+            onChange={() => setSelectedIndex(index)}
+            name={'pattern'}
+          />
         )}
       </div>
       <div className={s['info']}>

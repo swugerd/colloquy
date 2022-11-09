@@ -58,7 +58,7 @@ const AchievesHeader: React.FC = () => {
           </svg>
 
           {achieveIndicator > 0 && (
-            <Notify cName="header-notify" count={achieveIndicator} hasImage={false} />
+            <Notify cName="header" count={achieveIndicator} hasImage={false} />
           )}
         </div>
       </button>

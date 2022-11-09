@@ -12,4 +12,15 @@
 
 .content {
   display: flex;
+  min-height: 100vh;
+}
+
+@media (max-width: 1150px) {
+  .main {
+    flex-direction: column-reverse;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: $header-height;
+    margin-top: 2rem;
+  }
 }

@@ -16,11 +16,11 @@ const ProfileHeader: React.FC = () => {
       className={`${s['header__profile-info']} ${s['header-hover']} ${isOpen && s['active']}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
         <HeaderAvatar
-          hasDelete={false}
           className={'header__profile-image'}
           img={ebalo}
-          indicatorClass={'header-indicator'}
+          indicatorClass={['sm-indicator', 'border-sub-bg']}
           title="Олег"
+          onlineType="pc-online"
         />
         <span className={s['header__profile-name']} title="Максимилиан">
           Максимилиан

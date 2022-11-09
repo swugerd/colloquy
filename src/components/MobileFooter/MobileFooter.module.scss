@@ -1,0 +1,44 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+  position: fixed;
+  z-index: 300;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $sub-bg;
+  height: 7.5rem;
+}
+
+.wrapper-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  height: 100%;
+}
+
+.button {
+  width: 7.5rem;
+  height: 7.5rem;
+  padding: 1rem;
+  border-radius: 50%;
+  background: $green-main;
+  border: 4px solid $green-light;
+  position: absolute;
+  top: -3rem;
+}
+
+.link {
+  height: 4rem;
+  width: 4rem;
+  &.active .feed rect:first-child {
+    stroke: $green-main;
+  }
+  &.active .feed rect:not(:first-child),
+  &.active .messages path,
+  &.active .groups > *,
+  &.active .music > * {
+    fill: $green-main;
+  }
+}

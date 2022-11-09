@@ -22,44 +22,51 @@ import NotifyHeader from '../NotifyHeader/NotifyHeader';
 import ProfileHeader from '../ProfileHeader/ProfileHeader';
 import { useSelector } from 'react-redux';
 import { selectIsAuth } from '../../redux/auth/selector';
+import useWindowSize from '../../hooks/useWindowResize';
 
 const Header: React.FC = () => {
   const { isAuth } = useSelector(selectIsAuth);
+  const { width } = useWindowSize();
+
   return (
     <>
       {isAuth ? (
-        <header className={s['header']}>
-          <div className="container">
-            <div className={s['header__inner']}>
-              <div className={s['header__left']}>
-                <div className={s['header__logo']}>
-                  <Link className={s['header__logo-link']} to="/feed">
-                    <img className={s['header__logo-img']} src={logo} alt="logo" />
-                    <span className={s['header__logo-title']}>colloquy</span>
-                  </Link>
+        width > 1150 ? (
+          <header className={s['header']}>
+            <div className="container">
+              <div className={s['header__inner']}>
+                <div className={s['header__left']}>
+                  <div className={s['header__logo']}>
+                    <Link className={s['header__logo-link']} to="/feed">
+                      <img className={s['header__logo-img']} src={logo} alt="logo" />
+                      <span className={s['header__logo-title']}>colloquy</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className={s['header__right']}>
-                <div className={s['header__act']}>
-                  <FastMessages />
-                  <MusicHeader />
-                </div>
-                <div className={s['header__actions']}>
-                  <ShopHeader />
-                  <PatternsHeader />
-                  <AchievesHeader />
-                </div>
-                <div className={s['header__profile']}>
-                  {/* <button className={s['header__profile-theme']}>
+                <div className={s['header__right']}>
+                  <div className={s['header__act']}>
+                    <FastMessages />
+                    <MusicHeader />
+                  </div>
+                  <div className={s['header__actions']}>
+                    <ShopHeader />
+                    <PatternsHeader />
+                    <AchievesHeader />
+                  </div>
+                  <div className={s['header__profile']}>
+                    {/* <button className={s['header__profile-theme']}>
                 <img className={s['header-icon']} src={theme} alt="theme" />
               </button> */}
-                  <NotifyHeader />
-                  <ProfileHeader />
+                    <NotifyHeader />
+                    <ProfileHeader />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
+        ) : (
+          <></>
+        )
       ) : (
         <header className={s['header']}>
           <div className={`${s['header__inner']} ${s['center']}`}>

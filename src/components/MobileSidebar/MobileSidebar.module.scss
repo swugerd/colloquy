@@ -1,0 +1,79 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+  position: fixed;
+  background: $sub-bg;
+  padding: 2rem;
+  z-index: 1000;
+  bottom: -80rem;
+  left: 0;
+  right: 0;
+  transition: 0.3s linear;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  border-radius: 1rem 1rem 0 0;
+  &.active {
+    bottom: 0;
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.name {
+  color: $white;
+  font-size: 2.4rem;
+}
+
+.status {
+  color: $semi-white;
+  font-size: 1.8rem;
+}
+
+.info {
+  margin-right: auto;
+}
+
+.main-list {
+  border-bottom: 3px solid rgba(20, 20, 20, 0.5);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sub-list {
+  margin-bottom: 1.5rem;
+}
+
+.nav-link {
+  font-size: 2.4rem;
+  display: flex;
+  width: 100%;
+}
+
+.nav-item {
+  & + & {
+    margin-top: 2rem;
+  }
+}
+
+.nav-img {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 2rem;
+  position: relative;
+}
+
+.close {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  & svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}

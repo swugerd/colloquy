@@ -7,6 +7,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <div className={s['profile']}>profile</div>
+      <div className={s['wall']}>wall</div>
     </>
   );
 };

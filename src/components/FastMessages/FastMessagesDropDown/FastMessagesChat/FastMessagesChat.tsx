@@ -50,11 +50,11 @@ const FastMessagesChat: React.FC = () => {
       <div className={s['wrapper-top']}>
         <Link className={s['user-link']} to="/">
           <HeaderAvatar
-            hasDelete={false}
             className="fm-chat-image"
             img={ebalo}
             title={'image'}
-            indicatorClass="fm-indicator"
+            indicatorClass={['sm-indicator', 'border-sub-bg']}
+            onlineType="pc-offline"
           />
           <span className={s['user-name']} title={dialogId}>
             {dialogId}
@@ -102,10 +102,10 @@ const FastMessagesChat: React.FC = () => {
           <div key={id} className={s['message-wrapper']}>
             {userId !== chats[index + 1]?.userId && (
               <HeaderAvatar
-                hasDelete={false}
-                className="message-avatar"
-                img={img}
+                className="fm-chat-image"
+                img={ebalo}
                 title={'image'}
+                onlineType="pc-offline"
               />
             )}
             <div

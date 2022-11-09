@@ -120,7 +120,13 @@ const Post: React.FC<PostProps> = ({
     <div className={s['post']}>
       <div className={s['top-row']}>
         <div className={s['user']}>
-          <HeaderAvatar hasDelete={false} className={'post'} img={userImg} title={userName} />
+          <HeaderAvatar
+            className="post"
+            img={userImg}
+            title={'image'}
+            indicatorClass={['sm-indicator', 'border-elem']}
+            onlineType="pc-dnd"
+          />
           <div className={s['user-info']}>
             <span className={s['user-name']}>{userName}</span>
             <span className={s['post-date']}>{date}</span>
@@ -159,8 +165,8 @@ const Post: React.FC<PostProps> = ({
         </button>
       </div>
       <div className={s['content']}>
-        {text && <p className={s['post-text']}>{text}</p>}
-        {images?.length && (
+        {!!text && <p className={s['post-text']}>{text}</p>}
+        {!!images?.length && (
           <div
             className={classNames({
               [s['post-images']]: true,
@@ -188,7 +194,7 @@ const Post: React.FC<PostProps> = ({
             )}
           </div>
         )}
-        {videos?.length && (
+        {!!videos?.length && (
           <div
             className={classNames({
               [s['post-videos']]: true,
@@ -215,7 +221,7 @@ const Post: React.FC<PostProps> = ({
             )}
           </div>
         )}
-        {circles?.length && voices?.length ? (
+        {!!circles?.length && voices?.length ? (
           <div className={s['media-wrapper']}>
             <div className={`${s['post-circles']} ${s['circles-separator']}`}>
               {circles.map(({ id, circle, time }, index) =>
@@ -323,7 +329,7 @@ const Post: React.FC<PostProps> = ({
               <button className={s['more-btn']}>
                 <span className={s['more-text']}>
                   Ещё {music.length - 1}{' '}
-                  {wordDeclension(music.length - 1, ['аудиозапись', 'аудиозаписи', 'аудиозаписей'])}
+                  {wordDeclension(music.length - 1, ['трек', 'трека', 'треков'])}
                 </span>
                 <svg
                   width="34"

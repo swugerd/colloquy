@@ -41,12 +41,9 @@
     stroke: $green-main;
   }
   &.active .feed rect:not(:first-child),
-  &.active .profile circle,
-  &.active .profile path,
-  &.active .friends circle,
-  &.active .friends path,
-  &.active .groups path,
-  &.active .groups circle,
+  &.active .profile > *,
+  &.active .friends > *,
+  &.active .groups > *,
   &.active .messages path,
   &.active .circles ellipse,
   &.active .circles path:not(:last-child),
@@ -55,10 +52,8 @@
   &.active .photos path,
   &.active .photos circle,
   &.active .videos rect,
-  &.active .music path,
-  &.active .music ellipse,
-  &.active .apps circle,
-  &.active .apps rect,
+  &.active .music > *,
+  &.active .apps > *,
   &.active .games .games-path {
     fill: $green-main;
   }
@@ -72,10 +67,7 @@
   width: 2rem;
   height: 2rem;
   margin-right: 1rem;
-  & path,
-  rect,
-  circle,
-  ellipse {
+  & > * {
     transition: 0.2s linear;
   }
 }

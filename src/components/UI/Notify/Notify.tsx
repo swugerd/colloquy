@@ -9,7 +9,7 @@ type NotifyProps = {
 
 const Notify: React.FC<NotifyProps> = ({ cName, count, hasImage }) => {
   return (
-    <div className={s[cName]}>
+    <div className={`${s['notify']} ${s[cName]}`}>
       {hasImage ? <img src="." alt="" /> : count >= 99 ? '99+' : count}
     </div>
   );
