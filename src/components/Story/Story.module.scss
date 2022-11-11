@@ -27,3 +27,13 @@
   color: $white;
   font-weight: 500;
 }
+
+@media (max-width: 550px) {
+  .story {
+    max-width: 10rem;
+    height: 15rem;
+  }
+  .user-name {
+    font-size: 1.4rem;
+  }
+}

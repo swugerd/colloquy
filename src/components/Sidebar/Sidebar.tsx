@@ -5,6 +5,7 @@ import s from './Sidebar.module.scss';
 
 const Sidebar: React.FC = () => {
   const { width } = useWindowSize();
+  const id = 'swugerd';
   const links = [
     {
       id: 1,
@@ -43,7 +44,7 @@ const Sidebar: React.FC = () => {
         </svg>
       ),
       text: 'Профиль',
-      path: 'profile',
+      path: `profile/${id}`,
     },
     {
       id: 3,
@@ -310,7 +311,7 @@ const Sidebar: React.FC = () => {
       path: 'games',
     },
   ];
-  return width > 1150 ? (
+  return width > 1151 ? (
     <aside className={s['sidebar']}>
       <nav className={s['nav']}>
         <ul className={s['nav-list']}>

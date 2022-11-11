@@ -56,3 +56,10 @@
   width: 1rem;
   height: 1rem;
 }
+
+@media (max-width: 550px) {
+  .custom-btn-small {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+}

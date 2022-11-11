@@ -55,6 +55,7 @@
   font-size: 1.6rem;
   font-weight: 500;
   color: $white;
+  word-wrap: break-word;
   margin-bottom: 1rem;
 }
 
@@ -66,12 +67,12 @@
   border-bottom: 2px solid $sub-bg;
   border-radius: 0.2rem;
   &-one {
-    grid-template-rows: minmax(25vw, 34rem);
+    grid-template-rows: 34rem;
     grid-template-columns: 1fr;
     grid-template-areas: 'first';
   }
   &-two {
-    grid-template-rows: minmax(15rem, 34rem);
+    grid-template-rows: 34rem;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: 'first second';
   }
@@ -83,7 +84,7 @@
       'first third';
   }
   &-four {
-    grid-template-rows: repeat(2, 16rem);
+    grid-template-rows: repeat(2, 25rem);
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
       'first second'
@@ -99,14 +100,21 @@
   }
   &-six {
     grid-template-rows: minmax(20rem, 20vw) minmax(10rem, 10vw);
-    grid-template-columns: repeat(4, minmax(8rem, 16rem));
+    grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
       'first first second second'
       'third fourth fifth sixth';
   }
+  &-mobile {
+    grid-template-rows: minmax(12rem, 1fr);
+    grid-template-columns: repeat(2, minmax(12rem, 1fr));
+    grid-template-areas: 'first second';
+  }
 }
 
 .post-image {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
   img {
     border-radius: 1rem;
     object-fit: cover;
@@ -132,7 +140,12 @@
   border-bottom: 2px solid $sub-bg;
   border-radius: 0.2rem;
   &-one {
-    grid-template-rows: minmax(30rem, 34rem);
+    grid-template-rows: minmax(14rem, 40vw);
+    grid-template-columns: 1fr;
+    grid-template-areas: 'first';
+  }
+  &-mobile {
+    grid-template-rows: minmax(14rem, 40vw);
     grid-template-columns: 1fr;
     grid-template-areas: 'first';
   }
@@ -234,7 +247,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 35rem;
 }
 
 .circles-separator {
@@ -250,13 +262,19 @@
   margin: 0 auto;
 }
 
+.only-voices > .post-voice + .post-voice {
+  margin-top: 1.5rem;
+}
+
 .post-voice.last-media::before {
   border-radius: 2rem;
 }
 
 .post-circle {
-  width: 17.5rem;
-  height: 17.5rem;
+  max-width: 17.5rem;
+  width: 30vw;
+  height: 30vw;
+  max-height: 17.5rem;
   &.last-media::before {
     border-radius: 50%;
   }
@@ -274,6 +292,9 @@
   margin-bottom: 2rem;
   border-bottom: 2px solid $sub-bg;
   border-radius: 0.2rem;
+  &.only-voices {
+    flex-direction: column;
+  }
   & .post-voice.last-media span {
     font-size: 2rem;
   }
@@ -282,8 +303,13 @@
 .post-track {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-size: 1.4rem;
   font-weight: 500;
+}
+
+.track-left {
+  display: flex;
 }
 
 .play-btn {
@@ -295,7 +321,6 @@
 .track-info {
   display: flex;
   align-items: center;
-  margin-right: auto;
 }
 
 .track-name {
@@ -404,25 +429,99 @@
 }
 
 @media (max-width: 1300px) {
-  .post-circle {
-    width: 12.5rem;
-    height: 12.5rem;
+  .media-wrapper {
+    flex-direction: column;
   }
-  .last-circle {
-    width: 9rem !important;
-    height: 9rem !important;
+  .circles-separator {
+    border-right: none;
+    border-bottom: 1px solid $sub-bg;
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+  }
+  .post-voices {
+    margin: 1.5rem auto 0;
   }
 }
 
 @media (max-width: 1150px) {
-  .post-images-one {
-    grid-template-rows: 50vw;
+  .post-images {
+    &-one {
+      grid-template-rows: minmax(20rem, 50vw);
+    }
+    &-two {
+      grid-template-rows: minmax(20rem, 50vw);
+    }
+    &-three {
+      grid-template-rows: repeat(2, minmax(20rem, 25vw));
+    }
+    &-four {
+      grid-template-rows: repeat(2, minmax(20rem, 25vw));
+    }
+    &-five {
+      grid-template-rows: repeat(3, minmax(15rem, 20vw));
+    }
+    &-six {
+      grid-template-rows: minmax(20rem, 30vw) minmax(10rem, 15vw);
+    }
   }
-  // .post-images-three,
-  // .post-images-four {
-  //   grid-template-rows: repeat(2, 30rem);
-  // }
-  // .post-images-five {
-  //   grid-template-rows: repeat(3, 25rem);
-  // }
+  .post-videos {
+    &-one {
+      grid-template-rows: minmax(20rem, 50vw);
+    }
+    &-three {
+      grid-template-rows: repeat(2, minmax(20rem, 25vw));
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .play-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .user-name {
+    font-size: 1.4rem;
+  }
+  .post-date {
+    font-size: 1.2rem;
+  }
+  .hide {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+  .post-text {
+    font-size: 1.2rem;
+  }
+  .top-row {
+    margin-bottom: 0.5rem;
+  }
+  .actions-info {
+    span {
+      font-size: 1.2rem;
+    }
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+  .more {
+    font-size: 3.2rem;
+  }
+  .post-track {
+    font-size: 1.2rem;
+    flex-direction: column;
+    align-items: initial;
+  }
+  .track-left {
+    margin-bottom: 1rem;
+  }
+  .more-btn {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 400px) {
+  .post-images-one {
+    grid-template-rows: 12rem;
+  }
 }

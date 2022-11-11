@@ -6,12 +6,12 @@ import switchAcc from '../../../assets/img/icons/account-switch.svg';
 import activity from '../../../assets/img/icons/activity.svg';
 import exit from '../../../assets/img/icons/exit.svg';
 import arrow from '../../../assets/img/header/arrow.svg';
-import { useDispatch } from 'react-redux';
 import { setIsAuth } from '../../../redux/auth/slice';
+import { useAppDispatch } from './../../../redux/store';
 
 const ProfileDropDown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
   const statuses = [
     { id: 1, name: 'В сети', className: 'green' },

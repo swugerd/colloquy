@@ -7,7 +7,10 @@ type HeaderAvatarProps = {
   className: string;
   img: string;
   title: string;
-  indicatorClass?: ['sm-indicator' | 'md-indicator', 'border-elem' | 'border-sub-bg'];
+  indicatorClass?: [
+    'sm-indicator' | 'md-indicator' | 'lg-indicator',
+    'border-elem' | 'border-sub-bg',
+  ];
   onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline';
 };
 

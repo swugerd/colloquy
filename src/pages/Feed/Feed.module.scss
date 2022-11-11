@@ -1,13 +1,5 @@
 @import '../../scss/variables.scss';
 
-.feed {
-  background: $sub-bg;
-  max-width: 75rem;
-  margin: 0 4.5rem;
-  border-radius: 2rem;
-  padding: 1.5rem;
-}
-
 .side-content {
   top: calc($header-height + 2rem);
   max-width: 38rem;
@@ -148,9 +140,9 @@
     max-width: 100%;
   }
   .options {
-    position: absolute;
+    position: fixed;
     z-index: 200;
-    top: 0;
+    top: 7.5rem;
     left: 0;
     opacity: 0;
     border-radius: 0 0 2rem 2rem;
@@ -163,5 +155,44 @@
   }
   .side-content {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .stories,
+  .feed {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .option-name {
+    font-size: 1.4rem;
+  }
+  .option-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    & svg {
+      margin-bottom: 1rem;
+    }
+  }
+  .options {
+    top: 4rem;
+  }
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .next-button,
+  .prev-button {
+    width: 2rem;
+    height: 3rem;
+  }
+  .feed,
+  .stories {
+    padding: 1rem;
+  }
+  .stories {
+    margin-bottom: 1.5rem;
   }
 }

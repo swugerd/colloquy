@@ -5,6 +5,11 @@
   background: $sub-bg;
   font-family: 'OpenSans';
   color: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .wrapper-inner {
@@ -23,4 +28,17 @@
 .arrow {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+@media (max-width: 550px) {
+  .wrapper {
+    height: 5rem;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .arrow {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
 }

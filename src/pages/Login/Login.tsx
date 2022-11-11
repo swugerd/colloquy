@@ -1,14 +1,14 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import { setIsAuth } from '../../redux/auth/slice';
 import s from './Login.module.scss';
+import { useAppDispatch } from './../../redux/store';
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useSetPageTitle('Авторизация');
   return (
     <div className={s['wrapper']}>

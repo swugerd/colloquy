@@ -92,3 +92,19 @@
   height: 7.5rem;
   margin-right: 2rem;
 }
+
+@media (max-width: 550px) {
+  .story {
+    width: 4rem;
+    height: 4rem;
+  }
+  .post {
+    height: 4.5rem;
+    width: 4.5rem;
+  }
+  .mobile-sidebar {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+  }
+}

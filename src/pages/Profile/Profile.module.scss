@@ -15,3 +15,22 @@
   border-radius: 2rem;
   padding: 2rem;
 }
+
+.prev-button,
+.next-button {
+  width: 2.5rem;
+  height: 5rem;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+}
+
+.prev-button {
+  left: 0;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.next-button {
+  right: 0;
+  transform: translateY(-50%) rotate(270deg);
+}

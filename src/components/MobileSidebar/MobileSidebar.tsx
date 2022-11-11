@@ -4,16 +4,18 @@ import s from './MobileSidebar.module.scss';
 import img from '../../assets/uploads/test/ebalo.png';
 import { Link, NavLink } from 'react-router-dom';
 import Notify from '../UI/Notify/Notify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setIsAuth } from '../../redux/auth/slice';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setIsSidebarShow } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
+import { useAppDispatch } from './../../redux/store';
 
 const MobileSidebar: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const { mobile } = useSelector(selectMobile);
+  const id = 'swugerd';
   const links = [
     {
       id: 1,
@@ -227,22 +229,24 @@ const MobileSidebar: React.FC = () => {
       path: 'shop',
     },
   ];
-  return width <= 1150 ? (
+  return width <= 1151 ? (
     <div className={`${s['wrapper']} ${mobile.isSidebarShow ? s['active'] : ''}`}>
       <div className={s['top']}>
-        <HeaderAvatar
-          className={'mobile-sidebar'}
-          img={img}
-          title={'Олег'}
-          onlineType={'pc-online'}
-          indicatorClass={['md-indicator', 'border-sub-bg']}
-        />
-        <div className={s['info']}>
-          <span className={s['name']}>Олег Киреев</span>
-          <p className={s['status']}>статус</p>
-        </div>
+        <Link to={`/profile/${id}`} className={s['profile-link']}>
+          <HeaderAvatar
+            className={'mobile-sidebar'}
+            img={img}
+            title={'Олег'}
+            onlineType={'pc-online'}
+            indicatorClass={[`${width >= 550 ? 'lg-indicator' : 'md-indicator'}`, 'border-sub-bg']}
+          />
+          <div className={s['info']}>
+            <span className={s['name']}>Олег Киреев</span>
+            <p className={s['status']}>статус</p>
+          </div>
+        </Link>
         <div className={s['actions']}>
-          <div className={s['settings']}>
+          <Link to="/settings" className={s['settings']}>
             <svg
               width="26"
               height="26"
@@ -286,7 +290,7 @@ const MobileSidebar: React.FC = () => {
                 fill="white"
               />
             </svg>
-          </div>
+          </Link>
         </div>
       </div>
       <div className={s['main']}>
@@ -301,6 +305,21 @@ const MobileSidebar: React.FC = () => {
                   to={`/${path}`}>
                   {img}
                   <span className={s['text']}>{text}</span>
+                  <div className={s['arrow']}>
+                    <svg
+                      width="15"
+                      height="9"
+                      viewBox="0 0 15 9"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M1 1L6.79289 6.79289C7.18342 7.18342 7.81658 7.18342 8.20711 6.79289L14 1"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
                 </NavLink>
               </li>
             ))}
@@ -325,7 +344,7 @@ const MobileSidebar: React.FC = () => {
                       strokeWidth="2"
                     />
                   </svg>
-                  <Notify cName={'mobile-sidebar'} count={102} hasImage={false} />
+                  <Notify cName={'mobile-sidebar'} count={1} hasImage={false} />
                 </div>
                 <span className={s['text']}>Уведомления</span>
               </NavLink>

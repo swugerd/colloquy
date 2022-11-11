@@ -21,6 +21,12 @@
     width: 100%;
     padding-top: 0;
     padding-bottom: $header-height;
-    margin-top: 2rem;
+    margin-top: 9.5rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .main {
+    margin-top: 6.5rem;
   }
 }

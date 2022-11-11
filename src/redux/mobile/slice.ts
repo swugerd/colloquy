@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MobileState } from './types';
 const initialState: MobileState = {
-  title: 'Новости',
+  title: '',
   isSidebarShow: false,
   isHeaderShow: false,
+  hasArrowButton: false,
+  infoName: '',
 };
 
 const MobileSlice = createSlice({
@@ -19,9 +21,16 @@ const MobileSlice = createSlice({
     setIsHeaderShow(state, action: PayloadAction<boolean>) {
       state.isHeaderShow = action.payload;
     },
+    setHasArrowButton(state, action: PayloadAction<boolean>) {
+      state.hasArrowButton = action.payload;
+    },
+    setIsInfoName(state, action: PayloadAction<string>) {
+      state.infoName = action.payload;
+    },
   },
 });
 
-export const { setTitle, setIsSidebarShow, setIsHeaderShow } = MobileSlice.actions;
+export const { setTitle, setIsSidebarShow, setIsHeaderShow, setHasArrowButton, setIsInfoName } =
+  MobileSlice.actions;
 
 export default MobileSlice.reducer;

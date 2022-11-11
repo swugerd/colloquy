@@ -3,6 +3,7 @@ import s from './Post.module.scss';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import formatTime from '../../utils/formatTime';
 import classNames from 'classnames';
+import useWindowSize from './../../hooks/useWindowResize';
 
 type PostProps = {
   id: number;
@@ -59,6 +60,7 @@ const Post: React.FC<PostProps> = ({
 }) => {
   const { name: userName, img: userImg } = user;
   const { text, images, videos, circles, voices, music } = content;
+  const { width } = useWindowSize();
   const maxVisibleContent: {
     images: number;
     videos: number;
@@ -68,11 +70,11 @@ const Post: React.FC<PostProps> = ({
     voicesSolo: number;
     music: number;
   } = {
-    images: 6,
-    videos: 3,
+    images: width <= 768 ? 2 : 6,
+    videos: width <= 768 ? 1 : 3,
     voices: 2,
     circles: 2,
-    circlesSolo: 3,
+    circlesSolo: width <= 768 ? 2 : 3,
     voicesSolo: 2,
     music: 1,
   };
@@ -172,10 +174,11 @@ const Post: React.FC<PostProps> = ({
               [s['post-images']]: true,
               [s['post-images-one']]: images.length === 1,
               [s['post-images-two']]: images.length === 2,
-              [s['post-images-three']]: images.length === 3,
-              [s['post-images-four']]: images.length === 4,
-              [s['post-images-five']]: images.length === 5,
-              [s['post-images-six']]: images.length >= maxVisibleContent.images,
+              [s['post-images-three']]: images.length === 3 && width > 768,
+              [s['post-images-four']]: images.length === 4 && width > 768,
+              [s['post-images-five']]: images.length === 5 && width > 768,
+              [s['post-images-six']]: images.length >= maxVisibleContent.images && width > 768,
+              [s['post-images-mobile']]: images.length > maxVisibleContent.images && width <= 768,
             })}>
             {images.map(({ id, img }, index) =>
               index > maxVisibleContent.images - 1 ? null : (
@@ -199,8 +202,9 @@ const Post: React.FC<PostProps> = ({
             className={classNames({
               [s['post-videos']]: true,
               [s['post-videos-one']]: videos.length === 1,
-              [s['post-videos-two']]: videos.length === 2,
-              [s['post-videos-three']]: videos.length >= maxVisibleContent.videos,
+              [s['post-videos-two']]: videos.length === 2 && width > 768,
+              [s['post-videos-three']]: videos.length >= maxVisibleContent.videos && width > 768,
+              [s['post-videos-mobile']]: videos.length > maxVisibleContent.videos && width <= 768,
             })}>
             {videos.map(({ id, video }, index) =>
               index > maxVisibleContent.videos - 1 ? null : (
@@ -263,7 +267,7 @@ const Post: React.FC<PostProps> = ({
         ) : !voices?.length && !circles?.length ? (
           ''
         ) : !circles?.length ? (
-          <div className={s['post-only-media']}>
+          <div className={`${s['post-only-media']} ${s['only-voices']}`}>
             {voices &&
               voices.map(({ id, voice, time }, index) =>
                 index > maxVisibleContent.voicesSolo - 1 ? null : (
@@ -306,24 +310,26 @@ const Post: React.FC<PostProps> = ({
         )}
         {music?.length && (
           <div className={s['post-track']}>
-            <button className={s['play-btn']}>
-              <svg
-                width="21"
-                height="29"
-                viewBox="0 0 21 29"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M0.5 25.1356V3.86437C0.5 2.24185 2.33029 1.29459 3.65493 2.23154L18.6915 12.8672C19.8183 13.6641 19.8183 15.3359 18.6915 16.1328L3.65493 26.7685C2.33028 27.7054 0.5 26.7581 0.5 25.1356Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-            <div className={s['track-info']}>
-              <span className={s['track-name']}>{music[0].name}</span>
-              <span className={s['track-separator']}>&mdash;</span>
-              <span className={s['track-author']}>{music[0].author}</span>
-              <span className={s['track-time']}>{formatTime(music[0].time)}</span>
+            <div className={s['track-left']}>
+              <button className={s['play-btn']}>
+                <svg
+                  width="21"
+                  height="29"
+                  viewBox="0 0 21 29"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0.5 25.1356V3.86437C0.5 2.24185 2.33029 1.29459 3.65493 2.23154L18.6915 12.8672C19.8183 13.6641 19.8183 15.3359 18.6915 16.1328L3.65493 26.7685C2.33028 27.7054 0.5 26.7581 0.5 25.1356Z"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+              <div className={s['track-info']}>
+                <span className={s['track-name']}>{music[0].name}</span>
+                <span className={s['track-separator']}>&mdash;</span>
+                <span className={s['track-author']}>{music[0].author}</span>
+                <span className={s['track-time']}>{formatTime(music[0].time)}</span>
+              </div>
             </div>
             {music.length > 1 && (
               <button className={s['more-btn']}>

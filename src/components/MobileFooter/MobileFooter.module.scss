@@ -42,3 +42,18 @@
     fill: $green-main;
   }
 }
+
+@media (max-width: 550px) {
+  .wrapper {
+    height: 5rem;
+  }
+  .button {
+    width: 5rem;
+    height: 5rem;
+    padding: 0.5rem;
+  }
+  .link {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

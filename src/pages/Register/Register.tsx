@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FirstStep from '../../components/RegFormSteps/FirstStep';
 import SecondStep from '../../components/RegFormSteps/SecondStep';
@@ -9,11 +8,12 @@ import Input from '../../components/UI/Input/Input';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import { setIsAuth } from '../../redux/auth/slice';
 import s from './Register.module.scss';
+import { useAppDispatch } from './../../redux/store';
 
 const Register: React.FC = () => {
   // Добавить форму
   useSetPageTitle('Регистрация');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [index, setIndex] = useState(0);
   const steps = [<FirstStep />, <SecondStep />, <ThirdStep />];
   const titles = ['Начнём с основ', 'Расскажите о себе', 'Загрузим аватар'];

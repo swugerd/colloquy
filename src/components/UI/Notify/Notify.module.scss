@@ -28,3 +28,11 @@
   top: -0.5rem;
   right: -0.5rem;
 }
+
+@media (max-width: 550px) {
+  .mobile-sidebar {
+    font-size: 1rem;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}

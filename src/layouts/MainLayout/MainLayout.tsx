@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header/Header';
 import MobileFooter from '../../components/MobileFooter/MobileFooter';
 import MobileHeader from '../../components/MobileHeader/MobileHeader';
@@ -14,30 +13,17 @@ type MainLayoutProps = {
 };
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const { mobile } = useSelector(selectMobile);
-  // const { width } = useWindowSize();
-  // console.log(width);
-
   return (
     <div className={`${s['wrapper']}`}>
-      {/* {width <= 1153 ? (
-        <>
-          <MobileHeader title={mobile.title} hasArrow={true} />
-          <MobileFooter />
-        </>
-      ) : (
-        <Header />
-      )} */}
       {
         <>
           <Header />
-          <MobileHeader title={mobile.title} hasArrow={true} />
+          <MobileHeader />
           <MobileFooter />
         </>
       }
       <div className="container">
         <div className={s['content']}>
-          {/* {width <= 1153 ? <MobileSidebar /> : <Sidebar />} */}
           {
             <>
               <MobileSidebar />

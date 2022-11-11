@@ -1,17 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowResize';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setIsSidebarShow } from '../../redux/mobile/slice';
 import s from './MobileFooter.module.scss';
+import { useAppDispatch } from './../../redux/store';
 
 const MobileFooter: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { mobile } = useSelector(selectMobile);
   const { width } = useWindowSize();
 
-  return width <= 1150 ? (
+  return width <= 1151 ? (
     <div className={s['wrapper']}>
       <div className={s['wrapper-inner']}>
         <NavLink

@@ -31,7 +31,7 @@ const Header: React.FC = () => {
   return (
     <>
       {isAuth ? (
-        width > 1150 ? (
+        width > 1151 ? (
           <header className={s['header']}>
             <div className="container">
               <div className={s['header__inner']}>

@@ -1,24 +1,23 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import useWindowSize from '../../hooks/useWindowResize';
 import { selectMobile } from '../../redux/mobile/selector';
-import { setIsHeaderShow } from '../../redux/mobile/slice';
+import { setHasArrowButton, setIsHeaderShow, setTitle } from '../../redux/mobile/slice';
 import s from './MobileHeader.module.scss';
+import { useAppDispatch } from './../../redux/store';
 
-type MobileHeaderProps = {
-  title: string;
-  hasArrow: boolean;
-};
-
-const MobileHeader: React.FC<MobileHeaderProps> = ({ title, hasArrow }) => {
-  const dispatch = useDispatch();
+const MobileHeader: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const { mobile } = useSelector(selectMobile);
-  return width <= 1150 ? (
+  useEffect(() => {
+    dispatch(setTitle(document.title));
+  }, []);
+  return width <= 1151 ? (
     <header className={s['wrapper']}>
       <div className={s['wrapper-inner']}>
-        <h2 className={s['title']}>{title}</h2>
-        {hasArrow && (
+        <h2 className={s['title']}>{mobile.infoName ? `@${mobile.infoName}` : mobile.title}</h2>
+        {mobile.hasArrowButton && (
           <button
             className={s['arrow']}
             onClick={() => {

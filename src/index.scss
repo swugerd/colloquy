@@ -74,3 +74,9 @@ li {
   padding: 0;
   list-style: none;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+}
