@@ -2,7 +2,174 @@
 .wall {
   background: $sub-bg;
   max-width: 75rem;
-  margin: 0 4.5rem;
   border-radius: 2rem;
   padding: 1.5rem;
+}
+
+.feed {
+  margin: 0 4.5rem;
+}
+
+.radio-btn {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.inp-disabled {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  cursor: pointer;
+  &:checked ~ .custom-btn {
+    background: $green-light;
+  }
+}
+
+.custom-btn {
+  border-radius: 50%;
+  outline: 0.4rem solid rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.input {
+  border-radius: 1rem 1rem 0 0;
+  background: $elem;
+  padding: 1rem 1rem 1rem 4rem;
+  width: 100%;
+  display: block;
+  resize: none;
+  outline: none;
+  border: none;
+  color: $white;
+  font-family: 'Opensans';
+  font-size: 1.4rem;
+  font-weight: 400;
+  &::placeholder {
+    font-weight: 600;
+  }
+}
+
+.controls-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.paperclip,
+.smile {
+  position: absolute;
+}
+
+.paperclip {
+  top: 1rem;
+  left: 1rem;
+  &:hover svg path {
+    stroke: $white;
+  }
+  svg path {
+    stroke: $semi-white;
+    transition: 0.2s linear;
+  }
+}
+
+.smile {
+  top: 1rem;
+  right: 1rem;
+  &:hover {
+    svg path {
+      &:first-child {
+        fill: $white;
+      }
+      &:not(:first-child) {
+        stroke: $white;
+      }
+    }
+  }
+  svg path {
+    transition: 0.2s linear;
+    &:first-child {
+      fill: $semi-white;
+    }
+    &:not(:first-child) {
+      stroke: $semi-white;
+    }
+  }
+}
+
+.input-controls {
+  background: $elem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid #2c2c2c;
+  border-radius: 0 0 1rem 1rem;
+  cursor: pointer;
+  color: $white;
+}
+
+.comments {
+  margin-right: 1.5rem;
+  &:hover svg path {
+    stroke: $white;
+  }
+  svg path {
+    transition: 0.2s linear;
+    stroke: $semi-white;
+  }
+}
+
+.micro {
+  margin-right: 1.5rem;
+  position: relative;
+  &::after {
+    content: '';
+    width: 0.2rem;
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1.5rem;
+    background: $sub-bg;
+  }
+}
+
+.send {
+  margin-left: 1.5rem;
+  &:hover svg path {
+    fill: $white;
+  }
+  svg path {
+    transition: 0.2s linear;
+    fill: $semi-white;
+  }
+}
+
+.media-action {
+  margin-right: auto;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+}
+
+.post-form {
+  font-family: 'Opensans';
+}
+
+@media (max-width: 1150px) {
+  .wall {
+    max-width: 100%;
+  }
+  .feed {
+    margin: 0;
+  }
 }

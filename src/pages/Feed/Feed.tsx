@@ -391,7 +391,7 @@ const Feed: React.FC = () => {
 
   return (
     <>
-      <Wall />
+      <Wall className={'feed'} page={'feed'} />
       <div className={s['side-content']}>
         <div className={s['stories']}>
           <h2 className={s['title']}>Истории</h2>
@@ -440,7 +440,7 @@ const Feed: React.FC = () => {
             modules={[Navigation]}>
             {stories.map(({ id, story, user }) => (
               <SwiperSlide key={id}>
-                <Story id={id} story={story} user={user} />
+                <Story id={id} story={story} user={user} className={'feed'} />
               </SwiperSlide>
             ))}
             <button className={s['prev-button']} ref={navigationPrevRef}>

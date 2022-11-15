@@ -10,11 +10,12 @@ type StoryProps = {
     name: string;
     img: string;
   };
+  className: string;
 };
 
-const Story: React.FC<StoryProps> = ({ id, story, user }) => {
+const Story: React.FC<StoryProps> = ({ id, story, user, className }) => {
   return (
-    <div className={s['story']}>
+    <div className={`${s['story']} ${s[className]}`}>
       <video>
         <source src={story} type="video/mp4" />
       </video>

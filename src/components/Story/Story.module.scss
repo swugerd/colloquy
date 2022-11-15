@@ -1,8 +1,6 @@
 @import '../../scss/variables.scss';
 
 .story {
-  max-width: 14rem;
-  height: 19rem;
   border-radius: 1rem;
   border: 4px solid $green-main;
   position: relative;
@@ -10,6 +8,16 @@
   &:hover .user {
     opacity: 1;
   }
+}
+
+.feed {
+  max-width: 14rem;
+  height: 19rem;
+}
+
+.profile {
+  max-width: 11rem;
+  height: 15rem;
 }
 
 .user {

@@ -5,7 +5,7 @@ import mobileSvg from '../../../assets/img/indicator/mobile.svg';
 type OnlineIndicatorProps = {
   cName: string[];
   isMobile: boolean;
-  onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline';
+  onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline' | string;
 };
 
 const OnlineIndicator: React.FC<OnlineIndicatorProps> = ({ cName, isMobile, onlineType }) => {

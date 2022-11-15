@@ -11,7 +11,7 @@ type HeaderAvatarProps = {
     'sm-indicator' | 'md-indicator' | 'lg-indicator',
     'border-elem' | 'border-sub-bg',
   ];
-  onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline';
+  onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline' | string;
 };
 
 const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
