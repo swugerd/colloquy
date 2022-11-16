@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import s from './Wall.module.scss';
 import Post from '../Post/Post';
 import img from '../../assets/uploads/pasha.png';
@@ -166,6 +166,10 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
     },
   ];
   const [isActive, setIsActive] = useState(true);
+  const textAreaAdjust = (e: any) => {
+    e.target.style.height = '1px';
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
   return (
     <div className={`${s['wall']} ${s[className]}`}>
       {/* <div className={s['hidden']}>
@@ -208,7 +212,10 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
       {page === 'profile' && (
         <form className={s['post-form']}>
           <div className={s['relative']}>
-            <textarea className={s['input']} placeholder="Что произошло сегодня?"></textarea>
+            <textarea
+              className={s['input']}
+              placeholder="Что произошло сегодня?"
+              onChange={textAreaAdjust}></textarea>
             <button className={`${s['controls-icon']} ${s['paperclip']}`}>
               <svg
                 width="22"

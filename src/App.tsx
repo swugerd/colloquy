@@ -4,7 +4,7 @@ import Feed from './pages/Feed/Feed';
 import Home from './pages/Home/Home';
 import './index.scss';
 import MainLayout from './layouts/MainLayout/MainLayout';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Profile from './pages/Profile/Profile';
 import Friends from './pages/Friends/Friends';
 import Groups from './pages/Groups/Groups';
@@ -35,6 +35,7 @@ const App: React.FC = () => {
       {isAuth ? (
         <MainLayout>
           <Routes>
+            <Route path="/" element={<Navigate to="/feed" />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile/:username" element={<Profile />} />
             <Route path="/friends" element={<Friends />} />

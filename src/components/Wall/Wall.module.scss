@@ -41,8 +41,11 @@
 .input {
   border-radius: 1rem 1rem 0 0;
   background: $elem;
-  padding: 1rem 1rem 1rem 4rem;
+  padding: 1rem 4rem 1rem 4rem;
   width: 100%;
+  min-height: 6rem;
+  height: fit-content;
+  overflow-y: auto;
   display: block;
   resize: none;
   outline: none;
