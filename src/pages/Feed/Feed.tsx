@@ -420,23 +420,19 @@ const Feed: React.FC = () => {
                 slidesPerView: 2,
               },
             }}
-            onSwiper={(swiper) => {
-              setTimeout(() => {
-                // Override prevEl & nextEl now that refs are defined
+            // onSwiper={(swiper: any) => {
+            //   setTimeout(() => {
+            //     // Override prevEl & nextEl now that refs are defined
 
-                // сделать что-то с типизацией
+            //     swiper.params.navigation.prevEl = navigationPrevRef.current;
+            //     swiper.params.navigation.nextEl = navigationNextRef.current;
 
-                // @ts-ignore
-                swiper.params.navigation.prevEl = navigationPrevRef.current;
-                // @ts-ignore
-                swiper.params.navigation.nextEl = navigationNextRef.current;
-
-                // Re-init navigation
-                swiper.navigation.destroy();
-                swiper.navigation.init();
-                swiper.navigation.update();
-              });
-            }}
+            //     // Re-init navigation
+            //     swiper.navigation.destroy();
+            //     swiper.navigation.init();
+            //     swiper.navigation.update();
+            //   });
+            // }}
             modules={[Navigation]}>
             {stories.map(({ id, story, user }) => (
               <SwiperSlide key={id}>

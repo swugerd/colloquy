@@ -1,0 +1,324 @@
+@import '../../scss/variables.scss';
+
+.prev-button,
+.next-button {
+  width: 2.5rem;
+  height: 5rem;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+}
+
+.prev-button {
+  left: 0;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.next-button {
+  right: 0;
+  transform: translateY(-50%) rotate(270deg);
+}
+
+.content-block {
+  width: 25rem;
+  & + & {
+    margin-top: 1.5rem;
+  }
+}
+
+.sub-title {
+  font-family: 'OpenSans';
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: $white;
+}
+
+.add-story {
+  width: 11rem;
+  height: 15rem;
+  background: $elem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  svg {
+    width: 6rem;
+    height: 6rem;
+    line {
+      stroke: $green-main;
+    }
+  }
+}
+
+.content {
+  padding: 1rem;
+  background: $elem;
+  border-radius: 1rem;
+  font-family: 'OpenSans';
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.arrow {
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(270deg);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.count {
+  margin-left: 1rem;
+  color: $semi-white;
+}
+
+.online {
+  color: $white;
+  span {
+    color: $green-main;
+  }
+}
+
+.friend {
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.friend-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  margin-top: 0.2rem;
+  max-width: 4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-name {
+  max-width: 18rem;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-top: 1rem;
+  }
+}
+
+.group-info {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+.members {
+  color: $green-main;
+  // margin-top: 0.3rem;
+  max-width: 18rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  svg {
+    width: 1.2rem;
+    height: 1.8rem;
+    margin-right: 0.3rem;
+    & > * {
+      fill: $green-main;
+    }
+  }
+}
+
+.music-img {
+  width: 4rem;
+  height: 4rem;
+  img {
+    border-radius: 0.5rem;
+  }
+}
+
+.group-name {
+  color: $white;
+}
+
+.video {
+  width: 11rem;
+  height: 6.5rem;
+  & video {
+    border-radius: 1.5rem;
+    object-fit: cover;
+  }
+}
+
+.views {
+  margin-top: 0.2rem;
+  color: $white;
+  svg {
+    width: 1.5rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+  display: flex;
+  align-items: baseline;
+}
+
+.photo-block {
+  margin-bottom: 1.5rem;
+}
+
+.photo-top {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.photo-link {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.photo-title {
+  font-size: 1.6rem;
+  color: $white;
+  font-weight: 500;
+}
+
+.photos {
+  display: grid;
+  grid-template: repeat(2, 15rem) / repeat(2, 15rem);
+  grid-gap: 1rem;
+}
+
+.photo img {
+  border-radius: 1rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: $elem;
+  border-radius: 1rem;
+  width: 8.5rem;
+  height: 8.5rem;
+  justify-content: center;
+}
+
+.collection-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.collection-arrow {
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: rotate(180deg);
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.separator {
+  margin: 0 0.5rem;
+  display: block;
+}
+
+.my-count {
+  color: $green-main;
+  font-weight: 600;
+}
+
+.stories-area {
+  grid-area: stories;
+  grid-row: 2 / auto;
+}
+
+.friends-area {
+  grid-area: friends;
+}
+
+.groups-area {
+  grid-area: groups;
+}
+
+.music-area {
+  grid-area: music;
+}
+
+.videos-area {
+  grid-area: videos;
+}
+
+.collection-area {
+  grid-area: collection;
+}
+
+.photos-area {
+  grid-area: photos;
+}
+
+@media (max-width: 1450px) {
+  .content-block {
+    width: 20rem;
+  }
+  .group-name,
+  .members {
+    max-width: 13rem;
+  }
+  .photos {
+    grid-template: repeat(4, 15rem) / repeat(1, 1fr);
+  }
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .collection {
+    width: 100%;
+  }
+  .collection + .collection {
+    margin-top: 1rem;
+  }
+  .photo-link {
+    display: none;
+  }
+}

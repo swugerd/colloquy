@@ -19,7 +19,7 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
       user: { id: 1, name: 'Пашок Кубыркин', img },
       date: 'Вчера',
       content: {
-        text: 'ьууп бу п тыц тут буп буп буп тыц цуцтсфиыиыdasdsadsaфывтфыивтфыивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
+        text: 'ьууп бу п тыц тут буп буп буп тыц  втфыивтфыdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsadsadsadsadasdsaивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
         images: [
           { id: 1, img },
           { id: 2, img },
@@ -291,7 +291,7 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
                 />
                 <div className={`${s['custom-btn']}`}></div>
               </div>
-              <div className={s['text']}>Добавить медиан на страницу</div>
+              <div className={s['text']}>Добавить медиа на страницу</div>
             </div>
             <button className={`${s['controls-icon']} ${s['micro']}`}>
               <svg

@@ -56,6 +56,9 @@
   font-weight: 500;
   color: $white;
   word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
   margin-bottom: 1rem;
 }
 
@@ -440,6 +443,22 @@
   }
   .post-voices {
     margin: 1.5rem auto 0;
+  }
+  .more-btn {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .more-text {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 1210px) {
+  .post-text {
+    // max-width: 100%;
+    // min-width: 36rem;
   }
 }
 

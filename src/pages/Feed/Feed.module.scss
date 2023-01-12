@@ -151,6 +151,7 @@
   }
   .side-content {
     max-width: 100%;
+    order: 1;
   }
 }
 
@@ -162,6 +163,9 @@
 }
 
 @media (max-width: 550px) {
+  .wrapper {
+    margin-top: 6.5rem;
+  }
   .option-name {
     font-size: 1.4rem;
   }

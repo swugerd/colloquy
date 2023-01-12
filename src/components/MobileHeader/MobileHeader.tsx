@@ -13,7 +13,7 @@ const MobileHeader: React.FC = () => {
   useEffect(() => {
     dispatch(setTitle(document.title));
   }, []);
-  return width <= 1151 ? (
+  return width <= 1150 ? (
     <header className={s['wrapper']}>
       <div className={s['wrapper-inner']}>
         <h2 className={s['title']}>{mobile.infoName ? `@${mobile.infoName}` : mobile.title}</h2>

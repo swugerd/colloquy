@@ -311,7 +311,7 @@ const Sidebar: React.FC = () => {
       path: 'games',
     },
   ];
-  return width > 1151 ? (
+  return width > 1150 ? (
     <aside className={s['sidebar']}>
       <nav className={s['nav']}>
         <ul className={s['nav-list']}>

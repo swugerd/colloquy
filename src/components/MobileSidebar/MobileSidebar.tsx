@@ -229,7 +229,7 @@ const MobileSidebar: React.FC = () => {
       path: 'shop',
     },
   ];
-  return width <= 1151 ? (
+  return width <= 1150 ? (
     <div className={`${s['wrapper']} ${mobile.isSidebarShow ? s['active'] : ''}`}>
       <div className={s['top']}>
         <Link to={`/profile/${id}`} className={s['profile-link']}>

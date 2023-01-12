@@ -12,7 +12,7 @@ const MobileFooter: React.FC = () => {
   const { mobile } = useSelector(selectMobile);
   const { width } = useWindowSize();
 
-  return width <= 1151 ? (
+  return width <= 1150 ? (
     <div className={s['wrapper']}>
       <div className={s['wrapper-inner']}>
         <NavLink
