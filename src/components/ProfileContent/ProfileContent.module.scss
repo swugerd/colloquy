@@ -96,12 +96,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: auto;
 }
 
 .friend-list {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  // justify-content: space-between;
 }
 
 .name {
@@ -118,6 +119,24 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.video-name {
+  max-width: 11rem;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $white;
+}
+
+.video-author {
+  color: $green-main;
+  max-width: 11rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
 }
 
 .group-list {
@@ -161,6 +180,7 @@
 .music-img {
   width: 4rem;
   height: 4rem;
+  flex-shrink: 0;
   img {
     border-radius: 0.5rem;
   }
@@ -173,6 +193,7 @@
 .video {
   width: 11rem;
   height: 6.5rem;
+  flex-shrink: 0;
   & video {
     border-radius: 1.5rem;
     object-fit: cover;
@@ -222,6 +243,15 @@
 
 .photo img {
   border-radius: 1rem;
+}
+
+.video-item {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-top: 1rem;
+    // margin-left: 1rem;
+  }
 }
 
 .row {
@@ -297,6 +327,13 @@
   grid-area: photos;
 }
 
+.content-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 @media (max-width: 1450px) {
   .content-block {
     width: 20rem;
@@ -318,7 +355,119 @@
   .collection + .collection {
     margin-top: 1rem;
   }
+  .photo-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .video {
+    width: 5rem;
+    height: 6rem;
+  }
+}
+
+.photo-title {
+  font-family: 'OpenSans';
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.photo-block {
+  font-family: 'OpenSans';
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1150px) {
+  .content-block {
+    width: 100%;
+  }
+  .photo-block {
+    margin-top: 1.5rem;
+  }
+  .photo-title {
+    margin-bottom: 1rem;
+  }
   .photo-link {
-    display: none;
+    font-size: 1.4rem;
+  }
+  .photos {
+    display: flex;
+    // justify-content: space-between;
+  }
+  .photo {
+    max-width: 17.5rem;
+    max-height: 17.5rem;
+    min-height: 8.5rem;
+    min-width: 8.5rem;
+  }
+  .friend {
+    flex-direction: row;
+    max-width: 20rem;
+    width: 100%;
+  }
+  .friend + .friend {
+    margin-left: 1.5rem;
+  }
+  .name {
+    margin-top: 0;
+    margin-left: 0.5rem;
+    max-width: 15rem;
+  }
+  .group-list {
+    flex-direction: row;
+    // justify-content: space-between;
+  }
+  .group {
+    max-width: 20rem;
+    width: 100%;
+  }
+  .group + .group {
+    margin-top: 0;
+    margin-left: 1.5rem;
+  }
+  .video {
+    width: 10rem;
+  }
+  .content-block {
+    margin-bottom: 1.5rem;
+  }
+  .video-item {
+    margin-top: 0 !important;
+    & + & {
+      margin-left: 1rem;
+    }
+  }
+  .row {
+    flex-direction: row;
+  }
+  .collection {
+    width: 15rem;
+  }
+  .collection + .collection {
+    margin-top: 0;
+    margin-left: 1.5rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .friend-list,
+  .group-list {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .friend + .friend,
+  .group + .group,
+  .video-item + .video-item {
+    margin-left: 0;
+    margin-top: 1rem !important;
+  }
+  .friend {
+    max-width: fit-content;
+  }
+  .name,
+  .members,
+  .group-name,
+  .video-author,
+  .video-name {
+    max-width: 50vw;
   }
 }

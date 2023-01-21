@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import React from 'react';
 import s from './Achievement.module.scss';
 import gemIcon from '../../assets/img/icons/gem.svg';
+import Icon from '../UI/Icon/Icon';
+import bgAchievementSvg from '../../assets/img/achievements/bg.svg';
 
 type AchievementProps = {
   id: number;
@@ -28,7 +30,7 @@ const Achievement: React.FC<AchievementProps> = ({
     <div className={s['achievement']}>
       <div className={s['preview']}>
         <div className={s['desc']}>{desc}</div>
-        <svg
+        {/* <svg
           className={classNames({
             [s['background']]: true,
             [s['easy']]: type === 'easy',
@@ -45,7 +47,18 @@ const Achievement: React.FC<AchievementProps> = ({
             stroke="white"
             strokeWidth="3"
           />
-        </svg>
+        </svg> */}
+        <Icon
+          src={bgAchievementSvg}
+          id={'bg'}
+          className={'achievement-bg'}
+          hoverClass={classNames({
+            easy: type === 'easy',
+            standard: type === 'standard',
+            hard: type === 'hard',
+            secret: type === 'secret',
+          })}
+        />
         <div
           className={classNames({
             [s['icon']]: true,

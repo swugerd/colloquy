@@ -1,4 +1,5 @@
 @import '../../scss/variables.scss';
+@import '../UI/Icon/Icon.module.scss';
 
 .achievement {
   display: flex;
@@ -24,6 +25,9 @@
       stroke: darken($white, 15);
       fill: darken($red-dark, 15);
     }
+    .hard {
+      display: none;
+    }
     .secret path {
       stroke: darken($white, 15);
       fill: darken($dark-purple, 15);
@@ -39,12 +43,12 @@
   margin-right: 2.5rem;
 }
 
-.background {
-  width: 35rem;
-  & path {
-    transition: 0.2s linear;
-  }
-}
+// .background {
+//   width: 35rem;
+//   & path {
+//     transition: 0.2s linear;
+//   }
+// }
 
 .name,
 .desc {
@@ -85,21 +89,21 @@
   }
 }
 
-.easy path {
-  fill: $green-main;
-}
+// .easy path {
+//   fill: $green-main;
+// }
 
-.standard path {
-  fill: $blue-dark;
-}
+// .standard path {
+//   fill: $blue-dark;
+// }
 
-.hard path {
-  fill: $red-dark;
-}
+// .hard path {
+//   fill: $red-dark;
+// }
 
-.secret path {
-  fill: $dark-purple;
-}
+// .secret path {
+//   fill: $dark-purple;
+// }
 
 .easy-icon {
   background: $green-light;

@@ -54,6 +54,8 @@
   padding-bottom: 1rem;
   border-bottom: 2px solid rgba(31, 31, 31, 0.7);
   margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .user-name {
@@ -67,7 +69,13 @@
 .status {
   font-size: 1.4rem;
   font-weight: 500;
+  font-family: 'OpenSans';
   color: $semi-white;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sub-info {
@@ -89,6 +97,7 @@
 .option-title {
   width: 11rem;
   margin-right: 1.5rem;
+  font-family: 'OpenSans';
 }
 
 .wrap-button {
@@ -126,6 +135,7 @@
 
 .unwrapperd-title {
   font-size: 1.4rem;
+  font-family: 'OpenSans';
   color: $white;
   font-weight: 500;
   width: 7rem;
@@ -144,14 +154,70 @@
   }
 }
 
+.option-data {
+  font-family: 'OpenSans';
+}
+
 .option-unwrapped-data {
   color: $green-main;
   font-weight: 600;
+  font-family: 'OpenSans';
 }
 
 .about {
   font-size: 1.4rem;
+  font-family: 'OpenSans';
   color: $white;
+}
+
+.mobile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-btn {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  height: 4rem;
+  width: 4rem;
+  transition: 0.2s background linear;
+  &.active {
+    border-radius: 1rem 1rem 0 0;
+  }
+  &.list-btn + &.list-btn {
+    margin-top: 1rem;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.dots {
+  height: 0.6rem;
+  width: 2.6rem;
+}
+
+.more-icon {
+  height: 2rem;
+  width: 2rem;
+  color: $white;
+}
+
+.more {
+  position: relative;
+}
+
+.actions {
+  background: $elem;
+  padding: 1rem;
+  border-radius: 1rem 0 1rem 1rem;
+  position: absolute;
+  right: 0;
+  top: 4rem;
+  display: none;
+  &.active {
+    display: block;
+  }
 }
 
 @media (max-width: 1450px) {
@@ -193,13 +259,94 @@
   .option-data,
   .option-unwrapped-data {
     font-size: 1.4rem;
-    width: 12rem;
+    width: 11rem;
     white-space: nowrap;
   }
   .option-title {
     margin-right: 1rem;
   }
   .main-info {
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  .avatar {
+    margin-right: 3rem;
+    flex-shrink: 0;
+  }
+  .info {
+    width: 100%;
+  }
+  .sub-info {
+    padding-bottom: 1.8rem;
+  }
+  .left {
+    margin-right: 0;
+  }
+  .status {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (max-width: 550px) {
+  .avatar {
+    width: 7.5rem;
+    height: 7.5rem;
+    margin-bottom: 0;
+    & img {
+      border-radius: 50%;
+    }
+  }
+  .user-name {
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+  .main-info {
+    border-bottom: 0;
+  }
+  .mobile-info {
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(31, 31, 31, 0.7);
+    margin-bottom: 0.5rem;
+  }
+  .option-title {
+    width: fit-content;
+  }
+  .option-title,
+  .option-data,
+  .option-unwrapped-data {
+    font-size: 1.2rem;
+  }
+  .wrap-button {
+    font-size: 1.2rem;
+  }
+  .sub-info {
+    padding-bottom: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .status {
+    -webkit-line-clamp: 3;
+  }
+  .main-info {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  .more-btn {
+    height: 3rem;
+    width: 3rem;
+  }
+  .more-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .dots {
+    width: 1.8rem;
+    height: 0.4rem;
+  }
+  .actions {
+    top: 3rem;
+    padding: 0.5rem;
+  }
+  .more-btn.list-btn + .more-btn.list-btn {
+    margin-top: 0.5rem;
   }
 }

@@ -44,13 +44,6 @@
   & + & {
     margin-left: 1rem;
   }
-  & svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    & .trash-path {
-      stroke: $red-light;
-    }
-  }
 }
 
 .buttons {

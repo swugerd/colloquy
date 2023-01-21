@@ -1,0 +1,85 @@
+@import '../../../scss/variables.scss';
+
+.not-found {
+  margin-right: 2rem;
+  width: 36.7rem;
+  height: 36.7rem;
+}
+
+.nav-img {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+  & > * {
+    transition: 0.2s linear;
+  }
+}
+
+.profile.active > *,
+.feed.active > *,
+.friends.active > *,
+.groups.active > *,
+.messages.active > *,
+.circles.active > *,
+.voices.active > *,
+.photos.active > *,
+.videos.active > *,
+.music.active > *,
+.apps.active > *,
+.games.active > * {
+  color: $green-main;
+}
+
+.account-button {
+  width: 1.5rem;
+  height: 1.5rem;
+  & > * {
+    color: $red-light;
+  }
+}
+
+.achievement-bg {
+  width: 35rem;
+  height: 7.5rem;
+  & path {
+    transition: 0.2s linear;
+  }
+}
+
+.easy > * {
+  color: $green-main;
+}
+
+.standard > * {
+  color: $blue-dark;
+}
+
+.hard > * {
+  color: $red-dark;
+}
+
+.secret > * {
+  color: $dark-purple;
+}
+
+.profile-arrow {
+  width: 1.5rem;
+  height: 1rem;
+  &.active {
+    transform: rotate(180deg);
+  }
+}
+
+@media (max-width: 1000px) {
+  .not-found {
+    margin-bottom: 2rem;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .not-found {
+    width: 15rem;
+    height: 15rem;
+  }
+}

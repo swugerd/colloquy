@@ -25,9 +25,9 @@
   &.active {
     color: $green-main;
   }
-  &.active ~ .feed rect {
-    stroke: $green-main;
-  }
+  // &.active ~ .feed rect {
+  //   stroke: $green-main;
+  // }
 }
 
 .nav-link {
@@ -35,39 +35,39 @@
   &.active .text {
     color: $green-main;
   }
-  &.active .feed rect:first-child,
-  &.active .photos rect,
-  &.active .games .games-path {
-    stroke: $green-main;
-  }
-  &.active .feed rect:not(:first-child),
-  &.active .profile > *,
-  &.active .friends > *,
-  &.active .groups > *,
-  &.active .messages path,
-  &.active .circles ellipse,
-  &.active .circles path:not(:last-child),
-  &.active .voices ellipse,
-  &.active .voices .micro-path,
-  &.active .photos path,
-  &.active .photos circle,
-  &.active .videos rect,
-  &.active .music > *,
-  &.active .apps > *,
-  &.active .games .games-path {
-    fill: $green-main;
-  }
+  // &.active .feed rect:first-child,
+  // &.active .photos rect,
+  // &.active .games .games-path {
+  //   stroke: $green-main;
+  // }
+  // &.active .feed rect:not(:first-child),
+  // &.active .profile > *,
+  // &.active .friends > *,
+  // &.active .groups > *,
+  // &.active .messages path,
+  // &.active .circles ellipse,
+  // &.active .circles path:not(:last-child),
+  // &.active .voices ellipse,
+  // &.active .voices .micro-path,
+  // &.active .photos path,
+  // &.active .photos circle,
+  // &.active .videos rect,
+  // &.active .music > *,
+  // &.active .apps > *,
+  // &.active .games .games-path {
+  //   fill: $green-main;
+  // }
 }
 
 .text {
   transition: 0.2s linear;
 }
 
-.nav-img {
-  width: 2rem;
-  height: 2rem;
-  margin-right: 1rem;
-  & > * {
-    transition: 0.2s linear;
-  }
-}
+// .nav-img {
+//   width: 2rem;
+//   height: 2rem;
+//   margin-right: 1rem;
+//   & > * {
+//     transition: 0.2s linear;
+//   }
+// }

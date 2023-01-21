@@ -1,6 +1,6 @@
-<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="11" height="11" rx="2" fill="white"/>
-<rect x="14" width="11" height="11" rx="2" fill="white"/>
-<rect y="14" width="11" height="11" rx="2" fill="white"/>
-<circle cx="19.5" cy="19.5" r="5.5" fill="white"/>
+<svg viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" id="apps">
+<rect width="11" height="11" rx="2" fill="currentColor"/>
+<rect x="14" width="11" height="11" rx="2" fill="currentColor"/>
+<rect y="14" width="11" height="11" rx="2" fill="currentColor"/>
+<circle cx="19.5" cy="19.5" r="5.5" fill="currentColor"/>
 </svg>

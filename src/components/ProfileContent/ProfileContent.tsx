@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './ProfileContent.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -6,15 +6,76 @@ import Story from '../Story/Story';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
+import useWindowSize from '../../hooks/useWindowResize';
+import Icon from '../UI/Icon/Icon';
+import arrowSvg from '../../assets/img/icons/arrow.svg';
+import classNames from 'classnames';
+
+type contentType = 'stories' | 'friends' | 'groups' | 'music' | 'videos' | 'photos' | 'collection';
 
 type ProfileContentProps = {
-  contentType: 'stories' | 'friends' | 'groups' | 'music' | 'videos' | 'photos' | 'collection';
+  contentType: contentType;
   data: any;
 };
+
+// поставить шрифт, переделать компонент
 
 const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) => {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
+
+  const { width } = useWindowSize();
+
+  const [visibleFriends, setvisibleFriends] = useState(0);
+  const [visibleVideos, setVisibleVideos] = useState(0);
+  const [visibleGroups, setVisibleGroups] = useState(0);
+  const [visibleMusic, setVisibleMusic] = useState(0);
+  const [visiblePhotos, setVisiblePhotos] = useState(0);
+
+  const [isOpen, setIsOpen] = useState({
+    isStoriesOpen: true,
+    isPhotosOpen: true,
+    isFriendsOpen: false,
+    isGroupsOpen: false,
+    isMusicOpen: false,
+    isVideosOpen: false,
+    isCollectionOpen: false,
+  });
+
+  const {
+    isStoriesOpen,
+    isPhotosOpen,
+    isFriendsOpen,
+    isGroupsOpen,
+    isMusicOpen,
+    isVideosOpen,
+    isCollectionOpen,
+  } = isOpen;
+
+  useEffect(() => {
+    if (width < 740) {
+      setvisibleFriends(2);
+      setVisibleGroups(2);
+      setVisibleMusic(2);
+      setVisibleVideos(2);
+      setVisiblePhotos(4);
+    } else if (width > 600 && width < 1000) {
+      setvisibleFriends(3);
+      setVisibleGroups(3);
+      setVisibleMusic(3);
+      setVisibleVideos(3);
+      setVisiblePhotos(4);
+    } else {
+      setvisibleFriends(4);
+      setVisibleGroups(3);
+      setVisibleMusic(3);
+      setVisibleVideos(3);
+      setVisiblePhotos(4);
+    }
+    if (width < 550) {
+      setVisiblePhotos(3);
+    }
+  }, [width]);
 
   const convertMembers = (count: number) => {
     if (count > 999999) {
@@ -26,37 +87,54 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
     }
     return count;
   };
-  return (
-    <>
-      {contentType === 'stories' && (
-        <div className={`${s['content-block']} ${s[`${contentType}-area`]}`}>
-          <h5 className={s['sub-title']}>Истории</h5>
+
+  const setTitle = (contentType: contentType) => {
+    const titles = [
+      { type: 'stories', title: 'Истории' },
+      { type: 'friends', title: 'Друзья' },
+      { type: 'groups', title: 'Сообщества' },
+      { type: 'music', title: 'Музыка' },
+      { type: 'videos', title: 'Видео' },
+      { type: 'photos', title: 'Фотографии' },
+      { type: 'collection', title: 'Коллекция' },
+    ];
+    return titles.find((item) => item.type === contentType)?.title;
+  };
+
+  const setContent = (data: any, contentType: contentType) => {
+    const content = [
+      {
+        type: 'stories',
+        jsx: (
           <Swiper
             slidesPerView={2}
             spaceBetween={30}
+            breakpoints={{
+              320: {
+                slidesPerView: 2,
+              },
+              400: {
+                slidesPerView: 3,
+              },
+              500: {
+                slidesPerView: 4,
+              },
+              700: {
+                slidesPerView: 5,
+              },
+              900: {
+                slidesPerView: 7,
+              },
+              1150: {
+                slidesPerView: 2,
+              },
+            }}
             navigation={{
               prevEl: navigationPrevRef.current,
               nextEl: navigationNextRef.current,
             }}
-            // onSwiper={(swiper) => {
-            //   setTimeout(() => {
-            //     // Override prevEl & nextEl now that refs are defined
-
-            //     // сделать что-то с типизацией
-
-            //     // @ts-ignore
-            //     swiper.params.navigation.prevEl = navigationPrevRef.current;
-            //     // @ts-ignore
-            //     swiper.params.navigation.nextEl = navigationNextRef.current;
-
-            //     // Re-init navigation
-            //     swiper.navigation.destroy();
-            //     swiper.navigation.init();
-            //     swiper.navigation.update();
-            //   });
-            // }}
             modules={[Navigation]}>
-            {data.map((item: any) => (
+            {data?.map((item: any) => (
               <SwiperSlide key={item.id}>
                 <Story id={item.id} story={item.story} user={item.user} className={'profile'} />
               </SwiperSlide>
@@ -121,11 +199,11 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               </svg>
             </button>
           </Swiper>
-        </div>
-      )}
-      {contentType === 'friends' && (
-        <div className={`${s['content-block']} ${s[`${contentType}-area`]}`}>
-          <h5 className={s['sub-title']}>Друзья</h5>
+        ),
+      },
+      {
+        type: 'friends',
+        jsx: (
           <div className={s['content']}>
             <div className={s['top']}>
               <Link to="/friends" className={s['link']}>
@@ -145,16 +223,16 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                     />
                   </svg>
                 </div>
-                <span className={s['count']}>{data.length}</span>
+                <span className={s['count']}>{data?.length}</span>
               </Link>
               <p className={s['online']}>
                 Онлайн:{' '}
-                <span>{data.filter((item: any) => item.onlineType !== 'pc-offline').length}</span>
+                <span>{data?.filter((item: any) => item.onlineType !== 'pc-offline').length}</span>
               </p>
             </div>
             <div className={s['friend-list']}>
-              {data.map((item: any, index: number) =>
-                index >= 4 ? null : (
+              {data?.map((item: any, index: number) =>
+                index >= visibleFriends ? null : (
                   <Link to="/friends" className={s['friend']} key={item.id}>
                     <HeaderAvatar
                       className={'content-block'}
@@ -169,11 +247,11 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               )}
             </div>
           </div>
-        </div>
-      )}
-      {contentType === 'groups' && (
-        <div className={`${s['content-block']} ${s[`${contentType}-area`]}`}>
-          <h5 className={s['sub-title']}>Сообщества</h5>
+        ),
+      },
+      {
+        type: 'groups',
+        jsx: (
           <div className={s['content']}>
             <div className={s['top']}>
               <Link to="/groups" className={s['link']}>
@@ -193,12 +271,12 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                     />
                   </svg>
                 </div>
-                <span className={s['count']}>{data.length}</span>
+                <span className={s['count']}>{data?.length}</span>
               </Link>
             </div>
             <div className={s['group-list']}>
-              {data.map((item: any, index: number) =>
-                index >= 3 ? null : (
+              {data?.map((item: any, index: number) =>
+                index >= visibleGroups ? null : (
                   <Link to="/groups" className={s['group']} key={item.id}>
                     <HeaderAvatar
                       className={'content-block'}
@@ -230,11 +308,11 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               )}
             </div>
           </div>
-        </div>
-      )}
-      {contentType === 'music' && (
-        <div className={`${s['content-block']} ${s[`${contentType}-area`]}`}>
-          <h5 className={s['sub-title']}>Музыка</h5>
+        ),
+      },
+      {
+        type: 'music',
+        jsx: (
           <div className={s['content']}>
             <div className={s['top']}>
               <Link to="/groups" className={s['link']}>
@@ -254,12 +332,12 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                     />
                   </svg>
                 </div>
-                <span className={s['count']}>{data.length}</span>
+                <span className={s['count']}>{data?.length}</span>
               </Link>
             </div>
             <div className={s['group-list']}>
-              {data.map((item: any, index: number) =>
-                index >= 3 ? null : (
+              {data?.map((item: any, index: number) =>
+                index >= visibleMusic ? null : (
                   <Link to="/music" className={s['group']} key={item.id}>
                     <div className={s['music-img']}>
                       <img src={item.img} alt="music" />
@@ -273,11 +351,11 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               )}
             </div>
           </div>
-        </div>
-      )}
-      {contentType === 'videos' && (
-        <div className={`${s['content-block']} ${s[`${contentType}-area`]}`}>
-          <h5 className={s['sub-title']}>Видео</h5>
+        ),
+      },
+      {
+        type: 'videos',
+        jsx: (
           <div className={s['content']}>
             <div className={s['top']}>
               <Link to="/groups" className={s['link']}>
@@ -297,21 +375,21 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                     />
                   </svg>
                 </div>
-                <span className={s['count']}>{data.length}</span>
+                <span className={s['count']}>{data?.length}</span>
               </Link>
             </div>
             <div className={s['group-list']}>
-              {data.map((item: any, index: number) =>
-                index >= 3 ? null : (
-                  <div className={s['group']} key={item.id}>
+              {data?.map((item: any, index: number) =>
+                index >= visibleVideos ? null : (
+                  <div className={s['video-item']} key={item.id}>
                     <div className={s['video']}>
                       <video>
                         <source src={item.video} type="video/mp4" />
                       </video>
                     </div>
                     <div className={s['group-info']}>
-                      <span className={s['group-name']}>{item.name}</span>
-                      <Link to="/profile/swugerd" className={s['members']}>
+                      <span className={s['video-name']}>{item.name}</span>
+                      <Link to="/profile/swugerd" className={s['video-author']}>
                         {item.author}
                       </Link>
                       <div className={s['views']}>
@@ -339,46 +417,25 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               )}
             </div>
           </div>
-        </div>
-      )}
-      {contentType === 'photos' && (
-        <div className={`${s[`${contentType}-area`]} ${s['photo-block']}`}>
-          <div className={s['photo-top']}>
-            <h5 className={s['photo-title']}>Фотографии</h5>
-            <Link to="/photos" className={s['photo-link']}>
-              <span className={s['all']}>Показать все</span>
-              <div className={s['arrow']}>
-                <svg
-                  width="15"
-                  height="9"
-                  viewBox="0 0 15 9"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M1 1L6.79289 6.79289C7.18342 7.18342 7.81658 7.18342 8.20711 6.79289L14 1"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <span className={s['count']}>{data.length}</span>
-            </Link>
-          </div>
+        ),
+      },
+      {
+        type: 'photos',
+        jsx: (
           <div className={s['photos']}>
-            {data.map((item: any, index: number) =>
-              index >= 4 ? null : (
+            {data?.map((item: any, index: number) =>
+              index >= visiblePhotos ? null : (
                 <div className={s['photo']} key={item.id}>
                   <img src={item.img} alt="content" />
                 </div>
               ),
             )}
           </div>
-        </div>
-      )}
-      {contentType === 'collection' && (
-        <div className={` ${s[`${contentType}-area`]}`}>
-          <h5 className={s['sub-title']}>Коллекция</h5>
+        ),
+      },
+      {
+        type: 'collection',
+        jsx: (
           <div className={s['row']}>
             <Link to="/achievements" className={s['collection']}>
               <div className={s['collection-icon']}>
@@ -534,6 +591,98 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               </div>
             </Link>
           </div>
+        ),
+      },
+    ];
+    return content.find((item) => item.type === contentType)?.jsx;
+  };
+
+  const contentVisibleHandler = (contentType: contentType, action: 'get' | 'set') => {
+    const stateInfo: {
+      type: contentType;
+      state: boolean;
+      key: string;
+    }[] = [
+      { type: 'stories', state: isStoriesOpen, key: 'isStoriesOpen' },
+      { type: 'friends', state: isFriendsOpen, key: 'isFriendsOpen' },
+      { type: 'groups', state: isGroupsOpen, key: 'isGroupsOpen' },
+      { type: 'music', state: isMusicOpen, key: 'isMusicOpen' },
+      { type: 'videos', state: isVideosOpen, key: 'isVideosOpen' },
+      { type: 'photos', state: isPhotosOpen, key: 'isPhotosOpen' },
+      { type: 'collection', state: isCollectionOpen, key: 'isCollectionOpen' },
+    ];
+
+    const state = stateInfo.find((item) => item.type === contentType)?.state;
+    const key = stateInfo.find((item) => item.type === contentType)?.key;
+
+    if (action === 'set') {
+      key && setIsOpen((prev) => ({ ...prev, [key]: !state }));
+    } else {
+      return key;
+    }
+  };
+
+  return (
+    <>
+      {(data?.length || contentType === 'collection' || contentType === 'stories') && (
+        <div
+          className={classNames({
+            [s['content-block']]: contentType !== 'photos' && contentType !== 'collection',
+            [s['photo-block']]: contentType === 'photos',
+          })}>
+          {width < 1150 ? (
+            <button
+              className={s['content-top']}
+              onClick={() => contentVisibleHandler(contentType, 'set')}>
+              <h5 className={s['sub-title']}>{setTitle(contentType)}</h5>
+              <Icon
+                src={arrowSvg}
+                id={'arrow'}
+                className={'profile-arrow'}
+                hoverClass={
+                  // @ts-ignore
+                  isOpen[contentVisibleHandler(contentType, 'get')] ? 'active' : ''
+                }
+              />
+            </button>
+          ) : (
+            <div
+              className={classNames({
+                [s['content-top']]: contentType !== 'photos',
+                [s['photo-top']]: contentType === 'photos',
+              })}>
+              <h5 className={s['sub-title']}>{setTitle(contentType)}</h5>
+              {contentType === 'photos' && (
+                <Link
+                  to="/friends"
+                  className={classNames({
+                    [s['link']]: contentType !== 'photos',
+                    [s['photo-link']]: contentType === 'photos',
+                  })}>
+                  <span className={s['all']}>Показать все</span>
+                  <div className={s['arrow']}>
+                    <svg
+                      width="15"
+                      height="9"
+                      viewBox="0 0 15 9"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M1 1L6.79289 6.79289C7.18342 7.18342 7.81658 7.18342 8.20711 6.79289L14 1"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <span className={s['count']}>{data.length}</span>
+                </Link>
+              )}
+            </div>
+          )}
+          {width > 1150
+            ? setContent(data, contentType) // @ts-ignore
+            : isOpen[contentVisibleHandler(contentType, 'get')] && setContent(data, contentType)}
         </div>
       )}
     </>

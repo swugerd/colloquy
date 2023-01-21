@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './AccountCard.module.scss';
-import trashIcon from '../../assets/img/icons/trash.svg';
-import arrowIcon from '../../assets/img/header/arrow.svg';
+import Icon from '../UI/Icon/Icon';
+import trashSvg from '../../assets/img/icons/trash.svg';
+import arrowSvg from '../../assets/img/icons/arrow.svg';
 
 type AccountCardProps = {
   id: number;
@@ -21,7 +22,7 @@ const AccountCard: React.FC<AccountCardProps> = ({ id, name, img, className }) =
       </span>
       <div className={s['buttons']}>
         <button className={`${s['button']} ${s['warn']}`}>
-          <svg
+          {/* <svg
             width="24"
             height="28"
             viewBox="0 0 24 28"
@@ -64,10 +65,11 @@ const AccountCard: React.FC<AccountCardProps> = ({ id, name, img, className }) =
               strokeWidth="2"
               strokeLinecap="round"
             />
-          </svg>
+          </svg> */}
+          <Icon src={trashSvg} id={'trash'} className={'account-button'} />
         </button>
         <button className={`${s['button']} ${s['success']}`}>
-          <svg
+          {/* <svg
             width="15"
             height="9"
             viewBox="0 0 15 9"
@@ -79,7 +81,8 @@ const AccountCard: React.FC<AccountCardProps> = ({ id, name, img, className }) =
               strokeWidth="2"
               strokeLinecap="round"
             />
-          </svg>
+          </svg> */}
+          <Icon src={arrowSvg} id={'arrow'} className={'account-button'} />
         </button>
       </div>
     </div>
