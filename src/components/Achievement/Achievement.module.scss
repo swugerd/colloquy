@@ -12,27 +12,27 @@
   &:hover .name {
     opacity: 0;
   }
-  &:hover {
-    .easy path {
-      stroke: darken($white, 15);
-      fill: darken($green-main, 15);
-    }
-    .standard path {
-      stroke: darken($white, 15);
-      fill: darken($blue-dark, 15);
-    }
-    .hard path {
-      stroke: darken($white, 15);
-      fill: darken($red-dark, 15);
-    }
-    .hard {
-      display: none;
-    }
-    .secret path {
-      stroke: darken($white, 15);
-      fill: darken($dark-purple, 15);
-    }
-  }
+  // &:hover {
+  //   .easy path {
+  //     stroke: darken($white, 15);
+  //     fill: darken($green-main, 15);
+  //   }
+  //   .standard path {
+  //     stroke: darken($white, 15);
+  //     fill: darken($blue-dark, 15);
+  //   }
+  //   .hard path {
+  //     stroke: darken($white, 15);
+  //     fill: darken($red-dark, 15);
+  //   }
+  //   .hard {
+  //     display: none;
+  //   }
+  //   .secret path {
+  //     stroke: darken($white, 15);
+  //     fill: darken($dark-purple, 15);
+  //   }
+  // }
   & + & {
     margin-top: 2rem;
   }

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import s from './Achievement.module.scss';
+import iconS from '../UI/Icon/Icon.module.scss';
 import gemIcon from '../../assets/img/icons/gem.svg';
 import Icon from '../UI/Icon/Icon';
 import bgAchievementSvg from '../../assets/img/achievements/bg.svg';
@@ -27,7 +28,7 @@ const Achievement: React.FC<AchievementProps> = ({
   reward,
 }) => {
   return (
-    <div className={s['achievement']}>
+    <div className={`${s['achievement']} ${iconS['hover']}`}>
       <div className={s['preview']}>
         <div className={s['desc']}>{desc}</div>
         {/* <svg
@@ -98,7 +99,7 @@ const Achievement: React.FC<AchievementProps> = ({
         </div>
         <div className={s['reward']}>
           <span>{reward}</span>
-          <div className={s['reward-icon']}>
+          {/* <div className={s['reward-icon']}>
             <svg
               width="11"
               height="15"
@@ -126,7 +127,8 @@ const Achievement: React.FC<AchievementProps> = ({
                 fill="white"
               />
             </svg>
-          </div>
+          </div> */}
+          <Icon src={gemIcon} id={'gem'} className={'reward-icon'} />
         </div>
       </div>
     </div>

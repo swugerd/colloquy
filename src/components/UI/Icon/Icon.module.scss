@@ -15,6 +15,10 @@
   }
 }
 
+.nav-img.messages {
+  --transparent-color: black;
+}
+
 .profile.active > *,
 .feed.active > *,
 .friends.active > *,
@@ -41,9 +45,32 @@
 .achievement-bg {
   width: 35rem;
   height: 7.5rem;
-  & path {
+  & > * {
     transition: 0.2s linear;
   }
+}
+
+.hover:hover .achievement-bg.easy > * {
+  color: darken($green-main, 15);
+}
+
+.hover:hover .achievement-bg.standard > * {
+  color: darken($blue-dark, 15);
+}
+
+.hover:hover .achievement-bg.hard > * {
+  color: darken($red-dark, 15);
+}
+
+.hover:hover .achievement-bg.secret > * {
+  color: darken($dark-purple, 15);
+}
+
+.achieve {
+  width: 2rem;
+  height: 2rem;
+  color: $white;
+  --transparent-color: black;
 }
 
 .easy > * {
@@ -68,6 +95,32 @@
   &.active {
     transform: rotate(180deg);
   }
+}
+
+.reward-icon {
+  width: 1rem;
+  height: 1.5rem;
+}
+
+.header-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.header-messages {
+  width: 2rem;
+  height: 2rem;
+  --transparent-color: black;
+}
+
+.full-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.arrow-fms {
+  width: 2rem;
+  height: 2rem;
 }
 
 @media (max-width: 1000px) {

@@ -40,14 +40,8 @@
 }
 
 .full-chat {
-  width: 2rem;
-  height: 2rem;
   margin-right: 1.5rem;
   object-fit: contain;
-  & svg {
-    width: auto;
-    height: auto;
-  }
 }
 
 .arrow {

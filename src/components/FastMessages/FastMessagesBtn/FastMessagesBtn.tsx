@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import chat from '../../../assets/img/header/chat.svg';
+import chatSvg from '../../../assets/img/icons/chat.svg';
+import Icon from '../../UI/Icon/Icon';
 import s from './FastMessagesBtn.module.scss';
 
 type FastMessagesBtnProps = {
@@ -11,7 +12,7 @@ type FastMessagesBtnProps = {
 const FastMessagesBtn: React.FC<FastMessagesBtnProps> = ({ className, onClick }) => {
   return (
     <Link className={className} to="/fms" onClick={onClick}>
-      <svg
+      {/* <svg
         className={`${s['header__messages-img']} ${s['header-msgs']}`}
         width="21"
         height="22"
@@ -29,7 +30,10 @@ const FastMessagesBtn: React.FC<FastMessagesBtnProps> = ({ className, onClick })
         <circle cx="4" cy="9" r="1" fill="black" />
         <circle cx="8" cy="9" r="1" fill="black" />
         <circle cx="12" cy="9" r="1" fill="black" />
-      </svg>
+      </svg> */}
+      <div className={s['header__messages-img']}>
+        <Icon src={chatSvg} id={'messages'} className={'header-messages'} />
+      </div>
     </Link>
   );
 };

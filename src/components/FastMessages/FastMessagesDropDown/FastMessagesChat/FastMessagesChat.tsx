@@ -2,12 +2,13 @@ import React from 'react';
 import HeaderAvatar from '../../../UI/HeaderAvatar/HeaderAvatar';
 import ebalo from '../../../../assets/uploads/test/ebalo.png';
 import ebalo2 from '../../../../assets/uploads/test/ebalo2.png';
-import fullChat from '../../../../assets/img/icons/chat-full.svg';
-import arrow from '../../../../assets/img/icons/arrow.svg';
+import fullChatSvg from '../../../../assets/img/icons/chat-full.svg';
+import arrowSvg from '../../../../assets/img/icons/back.svg';
 import s from './FastMessagesChat.module.scss';
 import inputS from '../../../UI/Input/Input.module.scss';
 import { Link, useParams } from 'react-router-dom';
 import Input from '../../../UI/Input/Input';
+import Icon from '../../../UI/Icon/Icon';
 
 const FastMessagesChat: React.FC = () => {
   const { dialogId }: any = useParams();
@@ -61,7 +62,7 @@ const FastMessagesChat: React.FC = () => {
           </span>
         </Link>
         <button className={s['full-chat']}>
-          <svg
+          {/* <svg
             width="19"
             height="19"
             viewBox="0 0 19 19"
@@ -79,10 +80,11 @@ const FastMessagesChat: React.FC = () => {
               strokeWidth="2"
               strokeLinecap="round"
             />
-          </svg>
+          </svg> */}
+          <Icon src={fullChatSvg} id={'fullChat'} className={'full-icon'} />
         </button>
         <Link className={s['arrow']} to="/fms">
-          <svg
+          {/* <svg
             width="15"
             height="13"
             viewBox="0 0 15 13"
@@ -94,7 +96,8 @@ const FastMessagesChat: React.FC = () => {
               strokeWidth="2"
               strokeLinecap="round"
             />
-          </svg>
+          </svg> */}
+          <Icon src={arrowSvg} id={'back'} className={'arrow-fms'} />
         </Link>
       </div>
       <div className={s['wrapper-content']}>
