@@ -1,8 +1,10 @@
 import React from 'react';
 import s from './PatternsDropDown.module.scss';
+import addSvg from '../../../assets/img/icons/add.svg';
 import DropDownLayout from './../../UI/DropDownLayout/DropDownLayout';
 import Pattern from '../../Pattern/Pattern';
 import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
+import Icon from '../../UI/Icon/Icon';
 
 const PatternsDropDown: React.FC = () => {
   const patterns: { id: number; name: string }[] = [
@@ -37,31 +39,7 @@ const PatternsDropDown: React.FC = () => {
             ))
           : ''}
         <div className={s['add-pattern']}>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <line
-              x1="7"
-              y1="1"
-              x2="7"
-              y2="13"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <line
-              x1="13"
-              y1="7"
-              x2="1"
-              y2="7"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
+          <Icon src={addSvg} id={'add'} className={'white'} />
         </div>
       </div>
     </DropDownLayout>

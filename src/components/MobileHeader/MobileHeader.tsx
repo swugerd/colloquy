@@ -4,7 +4,9 @@ import useWindowSize from '../../hooks/useWindowResize';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setHasArrowButton, setIsHeaderShow, setTitle } from '../../redux/mobile/slice';
 import s from './MobileHeader.module.scss';
+import arrowSvg from '../../assets/img/icons/arrow.svg';
 import { useAppDispatch } from './../../redux/store';
+import Icon from '../UI/Icon/Icon';
 
 const MobileHeader: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -23,19 +25,7 @@ const MobileHeader: React.FC = () => {
             onClick={() => {
               dispatch(setIsHeaderShow(!mobile.isHeaderShow));
             }}>
-            <svg
-              width="15"
-              height="9"
-              viewBox="0 0 15 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M1 1L6.79289 6.79289C7.18342 7.18342 7.81658 7.18342 8.20711 6.79289L14 1"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
+            <Icon src={arrowSvg} id={'arrow'} className={''} />
           </button>
         )}
       </div>

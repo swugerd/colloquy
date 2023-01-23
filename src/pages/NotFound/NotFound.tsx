@@ -9,9 +9,6 @@ const NotFound: React.FC = () => {
   useSetPageTitle('Страница не найдена!');
   return (
     <div className={`${s['wrapper']} container`}>
-      {/* <svg className={s['image']}>
-        <use xlinkHref={`${svg}#notFound`} />
-      </svg> */}
       <Icon src={svg} id={'notFound'} className={'not-found'} />
       <div className={s['block']}>
         <h2 className={s['title']}>404</h2>

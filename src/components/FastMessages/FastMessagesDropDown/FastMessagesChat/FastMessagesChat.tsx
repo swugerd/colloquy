@@ -62,41 +62,9 @@ const FastMessagesChat: React.FC = () => {
           </span>
         </Link>
         <button className={s['full-chat']}>
-          {/* <svg
-            width="19"
-            height="19"
-            viewBox="0 0 19 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M9 9.89603C9 9.89603 14.4673 4.42857 16.5956 2.30035M16.5956 2.30035C15.9593 2.10009 11.8973 2.39783 11.8973 2.39783M16.5956 2.30035C16.8047 2.50948 16.4981 6.99857 16.4981 6.99857"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M8 1.99976H3C1.89543 1.99976 1 2.89519 1 3.99976V15.9998C1 17.1043 1.89543 17.9998 3 17.9998H15C16.1046 17.9998 17 17.1043 17 15.9998V10.4998"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg> */}
           <Icon src={fullChatSvg} id={'fullChat'} className={'full-icon'} />
         </button>
         <Link className={s['arrow']} to="/fms">
-          {/* <svg
-            width="15"
-            height="13"
-            viewBox="0 0 15 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M13.5 6.5C13.5 6.5 5.88155 6.5 1 6.5M1 6.5C1.5 7.5 6.5 12 6.5 12M1 6.5C1 6 6.5 1 6.5 1"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg> */}
           <Icon src={arrowSvg} id={'back'} className={'arrow-fms'} />
         </Link>
       </div>

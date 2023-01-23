@@ -24,6 +24,11 @@
   text-overflow: ellipsis;
 }
 
+.header__profile-arrow {
+  width: 1.5rem;
+  height: 0.9rem;
+}
+
 .header-hover {
   transition: 0.2s linear;
   box-sizing: border-box;

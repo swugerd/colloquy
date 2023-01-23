@@ -2,10 +2,11 @@ import React from 'react';
 import FastMessagesItem from '../../FastMessagesItem/FastMessagesItem';
 import s from './FastMessagesList.module.scss';
 import inputS from '../../../UI/Input/Input.module.scss';
-import close from '../../../../assets/img/icons/close.svg';
+import closeSvg from '../../../../assets/img/icons/close.svg';
 import Input from '../../../UI/Input/Input';
 import { Link } from 'react-router-dom';
 import NotFoundBlock from '../../../NotFoundBlock/NotFoundBlock';
+import Icon from '../../../UI/Icon/Icon';
 
 type FastMessagesListProps = {
   onClick: React.MouseEventHandler<HTMLAnchorElement>;
@@ -31,16 +32,8 @@ const FastMessagesList: React.FC<FastMessagesListProps> = ({ onClick }) => {
     <>
       <div className={s['wrapper-top']}>
         <h6 className={s['wrapper-heading']}>Чаты</h6>
-        <Link className={s.close} onClick={onClick} to="/">
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 30 30"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M28 2L2 28" stroke="white" strokeWidth="4" strokeLinecap="round" />
-            <path d="M2 2L28 28" stroke="white" strokeWidth="4" strokeLinecap="round" />
-          </svg>
+        <Link onClick={onClick} to="/">
+          <Icon src={closeSvg} id={'close'} className={'fms-close'} />
         </Link>
       </div>
       <div className={`${s['wrapper-content']} ${chats.length ? '' : s['nothing']}`}>

@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
+import Icon from '../../components/UI/Icon/Icon';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
+import closeSvg from '../../assets/img/icons/close.svg';
 import s from './ModalLayout.module.scss';
 
 type ModalLayoutProps = {
@@ -16,15 +18,7 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({ className, children, onClose,
     <div className={s['wrapper']}>
       <div className={`${s['modal']} ${s[className]}`} ref={ref}>
         <button className={s['close']} onClick={onClose}>
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 30 30"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M28 2L2 28" stroke="white" strokeWidth="4" strokeLinecap="round" />
-            <path d="M2 2L28 28" stroke="white" strokeWidth="4" strokeLinecap="round" />
-          </svg>
+          <Icon src={closeSvg} id={'close'} className={'white'} />
         </button>
         {children}
       </div>

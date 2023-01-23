@@ -52,6 +52,21 @@
   }
 }
 
+.add-icon {
+  height: 0.3rem;
+  width: 6rem;
+  background: $green-main;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    background: inherit;
+    transform: rotate(90deg);
+  }
+}
+
 .content {
   padding: 1rem;
   background: $elem;

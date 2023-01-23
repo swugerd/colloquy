@@ -97,22 +97,8 @@
   &.active .option-name {
     color: $green-main;
   }
-  &.active .all rect,
-  &.active .photos rect {
-    stroke: $green-main;
-  }
-  &.active .friends > *,
-  &.active .groups > *,
-  &.active .circles ellipse,
-  &.active .circles path:not(:last-child),
-  &.active .voices ellipse,
-  &.active .voices .micro-path,
-  &.active .photos path,
-  &.active .photos circle,
-  &.active .videos rect,
-  &.active .music > *,
-  &.active .patterns > * {
-    fill: $green-main;
+  & svg > * {
+    color: $white;
   }
 }
 

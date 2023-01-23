@@ -1,11 +1,17 @@
 import React, { useRef, useState } from 'react';
 import s from './Wall.module.scss';
+import paperclipSvg from '../../assets/img/icons/paperclip.svg';
+import smileSvg from '../../assets/img/icons/smile.svg';
+import commentsSvg from '../../assets/img/icons/comment.svg';
+import microSvg from '../../assets/img/icons/voices.svg';
+import sendSvg from '../../assets/img/icons/send.svg';
 import Post from '../Post/Post';
 import img from '../../assets/uploads/pasha.png';
 import video from '../../assets/videos/video.mp4';
 import circle from '../../assets/videos/video.mp4';
 import voice from '../../assets/uploads/test/voice.png';
 import track from '../../assets/uploads/test/ebalo.png';
+import Icon from '../UI/Icon/Icon';
 
 type WallProps = {
   className: string;
@@ -217,69 +223,15 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
               placeholder="Что произошло сегодня?"
               onChange={textAreaAdjust}></textarea>
             <button className={`${s['controls-icon']} ${s['paperclip']}`}>
-              <svg
-                width="22"
-                height="23"
-                viewBox="0 0 22 23"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1 10.5L9.77976 2.55641C10.8869 1.55468 12.3268 1 13.8198 1V1C15.2285 1 16.5927 1.49388 17.6749 2.39571L17.7333 2.44446C18.5635 3.13625 19.1995 4.03202 19.5789 5.04383L19.6087 5.12308C20.1821 6.65231 20.1638 8.34058 19.5572 9.85698L19.223 10.6924C18.7467 11.8833 18.0178 12.9568 17.0867 13.8389L10.3313 20.2388C9.47644 21.0486 8.34371 21.5 7.16619 21.5V21.5C6.08959 21.5 5.04706 21.1226 4.22 20.4333L4.1033 20.3361C3.08739 19.4895 2.5 18.2354 2.5 16.913V16.913C2.5 15.6916 3.00138 14.5237 3.8869 13.6824L11.4419 6.50522C12.0867 5.89263 13.0293 5.71171 13.8551 6.04204V6.04204C14.5693 6.32774 15.091 6.95483 15.2418 7.70914L15.2564 7.78205C15.4093 8.54638 15.1836 9.33749 14.6505 9.90614L8 17"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Icon src={paperclipSvg} id={'paperclip'} className={'gray'} />
             </button>
             <button className={`${s['controls-icon']} ${s['smile']}`}>
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 25 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M21.5808 19.6349C21.994 19.9596 22.5956 19.8896 22.8879 19.4529C24.4579 17.1073 25.1933 14.2898 24.9565 11.4585C24.6933 8.30994 23.2475 5.37791 20.91 3.25219C18.5725 1.12647 15.5168 -0.0352167 12.3575 0.000812777C9.19815 0.0368423 6.16969 1.26792 3.88129 3.44639C1.59289 5.62486 0.214343 8.5891 0.0229546 11.7428C-0.168434 14.8965 0.841541 18.0057 2.84971 20.4449C4.85787 22.8841 7.71524 24.4724 10.847 24.8902C13.6633 25.2659 16.5135 24.6701 18.9335 23.2173C19.3841 22.9468 19.4835 22.3494 19.1796 21.9207V21.9207C18.8756 21.492 18.2835 21.395 17.8293 21.6593C15.8049 22.8373 13.438 23.3159 11.0987 23.0038C8.44371 22.6496 6.02137 21.3032 4.31895 19.2353C2.61652 17.1675 1.76031 14.5317 1.92256 11.8581C2.08481 9.18453 3.25348 6.67159 5.19347 4.82478C7.13347 2.97798 9.70085 1.93433 12.3792 1.90379C15.0575 1.87324 17.648 2.85807 19.6296 4.66015C21.6112 6.46223 22.8369 8.94787 23.0601 11.617C23.2567 13.9688 22.6622 16.3094 21.3861 18.2734C21.0998 18.7141 21.1675 19.3102 21.5808 19.6349V19.6349Z"
-                  fill="white"
-                />
-                <path
-                  d="M8 15L9.17818 16.0473C11.0726 17.7312 13.9274 17.7312 15.8218 16.0473L17 15"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M10 10V10C9.52464 7.86088 6.47536 7.86088 6 10V10"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M19 10V10C18.5246 7.86088 15.4754 7.86088 15 10V10"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Icon src={smileSvg} id={'smile'} className={'gray'} />
             </button>
           </div>
           <div className={s['input-controls']}>
             <button className={`${s['controls-icon']} ${s['comments']}`}>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.5 6.5H15.5" stroke="#9B9B9B" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M6 10H14" stroke="#9B9B9B" strokeWidth="1.5" strokeLinecap="round" />
-                <path
-                  d="M9.95086 15.5313L4.65369 18.9022C4.58712 18.9446 4.5 18.8967 4.5 18.8178V16C4.5 15.7239 4.27614 15.5 4 15.5C2.34315 15.5 1 14.1569 1 12.5V4C1 2.34315 2.34315 1 4 1H16C17.6569 1 19 2.34315 19 4V12.5C19 14.1569 17.6569 15.5 16 15.5H10.0582C10.0202 15.5 9.98295 15.5108 9.95086 15.5313Z"
-                  stroke="#9B9B9B"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Icon src={commentsSvg} id={'comments'} className={'gray'} />
             </button>
             <div className={s['media-action']} onClick={() => setIsActive(!isActive)}>
               <div className={s['radio-btn']}>
@@ -294,38 +246,10 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
               <div className={s['text']}>Добавить медиа на страницу</div>
             </div>
             <button className={`${s['controls-icon']} ${s['micro']}`}>
-              <svg
-                width="23"
-                height="22"
-                viewBox="0 0 23 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="11.5" cy="10" rx="11.5" ry="10" fill="white" />
-                <path
-                  d="M3.85089 22H2.5C2.64022 21.7196 2.87312 21.3827 3.11407 21.066C3.66346 20.3441 4.094 19.53 4.27192 18.6404L4.5 17.5L9 19.5C8.01356 20.4864 6.81099 21.2297 5.48754 21.6708L5.1158 21.7947C4.70793 21.9307 4.28082 22 3.85089 22Z"
-                  fill="white"
-                />
-                <rect x="9" y="3" width="5" height="9" rx="2.5" fill="black" />
-                <path
-                  d="M16 8C16 9.5913 15.5259 11.1174 14.682 12.2426C13.8381 13.3679 12.6935 14 11.5 14C10.3065 14 9.16193 13.3679 8.31802 12.2426C7.47411 11.1174 7 9.5913 7 8L8 8V8.58421C8 9.1897 8.10544 9.79214 8.34613 10.3477C8.5458 10.8086 8.79676 11.3386 9 11.6096C9.71799 12.5669 10.4846 13 11.5 13C12.5154 13 13.282 12.5669 14 11.6096C14.3499 11.143 14.4413 10.7824 14.682 10.1869C14.9351 9.56043 15 8.69407 15 8H16Z"
-                  fill="black"
-                />
-                <path
-                  d="M11 15V13.5H12V15H14C14.2761 15 14.5 15.2239 14.5 15.5C14.5 15.7761 14.2761 16 14 16H9C8.72386 16 8.5 15.7761 8.5 15.5C8.5 15.2239 8.72386 15 9 15H11Z"
-                  fill="black"
-                />
-              </svg>
+              <Icon src={microSvg} id={'voices'} className={'gray'} />
             </button>
             <button className={`${s['controls-icon']} ${s['send']}`}>
-              <svg
-                width="29"
-                height="25"
-                viewBox="0 0 29 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M29 12.5L0 25V15L20.5 12.5H29Z" fill="white" />
-                <path d="M29 12.5L0 0V9.5L20.5 12.5H29Z" fill="white" />
-              </svg>
+              <Icon src={sendSvg} id={'send'} className={'gray'} />
             </button>
           </div>
         </form>

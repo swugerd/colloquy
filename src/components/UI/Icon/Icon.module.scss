@@ -15,7 +15,20 @@
   }
 }
 
-.nav-img.messages {
+.mobile-img {
+  margin-right: 2rem;
+  width: 4rem;
+  height: 4rem;
+  &.active ~ .mobile-sidebar-arrow {
+    color: $green-main;
+  }
+  & > * {
+    transition: 0.2s linear;
+  }
+}
+
+.nav-img.messages,
+.footer-msgs {
   --transparent-color: black;
 }
 
@@ -30,16 +43,20 @@
 .videos.active > *,
 .music.active > *,
 .apps.active > *,
-.games.active > * {
+.games.active > *,
+.achieve.active > *,
+.shop.active > *,
+.notify.active > *,
+.all.active > *,
+.patterns.active > * {
   color: $green-main;
 }
 
 .account-button {
   width: 1.5rem;
   height: 1.5rem;
-  & > * {
-    color: $red-light;
-  }
+  --transparent-color: #f94f4f;
+  color: $white;
 }
 
 .achievement-bg {
@@ -66,7 +83,7 @@
   color: darken($dark-purple, 15);
 }
 
-.achieve {
+.achieve-header {
   width: 2rem;
   height: 2rem;
   color: $white;
@@ -92,9 +109,43 @@
 .profile-arrow {
   width: 1.5rem;
   height: 1rem;
+  color: $white;
   &.active {
     transform: rotate(180deg);
   }
+}
+
+.profile-action {
+  width: 2rem;
+  height: 2rem;
+  color: $white;
+  --transparent-color: black;
+}
+
+.profile-hover svg.white,
+.profile-hover:hover svg.profile-arrow {
+  transition: 0.2s linear;
+}
+
+.profile-hover:hover svg.white,
+.profile-hover:hover svg.profile-arrow {
+  color: $green-main;
+}
+
+.inp-check:checked ~ div > svg.white {
+  color: $green-main;
+}
+
+.home-dots {
+  color: $white;
+  width: 3.4rem;
+  height: 0.8rem;
+}
+
+.profile-dots {
+  color: $white;
+  width: 2.6rem;
+  height: 0.8rem;
 }
 
 .reward-icon {
@@ -105,6 +156,7 @@
 .header-icon {
   width: 2.5rem;
   height: 2.5rem;
+  color: $white;
 }
 
 .header-messages {
@@ -123,6 +175,90 @@
   height: 2rem;
 }
 
+.fms-close {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.fms-cross {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: $white;
+}
+
+.footer-logo > * {
+  width: 5rem;
+  height: 5rem;
+}
+
+.mobile-settings {
+  width: 3rem;
+  height: 3rem;
+}
+
+.mobile-sidebar-arrow {
+  margin-left: auto;
+  transform: rotate(270deg);
+  height: 1.5rem;
+  width: 3rem;
+  transition: 0.2s linear;
+}
+
+.inp-search {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.8rem;
+  width: 2rem;
+  height: 2rem;
+  color: $semi-white;
+}
+
+.close-inp {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  opacity: 0;
+  color: $semi-white;
+  transition: 0.2s linear;
+  pointer-events: none;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  &:hover {
+    color: $white;
+  }
+}
+
+.green {
+  color: $green-main;
+}
+
+.only-gray {
+  color: $semi-white;
+  transition: 0.2s linear;
+  &.active {
+    color: $green-main;
+  }
+}
+
+.gray {
+  color: $semi-white;
+  transition: 0.2s linear;
+  --transparent-color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    color: $white;
+  }
+}
+
+.white {
+  color: $white;
+}
+
 @media (max-width: 1000px) {
   .not-found {
     margin-bottom: 2rem;
@@ -134,5 +270,29 @@
   .not-found {
     width: 15rem;
     height: 15rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .mobile-img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+  .mobile-sidebar-arrow {
+    height: 1rem;
+    width: 1.5rem;
+  }
+  .mobile-settings {
+    width: 2rem;
+    height: 2rem;
+  }
+  .profile-action {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .profile-dots {
+    width: 1.8rem;
+    height: 0.4rem;
   }
 }

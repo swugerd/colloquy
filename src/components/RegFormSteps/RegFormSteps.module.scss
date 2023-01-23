@@ -40,13 +40,6 @@
   width: 7.5rem;
   height: 4rem;
   cursor: pointer;
-  &:checked ~ .custom-btn svg path:not(:first-child) {
-    stroke: $green-main;
-  }
-  &:checked ~ .custom-btn svg circle,
-  &:checked ~ .custom-btn svg .path {
-    fill: $green-main;
-  }
 }
 
 .custom-btn {

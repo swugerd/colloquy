@@ -22,7 +22,7 @@ const AchievesDropDown: React.FC = () => {
     {
       id: 1,
       type: 'easy',
-      img: <Icon src={achieveSvg} id={'achieve'} className={'achieve'} />,
+      img: <Icon src={achieveSvg} id={'achieve'} className={'achieve-header'} />,
       name: 'Знакомство с шаблонами',
       desc: 'Выполнить какое-то  воыфо врыфорв фыровлыф выфв фывфы вофырвло фрыоврыфол рвофырв',
       myProgress: 0,
@@ -32,7 +32,9 @@ const AchievesDropDown: React.FC = () => {
     {
       id: 2,
       type: 'standard',
-      img: <Icon src={chatSvg} id={'messages'} className={'achieve'} hoverClass={'messages'} />,
+      img: (
+        <Icon src={chatSvg} id={'messages'} className={'achieve-header'} hoverClass={'messages'} />
+      ),
       name: 'Знакомство с шаблонами',
       desc: 'Выполнить какое-то очень сложное условие, чтобы быть очень крутым парей Выполнить какое-то очень сложное условие, чтобы быть очень крутым парей',
       myProgress: 1,
@@ -42,7 +44,7 @@ const AchievesDropDown: React.FC = () => {
     {
       id: 3,
       type: 'hard',
-      img: <Icon src={patternsSvg} id={'patterns'} className={'achieve'} />,
+      img: <Icon src={patternsSvg} id={'patterns'} className={'achieve-header'} />,
       name: 'Знакомство с шаблонами',
       desc: 'Выполнить какое-то очень сложное условие, чтобы быть очень крутым парей Выполнить какое-то очень сложное условие, чтобы быть очень крутым парей',
       myProgress: 60,
@@ -52,7 +54,7 @@ const AchievesDropDown: React.FC = () => {
     {
       id: 4,
       type: 'secret',
-      img: <Icon src={questionSvg} id={'question'} className={'achieve'} />,
+      img: <Icon src={questionSvg} id={'question'} className={'achieve-header'} />,
       name: 'Знакомство с шаблонами',
       desc: 'Выполнить какое-то очень сложное условие, чтобы быть очень крутым парей Выполнить какое-то очень сложное условие, чтобы быть очень крутым парей',
       myProgress: 4,

@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import Button from '../../components/UI/Button/Button';
 import s from './Home.module.scss';
+import dotsSvg from '../../assets/img/icons/dots.svg';
 import img from '../../assets/uploads/test/image.png';
 import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
 import AccountCard from '../../components/AccountCard/AccountCard';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
+import Icon from '../../components/UI/Icon/Icon';
 
 const Home: React.FC = () => {
   // Переделать адаптив под разные карточки аккаунтов
@@ -51,17 +53,7 @@ const Home: React.FC = () => {
                 className={`${s['more-accs']}`}
                 onClick={() => setIsOpen(true)}
                 ref={buttonRef}>
-                <svg
-                  className={s['dots']}
-                  width="34"
-                  height="8"
-                  viewBox="0 0 34 8"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="4" cy="4" r="4" fill="white" />
-                  <circle cx="17" cy="4" r="4" fill="white" />
-                  <circle cx="30" cy="4" r="4" fill="white" />
-                </svg>
+                <Icon src={dotsSvg} id={'dots'} className={'home-dots'} />
               </button>
             </div>
             <p className={s['info']}>Можно сохранить до 6 аккаунтов на одном устройстве</p>
