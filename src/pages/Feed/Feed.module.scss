@@ -1,23 +1,17 @@
 @import '../../scss/variables.scss';
 
-.side-content {
-  top: calc($header-height + 2rem);
-  max-width: 38rem;
-  min-width: 32.7rem;
-}
+// .stories {
+//   background: $sub-bg;
+//   margin-bottom: 2rem;
+//   border-radius: 2rem;
+//   padding: 2rem;
+// }
 
-.stories {
-  background: $sub-bg;
-  margin-bottom: 2rem;
-  border-radius: 2rem;
-  padding: 2rem;
-}
-
-.options {
-  background: $sub-bg;
-  border-radius: 2rem;
-  padding: 2rem;
-}
+// .options {
+//   background: $sub-bg;
+//   border-radius: 2rem;
+//   padding: 2rem;
+// }
 
 .hidden {
   margin: 1.5rem 0;
@@ -54,92 +48,17 @@
   color: $green-main;
 }
 
-.prev-button,
-.next-button {
-  width: 2.5rem;
-  height: 5rem;
-  position: absolute;
-  z-index: 100;
-  top: 50%;
-}
-
-.prev-button {
-  left: 0;
-  transform: translateY(-50%) rotate(90deg);
-}
-
-.next-button {
-  right: 0;
-  transform: translateY(-50%) rotate(270deg);
-}
-
 :global(.swiper-button-disabled) {
   display: none;
 }
 
-.title {
-  margin-bottom: 1.5rem;
-  font-size: 2.4rem;
-  color: $green-main;
-  font-family: 'OpenSans';
-  font-weight: 600;
-}
-
-.option {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  &.active {
-    background: rgba(0, 0, 0, 0.3);
-  }
-  &.active .option-name {
-    color: $green-main;
-  }
-  & svg > * {
-    color: $white;
-  }
-}
-
-.option-icon {
-  width: 2rem;
-  height: 2rem;
-  margin-right: 1rem;
-  & svg > * {
-    transition: 0.2s linear;
-  }
-}
-
-.option-name {
-  margin-right: auto;
-  font-family: 'OpenSans';
-  font-size: 1.8rem;
-  color: $white;
-  font-weight: 500;
-  transition: 0.2s linear;
-}
-
-@media (max-width: 1150px) {
-  .options {
-    position: fixed;
-    z-index: 200;
-    top: 7.5rem;
-    left: 0;
-    opacity: 0;
-    border-radius: 0 0 2rem 2rem;
-    transition: 0.2s linear;
-    pointer-events: none;
-    &.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-  }
-  .side-content {
-    max-width: 100%;
-    order: 1;
-  }
-}
+// .title {
+//   margin-bottom: 1.5rem;
+//   font-size: 2.4rem;
+//   color: $green-main;
+//   font-family: 'OpenSans';
+//   font-weight: 600;
+// }
 
 @media (max-width: 768px) {
   .stories,
@@ -152,33 +71,33 @@
   .wrapper {
     margin-top: 6.5rem;
   }
-  .option-name {
-    font-size: 1.4rem;
-  }
-  .option-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    & svg {
-      margin-bottom: 1rem;
-    }
-  }
-  .options {
-    top: 4rem;
-  }
+  // .option-name {
+  //   font-size: 1.4rem;
+  // }
+  // .option-icon {
+  //   width: 1.5rem;
+  //   height: 1.5rem;
+  //   & svg {
+  //     margin-bottom: 1rem;
+  //   }
+  // }
+  // .options {
+  //   top: 4rem;
+  // }
   .title {
     font-size: 1.8rem;
     margin-bottom: 1rem;
   }
-  .next-button,
-  .prev-button {
-    width: 2rem;
-    height: 3rem;
-  }
+  // .next-button,
+  // .prev-button {
+  //   width: 2rem;
+  //   height: 3rem;
+  // }
   .feed,
   .stories {
     padding: 1rem;
   }
-  .stories {
-    margin-bottom: 1.5rem;
-  }
+  // .stories {
+  //   margin-bottom: 1.5rem;
+  // }
 }

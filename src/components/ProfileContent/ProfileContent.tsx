@@ -6,6 +6,7 @@ import Story from '../Story/Story';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
+import convertMembers from '../../utils/convertMembers';
 import useWindowSize from '../../hooks/useWindowResize';
 import Icon from '../UI/Icon/Icon';
 import userSvg from '../../assets/img/icons/user.svg';
@@ -81,17 +82,6 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
       setVisiblePhotos(3);
     }
   }, [width]);
-
-  const convertMembers = (count: number) => {
-    if (count > 999999) {
-      count = Math.floor(count / 1000000);
-      return `${count} млн.`;
-    } else if (count > 999) {
-      count = Math.floor(count / 1000);
-      return `${count} тыс.`;
-    }
-    return count;
-  };
 
   const setTitle = (contentType: contentType) => {
     const titles = [

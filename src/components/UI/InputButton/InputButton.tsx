@@ -1,26 +1,36 @@
 import React from 'react';
-import s from './RadioButton.module.scss';
+import s from './InputButton.module.scss';
 
-type RadioButtonProps = {
+type InputButtonProps = {
   className?: string;
   checked: any;
   onChange: any;
   name: string;
+  id: string;
+  type: 'radio' | 'checkbox';
 };
 
-const RadioButton: React.FC<RadioButtonProps> = ({ className, checked, onChange, name }) => {
+const InputButton: React.FC<InputButtonProps> = ({
+  className,
+  checked,
+  onChange,
+  name,
+  id,
+  type,
+}) => {
   return (
     <div className={`${s['radio-btn']} ${className ? s[className] : ''}`}>
       <input
-        type="radio"
+        type={type}
         name={name}
         className={`${s['inp-disabled']}`}
         checked={checked}
         onChange={onChange}
+        id={id}
       />
       <div className={`${s['custom-btn']} ${s['custom-btn-small']}`}></div>
     </div>
   );
 };
 
-export default RadioButton;
+export default InputButton;

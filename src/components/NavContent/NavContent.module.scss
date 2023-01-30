@@ -1,0 +1,141 @@
+@import '../../scss/variables.scss';
+
+.nav {
+  margin-bottom: 2rem;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  max-width: 43vw;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin-right: 2rem;
+  &::-webkit-scrollbar {
+    background: transparent;
+    height: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.link-item {
+  border-radius: 1rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.active {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  & + & {
+    margin-left: 1.5rem;
+  }
+}
+
+.back-icon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+}
+
+.members {
+  color: $green-main;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.back-text {
+  font-family: 'OpenSans';
+  color: $white;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.title {
+  font-family: 'OpenSans';
+  color: $white;
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.link {
+  color: $white;
+  padding: 0.6rem 1.5rem;
+  font-family: 'OpenSans';
+  font-size: 2.8rem;
+  font-weight: 600;
+  &.active {
+    color: $green-main;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  margin-left: 1.5rem;
+}
+
+@media (max-width: 1300px) {
+  .links {
+    max-width: 30vw;
+  }
+}
+
+@media (max-width: 1150px) {
+  .links {
+    max-width: 100%;
+  }
+  .dnone {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .link {
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+  }
+  .link-item {
+    height: 3rem;
+    & + & {
+      margin-left: 0.5rem;
+    }
+  }
+  .nav {
+    margin-bottom: 1.5rem;
+  }
+  .buttons {
+    margin-left: 1rem;
+  }
+  .top {
+    margin-bottom: 1rem;
+    & .buttons {
+      display: none;
+    }
+  }
+  .bottom {
+    display: flex;
+    & div:first-child {
+      flex-grow: 1;
+    }
+  }
+}

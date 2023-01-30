@@ -4,7 +4,7 @@ import trashSvg from '../../assets/img/icons/trash.svg';
 import settingsSvg from '../../assets/img/icons/settings.svg';
 import forwardSvg from '../../assets/img/icons/forward.svg';
 import editSvg from '../../assets/img/icons/edit.svg';
-import RadioButton from '../UI/RadioButton/RadioButton';
+import InputButton from '../UI/InputButton/InputButton';
 import Icon from '../UI/Icon/Icon';
 
 type PatternProps = {
@@ -37,10 +37,12 @@ const Pattern: React.FC<PatternProps> = ({ id, name, hasRadio, index }) => {
           <Icon src={settingsSvg} id={'settings'} className={'gray'} />
         </button>
         {hasRadio && (
-          <RadioButton
+          <InputButton
             checked={selectedIndex === index}
             onChange={() => setSelectedIndex(index)}
             name={'pattern'}
+            id=""
+            type={'radio'}
           />
         )}
       </div>

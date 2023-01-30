@@ -1,0 +1,117 @@
+@import '../../scss/variables.scss';
+
+.friend {
+  display: flex;
+  align-items: center;
+  background: $elem;
+  border-radius: 1rem;
+  font-family: 'Montserrat';
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+.align-center {
+  justify-content: center;
+}
+
+.friend-name {
+  color: $white;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.friend-status {
+  color: $semi-white;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: auto;
+}
+
+.friend-name,
+.friend-status {
+  max-width: 23vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friend-actions {
+  display: flex;
+  align-self: flex-start;
+  margin-left: auto;
+  align-self: center;
+}
+
+.link {
+  display: flex;
+}
+
+.last-seen {
+  color: $green-main;
+  font-size: 1.8rem;
+  //   margin-top: auto;
+}
+
+.rec-members {
+  color: $green-main;
+  font-weight: 600;
+  display: block;
+  font-size: 1.2rem;
+}
+
+.rec-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-left: 1rem;
+  & svg {
+    display: block;
+    margin-top: 0.2rem;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.members {
+  font-size: 2rem;
+  color: $semi-white;
+  font-weight: 500;
+  & span {
+    color: $green-main;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 1150px) {
+  .friend-name,
+  .friend-status {
+    max-width: 50vw;
+  }
+}
+
+@media (max-width: 550px) {
+  .friend-name {
+    font-size: 1.4rem;
+  }
+  .friend-status,
+  .last-seen,
+  .members {
+    font-size: 1.2rem;
+  }
+  .friend-actions {
+    flex-direction: column;
+  }
+  .friend-name,
+  .friend-status {
+    max-width: 40vw;
+  }
+}

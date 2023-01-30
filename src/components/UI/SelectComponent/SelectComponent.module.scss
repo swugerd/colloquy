@@ -1,0 +1,112 @@
+@import '../../../scss/variables.scss';
+
+.control {
+  background-color: #1f1f1f !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: 0.2s linear box-shadow !important;
+  border-radius: 1rem !important;
+  &.focus {
+    box-shadow: 0 0 0 2px #0f9c72 !important;
+    border-radius: 1rem 1rem 0 0 !important;
+  }
+  &:hover {
+    box-shadow: 0 0 0 2px #0f9c72 !important;
+  }
+}
+
+.placeholder {
+  font-family: 'OpenSans' !important;
+  font-size: 1.4rem !important;
+  color: #9b9b9b !important;
+  font-weight: 600 !important;
+}
+
+.indicator-separator {
+  display: none;
+}
+
+.option {
+  cursor: pointer !important;
+  border-radius: 1rem !important;
+  font-family: 'Montserrat' !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: white !important;
+  &.focus {
+    background-color: rgba(31, 31, 31, 0.5) !important;
+  }
+  &.isActive {
+    background-color: rgba(31, 31, 31, 0.5) !important;
+  }
+}
+
+.value > div {
+  font-family: 'OpenSans' !important;
+  font-size: 1.4rem !important;
+  color: $white;
+  font-weight: 600 !important;
+}
+
+.menu {
+  top: 3.2rem !important;
+  border-radius: 0 0 1rem 1rem !important;
+  background: #3d3d3d !important;
+}
+
+.no-options {
+  font-family: 'OpenSans' !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+}
+
+.menu-list {
+  max-height: 15rem !important;
+  padding: 1rem !important;
+  &::-webkit-scrollbar {
+    background: transparent !important;
+    width: 0.3rem !important;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #0f9c72 !important;
+    border: 1rem solid rgba(0, 0, 0, 0) !important;
+    border-radius: 1rem !important;
+  }
+}
+
+.side-select {
+  // margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.side-select-age {
+  margin-bottom: 1.5rem;
+  width: 10rem;
+  & .control {
+    height: 5rem;
+  }
+  & + & {
+    margin-left: 3rem;
+  }
+}
+
+.side-select,
+.side-select-age {
+  & .control {
+    height: 5rem;
+  }
+  & .menu {
+    top: 4.4rem !important;
+  }
+}
+
+@media (max-width: 550px) {
+  .side-select {
+    & .control {
+      height: 4rem;
+    }
+    & .menu {
+      top: 3.4rem !important;
+    }
+  }
+}

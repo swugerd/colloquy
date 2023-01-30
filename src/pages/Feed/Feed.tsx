@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Feed.module.scss';
+import sideContentS from '../../components/SideContent/SideContent.module.scss';
 import allSvg from '../../assets/img/icons/all.svg';
 import friendsSvg from '../../assets/img/icons/friends.svg';
 import groupsSvg from '../../assets/img/icons/groups.svg';
@@ -24,7 +25,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import RadioButton from '../../components/UI/RadioButton/RadioButton';
+import InputButton from '../../components/UI/InputButton/InputButton';
 import { useSelector } from 'react-redux';
 import { selectMobile } from '../../redux/mobile/selector';
 import { useAppDispatch } from './../../redux/store';
@@ -32,6 +33,7 @@ import useWindowSize from './../../hooks/useWindowResize';
 import { setHasArrowButton, setTitle } from '../../redux/mobile/slice';
 import Wall from '../../components/Wall/Wall';
 import Icon from '../../components/UI/Icon/Icon';
+import SideContent from '../../components/SideContent/SideContent';
 
 const Feed: React.FC = () => {
   useSetPageTitle('Новости');
@@ -160,104 +162,114 @@ const Feed: React.FC = () => {
   const [typeIndex, setTypeIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
+  const children = [
+    <div className={sideContentS['stories']} key={1}>
+      <Swiper
+        slidesPerView={2}
+        spaceBetween={20}
+        navigation={{
+          prevEl: navigationPrevRef.current,
+          nextEl: navigationNextRef.current,
+        }}
+        breakpoints={{
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 0,
+          },
+          380: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 4,
+          },
+          1000: {
+            slidesPerView: 5,
+          },
+          1150: {
+            slidesPerView: 2,
+          },
+        }}
+        modules={[Navigation]}>
+        {stories.map(({ id, story, user }) => (
+          <SwiperSlide key={id}>
+            <Story id={id} story={story} user={user} className={'feed'} />
+          </SwiperSlide>
+        ))}
+        <button className={sideContentS['prev-button']} ref={navigationPrevRef}>
+          <Icon src={arrowSvg} id={'arrow'} className={'white'} />
+        </button>
+        <button className={sideContentS['next-button']} ref={navigationNextRef}>
+          <Icon src={arrowSvg} id={'arrow'} className={'white'} />
+        </button>
+      </Swiper>
+    </div>,
+    <div className={`${sideContentS['options']}`} key={2}>
+      <div className={sideContentS['group']}>
+        {settings.type.map(({ id, name, iconSettings }, index) => (
+          <div
+            className={`${sideContentS['option']} ${
+              typeIndex === index ? sideContentS['active'] : ''
+            }`}
+            onClick={() => setTypeIndex(index)}
+            key={id}>
+            <div className={sideContentS['option-icon']}>
+              <Icon
+                src={iconSettings.src}
+                id={iconSettings.iconId}
+                className={iconSettings.className}
+                hoverClass={typeIndex === index ? 'active' : ''}
+              />
+            </div>
+            <span className={sideContentS['option-name']}>{name}</span>
+            <InputButton
+              checked={typeIndex === index}
+              onChange={() => setTypeIndex(index)}
+              className="relative"
+              name={'type'}
+              id={''}
+              type={'radio'}
+            />
+          </div>
+        ))}
+      </div>
+      <h2 className={sideContentS['title']}>Настройки контента</h2>
+      <div className={sideContentS['group']}>
+        {settings.content.map(({ id, name, iconSettings }, index) => (
+          <div
+            className={`${sideContentS['option']} ${
+              contentIndex === index ? sideContentS['active'] : ''
+            }`}
+            onClick={() => setContentIndex(index)}
+            key={id}>
+            <div className={sideContentS['option-icon']}>
+              <Icon
+                src={iconSettings.src}
+                id={iconSettings.iconId}
+                className={iconSettings.className}
+                hoverClass={contentIndex === index ? 'active' : ''}
+              />
+            </div>
+            <span className={sideContentS['option-name']}>{name}</span>
+            <InputButton
+              checked={contentIndex === index}
+              onChange={() => setContentIndex(index)}
+              className="relative"
+              name={'content'}
+              id={''}
+              type={'radio'}
+            />
+          </div>
+        ))}
+      </div>
+    </div>,
+  ];
+
   return (
     <>
       <Wall className={'feed'} page={'feed'} />
-      <div className={s['side-content']}>
-        <div className={s['stories']}>
-          <h2 className={s['title']}>Истории</h2>
-          <Swiper
-            slidesPerView={2}
-            spaceBetween={20}
-            navigation={{
-              prevEl: navigationPrevRef.current,
-              nextEl: navigationNextRef.current,
-            }}
-            breakpoints={{
-              320: {
-                slidesPerView: 2,
-                spaceBetween: 0,
-              },
-              380: {
-                slidesPerView: 3,
-              },
-              768: {
-                slidesPerView: 4,
-              },
-              1000: {
-                slidesPerView: 5,
-              },
-              1150: {
-                slidesPerView: 2,
-              },
-            }}
-            modules={[Navigation]}>
-            {stories.map(({ id, story, user }) => (
-              <SwiperSlide key={id}>
-                <Story id={id} story={story} user={user} className={'feed'} />
-              </SwiperSlide>
-            ))}
-            <button className={s['prev-button']} ref={navigationPrevRef}>
-              <Icon src={arrowSvg} id={'arrow'} className={'white'} />
-            </button>
-            <button className={s['next-button']} ref={navigationNextRef}>
-              <Icon src={arrowSvg} id={'arrow'} className={'white'} />
-            </button>
-          </Swiper>
-        </div>
-        <div className={`${s['options']} ${mobile.isHeaderShow ? s['active'] : ''}`}>
-          <h2 className={s['title']}>Что будем показывать?</h2>
-          <div className={s['group']}>
-            {settings.type.map(({ id, name, iconSettings }, index) => (
-              <div
-                className={`${s['option']} ${typeIndex === index ? s['active'] : ''}`}
-                onClick={() => setTypeIndex(index)}
-                key={id}>
-                <div className={s['option-icon']}>
-                  <Icon
-                    src={iconSettings.src}
-                    id={iconSettings.iconId}
-                    className={iconSettings.className}
-                    hoverClass={typeIndex === index ? 'active' : ''}
-                  />
-                </div>
-                <span className={s['option-name']}>{name}</span>
-                <RadioButton
-                  checked={typeIndex === index}
-                  onChange={() => setTypeIndex(index)}
-                  className="relative"
-                  name={'type'}
-                />
-              </div>
-            ))}
-          </div>
-          <h2 className={s['title']}>Настройки контента</h2>
-          <div className={s['group']}>
-            {settings.content.map(({ id, name, iconSettings }, index) => (
-              <div
-                className={`${s['option']} ${contentIndex === index ? s['active'] : ''}`}
-                onClick={() => setContentIndex(index)}
-                key={id}>
-                <div className={s['option-icon']}>
-                  <Icon
-                    src={iconSettings.src}
-                    id={iconSettings.iconId}
-                    className={iconSettings.className}
-                    hoverClass={contentIndex === index ? 'active' : ''}
-                  />
-                </div>
-                <span className={s['option-name']}>{name}</span>
-                <RadioButton
-                  checked={contentIndex === index}
-                  onChange={() => setContentIndex(index)}
-                  className="relative"
-                  name={'content'}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <SideContent titles={['Истории', 'Что будем показывать?']} className={'feed'}>
+        {children}
+      </SideContent>
     </>
   );
 };

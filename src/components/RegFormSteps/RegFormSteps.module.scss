@@ -18,44 +18,6 @@
   color: $green-main;
 }
 
-.gender {
-  height: 4rem;
-  width: 7.5rem;
-  border-radius: 1rem;
-  background: $bg-main;
-}
-
-.radio-btn {
-  position: relative;
-  & + & {
-    margin-left: 1rem;
-  }
-}
-
-.inp-disabled {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 7.5rem;
-  height: 4rem;
-  cursor: pointer;
-}
-
-.custom-btn {
-  border-radius: 1rem;
-  background-color: $bg-main;
-  width: 7.5rem;
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & svg {
-    width: 3rem;
-    height: 3rem;
-  }
-}
-
 .d-flex {
   display: flex;
   align-items: center;

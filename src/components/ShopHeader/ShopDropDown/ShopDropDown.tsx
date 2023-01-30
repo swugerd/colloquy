@@ -6,7 +6,7 @@ import ebalo from '../../../assets/uploads/test/image2.png';
 import smile from '../../../assets/uploads/test/smile.png';
 import classNames from 'classnames';
 import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
-import RadioButton from '../../UI/RadioButton/RadioButton';
+import InputButton from '../../UI/InputButton/InputButton';
 
 const ShopDropDown: React.FC = () => {
   const categories = [
@@ -104,7 +104,7 @@ const ShopDropDown: React.FC = () => {
                           [s['img-very-small']]: type === 'emoji',
                         })}>
                         {type !== 'emoji' && (
-                          <RadioButton
+                          <InputButton
                             className={classNames({
                               'radio-btn-small': type === 'sounds',
                               'radio-btn-big': type === 'bg',
@@ -114,6 +114,8 @@ const ShopDropDown: React.FC = () => {
                             }
                             onChange={() => setSelectedIndex(index)}
                             name={'product'}
+                            id=""
+                            type={'radio'}
                           />
                         )}
                         <img src={img} alt="product" />

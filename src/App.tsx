@@ -35,11 +35,19 @@ const App: React.FC = () => {
       {isAuth ? (
         <MainLayout>
           <Routes>
-            <Route path="/" element={<Navigate to="/feed" />} />
+            <Route index element={<Navigate to="/feed" />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile/:username" element={<Profile />} />
-            <Route path="/friends" element={<Friends />} />
-            <Route path="/groups" element={<Groups />} />
+            <Route path="/friends">
+              <Route index element={<Friends isSearchPage={false} />} />
+              <Route path="/friends/search" element={<Friends isSearchPage={true} />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+            <Route path="/groups">
+              <Route index element={<Groups isSearchPage={false} />} />
+              <Route path="/groups/search" element={<Groups isSearchPage={true} />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
             <Route path="/messages" element={<Messages />} />
             <Route path="/circles" element={<Circles />} />
             <Route path="/voices" element={<Voices />} />
@@ -70,7 +78,7 @@ const App: React.FC = () => {
               paddingBottom: '1rem',
             }}>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route index element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<NotFound />} />

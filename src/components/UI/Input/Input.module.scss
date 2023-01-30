@@ -168,3 +168,47 @@
     border: 2px solid $green-main;
   }
 }
+
+.nav-content {
+  background: $bg-main;
+  padding: 1.5rem 4rem 1.5rem 4rem;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+.side-count {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  width: 10rem;
+  height: 5rem;
+  padding: 1rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+@media (max-width: 550px) {
+  .nav-content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+}

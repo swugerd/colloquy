@@ -4,4 +4,5 @@ export interface MobileState {
   isHeaderShow: boolean;
   hasArrowButton: boolean;
   infoName: string;
+  backText: string;
 }

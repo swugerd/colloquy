@@ -57,6 +57,11 @@
   height: 1rem;
 }
 
+.side-online {
+  position: relative;
+  margin-right: 1.5rem;
+}
+
 @media (max-width: 550px) {
   .custom-btn-small {
     width: 0.8rem;

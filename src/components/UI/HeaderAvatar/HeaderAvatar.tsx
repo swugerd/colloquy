@@ -10,10 +10,10 @@ type HeaderAvatarProps = {
   img: string;
   title: string;
   indicatorClass?: [
-    'sm-indicator' | 'md-indicator' | 'lg-indicator',
-    'border-elem' | 'border-sub-bg',
+    'sm-indicator' | 'md-indicator' | 'lg-indicator' | 'friend-indicator',
+    'border-elem' | 'border-sub-bg' | 'border-friend',
   ];
-  onlineType: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline' | string;
+  onlineType?: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline' | string;
 };
 
 const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
@@ -28,7 +28,7 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
     <div className={s[className]} title={title}>
       <div className={s['image-block']}>
         <img src={img} alt="profile" />
-        {indicatorClass && (
+        {indicatorClass && onlineType && (
           <OnlineIndicator onlineType={onlineType} cName={indicatorClass} isMobile={false} />
         )}
       </div>

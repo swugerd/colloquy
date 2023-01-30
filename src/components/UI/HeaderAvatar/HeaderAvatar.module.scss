@@ -98,6 +98,39 @@
   height: 4rem;
 }
 
+.recs {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
+}
+
+.friend {
+  width: 10rem;
+  height: 10rem;
+  margin-right: 1.5rem;
+}
+
+@media (max-width: 1300px) {
+  .friend {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .friend {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .friend {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+}
+
 @media (max-width: 550px) {
   .story {
     width: 4rem;
@@ -111,5 +144,13 @@
     width: 5rem;
     height: 5rem;
     margin-right: 1rem;
+  }
+  .friend {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+  .recs {
+    width: 4rem;
+    height: 4rem;
   }
 }

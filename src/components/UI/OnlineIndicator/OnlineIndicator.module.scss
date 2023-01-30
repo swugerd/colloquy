@@ -28,12 +28,23 @@
   height: 2.1rem;
 }
 
+.friend-indicator {
+  width: 2.1rem;
+  height: 2.1rem;
+  bottom: 0.2rem;
+  right: 0.2rem;
+}
+
 .border-sub-bg {
   border: 3px solid $sub-bg;
 }
 
 .border-elem {
   border: 3px solid $elem;
+}
+
+.border-friend {
+  border: 4px solid $elem;
 }
 
 .pc-online {
@@ -68,3 +79,15 @@
 //   height: 1.3rem;
 //   border: 3px solid $sub-bg;
 // }
+
+@media (max-width: 550px) {
+  .friend-indicator {
+    width: 1.5rem;
+    height: 1.5rem;
+    bottom: 0rem;
+    right: 0rem;
+  }
+  .border-friend {
+    border: 3px solid $elem;
+  }
+}

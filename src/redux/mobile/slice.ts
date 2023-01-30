@@ -6,6 +6,7 @@ const initialState: MobileState = {
   isHeaderShow: false,
   hasArrowButton: false,
   infoName: '',
+  backText: '',
 };
 
 const MobileSlice = createSlice({
@@ -27,10 +28,19 @@ const MobileSlice = createSlice({
     setIsInfoName(state, action: PayloadAction<string>) {
       state.infoName = action.payload;
     },
+    setHasBackButton(state, action: PayloadAction<string>) {
+      state.backText = action.payload;
+    },
   },
 });
 
-export const { setTitle, setIsSidebarShow, setIsHeaderShow, setHasArrowButton, setIsInfoName } =
-  MobileSlice.actions;
+export const {
+  setTitle,
+  setIsSidebarShow,
+  setIsHeaderShow,
+  setHasArrowButton,
+  setIsInfoName,
+  setHasBackButton,
+} = MobileSlice.actions;
 
 export default MobileSlice.reducer;
