@@ -41,6 +41,9 @@
 .back-text {
   display: flex;
   align-items: center;
+  & svg {
+    display: block;
+  }
   & span {
     color: $white;
     font-family: 'OpenSans';
@@ -48,6 +51,20 @@
     display: block;
     margin-left: 1rem;
     font-weight: 500;
+  }
+}
+
+.members {
+  color: $green-main;
+  font-weight: 600;
+}
+
+@media (max-width: 620px) {
+  .members-text {
+    display: none !important;
+  }
+  a.back-text span {
+    display: none;
   }
 }
 

@@ -58,7 +58,11 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
         img: <Icon src={findGroupsSvg} id={'find-groups'} className={'content-icon'} />,
         path: '/groups/search',
       },
-      { id: 2, img: <Icon src={createGroupSvg} id={'create-group'} className={'content-icon'} /> },
+      {
+        id: 2,
+        img: <Icon src={createGroupSvg} id={'create-group'} className={'content-icon'} />,
+        path: '/groups/create',
+      },
     ],
   };
 
@@ -68,7 +72,7 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
   const members = page === 'members' ? 123456 : 0;
 
   return (
-    <div className={`${s['nav']}`}>
+    <div className={`${s['nav']} ${page === 'members' ? s['members'] : ''}`}>
       <div className={`${s['top']} ${mobile.backText ? s['dnone'] : ''}`}>
         {isSearchPage ? (
           <>
@@ -118,7 +122,11 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
             <div className={s['buttons']}>
               {buttons[page === 'friends' ? 'friends' : 'groups'].map(({ id, img, path }) =>
                 path !== undefined ? (
-                  <Link to={path} key={id} onClick={() => setOnsearchPage(true)}>
+                  <Link
+                    className={s['action-link']}
+                    to={path}
+                    key={id}
+                    onClick={() => setOnsearchPage(true)}>
                     {img}
                   </Link>
                 ) : (

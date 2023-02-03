@@ -19,7 +19,7 @@ import GenderInput from '../../components/UI/GenderInput/GenderInput';
 import InputButton from '../../components/UI/InputButton/InputButton';
 import ContentCard from '../../components/ContentCard/ContentCard';
 import { useAppDispatch } from '../../redux/store';
-import { setHasArrowButton, setHasBackButton } from '../../redux/mobile/slice';
+import { setBackButtonType, setHasArrowButton, setHasBackButton } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
 
 type FriendsProps = {
@@ -34,7 +34,10 @@ const Friends: React.FC<FriendsProps> = ({ isSearchPage }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(setHasArrowButton(true));
-    if (isSearchPage) dispatch(setHasBackButton('К списку друзей'));
+    if (isSearchPage) {
+      dispatch(setHasBackButton('К списку друзей'));
+      dispatch(setBackButtonType('button'));
+    }
     return () => {
       if (isSearchPage) dispatch(setHasBackButton(''));
       dispatch(setHasArrowButton(false));

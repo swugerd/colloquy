@@ -52,6 +52,14 @@
   color: $green-main;
 }
 
+.settings.active > *,
+.suggest.active > *,
+.block.active > *,
+.crown.active > *,
+.request.active > * {
+  color: $green-main;
+}
+
 .account-button {
   width: 1.5rem;
   height: 1.5rem;

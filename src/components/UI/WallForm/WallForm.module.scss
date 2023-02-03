@@ -1,0 +1,182 @@
+@import '../../../scss/variables.scss';
+
+.radio-btn {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.inp-disabled {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  cursor: pointer;
+  &:checked ~ .custom-btn {
+    background: $green-light;
+  }
+}
+
+.custom-btn {
+  border-radius: 50%;
+  outline: 0.4rem solid rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.input {
+  border-radius: 1rem 1rem 0 0;
+  background: $elem;
+  padding: 1rem 4rem 1rem 4rem;
+  width: 100%;
+  min-height: 6rem;
+  height: fit-content;
+  overflow-y: auto;
+  display: block;
+  resize: none;
+  outline: none;
+  border: none;
+  color: $white;
+  font-family: 'Opensans';
+  font-size: 1.4rem;
+  font-weight: 400;
+  &::placeholder {
+    font-weight: 600;
+  }
+}
+
+.controls-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.paperclip,
+.smile {
+  position: absolute;
+}
+
+.paperclip {
+  top: 1rem;
+  left: 1rem;
+  &:hover svg path {
+    stroke: $white;
+  }
+  svg path {
+    stroke: $semi-white;
+    transition: 0.2s linear;
+  }
+}
+
+.smile {
+  top: 1rem;
+  right: 1rem;
+  &:hover {
+    svg path {
+      &:first-child {
+        fill: $white;
+      }
+      &:not(:first-child) {
+        stroke: $white;
+      }
+    }
+  }
+  svg path {
+    transition: 0.2s linear;
+    &:first-child {
+      fill: $semi-white;
+    }
+    &:not(:first-child) {
+      stroke: $semi-white;
+    }
+  }
+}
+
+.input-controls {
+  background: $elem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid #2c2c2c;
+  border-radius: 0 0 1rem 1rem;
+  color: $white;
+}
+
+.comments {
+  margin-right: 1.5rem;
+  &:hover svg path {
+    stroke: $white;
+  }
+  svg path {
+    transition: 0.2s linear;
+    stroke: $semi-white;
+  }
+}
+
+.micro {
+  margin-right: 1.5rem;
+  position: relative;
+}
+
+.send {
+  margin-left: auto;
+  position: relative;
+  &::after {
+    content: '';
+    width: 0.2rem;
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1.5rem;
+    background: $sub-bg;
+  }
+  &:hover svg path {
+    fill: $white;
+  }
+  svg path {
+    transition: 0.2s linear;
+    fill: $semi-white;
+  }
+}
+
+.row {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.media-action {
+  margin-right: auto;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.anonym {
+  margin-right: 2rem;
+  position: relative;
+  &.separator::after {
+    content: '';
+    width: 0.2rem;
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1.5rem;
+    background: $sub-bg;
+  }
+}
+
+.post-form {
+  font-family: 'Opensans';
+  margin-bottom: 1.5rem;
+}

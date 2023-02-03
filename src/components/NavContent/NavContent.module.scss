@@ -44,6 +44,10 @@
   }
 }
 
+.action-link + .action-link {
+  margin-left: 1.5rem;
+}
+
 .back-icon {
   width: 2rem;
   height: 2rem;
@@ -94,7 +98,12 @@
   margin-left: 1.5rem;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1320px) {
+  .nav.members {
+    & .back-text {
+      display: none;
+    }
+  }
   .links {
     max-width: 30vw;
   }

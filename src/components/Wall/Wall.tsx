@@ -12,13 +12,16 @@ import circle from '../../assets/videos/video.mp4';
 import voice from '../../assets/uploads/test/voice.png';
 import track from '../../assets/uploads/test/ebalo.png';
 import Icon from '../UI/Icon/Icon';
+import WallForm from '../UI/WallForm/WallForm';
 
 type WallProps = {
   className: string;
-  page: 'feed' | 'profile';
+  page: 'feed' | 'profile' | 'group';
+  placeholder: string;
+  isAdmin: boolean;
 };
 
-const Wall: React.FC<WallProps> = ({ className, page }) => {
+const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) => {
   const posts = [
     {
       id: 1,
@@ -171,11 +174,6 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
       views: 12,
     },
   ];
-  const [isActive, setIsActive] = useState(true);
-  const textAreaAdjust = (e: any) => {
-    e.target.style.height = '1px';
-    e.target.style.height = `${e.target.scrollHeight}px`;
-  };
   return (
     <div className={`${s['wall']} ${s[className]}`}>
       {/* <div className={s['hidden']}>
@@ -215,56 +213,24 @@ const Wall: React.FC<WallProps> = ({ className, page }) => {
     </div>
     <button className={s['return']}>Я передумал</button>
   </div> */}
-      {page === 'profile' && (
-        <form className={s['post-form']}>
-          <div className={s['relative']}>
-            <textarea
-              className={s['input']}
-              placeholder="Что произошло сегодня?"
-              onChange={textAreaAdjust}></textarea>
-            <button className={`${s['controls-icon']} ${s['paperclip']}`}>
-              <Icon src={paperclipSvg} id={'paperclip'} className={'gray'} />
-            </button>
-            <button className={`${s['controls-icon']} ${s['smile']}`}>
-              <Icon src={smileSvg} id={'smile'} className={'gray'} />
-            </button>
-          </div>
-          <div className={s['input-controls']}>
-            <button className={`${s['controls-icon']} ${s['comments']}`}>
-              <Icon src={commentsSvg} id={'comments'} className={'gray'} />
-            </button>
-            <div className={s['media-action']} onClick={() => setIsActive(!isActive)}>
-              <div className={s['radio-btn']}>
-                <input
-                  type="checkbox"
-                  className={`${s['inp-disabled']}`}
-                  checked={isActive}
-                  onChange={() => setIsActive(!isActive)}
-                />
-                <div className={`${s['custom-btn']}`}></div>
-              </div>
-              <div className={s['text']}>Добавить медиа на страницу</div>
-            </div>
-            <button className={`${s['controls-icon']} ${s['micro']}`}>
-              <Icon src={microSvg} id={'voices'} className={'gray'} />
-            </button>
-            <button className={`${s['controls-icon']} ${s['send']}`}>
-              <Icon src={sendSvg} id={'send'} className={'gray'} />
-            </button>
-          </div>
-        </form>
-      )}
+
+      <WallForm page={page} className={''} placeholder={placeholder} isAdmin={isAdmin} />
+
       {posts.map(({ id, user, date, content, likes, forwards, comments, views }) => (
         <Post
           id={id}
           user={user}
-          date={date}
           content={content}
-          likes={likes}
-          forwards={forwards}
-          comments={comments}
-          views={views}
           key={id}
+          postType={{
+            feed: {
+              date: date,
+              likes: likes,
+              forwards: forwards,
+              comments: comments,
+              views: views,
+            },
+          }}
         />
       ))}
     </div>

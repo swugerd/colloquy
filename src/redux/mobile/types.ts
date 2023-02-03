@@ -5,4 +5,6 @@ export interface MobileState {
   hasArrowButton: boolean;
   infoName: string;
   backText: string;
+  membersCount: number;
+  backButtonType: 'link' | 'button';
 }

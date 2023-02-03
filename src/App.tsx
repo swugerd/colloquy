@@ -26,9 +26,120 @@ import Notifies from './pages/Notifies/Notifies';
 import Achievements from './pages/Achievements/Achievements';
 import Shop from './pages/Shop/Shop';
 import Constructor from './pages/Constructor/Constructor';
+import Group from './pages/Group/Group';
+import GroupMembers from './pages/GroupMembers/GroupMembers';
+import GroupCreate from './pages/GroupCreate/GroupCreate';
+import GroupAdmin from './pages/GroupAdmin/GroupAdmin';
 
 const App: React.FC = () => {
   const { isAuth } = useSelector(selectIsAuth);
+
+  // const routes = [
+  //   {
+  //     path: '/',
+  //     element: <Navigate to="/feed" />,
+  //   },
+  //   {
+  //     path: '/feed',
+  //     element: <Feed />,
+  //   },
+  //   {
+  //     path: '/profile/:username',
+  //     element: <Profile />,
+  //   },
+  //   {
+  //     routes: [
+  //       {
+  //         path: '/friends',
+  //         element: <Friends isSearchPage={false} />,
+  //       },
+  //       {
+  //         path: '/friends/search',
+  //         element: <Friends isSearchPage={true} />,
+  //       },
+  //       {
+  //         path: '*',
+  //         element: <NotFound />,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     routes: [
+  //       {
+  //         path: '/groups',
+  //         element: <Groups isSearchPage={false} />,
+  //       },
+  //       {
+  //         path: '/groups/search',
+  //         element: <Groups isSearchPage={true} />,
+  //       },
+  //       {
+  //         path: '/groups/:name',
+  //         element: <Group />,
+  //       },
+  //       {
+  //         path: '*',
+  //         element: <NotFound />,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     path: '/messages',
+  //     element: <Messages />,
+  //   },
+  //   {
+  //     path: '/circles',
+  //     element: <Circles />,
+  //   },
+  //   {
+  //     path: '/voices',
+  //     element: <Voices />,
+  //   },
+  //   {
+  //     path: '/photos',
+  //     element: <Photos />,
+  //   },
+  //   {
+  //     path: '/videos',
+  //     element: <Videos />,
+  //   },
+  //   {
+  //     path: '/music',
+  //     element: <Music />,
+  //   },
+  //   {
+  //     path: '/apps',
+  //     element: <Apps />,
+  //   },
+  //   {
+  //     path: '/games',
+  //     element: <Games />,
+  //   },
+  //   {
+  //     path: '/settings',
+  //     element: <Settings />,
+  //   },
+  //   {
+  //     path: '/notifies',
+  //     element: <Notifies />,
+  //   },
+  //   {
+  //     path: '/achievements',
+  //     element: <Achievements />,
+  //   },
+  //   {
+  //     path: '/shop',
+  //     element: <Shop />,
+  //   },
+  //   {
+  //     path: '/constructor',
+  //     element: <Constructor />,
+  //   },
+  //   {
+  //     path: '*',
+  //     element: <NotFound />,
+  //   },
+  // ];
 
   return (
     <>
@@ -46,6 +157,14 @@ const App: React.FC = () => {
             <Route path="/groups">
               <Route index element={<Groups isSearchPage={false} />} />
               <Route path="/groups/search" element={<Groups isSearchPage={true} />} />
+              <Route path="/groups/create" element={<GroupCreate />} />
+              <Route path="/groups/:name/edit" element={<GroupAdmin page={'edit'} />} />
+              <Route path="/groups/:name/suggest" element={<GroupAdmin page={'suggest'} />} />
+              <Route path="/groups/:name/blacklist" element={<GroupAdmin page={'blacklist'} />} />
+              <Route path="/groups/:name/moderation" element={<GroupAdmin page={'moderation'} />} />
+              <Route path="/groups/:name/requests" element={<GroupAdmin page={'requests'} />} />
+              <Route path="/groups/:name/members" element={<GroupMembers />} />
+              <Route path="/groups/:name" element={<Group />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/messages" element={<Messages />} />
@@ -62,6 +181,18 @@ const App: React.FC = () => {
             <Route path="/shop" element={<Shop />} />
             <Route path="/constructor" element={<Constructor />} />
             <Route path="*" element={<NotFound />} />
+            {/* {routes.map((route, index) => {
+              if (route.routes && route.routes.length) {
+                return (
+                  <Route key={index} path={route.path}>
+                    {route.routes.map((subRoute, subIndex) => (
+                      <Route key={subIndex} path={subRoute.path} element={subRoute.element} />
+                    ))}
+                  </Route>
+                );
+              }
+              return <Route key={index} path={route.path} element={route.element} />;
+            })} */}
           </Routes>
         </MainLayout>
       ) : (

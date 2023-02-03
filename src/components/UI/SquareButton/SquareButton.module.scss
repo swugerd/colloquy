@@ -12,6 +12,10 @@
   }
 }
 
+.post-button + .post-button {
+  margin-left: 1.5rem;
+}
+
 .friend-button {
   position: relative;
   z-index: 2;
@@ -31,6 +35,23 @@
   transform: translateX(-50%);
 }
 
+.more-btn {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  height: 4rem;
+  width: 4rem;
+  transition: 0.2s background linear;
+  & + & {
+    margin-top: 1rem;
+  }
+  &.list-btn + &.list-btn {
+    margin-top: 1rem;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
 @media (max-width: 550px) {
   .button {
     height: 2.5rem;
@@ -44,6 +65,9 @@
   .friend-button + .friend-button {
     margin-left: 0;
     margin-top: 0.5rem;
+  }
+  .post-button + .post-button {
+    margin-left: 0.5rem;
   }
   .lock {
     width: 1rem;

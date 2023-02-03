@@ -13,7 +13,7 @@ import GenderInput from '../../components/UI/GenderInput/GenderInput';
 import InputButton from '../../components/UI/InputButton/InputButton';
 import Input from '../../components/UI/Input/Input';
 import { useAppDispatch } from '../../redux/store';
-import { setHasArrowButton, setHasBackButton } from '../../redux/mobile/slice';
+import { setBackButtonType, setHasArrowButton, setHasBackButton } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
 
 type GroupsProps = {
@@ -28,7 +28,10 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(setHasArrowButton(true));
-    if (isSearchPage) dispatch(setHasBackButton('К списку сообществ'));
+    if (isSearchPage) {
+      dispatch(setHasBackButton('К списку сообществ'));
+      dispatch(setBackButtonType('button'));
+    }
     return () => {
       if (isSearchPage) dispatch(setHasBackButton(''));
       dispatch(setHasArrowButton(false));
@@ -36,6 +39,7 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
   }, [isSearchPage]);
 
   const { width } = useWindowSize();
+
   const recGroups = [
     {
       id: 1,
@@ -122,31 +126,37 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
       </ul>
     </div>,
     isSearchPage && (
-      <div className={sideContentS['mobile-wrapper']} key="2">
-        <h4 className={sideContentS['sub-title']}>Город</h4>
-        <div className={sideContentS['margin-bottom']}>
-          <SelectComponent
-            placeholder={'Выберите'}
-            options={cities}
-            noOptionsMessage={'Город не найден'}
-            className={'side-select'}
-          />
+      <div className={`${sideContentS['mobile-wrapper']} ${sideContentS['group-search']}`} key="2">
+        <div>
+          <h4 className={sideContentS['sub-title']}>Город</h4>
+          <div className={sideContentS['margin-bottom']}>
+            <SelectComponent
+              placeholder={'Выберите'}
+              options={cities}
+              noOptionsMessage={'Город не найден'}
+              className={'side-select'}
+            />
+          </div>
         </div>
-        <h4 className={sideContentS['sub-title']}>Участники</h4>
-        <div className={`${sideContentS['row']} ${sideContentS['input']}`}>
-          <Input className={'side-count'} placeholder={'От'} type={'text'} inputType="default" />
-          <Input className={'side-count'} placeholder={'До'} type={'text'} inputType="default" />
+        <div className={sideContentS['align-end']}>
+          <h4 className={sideContentS['sub-title']}>Участники</h4>
+          <div className={`${sideContentS['row']} ${sideContentS['input']}`}>
+            <Input className={'side-count'} placeholder={'От'} type={'text'} inputType="default" />
+            <Input className={'side-count'} placeholder={'До'} type={'text'} inputType="default" />
+          </div>
         </div>
-        <h4 className={sideContentS['sub-title']}>Тематика</h4>
-        <div className={sideContentS['row']}>
-          <SelectComponent
-            placeholder={'Выберите'}
-            options={themes}
-            noOptionsMessage={'Тема не найдена'}
-            className={'side-select'}
-          />
+        <div>
+          <h4 className={sideContentS['sub-title']}>Тематика</h4>
+          <div className={sideContentS['row']}>
+            <SelectComponent
+              placeholder={'Выберите'}
+              options={themes}
+              noOptionsMessage={'Тема не найдена'}
+              className={'side-select'}
+            />
+          </div>
         </div>
-        <div className={sideContentS['online-row']}>
+        <div className={`${sideContentS['online-row']} ${sideContentS['align-end']}`}>
           <InputButton
             checked={undefined}
             onChange={undefined}

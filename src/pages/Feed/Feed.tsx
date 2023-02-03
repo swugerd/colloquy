@@ -266,7 +266,7 @@ const Feed: React.FC = () => {
 
   return (
     <>
-      <Wall className={'feed'} page={'feed'} />
+      <Wall className={'feed'} page={'feed'} placeholder={''} isAdmin={false} />
       <SideContent titles={['Истории', 'Что будем показывать?']} className={'feed'}>
         {children}
       </SideContent>

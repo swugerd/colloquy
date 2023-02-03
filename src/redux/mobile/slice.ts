@@ -7,6 +7,8 @@ const initialState: MobileState = {
   hasArrowButton: false,
   infoName: '',
   backText: '',
+  membersCount: 0,
+  backButtonType: 'button',
 };
 
 const MobileSlice = createSlice({
@@ -31,6 +33,12 @@ const MobileSlice = createSlice({
     setHasBackButton(state, action: PayloadAction<string>) {
       state.backText = action.payload;
     },
+    setMembersCount(state, action: PayloadAction<number>) {
+      state.membersCount = action.payload;
+    },
+    setBackButtonType(state, action: PayloadAction<'button' | 'link'>) {
+      state.backButtonType = action.payload;
+    },
   },
 });
 
@@ -41,6 +49,8 @@ export const {
   setHasArrowButton,
   setIsInfoName,
   setHasBackButton,
+  setMembersCount,
+  setBackButtonType,
 } = MobileSlice.actions;
 
 export default MobileSlice.reducer;

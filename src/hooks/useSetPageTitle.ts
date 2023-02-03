@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { setTitle } from '../redux/mobile/slice';
 import { useAppDispatch } from './../redux/store';
-const useSetPageTitle = (title: string, isDynimic?: boolean) => {
+const useSetPageTitle = (title: string, isDynimic?: boolean | string) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     document.title = title;

@@ -7,8 +7,8 @@
   border-radius: 1rem;
   font-family: 'Montserrat';
   padding: 1.5rem;
-  position: relative;
-  z-index: 1;
+  // position: relative;
+  // z-index: 1;
 }
 
 .friend-info {
@@ -40,6 +40,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.friend-name.admin,
+.friend-status.admin {
+  max-width: 17vw;
 }
 
 .friend-actions {
@@ -91,10 +96,51 @@
   }
 }
 
+.more {
+  position: relative;
+}
+
+.actions {
+  background: $sub-bg;
+  padding: 0.5rem;
+  border-radius: 1rem 0 1rem 1rem;
+  position: absolute;
+  right: 0;
+  top: 2.5rem;
+  z-index: 13;
+  display: none;
+  &.active {
+    display: block;
+  }
+}
+
+.more-btn {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  transition: 0.2s background linear;
+  position: relative;
+  z-index: 1;
+  &.active {
+    border-radius: 1rem 1rem 0 0;
+  }
+  &.list-btn + &.list-btn {
+    margin-top: 1rem;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
 @media (max-width: 1150px) {
   .friend-name,
   .friend-status {
     max-width: 50vw;
+  }
+  .friend-name.admin,
+  .friend-status.admin {
+    max-width: 45vw;
   }
 }
 

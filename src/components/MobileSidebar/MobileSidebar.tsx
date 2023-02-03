@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './MobileSidebar.module.scss';
 import friendSvg from '../../assets/img/icons/friends.svg';
@@ -29,6 +29,11 @@ const MobileSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const { mobile } = useSelector(selectMobile);
+
+  const closeHander = () => {
+    dispatch(setIsSidebarShow(false));
+  };
+
   const id = 'swugerd';
   const links = [
     {
@@ -112,7 +117,7 @@ const MobileSidebar: React.FC = () => {
   return width <= 1150 ? (
     <div className={`${s['wrapper']} ${mobile.isSidebarShow ? s['active'] : ''}`}>
       <div className={s['top']}>
-        <Link to={`/profile/${id}`} className={s['profile-link']}>
+        <Link to={`/profile/${id}`} className={s['profile-link']} onClick={closeHander}>
           <HeaderAvatar
             className={'mobile-sidebar'}
             img={img}
@@ -125,7 +130,7 @@ const MobileSidebar: React.FC = () => {
             <p className={s['status']}>статус</p>
           </div>
         </Link>
-        <div className={s['actions']}>
+        <div className={s['actions']} onClick={closeHander}>
           <Link to="/settings" className={s['settings']}>
             <Icon src={settingsSvg} id={'settings'} className={'mobile-settings'} />
           </Link>
@@ -153,6 +158,7 @@ const MobileSidebar: React.FC = () => {
                       <Icon src={arrowSvg} id={'arrow'} className={'mobile-sidebar-arrow'} />
                     </>
                   )}
+                  onClick={closeHander}
                   to={`/${path}`}
                 />
               </li>
@@ -179,6 +185,7 @@ const MobileSidebar: React.FC = () => {
                     <span className={s['text']}>Уведомления</span>
                   </>
                 )}
+                onClick={closeHander}
                 to={'/notifies'}
               />
             </li>

@@ -15,6 +15,7 @@ import video from '../../assets/videos/video.mp4';
 import useWindowSize from './../../hooks/useWindowResize';
 import ProfileContent from '../../components/ProfileContent/ProfileContent';
 import Icon from '../../components/UI/Icon/Icon';
+import SquareButton from '../../components/UI/SquareButton/SquareButton';
 
 const Profile: React.FC = () => {
   useSetPageTitle('Профиль');
@@ -104,6 +105,8 @@ const Profile: React.FC = () => {
     { id: 5, img: ava },
     { id: 6, img: ava },
   ];
+
+  const isAdmin = true;
   return (
     <>
       <div className={s['profile']}>
@@ -132,15 +135,9 @@ const Profile: React.FC = () => {
                       <Icon src={moreSvg} id={'dots'} className={'profile-dots'} />
                     </button>
                     <div className={`${s['actions']} ${isActionsOpen ? s['active'] : ''}`}>
-                      <button className={`${s['more-btn']} ${s['list-btn']}`}>
-                        <Icon src={chatSvg} id={'messages'} className={'profile-action'} />
-                      </button>
-                      <button className={`${s['more-btn']} ${s['list-btn']}`}>
-                        <Icon src={addSvg} id={'add'} className={'profile-action'} />
-                      </button>
-                      <button className={`${s['more-btn']} ${s['list-btn']}`}>
-                        <Icon src={blockSvg} id={'block'} className={'profile-action'} />
-                      </button>
+                      <SquareButton className={'more-btn'} icon={chatSvg} id={'messages'} />
+                      <SquareButton className={'more-btn'} icon={addSvg} id={'add'} />
+                      <SquareButton className={'more-btn'} icon={blockSvg} id={'block'} />
                     </div>
                   </div>
                 </div>
@@ -337,7 +334,12 @@ const Profile: React.FC = () => {
           {width > 1150 && <ProfileContent contentType={'collection'} data={null} />}
         </div>
       </div>
-      <Wall className={'profile'} page={'profile'} />
+      <Wall
+        className={'profile'}
+        page={'profile'}
+        placeholder={isAdmin ? 'Что произошло сегодня?' : 'Напишите что-нибудь'}
+        isAdmin={isAdmin}
+      />
     </>
   );
 };

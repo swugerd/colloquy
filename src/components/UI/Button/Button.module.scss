@@ -45,6 +45,25 @@
   font-weight: 600;
 }
 
+.group-create {
+  color: $white;
+  padding: 1rem 2rem;
+  font-family: 'Montserrat';
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 auto;
+}
+
+.group-delete {
+  background: $red-dark;
+  color: $white;
+  font-family: 'Montserrat';
+  padding: 0.8rem 1.4rem;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 6rem auto 0;
+}
+
 @media (max-width: 1150px) {
   .auth-btn {
     font-size: 1.8rem;
@@ -63,6 +82,13 @@
     width: 12rem;
     font-size: 1.6rem;
     padding: 0.8rem 1.3rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .group-create {
+    font-size: 1.6rem;
+    padding: 0.5rem 1rem;
   }
 }
 

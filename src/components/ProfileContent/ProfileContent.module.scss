@@ -111,7 +111,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: auto;
+  & + & {
+    margin-left: auto;
+  }
 }
 
 .friend-list {
@@ -342,6 +344,86 @@
   grid-area: photos;
 }
 
+.group-content {
+  width: 100%;
+  & .sub-title {
+    font-size: 2rem;
+  }
+  & .top {
+    font-size: 1.4rem;
+  }
+}
+
+.members-content {
+  & .online {
+    display: none;
+  }
+  & .name {
+    max-width: 7rem;
+    font-size: 1.6rem;
+  }
+}
+
+.stories-content {
+  margin-bottom: 3rem;
+  & .add-story {
+    width: 14rem;
+    height: 19rem;
+  }
+}
+
+.photos-content {
+  & .photo-link {
+    font-size: 1.4rem;
+  }
+  & .photos {
+    display: flex;
+  }
+  & .photo {
+    max-width: 14rem;
+    width: 100%;
+    height: 100%;
+    max-height: 14rem;
+    &:last-child {
+      display: none;
+    }
+  }
+  & .photo + .photo {
+    margin-left: auto;
+  }
+}
+
+.videos-content {
+  // & .video-item:last-child {
+  //   display: none;
+  // }
+  & .group-list {
+    flex-direction: row;
+  }
+  & .video-item + .video-item {
+    margin-top: 0;
+    margin-left: auto;
+  }
+  & .group-info {
+    display: none;
+  }
+  & .video-item {
+    height: 11rem;
+    max-width: 20rem;
+    width: 100%;
+    & > .video {
+      height: inherit;
+      width: inherit;
+    }
+  }
+}
+
+.music-content {
+  .track-time {
+    margin-left: auto;
+  }
+}
+
 .content-top {
   display: flex;
   justify-content: space-between;
@@ -350,6 +432,9 @@
 }
 
 @media (max-width: 1450px) {
+  .group-content {
+    width: 100% !important;
+  }
   .content-block {
     width: 20rem;
   }
@@ -461,6 +546,11 @@
     margin-top: 0;
     margin-left: 1.5rem;
   }
+  .music-content {
+    .group {
+      max-width: none;
+    }
+  }
 }
 
 @media (max-width: 550px) {
@@ -484,5 +574,35 @@
   .video-author,
   .video-name {
     max-width: 50vw;
+  }
+  .group-content {
+    & .sub-title {
+      font-size: 1.6rem;
+    }
+    & .top {
+      font-size: 1.2rem;
+    }
+  }
+  .members-content {
+    & .name {
+      max-width: 60vw;
+    }
+  }
+  .stories-content {
+    & .add-story {
+      width: 10rem;
+      height: 15rem;
+    }
+  }
+  .videos-content {
+    & .group-list {
+      flex-direction: column;
+    }
+    & .video-item + .video-item {
+      margin-left: 0;
+    }
+  }
+  .track-time {
+    font-size: 1.2rem;
   }
 }

@@ -16,17 +16,33 @@ import arrowSvg from '../../assets/img/icons/arrow.svg';
 import patternSvg from '../../assets/img/icons/patterns.svg';
 import gemSvg from '../../assets/img/icons/gem.svg';
 import classNames from 'classnames';
+import formatTime from '../../utils/formatTime';
 
-type contentType = 'stories' | 'friends' | 'groups' | 'music' | 'videos' | 'photos' | 'collection';
+type contentType =
+  | 'stories'
+  | 'friends'
+  | 'groups'
+  | 'music'
+  | 'videos'
+  | 'photos'
+  | 'collection'
+  | 'members';
 
 type ProfileContentProps = {
   contentType: contentType;
   data: any;
+  className?: string;
+  isAdmin?: boolean;
 };
 
 // поставить шрифт, переделать компонент
 
-const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) => {
+const ProfileContent: React.FC<ProfileContentProps> = ({
+  contentType,
+  data,
+  className,
+  isAdmin,
+}) => {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
 
@@ -37,10 +53,12 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
   const [visibleGroups, setVisibleGroups] = useState(0);
   const [visibleMusic, setVisibleMusic] = useState(0);
   const [visiblePhotos, setVisiblePhotos] = useState(0);
+  const [visibleMembers, setVisibleMembers] = useState(0);
 
   const [isOpen, setIsOpen] = useState({
+    isMembersOpen: true,
     isStoriesOpen: true,
-    isPhotosOpen: true,
+    isPhotosOpen: className ? false : true,
     isFriendsOpen: false,
     isGroupsOpen: false,
     isMusicOpen: false,
@@ -49,6 +67,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
   });
 
   const {
+    isMembersOpen,
     isStoriesOpen,
     isPhotosOpen,
     isFriendsOpen,
@@ -65,18 +84,21 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
       setVisibleMusic(2);
       setVisibleVideos(2);
       setVisiblePhotos(4);
+      setVisibleMembers(3);
     } else if (width > 600 && width < 1000) {
       setvisibleFriends(3);
       setVisibleGroups(3);
       setVisibleMusic(3);
       setVisibleVideos(3);
       setVisiblePhotos(4);
+      setVisibleMembers(3);
     } else {
       setvisibleFriends(4);
       setVisibleGroups(3);
       setVisibleMusic(3);
-      setVisibleVideos(3);
+      setVisibleVideos(className ? 2 : 3);
       setVisiblePhotos(4);
+      setVisibleMembers(4);
     }
     if (width < 550) {
       setVisiblePhotos(3);
@@ -85,6 +107,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
 
   const setTitle = (contentType: contentType) => {
     const titles = [
+      { type: 'members', title: 'Участники' },
       { type: 'stories', title: 'Истории' },
       { type: 'friends', title: 'Друзья' },
       { type: 'groups', title: 'Сообщества' },
@@ -98,6 +121,42 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
 
   const setContent = (data: any, contentType: contentType) => {
     const content = [
+      {
+        type: 'members',
+        jsx: (
+          <div className={s['content']}>
+            <div className={s['top']}>
+              <Link to="/groups/colloquy/members" className={s['link']}>
+                <span className={s['all']}>Показать все</span>
+                <div className={s['arrow']}>
+                  <Icon src={arrowSvg} id={'arrow'} className={'white'} />
+                </div>
+                <span className={s['count']}>{data?.length}</span>
+              </Link>
+              <p className={s['online']}>
+                Онлайн:{' '}
+                <span>{data?.filter((item: any) => item.onlineType !== 'pc-offline').length}</span>
+              </p>
+            </div>
+            <div className={s['friend-list']}>
+              {data?.map((item: any, index: number) =>
+                index >= visibleMembers ? null : (
+                  <Link to="/friends" className={s['friend']} key={item.id}>
+                    <HeaderAvatar
+                      className={className ? 'group-content' : 'content-block'}
+                      img={item.img}
+                      title={''}
+                      onlineType={item.onlineType}
+                      indicatorClass={['lg-indicator', 'border-friend']}
+                    />
+                    <span className={s['name']}>{item.name}</span>
+                  </Link>
+                ),
+              )}
+            </div>
+          </div>
+        ),
+      },
       {
         type: 'stories',
         jsx: (
@@ -121,7 +180,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                 slidesPerView: 7,
               },
               1150: {
-                slidesPerView: 2,
+                slidesPerView: className ? 3 : 2,
               },
             }}
             navigation={{
@@ -131,14 +190,16 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
             modules={[Navigation]}>
             {data?.map((item: any) => (
               <SwiperSlide key={item.id}>
-                <Story id={item.id} story={item.story} user={item.user} className={'profile'} />
+                <Story id={item.id} story={item.story} user={item.user} className={'feed'} />
               </SwiperSlide>
             ))}
-            <SwiperSlide>
-              <div className={s['add-story']}>
-                <div className={s['add-icon']}></div>
-              </div>
-            </SwiperSlide>
+            {isAdmin && (
+              <SwiperSlide>
+                <div className={s['add-story']}>
+                  <div className={s['add-icon']}></div>
+                </div>
+              </SwiperSlide>
+            )}
             <button className={s['prev-button']} ref={navigationPrevRef}>
               <Icon src={arrowSvg} id={'arrow'} className={'white'} />
             </button>
@@ -245,6 +306,9 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                       <span className={s['group-name']}>{item.name}</span>
                       <span className={s['members']}>{item.author}</span>
                     </div>
+                    {className && (
+                      <div className={s['track-time']}>{item.time && formatTime(item.time)}</div>
+                    )}
                   </Link>
                 ),
               )}
@@ -270,7 +334,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
                 index >= visibleVideos ? null : (
                   <div className={s['video-item']} key={item.id}>
                     <div className={s['video']}>
-                      <video>
+                      <video controls={className ? true : false}>
                         <source src={item.video} type="video/mp4" />
                       </video>
                     </div>
@@ -361,6 +425,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
       state: boolean;
       key: string;
     }[] = [
+      { type: 'members', state: isMembersOpen, key: 'isMembersOpen' },
       { type: 'stories', state: isStoriesOpen, key: 'isStoriesOpen' },
       { type: 'friends', state: isFriendsOpen, key: 'isFriendsOpen' },
       { type: 'groups', state: isGroupsOpen, key: 'isGroupsOpen' },
@@ -387,6 +452,8 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
           className={classNames({
             [s['content-block']]: contentType !== 'photos' && contentType !== 'collection',
             [s['photo-block']]: contentType === 'photos',
+            [className && s[className]]: className !== undefined,
+            [className && s['group-content']]: className !== undefined,
           })}>
           {width < 1150 ? (
             <button
@@ -412,7 +479,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ contentType, data }) =>
               <h5 className={s['sub-title']}>{setTitle(contentType)}</h5>
               {contentType === 'photos' && (
                 <Link
-                  to="/friends"
+                  to="/photos"
                   className={classNames({
                     [s['link']]: contentType !== 'photos',
                     [s['photo-link']]: contentType === 'photos',

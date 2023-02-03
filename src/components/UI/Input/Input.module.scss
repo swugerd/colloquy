@@ -205,10 +205,50 @@
   }
 }
 
+.side-adress {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 5rem;
+  padding: 1rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+.group-info {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 5rem;
+  padding: 1rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
 @media (max-width: 550px) {
   .nav-content {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+  .group-info {
+    height: 4rem;
     font-size: 1.4rem;
   }
 }

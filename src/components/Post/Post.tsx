@@ -10,9 +10,13 @@ import viewsSvg from '../../assets/img/icons/views.svg';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import formatTime from '../../utils/formatTime';
 import classNames from 'classnames';
+import anonymSvg from '../../assets/img/icons/anonym.svg';
 import useWindowSize from './../../hooks/useWindowResize';
 import Icon from '../UI/Icon/Icon';
 import { Link } from 'react-router-dom';
+import SquareButton from '../UI/SquareButton/SquareButton';
+import closeSvg from '../../assets/img/icons/close.svg';
+import addSvg from '../../assets/img/icons/add.svg';
 
 type PostProps = {
   id: number;
@@ -21,7 +25,6 @@ type PostProps = {
     name: string;
     img: string;
   };
-  date: string;
   content: {
     text?: string;
     images?: {
@@ -51,22 +54,21 @@ type PostProps = {
       author: string;
     }[];
   };
-  likes: number;
-  forwards: number;
-  comments: number;
-  views: number;
+  postType: {
+    feed?: {
+      date: string;
+      likes: number;
+      forwards: number;
+      comments: number;
+      views: number;
+    };
+    suggest?: {
+      isAnonym: boolean;
+    };
+  };
 };
 
-const Post: React.FC<PostProps> = ({
-  id,
-  user,
-  date,
-  content,
-  likes,
-  forwards,
-  comments,
-  views,
-}) => {
+const Post: React.FC<PostProps> = ({ id, user, postType, content }) => {
   const { name: userName, img: userImg } = user;
   const { text, images, videos, circles, voices, music } = content;
   const { width } = useWindowSize();
@@ -87,6 +89,13 @@ const Post: React.FC<PostProps> = ({
     voicesSolo: 2,
     music: 1,
   };
+
+  const [isAnonymActive, setIsAnonymActive] = useState(false);
+  const [isRadioActive, setIsRadioActive] = useState(false);
+
+  const { feed, suggest } = postType;
+
+  const { likes, comments, forwards, date, views } = feed || {};
 
   const checkLastContent = (
     type: 'class' | 'element',
@@ -143,9 +152,17 @@ const Post: React.FC<PostProps> = ({
             <span className={s['post-date']}>{date}</span>
           </div>
         </div>
-        <button className={s['hide']}>
-          <Icon src={hideSvg} id={'hide'} className={'gray'} />
-        </button>
+        {feed && (
+          <button className={s['hide']}>
+            <Icon src={hideSvg} id={'hide'} className={'gray'} />
+          </button>
+        )}
+        {suggest && (
+          <div className={s['row']}>
+            <SquareButton className={'post-button'} icon={closeSvg} id={'close'} />
+            <SquareButton className={'post-button'} icon={addSvg} id={'add'} />
+          </div>
+        )}
       </div>
       <div className={s['content']}>
         {!!text && <p className={s['post-text']}>{text}</p>}
@@ -316,31 +333,54 @@ const Post: React.FC<PostProps> = ({
           </div>
         )}
       </div>
-      <div className={s['actions']}>
-        <button
-          className={`${s['actions-info']} ${s['likes']} ${activeAction ? s['active'] : ''}`}
-          onClick={() => setactiveAction(!activeAction)}>
-          <Icon
-            src={likeSvg}
-            id={'like'}
-            className={'only-gray'}
-            hoverClass={activeAction ? 'active' : ''}
-          />
-          <span>{activeAction ? likes + 1 : likes}</span>
-        </button>
-        <button className={`${s['actions-info']} ${s['forwards']}`}>
-          <Icon src={forwardSvg} id={'forward'} className={'only-gray'} />
-          <span>{forwards}</span>
-        </button>
-        <button className={`${s['actions-info']} ${s['comments']}`}>
-          <Icon src={commentsSvg} id={'comments'} className={'only-gray'} />
-          <span>{comments}</span>
-        </button>
-        <div className={`${s['actions-info']} ${s['views']} `}>
-          <Icon src={viewsSvg} id={'views'} className={'only-gray'} />
-          <span>{views}</span>
+      {feed && (
+        <div className={s['actions']}>
+          <button
+            className={`${s['actions-info']} ${s['likes']} ${activeAction ? s['active'] : ''}`}
+            onClick={() => setactiveAction(!activeAction)}>
+            <Icon
+              src={likeSvg}
+              id={'like'}
+              className={'only-gray'}
+              hoverClass={activeAction ? 'active' : ''}
+            />
+            <span>{activeAction ? likes && likes + 1 : likes}</span>
+          </button>
+          <button className={`${s['actions-info']} ${s['forwards']}`}>
+            <Icon src={forwardSvg} id={'forward'} className={'only-gray'} />
+            <span>{forwards}</span>
+          </button>
+          <button className={`${s['actions-info']} ${s['comments']}`}>
+            <Icon src={commentsSvg} id={'comments'} className={'only-gray'} />
+            <span>{comments}</span>
+          </button>
+          <div className={`${s['actions-info']} ${s['views']} `}>
+            <Icon src={viewsSvg} id={'views'} className={'only-gray'} />
+            <span>{views}</span>
+          </div>
         </div>
-      </div>
+      )}
+      {suggest && (
+        <div className={s['row']}>
+          <button
+            className={`${s['controls-icon']} ${s['anonym']} ${s['separator']}`}
+            onClick={() => setIsAnonymActive(!isAnonymActive)}>
+            <Icon src={anonymSvg} id={'anonym'} className={isAnonymActive ? 'gray' : 'green'} />
+          </button>
+          <div className={s['media-action']} onClick={() => setIsRadioActive(!isRadioActive)}>
+            <div className={s['radio-btn']}>
+              <input
+                type="checkbox"
+                className={`${s['inp-disabled']}`}
+                checked={isRadioActive}
+                onChange={() => setIsRadioActive(!isRadioActive)}
+              />
+              <div className={`${s['custom-btn']}`}></div>
+            </div>
+            <div className={s['text']}>Добавить медиа в сообщество</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
