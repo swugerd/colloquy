@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Header from '../../components/Header/Header';
 import MobileFooter from '../../components/MobileFooter/MobileFooter';
 import MobileHeader from '../../components/MobileHeader/MobileHeader';
@@ -13,13 +14,14 @@ type MainLayoutProps = {
 };
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const { mobile } = useSelector(selectMobile);
   return (
     <div className={`${s['wrapper']}`}>
       {
         <>
           <Header />
           <MobileHeader />
-          <MobileFooter />
+          {mobile.chatId ? '' : <MobileFooter />}
         </>
       }
       <div className="container">
@@ -30,7 +32,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <Sidebar />
             </>
           }
-          <main className={s['main']}>{children}</main>
+          <main
+            className={`${s['main']} ${mobile.title === 'Сообщения' ? s['messages'] : ''} ${
+              mobile.chatId ? s['selected'] : ''
+            }`}>
+            {children}
+          </main>
         </div>
       </div>
     </div>

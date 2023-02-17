@@ -34,6 +34,14 @@
   }
 }
 
+.arrow-messages {
+  width: 2rem;
+  height: 2rem;
+  & svg {
+    display: block;
+  }
+}
+
 .margin-auto {
   margin-left: auto;
 }
@@ -59,6 +67,42 @@
   font-weight: 600;
 }
 
+.user-img {
+  width: 5rem;
+  height: 5rem;
+  margin: 0 1rem 0 1.5rem;
+  & img {
+    border-radius: 50%;
+  }
+}
+
+.user-name {
+  margin: 0 1rem 0 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.online {
+  color: $green-main;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-link .arrow svg {
+  display: block;
+}
+
+.paperclip {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: auto;
+}
+
 @media (max-width: 620px) {
   .members-text {
     display: none !important;
@@ -75,8 +119,24 @@
   .title {
     font-size: 1.8rem;
   }
-  .arrow {
+  .arrow,
+  .arrow-messages {
     height: 1.2rem;
     width: 1.2rem;
+  }
+  .user-img {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 0 0 1.5rem;
+  }
+  .user-name {
+    font-size: 1.4rem;
+  }
+  .online {
+    font-size: 1.2rem;
+  }
+  .paperclip {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }

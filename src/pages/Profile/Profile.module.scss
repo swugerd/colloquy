@@ -220,6 +220,16 @@
   }
 }
 
+.sticky {
+  position: fixed;
+  top: $header-height + 2rem;
+  z-index: 100;
+}
+
+.relative {
+  position: relative;
+}
+
 @media (max-width: 1450px) {
   .profile {
     margin: 0 3rem 0 4.5rem;

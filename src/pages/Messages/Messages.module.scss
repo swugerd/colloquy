@@ -1,0 +1,261 @@
+@import '../../scss/variables.scss';
+
+.messages {
+  background: $sub-bg;
+  border-radius: 2rem;
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  width: 100%;
+  margin-left: 4.5rem;
+  display: flex;
+  height: calc(100vh - 120px);
+}
+
+.chats {
+  max-width: 42rem;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.top {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 2rem;
+  padding-left: 1.5rem;
+  & div {
+    flex-grow: 1;
+  }
+}
+
+.create-chat {
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-left: 2rem;
+}
+
+.chat-link {
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat';
+  transition: 0.2s linear;
+  padding: 1rem;
+  &.active {
+    background: $elem;
+    &:hover {
+      background: $elem !important;
+    }
+  }
+  &:hover {
+    background: rgba(31, 31, 31, 0.5);
+  }
+}
+
+.messages-list {
+  overflow-y: scroll;
+  height: calc(100% - 60px);
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.user-name,
+.message-time,
+.last-wrapper {
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+.message-time {
+  color: $semi-white;
+}
+
+.info-top,
+.info-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-top {
+  margin-bottom: 0.5rem;
+}
+
+.last-wrapper {
+  display: flex;
+  & span {
+    color: $semi-white;
+    margin-right: 0.5rem;
+    display: block;
+  }
+  & p {
+    max-width: 20rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: $green-main;
+  }
+}
+
+.chat-info {
+  flex-grow: 1;
+}
+
+.unread-messages {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $green-main;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-family: 'OpenSans';
+}
+
+.nothing-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+  font-family: 'OpenSans';
+  font-size: 2rem;
+  color: $white;
+  font-weight: 500;
+  border-left: 2px solid $elem;
+}
+
+.dialog-top {
+  display: flex;
+  align-items: center;
+  background: $bg-main;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1.5rem 1.5rem;
+}
+
+.dialog-avatar {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1.5rem;
+  & img {
+    border-radius: 50%;
+  }
+}
+
+.dialog-name {
+  color: $white;
+  margin-right: 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.dialog-online {
+  font-size: 1.6rem;
+  color: $green-main;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+.paperclip {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.dialog-inner {
+  background: $elem;
+  border-radius: 0 0 1rem 1rem;
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 60px);
+}
+
+.messages-wrapper {
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .messages {
+    margin: 0;
+    height: calc(100vh - 200px);
+    padding: 0;
+  }
+  .messages.selected {
+    height: calc(100vh - 75px);
+    border-radius: 0;
+  }
+  .chats {
+    max-width: none;
+    padding-top: 2rem;
+  }
+  .dialog-inner {
+    border-radius: 2rem;
+    background: $sub-bg;
+  }
+  .nothing-dialog,
+  .dialog-top {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .messages {
+    height: calc(100vh - 150px);
+  }
+  .chats {
+    padding-top: 1rem;
+  }
+  .top {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .messages.selected {
+    height: calc(100vh - 50px);
+    border-radius: 0;
+  }
+  .create-chat {
+    width: 3rem;
+    height: 3rem;
+  }
+  .user-name {
+    font-size: 1.4rem;
+  }
+  .message-time,
+  .last-wrapper {
+    font-size: 1.2rem;
+  }
+  .unread-messages {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 1rem;
+  }
+  /*
+  посчиать высоту в планшете
+  */
+}

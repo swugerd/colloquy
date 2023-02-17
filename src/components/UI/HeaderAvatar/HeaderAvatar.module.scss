@@ -58,6 +58,12 @@
   margin-right: 1rem;
 }
 
+.messages-image {
+  margin-right: 1rem;
+  height: 5rem;
+  width: 5rem;
+}
+
 .chat-image {
   width: 4rem;
   height: 4rem;
@@ -115,6 +121,12 @@
   margin-right: 1.5rem;
 }
 
+.chat-avatar {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-right: 1rem;
+}
+
 @media (max-width: 1300px) {
   .friend {
     width: 7.5rem;
@@ -165,5 +177,19 @@
   .group-content {
     width: 3rem;
     height: 3rem;
+  }
+  .messages-image {
+    height: 3rem;
+    width: 3rem;
+  }
+  .chat-avatar {
+    height: 5rem;
+    width: 5rem;
+    & img + div {
+      height: 1.2rem;
+      width: 1.2rem;
+      bottom: 0;
+      right: 0;
+    }
   }
 }

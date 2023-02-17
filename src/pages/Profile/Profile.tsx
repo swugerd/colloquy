@@ -7,7 +7,7 @@ import chatSvg from '../../assets/img/icons/chat.svg';
 import addSvg from '../../assets/img/icons/add.svg';
 import blockSvg from '../../assets/img/icons/block.svg';
 import { useAppDispatch } from './../../redux/store';
-import { setIsInfoName } from '../../redux/mobile/slice';
+import { setChatId, setIsInfoName } from '../../redux/mobile/slice';
 import Wall from '../../components/Wall/Wall';
 import ava from '../../assets/uploads/ava.png';
 import img from '../../assets/uploads/pasha.png';
@@ -27,6 +27,7 @@ const Profile: React.FC = () => {
     window.scrollTo(0, 0);
     if (username) {
       dispatch(setIsInfoName(username));
+      dispatch(setChatId(0));
     }
     return () => {
       dispatch(setIsInfoName(''));
@@ -109,8 +110,8 @@ const Profile: React.FC = () => {
   const isAdmin = true;
   return (
     <>
-      <div className={s['profile']}>
-        <div className={s['left']}>
+      <div className={`${s['profile']}`}>
+        <div className={`${s['left']}`}>
           <div className={s['mobile-info']}>
             <div className={s['avatar']}>
               <img src={ava} alt="ava" />

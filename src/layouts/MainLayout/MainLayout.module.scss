@@ -24,10 +24,21 @@
     padding-bottom: $header-height;
     margin-top: 9.5rem;
   }
+  .messages {
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: center;
+  }
+  .messages.selected {
+    padding-top: 7rem !important;
+  }
 }
 
 @media (max-width: 550px) {
   .main {
     margin-top: 6.5rem;
+  }
+  .messages.selected {
+    padding-top: 5rem !important;
   }
 }

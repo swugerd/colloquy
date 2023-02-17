@@ -9,41 +9,53 @@ import inputS from '../../../UI/Input/Input.module.scss';
 import { Link, useParams } from 'react-router-dom';
 import Input from '../../../UI/Input/Input';
 import Icon from '../../../UI/Icon/Icon';
+import Message from '../../../Message/Message';
+import { Message as MessageType } from '../../../../types/message';
 
 const FastMessagesChat: React.FC = () => {
   const { dialogId }: any = useParams();
 
-  const chats = [
-    { id: 1, userId: 10, messageText: 'ура крутое сообщение!', messageTime: '12:40', img: ebalo },
+  const messages: MessageType[] = [
+    {
+      id: 1,
+      senderId: 2,
+      message: 'ку',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
+      unread: false,
+    },
     {
       id: 2,
-      userId: 10,
-      messageText: 'я тебе ответил очень конструктивно дааааа кмон',
-      messageTime: '12:40',
-      img: ebalo2,
+      senderId: 2,
+      message: 'че дел',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
+      unread: false,
+    },
+    {
+      id: 3,
+      senderId: 1,
+      message: 'колекви ебашу',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
     },
     {
       id: 4,
-      userId: parseInt(dialogId),
-      messageText: 'И короче ещё одно сообщение лол',
-      messageTime: '12:40',
-      img: ebalo2,
+      senderId: 1,
+      message: 'а че бро',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
     },
     {
       id: 5,
-      userId: parseInt(dialogId),
-      messageText: 'jdsahkjdhsajdshaj',
-      messageTime: '12:40',
-      img: ebalo2,
+      senderId: 2,
+      message: 'ыыыыыыыыыыыыыы',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
+      unread: true,
     },
     {
       id: 6,
-      userId: parseInt(dialogId),
-      messageText: 'jdsahkjdhsajdshaj',
-      messageTime: '12:40',
-      img: ebalo2,
+      senderId: 2,
+      message: 'ладно тогда делай не отвлекаю!',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
+      unread: true,
     },
-    { id: 7, userId: 10, messageText: 'jdsahkjdhsajdshaj', messageTime: '12:40', img: ebalo },
   ];
 
   return (
@@ -69,27 +81,16 @@ const FastMessagesChat: React.FC = () => {
         </Link>
       </div>
       <div className={s['wrapper-content']}>
-        {chats.map(({ id, userId, messageText, messageTime, img }, index, chats) => (
-          <div key={id} className={s['message-wrapper']}>
-            {userId !== chats[index + 1]?.userId && (
-              <HeaderAvatar
-                className="fm-chat-image"
-                img={ebalo}
-                title={'image'}
-                onlineType="pc-offline"
-              />
-            )}
-            <div
-              className={`${userId === parseInt(dialogId) ? s['other-message'] : s['my-message']} ${
-                s['message-text']
-              } ${userId === chats[index + 1]?.userId && s['left-margin']}`}>
-              {messageText}
-              <div className={`${s['message-action']}`}>
-                <div className={s['read-status']}></div>
-                <span className={s['message-time']}>{messageTime}</span>
-              </div>
-            </div>
-          </div>
+        {messages.map((message, index, messages) => (
+          <Message
+            senderId={message.senderId}
+            message={message}
+            myId={1}
+            nextSenderId={messages[index + 1]?.senderId}
+            className={'fm'}
+            page={'fms'}
+            key={message.id}
+          />
         ))}
       </div>
       <div className={s['wrapper-bottom']}>

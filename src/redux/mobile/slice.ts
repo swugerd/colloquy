@@ -9,6 +9,7 @@ const initialState: MobileState = {
   backText: '',
   membersCount: 0,
   backButtonType: 'button',
+  chatId: 0,
 };
 
 const MobileSlice = createSlice({
@@ -39,6 +40,9 @@ const MobileSlice = createSlice({
     setBackButtonType(state, action: PayloadAction<'button' | 'link'>) {
       state.backButtonType = action.payload;
     },
+    setChatId(state, action: PayloadAction<number>) {
+      state.chatId = action.payload;
+    },
   },
 });
 
@@ -51,6 +55,7 @@ export const {
   setHasBackButton,
   setMembersCount,
   setBackButtonType,
+  setChatId,
 } = MobileSlice.actions;
 
 export default MobileSlice.reducer;

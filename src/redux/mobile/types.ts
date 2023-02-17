@@ -7,4 +7,5 @@ export interface MobileState {
   backText: string;
   membersCount: number;
   backButtonType: 'link' | 'button';
+  chatId: number;
 }

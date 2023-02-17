@@ -167,7 +167,10 @@ const App: React.FC = () => {
               <Route path="/groups/:name" element={<Group />} />
               <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="/messages" element={<Messages />} />
+            <Route path="/messages">
+              <Route index element={<Messages isChatSelected={false} />} />
+              <Route path="/messages/:chatId" element={<Messages isChatSelected={true} />} />
+            </Route>
             <Route path="/circles" element={<Circles />} />
             <Route path="/voices" element={<Voices />} />
             <Route path="/photos" element={<Photos />} />

@@ -241,6 +241,42 @@
   }
 }
 
+.messages {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 5rem;
+  padding: 1.5rem 4rem 1.5rem 4rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+.send-message {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 5rem;
+  padding: 1.5rem 6.5rem 1.5rem 4rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
 @media (max-width: 550px) {
   .nav-content {
     padding-top: 1rem;
@@ -250,5 +286,15 @@
   .group-info {
     height: 4rem;
     font-size: 1.4rem;
+  }
+  .messages {
+    height: 4rem;
+    font-size: 1.4rem;
+    padding: 1rem 4rem 1rem 3.5rem;
+  }
+  .send-message {
+    height: 4rem;
+    font-size: 1.4rem;
+    padding: 1rem 6.5rem 1rem 3.5rem;
   }
 }

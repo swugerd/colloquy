@@ -6,6 +6,8 @@ import { setIsHeaderShow, setTitle } from '../../redux/mobile/slice';
 import s from './MobileHeader.module.scss';
 import backSvg from '../../assets/img/icons/back.svg';
 import arrowSvg from '../../assets/img/icons/arrow.svg';
+import ebalo from '../../assets/uploads/test/ebalo.png';
+import paperclipSvg from '../../assets/img/icons/paperclip.svg';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
 import { Link, useNavigate } from 'react-router-dom';
@@ -30,12 +32,34 @@ const MobileHeader: React.FC = () => {
   return width <= 1150 ? (
     <header className={s['wrapper']}>
       <div className={s['wrapper-inner']}>
-        {mobile.membersCount ? (
+        {!mobile.chatId && !mobile.membersCount ? (
+          <h2 className={s['title']}>{mobile.infoName ? `@${mobile.infoName}` : mobile.title}</h2>
+        ) : (
+          ''
+        )}
+        {!!mobile.membersCount && (
           <h2 className={s['title']}>
             Список участников - <span className={s['members']}>{mobile.membersCount}</span>
           </h2>
-        ) : (
-          <h2 className={s['title']}>{mobile.infoName ? `@${mobile.infoName}` : mobile.title}</h2>
+        )}
+        {!!mobile.chatId && (
+          <>
+            <Link className={s['arrow-link']} to="/messages">
+              <div className={s['arrow-messages']}>
+                <Icon src={backSvg} id={'back'} className={'white'} />
+              </div>
+            </Link>
+            <Link to={'/profile/swugerd'} className={s['link']}>
+              <div className={s['user-img']}>
+                <img src={ebalo} alt="user" />
+              </div>
+              <span className={s['user-name']}>{mobile.chatId}</span>
+            </Link>
+            <span className={s['online']}>В сети</span>
+            <button className={s['paperclip']}>
+              <Icon src={paperclipSvg} id={'paperclip'} className={'white'} />
+            </button>
+          </>
         )}
         {mobile.hasArrowButton && (
           <button

@@ -13,6 +13,7 @@ type HeaderAvatarProps = {
     'sm-indicator' | 'md-indicator' | 'lg-indicator' | 'friend-indicator',
     'border-elem' | 'border-sub-bg' | 'border-friend',
   ];
+  hasAnimation?: boolean;
   onlineType?: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline' | string;
 };
 
@@ -23,13 +24,19 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   hasDelete,
   indicatorClass,
   onlineType,
+  hasAnimation,
 }) => {
   return (
     <div className={s[className]} title={title}>
       <div className={s['image-block']}>
         <img src={img} alt="profile" />
         {indicatorClass && onlineType && (
-          <OnlineIndicator onlineType={onlineType} cName={indicatorClass} isMobile={false} />
+          <OnlineIndicator
+            onlineType={onlineType}
+            cName={indicatorClass}
+            isMobile={false}
+            hasAnimation={hasAnimation}
+          />
         )}
       </div>
       {hasDelete && (

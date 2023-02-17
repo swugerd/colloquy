@@ -52,6 +52,9 @@
 
 .about {
   grid-column: span 2;
+  &.edit {
+    margin-top: 2.5rem;
+  }
 }
 
 .sub-title {
