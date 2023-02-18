@@ -7,12 +7,10 @@ import Input from '../../../UI/Input/Input';
 import { Link } from 'react-router-dom';
 import NotFoundBlock from '../../../NotFoundBlock/NotFoundBlock';
 import Icon from '../../../UI/Icon/Icon';
+import { useAppDispatch } from './../../../../redux/store';
+import { setIsFmsOpen } from '../../../../redux/dropdowns/slice';
 
-type FastMessagesListProps = {
-  onClick: React.MouseEventHandler<HTMLAnchorElement>;
-};
-
-const FastMessagesList: React.FC<FastMessagesListProps> = ({ onClick }) => {
+const FastMessagesList: React.FC = () => {
   const chats: {
     id: number;
     name: string;
@@ -28,13 +26,14 @@ const FastMessagesList: React.FC<FastMessagesListProps> = ({ onClick }) => {
     { id: 8, name: 'Пашок Кубыркин', img: '../../assets/img/header/ebalo.png' },
     { id: 9, name: 'Димон шкаф', img: '../../assets/img/header/ebalo.png' },
   ];
+  const dispatch = useAppDispatch();
   return (
     <>
       <div className={s['wrapper-top']}>
         <h6 className={s['wrapper-heading']}>Чаты</h6>
-        <Link onClick={onClick} to="/">
+        <button onClick={() => dispatch(setIsFmsOpen(false))}>
           <Icon src={closeSvg} id={'close'} className={'fms-close'} />
-        </Link>
+        </button>
       </div>
       <div className={`${s['wrapper-content']} ${chats.length ? '' : s['nothing']}`}>
         {chats.length ? (

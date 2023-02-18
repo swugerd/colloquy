@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import auth from './auth/slice';
 import mobile from './mobile/slice';
+import dropdowns from './dropdowns/slice';
 
 export const store = configureStore({
   reducer: {
     auth,
     mobile,
+    dropdowns,
   },
 });
 

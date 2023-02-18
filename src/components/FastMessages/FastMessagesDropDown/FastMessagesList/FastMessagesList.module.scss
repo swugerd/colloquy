@@ -6,6 +6,9 @@
   align-items: center;
   padding: 1rem 1.5rem 1rem 1.5rem;
   height: 5rem;
+  & svg {
+    color: $white;
+  }
 }
 
 .wrapper-heading {

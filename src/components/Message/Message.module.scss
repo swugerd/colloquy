@@ -219,6 +219,11 @@
   & .message-action {
     font-size: 0.8rem;
   }
+  & .message-action {
+    align-self: flex-end;
+    padding-bottom: 0;
+    padding-left: 1rem;
+  }
 }
 
 .grid-area {

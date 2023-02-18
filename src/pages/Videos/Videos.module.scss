@@ -1,0 +1,212 @@
+@import '../../scss/variables.scss';
+
+.videos {
+  background: $sub-bg;
+  border-radius: 2rem;
+  padding: 2rem;
+  width: 100%;
+  margin-left: 4.5rem;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat';
+}
+
+.page-title {
+  color: $white;
+  font-size: 2.4rem;
+  margin-right: 1rem;
+  font-weight: 500;
+}
+
+.add-button {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.videos-list {
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: repeat(3, minmax(25rem, 1fr));
+  grid-template-rows: minmax(25rem, 25rem);
+}
+
+.video-block {
+  height: 20rem;
+  position: relative;
+  margin-bottom: 1rem;
+  & video {
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+}
+
+.delete-btn {
+  position: absolute;
+  transition: 0.2s linear;
+  top: 1rem;
+  right: 1rem;
+  width: 5rem;
+  height: 5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
+  & svg {
+    width: 2rem;
+    height: 2rem;
+    color: $red-light;
+    --transparent-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.views-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  & svg {
+    display: block;
+  }
+}
+
+.video-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.views {
+  display: flex;
+  align-items: center;
+}
+
+.video-info {
+  font-family: 'OpenSans';
+}
+
+.video-title {
+  font-size: 1.6rem;
+  color: $white;
+  font-weight: 500;
+}
+
+.video-author {
+  font-size: 1.4rem;
+  color: $green-main;
+  font-weight: 500;
+}
+
+.video-author,
+.video-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 15vw;
+}
+
+.views-count {
+  color: $white;
+}
+
+.video-date {
+  color: $semi-white;
+}
+
+.views-count,
+.video-date {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+@media (max-width: 1150px) {
+  .videos {
+    margin-left: 0;
+  }
+  .top {
+    display: none;
+  }
+  .videos-list {
+    grid-template-columns: repeat(2, minmax(23rem, 1fr));
+    grid-template-rows: minmax(25rem, 25rem);
+  }
+  .video-author,
+  .video-title {
+    max-width: 30vw;
+  }
+}
+
+@media (max-width: 550px) {
+  .videos {
+    padding: 1rem;
+  }
+
+  .videos-list {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 0;
+  }
+
+  .video-item {
+    display: flex;
+    & + & {
+      margin-top: 1rem;
+    }
+  }
+
+  .video-block {
+    flex-shrink: 0;
+    flex-basis: 50vw;
+    min-width: 14rem;
+    min-height: 9rem;
+    height: 20vw;
+    margin-bottom: 0;
+  }
+
+  .video-info {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .views {
+    display: none;
+    &.mobile {
+      display: flex;
+    }
+  }
+
+  .video-row.mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: initial;
+    flex-grow: 1;
+  }
+
+  .delete-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    & svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  .video-title {
+    font-size: 1.4rem;
+  }
+
+  .video-author {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  .views-count,
+  .video-date {
+    font-size: 1rem;
+  }
+  .video-author,
+  .video-title {
+    max-width: 40vw;
+  }
+}

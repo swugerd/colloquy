@@ -8,6 +8,10 @@ import FastMessagesBtn from './FastMessagesBtn/FastMessagesBtn';
 import FastMessagesDropDown from './FastMessagesDropDown/FastMessagesDropDown';
 import Input from '../UI/Input/Input';
 import { Route, Routes } from 'react-router-dom';
+import { useAppDispatch } from './../../redux/store';
+import { setIsFmsOpen } from '../../redux/dropdowns/slice';
+import { useSelector } from 'react-redux';
+import { selectDropdowns } from './../../redux/dropdowns/selector';
 
 const FastMessages: React.FC = () => {
   const chats: {
@@ -20,9 +24,11 @@ const FastMessages: React.FC = () => {
     { id: 3, name: 'Дима', img: '../../assets/img/header/ebalo.png' },
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
-  const openDropDownHandler = () => {
-    setIsOpen(!isOpen);
+  const dispatch = useAppDispatch();
+  const { dropdowns } = useSelector(selectDropdowns);
+
+  const closeHandler = () => {
+    dispatch(setIsFmsOpen(false));
   };
 
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -36,7 +42,7 @@ const FastMessages: React.FC = () => {
         fMsRef.current &&
         !e.composedPath().includes(fMsRef.current)
       ) {
-        setIsOpen(false);
+        closeHandler();
       }
     };
     document.body.addEventListener('click', handleOutsideClick);
@@ -59,15 +65,12 @@ const FastMessages: React.FC = () => {
               />
             );
           })}
-          <FastMessagesBtn
-            className={s['header__messages-btn--wrapped']}
-            onClick={openDropDownHandler}
-          />
+          <FastMessagesBtn className={s['header__messages-btn--wrapped']} />
         </div>
       ) : (
-        <FastMessagesBtn className={s['header__messages-btn']} onClick={openDropDownHandler} />
+        <FastMessagesBtn className={s['header__messages-btn']} />
       )}
-      {isOpen && <FastMessagesDropDown onClick={openDropDownHandler} ref={dropDownRef} />}
+      {dropdowns.isFmsOpen && <FastMessagesDropDown ref={dropDownRef} />}
     </>
   );
 };

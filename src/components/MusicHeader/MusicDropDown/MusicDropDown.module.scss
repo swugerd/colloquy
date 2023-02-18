@@ -21,6 +21,7 @@
   font-family: 'Montserrat';
   font-weight: 600;
   transition: 0.2s linear;
+  color: $white;
   &.active {
     color: $green-main;
   }

@@ -3,6 +3,7 @@ export interface MobileState {
   isSidebarShow: boolean;
   isHeaderShow: boolean;
   hasArrowButton: boolean;
+  hasAddButton: boolean;
   infoName: string;
   backText: string;
   membersCount: number;

@@ -3,6 +3,9 @@
 .header {
   &__messages-img {
     padding: 1.5rem;
+    & use {
+      color: $white;
+    }
   }
   .header-msgs {
     min-width: 2rem;

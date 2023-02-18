@@ -64,6 +64,12 @@
   width: 5rem;
 }
 
+.photo-block {
+  height: 6.5rem;
+  width: 6.5rem;
+  margin-right: 1rem;
+}
+
 .chat-image {
   width: 4rem;
   height: 4rem;
@@ -150,6 +156,11 @@
     width: 7.5rem;
     height: 7.5rem;
   }
+  .photo-block {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.7rem;
+  }
 }
 
 @media (max-width: 550px) {
@@ -191,5 +202,9 @@
       bottom: 0;
       right: 0;
     }
+  }
+  .photo-block {
+    width: 4rem;
+    height: 4rem;
   }
 }

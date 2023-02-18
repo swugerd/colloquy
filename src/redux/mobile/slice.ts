@@ -5,12 +5,15 @@ const initialState: MobileState = {
   isSidebarShow: false,
   isHeaderShow: false,
   hasArrowButton: false,
+  hasAddButton: false,
   infoName: '',
   backText: '',
   membersCount: 0,
   backButtonType: 'button',
   chatId: 0,
 };
+
+// сделать один редюср с типом страницы и в компоненте мобилок делать проверки
 
 const MobileSlice = createSlice({
   name: 'mobile',
@@ -43,6 +46,9 @@ const MobileSlice = createSlice({
     setChatId(state, action: PayloadAction<number>) {
       state.chatId = action.payload;
     },
+    setHasAddButton(state, action: PayloadAction<boolean>) {
+      state.hasAddButton = action.payload;
+    },
   },
 });
 
@@ -56,6 +62,7 @@ export const {
   setMembersCount,
   setBackButtonType,
   setChatId,
+  setHasAddButton,
 } = MobileSlice.actions;
 
 export default MobileSlice.reducer;

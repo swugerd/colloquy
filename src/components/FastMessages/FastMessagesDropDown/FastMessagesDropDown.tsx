@@ -11,21 +11,30 @@ import FastMessagesItem from '../FastMessagesItem/FastMessagesItem';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import FastMessagesList from './FastMessagesList/FastMessagesList';
 import FastMessagesChat from './FastMessagesChat/FastMessagesChat';
+import { useSelector } from 'react-redux';
+import { selectDropdowns } from './../../../redux/dropdowns/selector';
 
 type FastMessagesDropDownProps = {
-  onClick: React.MouseEventHandler<HTMLAnchorElement>;
+  isOpenHandler?: React.MouseEventHandler<HTMLButtonElement>;
+  componentIndexHandler?: React.MouseEventHandler<HTMLButtonElement>;
+  componentIndex?: 0 | 1;
 };
 
 const FastMessagesDropDown = React.forwardRef<HTMLDivElement, FastMessagesDropDownProps>(
-  ({ onClick }, ref) => {
-    const components = [<FastMessagesList onClick={onClick} />, <FastMessagesChat />];
+  ({ isOpenHandler, componentIndexHandler, componentIndex }, ref) => {
+    const { dropdowns } = useSelector(selectDropdowns);
     return (
       <div ref={ref} className={s.wrapper}>
         {
-          <Routes>
-            <Route path="/fms" element={<FastMessagesList onClick={onClick} />} />
-            <Route path="/fms/:dialogId" element={<FastMessagesChat />} />
-          </Routes>
+          dropdowns.fmsComponentIndex === 0 ? (
+            <FastMessagesList />
+          ) : (
+            <FastMessagesChat userId={dropdowns.fmsComponentIndex} />
+          )
+          // <Routes>
+          //   <Route path="/fms" element={<FastMessagesList onClick={onClick} />} />
+          //   <Route path="/fms/:dialogId" element={<FastMessagesChat />} />
+          // </Routes>
         }
       </div>
     );

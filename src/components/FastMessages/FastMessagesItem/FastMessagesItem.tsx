@@ -4,17 +4,19 @@ import s from './FastMessagesItem.module.scss';
 import sIndicator from '../../UI/OnlineIndicator/OnlineIndicator.module.scss';
 import ebalo from '../../../assets/uploads/test/image.png';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from './../../../redux/store';
+import { setFmsComponentIndex } from '../../../redux/dropdowns/slice';
 
 type FastMessagesItemProps = {
   id: any;
   name: string;
   img: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
 
-const FastMessagesItem: React.FC<FastMessagesItemProps> = ({ id, name, img, onClick }) => {
+const FastMessagesItem: React.FC<FastMessagesItemProps> = ({ id, name, img }) => {
+  const dispatch = useAppDispatch();
   return (
-    <Link className={s['chat']} to={`/fms/${id}`} title={name}>
+    <div className={s['chat']} title={name} onClick={() => dispatch(setFmsComponentIndex(id))}>
       <HeaderAvatar
         className="chat-image"
         img={ebalo}
@@ -23,7 +25,7 @@ const FastMessagesItem: React.FC<FastMessagesItemProps> = ({ id, name, img, onCl
         onlineType="pc-offline"
       />
       <span className={s['chat-name']}>{name}</span>
-    </Link>
+    </div>
   );
 };
 

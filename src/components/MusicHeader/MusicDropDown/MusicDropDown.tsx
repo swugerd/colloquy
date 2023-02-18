@@ -6,18 +6,22 @@ import MyMusicDropDown from '../MyMusicDropDown/MyMusicDropDown';
 import PlaylistsDropDown from '../PlaylistsDropDown/PlaylistsDropDown';
 import RecsDropDown from '../RecsDropDown/RecsDropDown';
 import s from './MusicDropDown.module.scss';
-type MusicDropDownProps = {
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { useSelector } from 'react-redux';
+import { selectDropdowns } from './../../../redux/dropdowns/selector';
+import { useAppDispatch } from './../../../redux/store';
+import { setIsMusicComponentIndex } from '../../../redux/dropdowns/slice';
 
-const MusicDropDown: React.FC<MusicDropDownProps> = ({ setState }) => {
-  const links = [
-    { id: 1, title: 'Моя музыка', path: '/music-dd' },
-    { id: 2, title: 'Плейлисты', path: '/playlists-dd' },
-    { id: 3, title: 'Рекомендации', path: '/recs-dd' },
+const MusicDropDown: React.FC = () => {
+  const buttons = [
+    { id: 1, title: 'Моя музыка' },
+    { id: 2, title: 'Плейлисты' },
+    { id: 3, title: 'Рекомендации' },
   ];
 
-  // Сделать навлинки для музыки и сайдбара + ещё раз проверить все иконки на ховеры и классы .active
+  const components = [<MyMusicDropDown />, <PlaylistsDropDown />, <RecsDropDown />];
+
+  const dispatch = useAppDispatch();
+  const { dropdowns } = useSelector(selectDropdowns);
 
   return (
     <div className={s['wrapper']}>
@@ -29,22 +33,18 @@ const MusicDropDown: React.FC<MusicDropDownProps> = ({ setState }) => {
         inputType="search"
       />
       <div className={s['nav']}>
-        {links.map(({ id, title, path }) => (
-          <NavLink
-            to={path}
+        {buttons.map(({ id, title }, index) => (
+          <button
             key={id}
-            className={({ isActive }) =>
-              isActive ? `${s['active']} ${s['nav-link']}` : s['nav-link']
-            }>
+            className={`${s['nav-link']} ${
+              dropdowns.musicComponentIndex === index ? s['active'] : ''
+            }`}
+            onClick={() => dispatch(setIsMusicComponentIndex(index))}>
             {title}
-          </NavLink>
+          </button>
         ))}
       </div>
-      <Routes>
-        <Route path="/music-dd" element={<MyMusicDropDown />} />
-        <Route path="/playlists-dd" element={<PlaylistsDropDown />} />
-        <Route path="/recs-dd" element={<RecsDropDown />} />
-      </Routes>
+      {components[dropdowns.musicComponentIndex]}
     </div>
   );
 };

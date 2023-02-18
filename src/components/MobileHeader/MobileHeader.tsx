@@ -7,6 +7,7 @@ import s from './MobileHeader.module.scss';
 import backSvg from '../../assets/img/icons/back.svg';
 import arrowSvg from '../../assets/img/icons/arrow.svg';
 import ebalo from '../../assets/uploads/test/ebalo.png';
+import addSvg from '../../assets/img/icons/add.svg';
 import paperclipSvg from '../../assets/img/icons/paperclip.svg';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
@@ -66,6 +67,11 @@ const MobileHeader: React.FC = () => {
             className={`${s['arrow']} ${isSideContentActive ? s['active'] : ''}`}
             onClick={arrowHandler}>
             <Icon src={arrowSvg} id={'arrow'} className={'white'} />
+          </button>
+        )}
+        {mobile.hasAddButton && (
+          <button className={`${s['add']}`} onClick={arrowHandler}>
+            <Icon src={addSvg} id={'add'} className={'white'} />
           </button>
         )}
         {mobile.backText && mobile.backButtonType === 'button' && (

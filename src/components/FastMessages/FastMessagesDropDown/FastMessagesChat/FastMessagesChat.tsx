@@ -11,9 +11,19 @@ import Input from '../../../UI/Input/Input';
 import Icon from '../../../UI/Icon/Icon';
 import Message from '../../../Message/Message';
 import { Message as MessageType } from '../../../../types/message';
+import { useAppDispatch } from './../../../../redux/store';
+import { setFmsComponentIndex } from '../../../../redux/dropdowns/slice';
+import { useSelector } from 'react-redux';
+import { selectDropdowns } from './../../../../redux/dropdowns/selector';
 
-const FastMessagesChat: React.FC = () => {
-  const { dialogId }: any = useParams();
+type FastMessagesChatProps = {
+  userId: number;
+};
+
+const FastMessagesChat: React.FC<FastMessagesChatProps> = ({ userId }) => {
+  const dispatch = useAppDispatch();
+
+  const { dropdowns } = useSelector(selectDropdowns);
 
   const messages: MessageType[] = [
     {
@@ -56,6 +66,20 @@ const FastMessagesChat: React.FC = () => {
       timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
       unread: true,
     },
+    {
+      id: 7,
+      senderId: 2,
+      message: 'ладно тогда делай не отвлекаю!',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
+      unread: true,
+    },
+    {
+      id: 8,
+      senderId: 2,
+      message: 'ладно тогда делай не отвлекаю!',
+      timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
+      unread: true,
+    },
   ];
 
   return (
@@ -69,16 +93,16 @@ const FastMessagesChat: React.FC = () => {
             indicatorClass={['sm-indicator', 'border-sub-bg']}
             onlineType="pc-offline"
           />
-          <span className={s['user-name']} title={dialogId}>
-            {dialogId}
+          <span className={s['user-name']} title={'da'}>
+            {userId}
           </span>
         </Link>
         <button className={s['full-chat']}>
           <Icon src={fullChatSvg} id={'fullChat'} className={'full-icon'} />
         </button>
-        <Link className={s['arrow']} to="/fms">
+        <button className={s['arrow']} onClick={() => dispatch(setFmsComponentIndex(0))}>
           <Icon src={arrowSvg} id={'back'} className={'arrow-fms'} />
-        </Link>
+        </button>
       </div>
       <div className={s['wrapper-content']}>
         {messages.map((message, index, messages) => (
