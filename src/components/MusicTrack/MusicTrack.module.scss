@@ -12,7 +12,15 @@
   }
   &:hover {
     background: rgba(44, 44, 44, 0.5);
+    & .recs-actions {
+      opacity: 1;
+    }
   }
+}
+
+.row {
+  display: flex;
+  margin-right: auto;
 }
 
 .recs-wrapper {
@@ -46,6 +54,9 @@
   font-size: 1rem;
   font-weight: 600;
   margin-right: auto;
+  & .row {
+    flex-direction: column;
+  }
 }
 
 .track-title {
@@ -153,5 +164,86 @@
   }
   &:hover svg path {
     fill: $white;
+  }
+}
+
+.recs-actions {
+  opacity: 0;
+  transition: 0.2s linear;
+}
+
+.music-page {
+  padding: 1rem;
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  & .track-img {
+    height: 5rem;
+    min-width: 5rem;
+    max-width: 5rem;
+  }
+  & .track-title,
+  & .track-author,
+  & .track-time {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  & .track-author,
+  & .track-title {
+    max-width: 13vw;
+  }
+  & .delete,
+  .forward {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.music-page.recs-wrapper {
+  & .recs-forward,
+  & .recs-delete {
+    width: 2rem;
+    height: 2rem;
+  }
+  & .recs-forward {
+    margin-bottom: 1rem;
+  }
+  & .recs-author,
+  & .recs-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+  & .recs-time {
+    font-size: 1.2rem;
+  }
+}
+
+.activity.wrapper {
+  padding: 1rem;
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  & .separator {
+    display: none;
+  }
+  & .row {
+    flex-direction: column;
+  }
+  & .track-title,
+  & .track-author {
+    margin: 0;
+  }
+  & .track-img {
+    height: 5rem;
+    min-width: 5rem;
+    max-width: 5rem;
+  }
+  & .track-title {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  & .track-author,
+  & .track-time {
+    font-size: 1.4rem;
   }
 }

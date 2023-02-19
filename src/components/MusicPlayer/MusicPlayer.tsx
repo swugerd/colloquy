@@ -13,9 +13,16 @@ import addSvg from '../../assets/img/icons/add.svg';
 import { Link } from 'react-router-dom';
 import Icon from '../UI/Icon/Icon';
 
-const MusicPlayer: React.FC = () => {
+type MusicPlayerProps = {
+  className: string;
+};
+
+// делать адаптив
+// сделать мобильный плеер
+
+const MusicPlayer: React.FC<MusicPlayerProps> = ({ className }) => {
   return (
-    <div className={s['player']}>
+    <div className={`${s['player']} ${s[className]}`}>
       <div className={s['player-pannel']}>
         <button className={s['prev-track']}>
           <Icon src={switchTrackSvg} id={'switchTrack'} className={''} />

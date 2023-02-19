@@ -13,22 +13,25 @@ type MusicTrackProps = {
   author: string;
   time: number;
   isRecs: boolean;
+  className: string;
 };
 
-const MusicTrack: React.FC<MusicTrackProps> = ({ img, title, author, time, isRecs }) => {
+const MusicTrack: React.FC<MusicTrackProps> = ({ img, title, author, time, isRecs, className }) => {
   return (
-    <div className={`${s['wrapper']} ${isRecs && s['recs-wrapper']}`}>
+    <div className={`${s['wrapper']} ${isRecs ? s['recs-wrapper'] : ''} ${s[className]}`}>
       <div className={s['track-img']}>
         <img src={ebalo} alt="track" />
       </div>
       <div className={`${isRecs ? s['track-recs'] : s['track-info']}`}>
-        <span className={isRecs ? s['recs-title'] : s['track-title']} title={title}>
-          {title}
-        </span>
-        {!isRecs && <span className={s['separator']}>&mdash;</span>}
-        <Link className={isRecs ? s['recs-author'] : s['track-author']} to="/" title={author}>
-          {author}
-        </Link>
+        <div className={s['row']}>
+          <span className={isRecs ? s['recs-title'] : s['track-title']} title={title}>
+            {title}
+          </span>
+          {!isRecs && <span className={s['separator']}>&mdash;</span>}
+          <Link className={isRecs ? s['recs-author'] : s['track-author']} to="/" title={author}>
+            {author}
+          </Link>
+        </div>
         <span className={`${s['track-time']} ${isRecs && s['recs-time']}`}>{formatTime(time)}</span>
       </div>
       <div className={isRecs ? s['recs-actions'] : s['track-actions']}>

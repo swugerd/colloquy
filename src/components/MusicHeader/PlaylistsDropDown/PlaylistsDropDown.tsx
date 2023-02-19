@@ -10,7 +10,11 @@ import MusicTrack from '../../MusicTrack/MusicTrack';
 import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 import Icon from '../../UI/Icon/Icon';
 
-const PlaylistsDropDown: React.FC = () => {
+type PlaylistsDropDownProps = {
+  className: string;
+};
+
+const PlaylistsDropDown: React.FC<PlaylistsDropDownProps> = ({ className }) => {
   const playlists: {
     id: number;
     author: string;
@@ -50,6 +54,13 @@ const PlaylistsDropDown: React.FC = () => {
         },
         { id: 5, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 59, file: '' },
         { id: 6, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 7, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 8, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 9, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 10, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 11, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 12, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+        { id: 13, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
       ],
     },
     {
@@ -109,16 +120,23 @@ const PlaylistsDropDown: React.FC = () => {
   ];
   return (
     <>
-      <div className={`${s['playlists']} ${playlists.length ? '' : s['nothing']}`}>
+      <div className={`${s['playlists']} ${playlists.length ? '' : s['nothing']} ${s[className]}`}>
         {playlists.map(({ id, author, title, count }) => (
-          <PlaylistCard author={author} title={title} count={count} img={cat} key={id} />
+          <PlaylistCard
+            author={author}
+            title={title}
+            count={count}
+            img={cat}
+            key={id}
+            className={className}
+          />
         ))}
         <div className={s['create']}>
-          <Icon src={addSvg} id={'add'} className={''} />
+          <Icon src={addSvg} id={'add'} className={'white'} />
         </div>
       </div>
       {playlists.length ? (
-        <div className={s['info']}>
+        <div className={`${s['info']} ${s[className]}`}>
           <p className={s['heading']}>Текущий плейлист</p>
           <span className={s['separator']}>&mdash;</span>
           <span className={s['title']}>{playlists[0]?.title}</span>
@@ -132,9 +150,17 @@ const PlaylistsDropDown: React.FC = () => {
       ) : (
         <NotFoundBlock className={'playlists-nothing'} text={'У вас ещё нету плейлистов'} />
       )}
-      <div className={s['wrapper']}>
+      <div className={`${s['wrapper']} ${s[className]}`}>
         {playlists[0]?.tracks.map(({ id, title, author, time }) => (
-          <MusicTrack img={cat} title={title} author={author} time={time} isRecs={false} key={id} />
+          <MusicTrack
+            img={cat}
+            title={title}
+            author={author}
+            time={time}
+            isRecs={false}
+            key={id}
+            className={className}
+          />
         ))}
       </div>
     </>

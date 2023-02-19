@@ -11,11 +11,14 @@ type PlaylistCardProps = {
   title: string;
   count: number;
   img: string;
+  className: string;
 };
 
-const PlaylistCard: React.FC<PlaylistCardProps> = ({ author, title, count, img }) => {
+const PlaylistCard: React.FC<PlaylistCardProps> = ({ author, title, count, img, className }) => {
   return (
-    <div className={s['card']} style={{ background: `url('${img}') center/cover no-repeat` }}>
+    <div
+      className={`${s['card']} ${s[className]}`}
+      style={{ background: `url('${img}') center/cover no-repeat` }}>
       <div className={s['card-hover']}>
         <div className={s['author']}>
           <span>Автор</span>

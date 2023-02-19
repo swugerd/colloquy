@@ -80,8 +80,13 @@
   margin-right: 2rem;
 }
 
+.dropdown {
+  & .play-line {
+    width: 20rem;
+  }
+}
+
 .play-line {
-  width: 20rem;
   height: 0.3rem;
   border-radius: 1rem;
   background: $semi-white;
@@ -189,5 +194,75 @@
   }
   &:hover svg line {
     stroke: $white;
+  }
+}
+
+.page {
+  & .track-name,
+  & .track-author {
+    font-size: 1.6rem;
+  }
+  & .track-time {
+    font-size: 1.4rem;
+  }
+  & .track-img {
+    width: 5.5rem;
+    height: 5.5rem;
+    flex-shrink: 0;
+  }
+  & .volume-wrapper {
+    flex-direction: row;
+  }
+  & .volume-icon {
+    margin-top: 0;
+  }
+  & .volume-line {
+    opacity: 1;
+    width: 6rem;
+    height: 0.3rem;
+    transform: translateY(0);
+    margin-left: 0.5rem;
+  }
+  & .volume-line-complete {
+    height: 100%;
+    width: 50%;
+    z-index: 100;
+  }
+  & .volume-line-point {
+    left: 50%;
+  }
+  & .track-actions {
+    display: flex;
+  }
+  & .track-info {
+    max-width: 30rem;
+    width: 100%;
+    flex-grow: 1;
+  }
+  & .repeat-icon,
+  & .shuffle-icon,
+  & .forward-icon,
+  & .add-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  & .repeat-icon {
+    order: 1;
+  }
+  & .shuffle-icon {
+    order: 2;
+  }
+  & .forward-icon {
+    order: 3;
+  }
+  & .add-icon {
+    order: 4;
+  }
+  & .track-wrapper {
+    width: 100%;
+  }
+  & .play-track {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }

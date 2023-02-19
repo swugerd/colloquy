@@ -13,11 +13,12 @@ type RecsBlockProps = {
     time: number;
     file: string;
   }[];
+  className: string;
 };
 
-const RecsBlock: React.FC<RecsBlockProps> = ({ title, tracks }) => {
+const RecsBlock: React.FC<RecsBlockProps> = ({ title, tracks, className }) => {
   return (
-    <div className={s['wrapper']}>
+    <div className={`${s['wrapper']} ${s[className]}`}>
       <h6 className={s['title']}>{title}</h6>
       <div className={s['block']}>
         {tracks.map(({ id, img, title, author, time }) => (
@@ -28,6 +29,7 @@ const RecsBlock: React.FC<RecsBlockProps> = ({ title, tracks }) => {
             time={time}
             key={id}
             isRecs={true}
+            className={className}
           />
         ))}
       </div>

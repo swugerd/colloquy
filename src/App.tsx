@@ -175,7 +175,11 @@ const App: React.FC = () => {
             <Route path="/voices" element={<Voices />} />
             <Route path="/photos" element={<Photos />} />
             <Route path="/videos" element={<Videos />} />
-            <Route path="/music" element={<Music />} />
+            <Route path="/music">
+              <Route index element={<Music tab="list" />} />
+              <Route path="/music/playlists" element={<Music tab="playlists" />} />
+              <Route path="/music/recs" element={<Music tab="recs" />} />
+            </Route>
             <Route path="/apps" element={<Apps />} />
             <Route path="/games" element={<Games />} />
             <Route path="/settings" element={<Settings />} />

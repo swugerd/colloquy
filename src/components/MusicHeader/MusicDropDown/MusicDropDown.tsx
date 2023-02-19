@@ -18,14 +18,18 @@ const MusicDropDown: React.FC = () => {
     { id: 3, title: 'Рекомендации' },
   ];
 
-  const components = [<MyMusicDropDown />, <PlaylistsDropDown />, <RecsDropDown />];
+  const components = [
+    <MyMusicDropDown className={'dropdown'} />,
+    <PlaylistsDropDown className={'dropdown'} />,
+    <RecsDropDown className={'dropdown'} />,
+  ];
 
   const dispatch = useAppDispatch();
   const { dropdowns } = useSelector(selectDropdowns);
 
   return (
     <div className={s['wrapper']}>
-      <MusicPlayer />
+      <MusicPlayer className={'dropdown'} />
       <Input
         className="music-dd-input"
         placeholder={'Искать музыку'}

@@ -1,7 +1,18 @@
+@import '../../../scss/variables.scss';
+
 .wrapper {
-  max-height: 37rem;
   overflow-y: scroll;
   &::-webkit-scrollbar {
-    display: none;
+    background: transparent;
+    width: 0.3rem;
   }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.wrapper.dropdown {
+  max-height: 37rem;
 }

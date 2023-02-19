@@ -4,7 +4,11 @@ import MusicTrack from '../../MusicTrack/MusicTrack';
 import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 import s from './MyMusicDropDown.module.scss';
 
-const MyMusicDropDown: React.FC = () => {
+type MyMusicDropDownProps = {
+  className: string;
+};
+
+const MyMusicDropDown: React.FC<MyMusicDropDownProps> = ({ className }) => {
   const tracks: {
     id: number;
     img: string;
@@ -18,7 +22,7 @@ const MyMusicDropDown: React.FC = () => {
       id: 2,
       img: ebalo,
       title: 'Я пиздец круто да е чееене може тыбть',
-      author: 'автор чайник деньги выбери',
+      author: 'автор чайник деньги выбер вфы вфы вфыв',
       time: 200,
       file: '',
     },
@@ -31,13 +35,22 @@ const MyMusicDropDown: React.FC = () => {
     { id: 9, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 1234, file: '' },
     { id: 10, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 1234, file: '' },
     { id: 11, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 1234, file: '' },
+    { id: 12, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 1234, file: '' },
   ];
 
   return (
-    <div className={`${s['wrapper']} ${tracks.length ? '' : s['nothing']}`}>
+    <div className={`${s['wrapper']} ${tracks.length ? '' : s['nothing']} ${s[className]}`}>
       {tracks.length ? (
         tracks.map(({ id, img, title, author, time }) => (
-          <MusicTrack img={img} title={title} author={author} time={time} key={id} isRecs={false} />
+          <MusicTrack
+            img={img}
+            title={title}
+            author={author}
+            time={time}
+            key={id}
+            isRecs={false}
+            className={className}
+          />
         ))
       ) : (
         <NotFoundBlock className={'music-nothing'} text={'У вас ещё нету музыки'} />

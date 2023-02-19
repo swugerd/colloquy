@@ -6,14 +6,29 @@
 
 .block {
   display: grid;
-  grid-template: repeat(2, 5rem) / repeat(3, 22.5rem);
-  max-height: 10rem;
-  max-width: 47.7rem;
+  grid-template-rows: repeat(2, 5rem);
+  grid-template-columns: repeat(auto-fit, minmax(22.5rem, 1fr));
   overflow-x: auto;
-  overflow-y: hidden;
   white-space: nowrap;
   &::-webkit-scrollbar {
     display: none;
+  }
+}
+
+.dropdown {
+  & .block {
+    max-height: 10rem;
+    max-width: 47.7rem;
+  }
+}
+
+.music-page {
+  & .block {
+    max-height: 14rem;
+    grid-template-rows: repeat(2, 7rem);
+  }
+  & .title {
+    font-size: 1.8rem;
   }
 }
 
