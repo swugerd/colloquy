@@ -21,8 +21,8 @@ const MyMusicDropDown: React.FC<MyMusicDropDownProps> = ({ className }) => {
     {
       id: 2,
       img: ebalo,
-      title: 'Я пиздец круто да е чееене може тыбть',
-      author: 'автор чайник деньги выбер вфы вфы вфыв',
+      title: 'Я пиздец круто да е чееене може тыбть sahjd hask hsdahj asd a',
+      author: 'автор чайник деньги выбер вфы вфы вфыв sad asd asd saddassa',
       time: 200,
       file: '',
     },

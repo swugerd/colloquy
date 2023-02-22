@@ -13,6 +13,7 @@ type DropDownLayoutProps = {
   link: string;
   linkText: string;
   isNotify?: boolean;
+  setIsActive?: () => void;
   children: React.ReactNode;
 };
 
@@ -25,6 +26,7 @@ const DropDownLayout: React.FC<DropDownLayoutProps> = ({
   linkText,
   isNotify,
   children,
+  setIsActive,
 }) => {
   return (
     <div className={`${s['wrapper']} ${isNotify ? s['wrapper-notify'] : ''}`}>
@@ -55,7 +57,7 @@ const DropDownLayout: React.FC<DropDownLayoutProps> = ({
       </div>
       <div className={s['wrapper-content']}>{children}</div>
       <div className={s['wrapper-bottom']}>
-        <Link to={link}>
+        <Link to={link} onClick={isNotify ? setIsActive : () => {}}>
           {linkText}
           <div className={s['arrow-icon']}>
             <Icon src={arrowSvg} id={'arrow'} className={'white'} />

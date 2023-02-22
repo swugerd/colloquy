@@ -8,6 +8,7 @@ const initialState: MobileState = {
   hasAddButton: false,
   infoName: '',
   backText: '',
+  hasUploadButton: false,
   membersCount: 0,
   backButtonType: 'button',
   chatId: 0,
@@ -49,6 +50,9 @@ const MobileSlice = createSlice({
     setHasAddButton(state, action: PayloadAction<boolean>) {
       state.hasAddButton = action.payload;
     },
+    setHasUploadButton(state, action: PayloadAction<boolean>) {
+      state.hasUploadButton = action.payload;
+    },
   },
 });
 
@@ -63,6 +67,7 @@ export const {
   setBackButtonType,
   setChatId,
   setHasAddButton,
+  setHasUploadButton,
 } = MobileSlice.actions;
 
 export default MobileSlice.reducer;

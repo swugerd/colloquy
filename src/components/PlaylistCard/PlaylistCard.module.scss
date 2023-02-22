@@ -92,4 +92,32 @@
   & .name {
     max-width: 18rem;
   }
+  & .title {
+    max-width: 17rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .music-page {
+    min-width: 9rem;
+    min-height: 9rem;
+    height: 9rem;
+    & .author,
+    & .title,
+    & .row span {
+      font-size: 1rem;
+    }
+    & .play {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    & .icon {
+      width: 1rem;
+      height: 1rem;
+    }
+    & .name,
+    & .title {
+      max-width: 7rem;
+    }
+  }
 }

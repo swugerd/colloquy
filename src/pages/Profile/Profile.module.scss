@@ -4,6 +4,10 @@
   display: flex;
 }
 
+.feed {
+  // position: relative;
+}
+
 .profile {
   background: $sub-bg;
   max-width: 63rem;
@@ -12,6 +16,19 @@
   border-radius: 2rem;
   padding: 1.5rem;
   display: flex;
+  // position: sticky;
+  // top: $header-height + 2rem;
+  &.sticky {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    overflow: auto;
+  }
+  // &.sticky {
+  //   position: fixed;
+  //   bottom: 0;
+  //   top: $header-height + 2rem;
+  // }
   // grid-template-columns: 25rem 31rem;
   // // grid-template-rows: repeat(6, 1fr);
   // grid-auto-rows: min-content;
@@ -218,12 +235,6 @@
   &.active {
     display: block;
   }
-}
-
-.sticky {
-  position: fixed;
-  top: $header-height + 2rem;
-  z-index: 100;
 }
 
 .relative {

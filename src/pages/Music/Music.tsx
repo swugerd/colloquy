@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Music.module.scss';
 import SideContent from '../../components/SideContent/SideContent';
@@ -14,6 +14,11 @@ import Icon from '../../components/UI/Icon/Icon';
 import ebalo from '../../assets/uploads/test/image2.png';
 import MusicTrack from '../../components/MusicTrack/MusicTrack';
 import HeaderAvatar from '../../components/UI/HeaderAvatar/HeaderAvatar';
+import { useAppDispatch } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { selectMobile } from '../../redux/mobile/selector';
+import { setHasArrowButton, setHasUploadButton } from '../../redux/mobile/slice';
+import useWindowSize from '../../hooks/useWindowResize';
 
 type MusicProps = {
   tab: 'list' | 'playlists' | 'recs';
@@ -21,6 +26,19 @@ type MusicProps = {
 
 const Music: React.FC<MusicProps> = ({ tab }) => {
   useSetPageTitle('Музыка');
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setHasArrowButton(true));
+    dispatch(setHasUploadButton(true));
+    return () => {
+      dispatch(setHasArrowButton(false));
+      dispatch(setHasUploadButton(false));
+    };
+  }, []);
+
+  const { width } = useWindowSize();
 
   const components = [
     { id: 1, name: 'list', component: <MyMusicDropDown className={'music-page'} /> },
@@ -34,21 +52,32 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
     { id: 3, name: 'Рекомендации', path: '/music/recs' },
   ];
 
+  // продолжить адаптив для мобилки
+
+  // проверить все названия и авторов на макс. длину
+
   const lastFriendsUpdates = [
     {
       id: 1,
       userId: 1,
       addedTracks: [
-        { id: 1, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        {
+          id: 1,
+          img: ebalo,
+          title: 'Трекачок Рвоыфрвло фылво флво лфв олфыв',
+          author: 'Юрчик овыфл оыфлв оыфлво фыдов флвы',
+          time: 62,
+          file: '',
+        },
         { id: 2, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
         { id: 3, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
         { id: 4, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
         { id: 5, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
-        // { id: 6, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
-        // { id: 7, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
-        // { id: 8, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
-        // { id: 9, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
-        // { id: 10, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        { id: 6, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        { id: 7, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        { id: 8, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        { id: 9, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        { id: 10, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
       ],
     },
     {
@@ -102,7 +131,7 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
   return (
     <>
       <div className={s['music']}>
-        <MusicPlayer className={'page'} />
+        {width > 550 && <MusicPlayer className={'page'} />}
         <Input
           className={'music-page'}
           placeholder={'Искать музыку'}
@@ -123,7 +152,7 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
                 </NavLink>
               </li>
             ))}
-            {tab === 'list' && (
+            {tab === 'list' && width > 550 && (
               <li className={s['upload-button']}>
                 <button className={s['upload']}>
                   <Icon src={uploadSvg} id={'upload'} className={'white'} />

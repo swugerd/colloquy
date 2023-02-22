@@ -93,6 +93,33 @@ const PlaylistsDropDown: React.FC<PlaylistsDropDownProps> = ({ className }) => {
     {
       id: 3,
       author: 'Максимильно Рабадонович',
+      title: 'полный запивончик вфы выфвыфвыф',
+      count: 25,
+      tracks: [
+        { id: 11, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 62, file: '' },
+        {
+          id: 12,
+          img: ebalo,
+          title: 'Я пиздец круто да е чееене може тыбть',
+          author: 'автор чайник деньги выбери',
+          time: 200,
+          file: '',
+        },
+        {
+          id: 8,
+          img: ebalo,
+          title: 'Трекачок',
+          author: 'Юрчик норм чел го в',
+          time: 221,
+          file: '',
+        },
+        { id: 9, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 59, file: '' },
+        { id: 10, img: ebalo, title: 'Трекачок', author: 'Юрчик', time: 100, file: '' },
+      ],
+    },
+    {
+      id: 4,
+      author: 'Максимильно Рабадонович',
       title: 'полный запивончик',
       count: 25,
       tracks: [

@@ -39,3 +39,14 @@
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
+@media (max-width: 550px) {
+  .title {
+    font-size: 1.4rem !important;
+    margin-bottom: 0;
+  }
+  .block {
+    display: flex;
+    flex-direction: column;
+  }
+}

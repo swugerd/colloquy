@@ -239,6 +239,29 @@
       pointer-events: none;
     }
   }
+  .music {
+    position: fixed;
+    z-index: 500;
+    top: 5.5rem;
+    left: 0;
+    opacity: 0;
+    border-radius: 0 0 2rem 2rem;
+    transition: 0.2s linear;
+    flex-direction: column;
+    pointer-events: none;
+    max-width: 50% !important;
+    max-height: 50rem;
+    & .block {
+      height: 50rem;
+    }
+    & .activity {
+      height: 40rem;
+    }
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
   .friends {
     position: fixed;
     z-index: 200;
@@ -368,5 +391,18 @@
   .input > div > input {
     height: 4rem;
     font-size: 1.4rem;
+  }
+  .music {
+    top: 5rem;
+    max-width: 100% !important;
+    & .block {
+      border-radius: 0 0 1rem 1rem;
+    }
+    & .activity-user-name {
+      font-size: 1.6rem;
+    }
+    & .activity-user-info {
+      font-size: 1.2rem;
+    }
   }
 }

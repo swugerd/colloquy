@@ -23,14 +23,49 @@ const Profile: React.FC = () => {
   const { username } = useParams();
   const { width } = useWindowSize();
 
+  const profileRef = useRef<HTMLDivElement>(null);
+  const feedRef = useRef<HTMLDivElement>(null);
+
+  const [isSticky, setIsSticky] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState('down');
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // при скролле вниз давать fixed bottom 0
+    // при скролле вверх давать relative и margin/paddin top относительно того насколько вниз я наскролил
+    // при скролле вверх, дойдя до начала блока профиля дать fixed и top 0
+
+    // const handleScroll = (e: Event) => {
+    //   const profileBlock = profileRef.current;
+    //   const profileBlockHeight = profileBlock && profileBlock.getBoundingClientRect().height;
+    //   const scrollPosition = window.scrollY;
+
+    //   if (profileBlockHeight) {
+    //     if (scrollPosition > profileBlockHeight / 2) {
+    //       if (scrollPosition > profileBlockHeight / 2 && scrollDirection !== 'up') {
+    //         setIsSticky(true);
+    //         setScrollDirection('down');
+    //       } else if (scrollPosition < profileBlockHeight / 2 && scrollDirection !== 'down') {
+    //         setIsSticky(false);
+    //         setScrollDirection('up');
+    //       }
+    //     } else {
+    //       setIsSticky(false);
+    //       setScrollDirection('down');
+    //     }
+    //   }
+    // };
+
+    // window.addEventListener('scroll', (e) => handleScroll(e));
+
     if (username) {
       dispatch(setIsInfoName(username));
       dispatch(setChatId(0));
     }
     return () => {
       dispatch(setIsInfoName(''));
+      // window.removeEventListener('scroll', (e) => handleScroll(e));
     };
   }, []);
 
@@ -110,7 +145,7 @@ const Profile: React.FC = () => {
   const isAdmin = true;
   return (
     <>
-      <div className={`${s['profile']}`}>
+      <div className={`${s['profile']} ${isSticky ? s['sticky'] : ''}`} ref={profileRef}>
         <div className={`${s['left']}`}>
           <div className={s['mobile-info']}>
             <div className={s['avatar']}>
@@ -335,12 +370,14 @@ const Profile: React.FC = () => {
           {width > 1150 && <ProfileContent contentType={'collection'} data={null} />}
         </div>
       </div>
-      <Wall
-        className={'profile'}
-        page={'profile'}
-        placeholder={isAdmin ? 'Что произошло сегодня?' : 'Напишите что-нибудь'}
-        isAdmin={isAdmin}
-      />
+      <div className={s['feed']} ref={feedRef}>
+        <Wall
+          className={'profile'}
+          page={'profile'}
+          placeholder={isAdmin ? 'Что произошло сегодня?' : 'Напишите что-нибудь'}
+          isAdmin={isAdmin}
+        />
+      </div>
     </>
   );
 };

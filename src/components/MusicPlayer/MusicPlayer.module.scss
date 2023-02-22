@@ -236,6 +236,7 @@
   }
   & .track-info {
     max-width: 30rem;
+    min-width: 20rem;
     width: 100%;
     flex-grow: 1;
   }
@@ -264,5 +265,49 @@
   & .play-track {
     width: 2.5rem;
     height: 2.5rem;
+  }
+}
+
+@media (max-width: 1300px) {
+  .page {
+    & .track-actions {
+      display: grid;
+      grid-template: repeat(2, 1.6rem) / repeat(2, 1.6rem);
+      grid-gap: 1.5rem;
+    }
+    & .volume-wrapper {
+      flex-direction: column-reverse;
+    }
+    & .volume-line {
+      height: 3rem;
+      width: 0.3rem;
+    }
+    & .volume-line-complete {
+      width: 100%;
+      height: 50%;
+    }
+    & .volume-line-point {
+      left: -0.1rem;
+    }
+    & .repeat-icon {
+      order: 3;
+    }
+    & .shuffle-icon {
+      order: 4;
+    }
+    & .forward-icon {
+      order: 2;
+    }
+    & .add-icon {
+      order: 1;
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .page {
+    & .track-info {
+      max-width: none;
+    }
   }
 }

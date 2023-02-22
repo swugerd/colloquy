@@ -4,6 +4,7 @@ import useWindowSize from '../../hooks/useWindowResize';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setIsHeaderShow, setTitle } from '../../redux/mobile/slice';
 import s from './MobileHeader.module.scss';
+import uploadSvg from '../../assets/img/icons/upload.svg';
 import backSvg from '../../assets/img/icons/back.svg';
 import arrowSvg from '../../assets/img/icons/arrow.svg';
 import ebalo from '../../assets/uploads/test/ebalo.png';
@@ -72,6 +73,11 @@ const MobileHeader: React.FC = () => {
         {mobile.hasAddButton && (
           <button className={`${s['add']}`} onClick={arrowHandler}>
             <Icon src={addSvg} id={'add'} className={'white'} />
+          </button>
+        )}
+        {mobile.hasUploadButton && width <= 550 && (
+          <button className={`${s['upload']}`}>
+            <Icon src={uploadSvg} id={'upload'} className={'white'} />
           </button>
         )}
         {mobile.backText && mobile.backButtonType === 'button' && (

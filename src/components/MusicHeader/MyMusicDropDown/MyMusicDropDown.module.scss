@@ -23,3 +23,9 @@
 .music-page {
   height: calc(100vh - 320px);
 }
+
+@media (max-width: 550px) {
+  .music-page {
+    height: auto;
+  }
+}

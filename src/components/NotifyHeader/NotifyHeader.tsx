@@ -21,7 +21,7 @@ const NotifyHeader: React.FC = () => {
           {notifies > 0 && <Notify cName="header" count={notifies} hasImage={false} />}
         </div>
       </button>
-      {isOpen && <NotifyDropDown />}
+      {isOpen && <NotifyDropDown setIsActive={() => setisOpen(false)} />}
     </div>
   );
 };

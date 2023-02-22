@@ -135,3 +135,33 @@
     width: 42vw;
   }
 }
+
+@media (max-width: 1150px) {
+  .music-page.playlists {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .create {
+    min-width: 9rem !important;
+    min-height: 9rem !important;
+    height: 9rem !important;
+    & svg {
+      width: 3rem !important;
+      height: 3rem !important;
+    }
+  }
+  .info.music-page {
+    font-size: 1.2rem;
+    & .remove,
+    & .forward {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+    & .remove {
+      margin-right: 1rem;
+    }
+  }
+}

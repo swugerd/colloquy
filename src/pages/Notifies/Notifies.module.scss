@@ -1,0 +1,21 @@
+@import '../../scss/variables.scss';
+
+.notifies {
+  background: $sub-bg;
+  border-radius: 2rem;
+  padding: 2rem;
+  width: 100%;
+  margin-left: 4.5rem;
+  margin-right: 4.5rem;
+  display: flex;
+  min-height: calc(100vh - 120px);
+  height: fit-content;
+}
+
+.title {
+  font-family: 'Montserrat';
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: $white;
+}

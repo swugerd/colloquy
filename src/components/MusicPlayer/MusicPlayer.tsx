@@ -17,9 +17,6 @@ type MusicPlayerProps = {
   className: string;
 };
 
-// делать адаптив
-// сделать мобильный плеер
-
 const MusicPlayer: React.FC<MusicPlayerProps> = ({ className }) => {
   return (
     <div className={`${s['player']} ${s[className]}`}>

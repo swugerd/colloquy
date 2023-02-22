@@ -4,7 +4,11 @@ import s from './NotifyDropDown.module.scss';
 import img from '../../../assets/uploads/test/image.png';
 import Notify from '../../Notify/Notify';
 
-const NotifyDropDown: React.FC = () => {
+type NotifyDropDownProps = {
+  setIsActive: () => void;
+};
+
+const NotifyDropDown: React.FC<NotifyDropDownProps> = ({ setIsActive }) => {
   const date = new Date().toLocaleDateString();
   const notifies = [
     { id: 1, img, name: 'Пашок Кубыркин', action: 'ping', date },
@@ -21,7 +25,8 @@ const NotifyDropDown: React.FC = () => {
       title="Уведомления"
       link={'/notifies'}
       linkText={'Просмотреть все'}
-      isNotify={true}>
+      isNotify={true}
+      setIsActive={setIsActive}>
       {notifies.map(({ id, img, name, action, date }) => (
         <Notify
           id={id}
