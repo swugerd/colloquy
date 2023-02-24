@@ -48,7 +48,12 @@
 .shop.active > *,
 .notify.active > *,
 .all.active > *,
-.patterns.active > * {
+.patterns.active > *,
+.push.active > *,
+.forward.active > *,
+.comments.active > *,
+.like.active > *,
+.lock.active > * {
   color: $green-main;
 }
 

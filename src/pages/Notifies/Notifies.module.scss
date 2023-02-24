@@ -7,9 +7,19 @@
   width: 100%;
   margin-left: 4.5rem;
   margin-right: 4.5rem;
-  display: flex;
   min-height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
   height: fit-content;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
 }
 
 .title {
@@ -18,4 +28,13 @@
   font-weight: 600;
   margin-bottom: 2rem;
   color: $white;
+}
+
+@media (max-width: 1150px) {
+  .notifies {
+    margin: 0;
+  }
+  .title {
+    display: none;
+  }
 }

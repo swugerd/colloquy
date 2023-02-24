@@ -153,6 +153,23 @@
   position: relative;
 }
 
+.profile-settings {
+  background: $bg-main;
+  padding: 1.2rem;
+  font-family: 'OpenSans';
+  font-size: 1.8rem;
+  color: $white;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  &::placeholder {
+    color: $semi-white;
+    font-weight: 500;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
 .music-dd-input {
   background: $bg-main;
   padding: 1rem 3.5rem 1rem 3.5rem;
@@ -315,6 +332,10 @@
     padding: 1rem 6.5rem 1rem 3.5rem;
   }
   .music-page {
+    height: 4rem;
+    font-size: 1.4rem;
+  }
+  .profile-settings {
     height: 4rem;
     font-size: 1.4rem;
   }

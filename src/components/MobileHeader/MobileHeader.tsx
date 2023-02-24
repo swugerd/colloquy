@@ -34,14 +34,22 @@ const MobileHeader: React.FC = () => {
   return width <= 1150 ? (
     <header className={s['wrapper']}>
       <div className={s['wrapper-inner']}>
-        {!mobile.chatId && !mobile.membersCount ? (
+        {!mobile.chatId && !mobile.membersCount && !mobile.hasArrowButton ? (
           <h2 className={s['title']}>{mobile.infoName ? `@${mobile.infoName}` : mobile.title}</h2>
+        ) : !mobile.chatId && !mobile.membersCount && mobile.hasArrowButton ? (
+          <h2 className={s['title']}>
+            <button onClick={arrowHandler}>
+              {mobile.infoName ? `@${mobile.infoName}` : mobile.title}
+            </button>
+          </h2>
         ) : (
           ''
         )}
         {!!mobile.membersCount && (
           <h2 className={s['title']}>
-            Список участников - <span className={s['members']}>{mobile.membersCount}</span>
+            <button onClick={arrowHandler}>
+              Список участников - <span className={s['members']}>{mobile.membersCount}</span>
+            </button>
           </h2>
         )}
         {!!mobile.chatId && (

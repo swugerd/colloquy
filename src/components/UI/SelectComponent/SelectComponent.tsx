@@ -10,6 +10,7 @@ type SelectComponentProps = {
   }[];
   noOptionsMessage: string;
   className?: string;
+  id?: string;
 };
 
 const SelectComponent: React.FC<SelectComponentProps> = ({
@@ -17,10 +18,12 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
   options,
   noOptionsMessage,
   className,
+  id,
 }) => {
   return (
     <Select
       placeholder={placeholder}
+      id={id}
       options={options}
       // @ts-ignore
       className={`${className ? s[className] : ''}`}

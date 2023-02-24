@@ -287,6 +287,38 @@
     }
   }
 
+  .notifies {
+    position: fixed;
+    z-index: 200;
+    top: 5.5rem;
+    left: 0;
+    opacity: 0;
+    border-radius: 0 0 2rem 2rem;
+    transition: 0.2s linear;
+    pointer-events: none;
+    width: 40%;
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  .notifies {
+    position: fixed;
+    z-index: 200;
+    top: 5.5rem;
+    left: 0;
+    opacity: 0;
+    border-radius: 0 0 2rem 2rem;
+    transition: 0.2s linear;
+    pointer-events: none;
+    width: 40%;
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
   .mobile-wrapper {
     display: grid;
     grid-template-columns: 2fr 1fr 0.5fr;
@@ -391,6 +423,13 @@
   .input > div > input {
     height: 4rem;
     font-size: 1.4rem;
+  }
+  .notifies {
+    top: 5rem;
+    width: 100%;
+    & .block {
+      border-radius: 0 0 1rem 1rem;
+    }
   }
   .music {
     top: 5rem;

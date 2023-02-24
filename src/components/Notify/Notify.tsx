@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './Notify.module.scss';
 import ping from '../../assets/img/icons/ping.svg';
+import notificationTypes from '../../constants/notificationTypes';
+import Icon from '../UI/Icon/Icon';
 
 type NotifyProps = {
   id: number;
@@ -11,30 +13,64 @@ type NotifyProps = {
   action: string;
   content: string;
   date: string;
+  className: string;
+  text?: string;
+  media?: string;
+  type: 'page' | 'dropdown';
 };
 
-const Notify: React.FC<NotifyProps> = ({ id, img, name, action, content, date }) => {
+const Notify: React.FC<NotifyProps> = ({
+  id,
+  img,
+  name,
+  action,
+  content,
+  date,
+  className,
+  text,
+  media,
+  type,
+}) => {
+  const notifyType = notificationTypes.find(({ type }) => type === action);
+  console.log(id, media);
   return (
-    <div className={s['notify']}>
-      <div className={s['image']}>
-        <img src={img} alt="user" />
-        <div className={s['ping']}>
-          <img src={ping} alt="ping" />
+    <div className={`${s['notify']} ${s[className]}`}>
+      <div className={s['row']}>
+        {notifyType?.type !== 'achieve' ? (
+          <div className={s['image']}>
+            <img src={img} alt="user" />
+            <div className={s['ping']}>
+              <Icon src={notifyType?.icon} id={notifyType?.iconId || ''} className={'white'} />
+            </div>
+          </div>
+        ) : (
+          'da'
+        )}
+        <div className={s['info']}>
+          <div className={s['top-row']}>
+            <Link to="/" className={s['name']}>
+              {name}
+            </Link>
+            <span className={s['date']}>{'22 дня назад'}</span>
+          </div>
+          <div className={s['bottom-row']}>
+            <p className={s['text']}>
+              {notifyType?.text}{' '}
+              {notifyType?.type !== 'achieve' && (
+                <Link className={s['content']} to="">
+                  {content}
+                </Link>
+              )}
+            </p>
+          </div>
         </div>
       </div>
-      <div className={s['info']}>
-        <div className={s['top-row']}>
-          <Link to="/" className={s['name']}>
-            {name}
-          </Link>
-          <span className={s['date']}>{'2 дня назад'}</span>
+      {(notifyType?.type === 'push' || notifyType?.type === 'comment') && (
+        <div className={s['text-preview']}>
+          {media && <img className={s['img-preview']} src={media} alt={'media'} />}
+          <span>{text}</span>
         </div>
-        <div className={s['bottom-row']}>
-          <p className={s['text']}>
-            Упомянул тебя в выфо врыфов <span className={s['content']}>{content}</span>
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

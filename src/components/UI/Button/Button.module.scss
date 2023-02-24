@@ -54,14 +54,22 @@
   margin: 0 auto;
 }
 
-.group-delete {
+.group-delete,
+.page-delete {
   background: $red-dark;
   color: $white;
   font-family: 'Montserrat';
   padding: 0.8rem 1.4rem;
   font-size: 2rem;
   font-weight: 600;
+}
+
+.group-delete {
   margin: 6rem auto 0;
+}
+
+.page-delete {
+  margin: 2rem auto 0;
 }
 
 @media (max-width: 1150px) {

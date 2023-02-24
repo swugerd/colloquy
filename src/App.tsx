@@ -182,7 +182,11 @@ const App: React.FC = () => {
             </Route>
             <Route path="/apps" element={<Apps />} />
             <Route path="/games" element={<Games />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings">
+              <Route index element={<Settings page={'profile'} />} />
+              <Route path="/settings/privacy" element={<Settings page={'privacy'} />} />
+              <Route path="/settings/blacklist" element={<Settings page={'blacklist'} />} />
+            </Route>
             <Route path="/notifies" element={<Notifies />} />
             <Route path="/achievements" element={<Achievements />} />
             <Route path="/shop" element={<Shop />} />

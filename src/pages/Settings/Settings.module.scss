@@ -1,0 +1,203 @@
+@import '../../scss/variables.scss';
+
+.settings {
+  background: $sub-bg;
+  border-radius: 2rem;
+  padding: 2rem;
+  width: 100%;
+  margin-left: 4.5rem;
+  margin-right: 4.5rem;
+  min-height: calc(100vh - 120px);
+  font-family: 'OpenSans';
+}
+
+.title {
+  color: $white;
+  margin-bottom: 3rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.avatar {
+  max-width: 23rem;
+  max-height: 23rem;
+  width: 15vw;
+  height: 15vw;
+  margin-right: 3rem;
+  flex-shrink: 0;
+  & img {
+    border-radius: 1rem;
+  }
+}
+
+.top-info {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.main-info {
+  display: grid;
+  grid-template: repeat(2, 9.5rem) / repeat(2, minmax(10rem, 20rem));
+  grid-gap: 1.5rem;
+  margin-left: auto;
+}
+
+.patronymic {
+  grid-column: span 2;
+}
+
+.input-grid {
+  display: grid;
+  grid-template: repeat(2, 9.5rem) / repeat(2, 1fr);
+  grid-gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.input-title {
+  font-size: 2rem;
+  color: $white;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  display: block;
+}
+
+.sub-title {
+  font-size: 2.2rem;
+  color: $green-main;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.about-block {
+  margin-bottom: 2rem;
+}
+
+.about-input {
+  padding: 1.5rem;
+  background: $bg-main;
+  border-radius: 1rem;
+  height: 10.1rem;
+  border: 2px solid transparent;
+  resize: none;
+  width: 100%;
+  outline: none;
+  font-size: 1.8rem;
+  color: $white;
+  font-family: 'OpenSans';
+  transition: 0.2s linear;
+  &::placeholder {
+    color: $semi-white;
+    font-weight: 500;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+.error {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: $red-light;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  color: $white;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: 0.2s linear;
+  border-radius: 1rem;
+  &.active {
+    background: rgba(0, 0, 0, 0.3);
+    color: $green-main;
+  }
+  & + & {
+    margin-top: 1rem;
+  }
+}
+
+.option-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1.5rem;
+}
+
+.option-label {
+  flex-grow: 1;
+  font-size: 2rem;
+  font-weight: 500;
+  cursor: inherit;
+  margin-right: 1rem;
+}
+
+.item + .item {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 1150px) {
+  .settings {
+    margin: 0;
+  }
+  .main-info {
+    grid-template: repeat(2, 9.5rem) / repeat(2, 1fr);
+    flex-grow: 1;
+  }
+  .avatar {
+    width: 20rem;
+    height: 20rem;
+  }
+  .title {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .avatar {
+    width: 10rem;
+    height: 10rem;
+    margin: 0 auto;
+    & img {
+      border-radius: 50%;
+    }
+  }
+  .main-info,
+  .input-grid,
+  .top-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .main-info {
+    margin-left: 0;
+  }
+  .input-title {
+    font-size: 1.6rem;
+  }
+  .about-input {
+    padding: 1rem;
+    font-size: 1.4rem;
+  }
+  .sub-title {
+    font-size: 1.8rem;
+  }
+  .option-label {
+    font-size: 1.6rem;
+  }
+  .option-item {
+    padding: 1rem;
+  }
+  .option-icon {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    & svg {
+      display: block;
+    }
+  }
+  .error {
+    font-size: 1.2rem;
+  }
+}

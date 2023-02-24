@@ -79,6 +79,15 @@
   flex-grow: 1;
 }
 
+.profile-select {
+  & .control {
+    height: 5rem;
+  }
+  & .menu {
+    top: 4.4rem !important;
+  }
+}
+
 .side-select-age {
   margin-bottom: 1.5rem;
   width: 10rem;
@@ -102,6 +111,14 @@
 
 @media (max-width: 550px) {
   .side-select {
+    & .control {
+      height: 4rem;
+    }
+    & .menu {
+      top: 3.4rem !important;
+    }
+  }
+  .profile-select {
     & .control {
       height: 4rem;
     }

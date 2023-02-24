@@ -36,7 +36,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
     };
   }, []);
 
-  const hasError = false;
+  const hasError = true;
 
   const navigate = useNavigate();
 
@@ -365,7 +365,11 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
         ))}
 
       {hasError && <p className={s['error']}>Неверный формат изображения (png, jpg, jpeg)</p>}
-      {page === 'create' && <Button className={'group-create'} text={'Создать'} />}
+      {page === 'create' ? (
+        <Button className={'group-create'} text={'Создать'} />
+      ) : (
+        <Button className={'group-create'} text={'Сохранить'} />
+      )}
     </div>
   );
 };

@@ -62,9 +62,21 @@
   margin-right: 1.5rem;
 }
 
+.profile-option {
+  position: relative;
+  & div {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
 @media (max-width: 550px) {
   .custom-btn-small {
     width: 0.8rem;
     height: 0.8rem;
+  }
+  .profile-option div {
+    width: 1rem;
+    height: 1rem;
   }
 }
