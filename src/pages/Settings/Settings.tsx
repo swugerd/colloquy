@@ -267,8 +267,6 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     { id: 8, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
   ];
 
-  // делать адаптив
-
   return (
     <>
       <div className={s['settings']}>

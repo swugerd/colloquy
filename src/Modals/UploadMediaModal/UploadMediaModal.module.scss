@@ -1,0 +1,40 @@
+@import '../../scss/variables.scss';
+
+.track {
+  margin-bottom: 3rem;
+}
+
+.video {
+  width: 25rem;
+  height: 35rem;
+  position: relative;
+  align-self: center;
+  & video {
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+}
+
+.close {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+@media (max-width: 1150px) {
+  .video {
+    min-width: 15rem;
+    min-height: 20rem;
+    width: 30vw;
+    height: 40vw;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .track {
+    margin-bottom: 1.5rem;
+  }
+}

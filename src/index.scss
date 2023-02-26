@@ -58,6 +58,10 @@ input {
   position: relative;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 a {
   color: $white;
   text-decoration: none;

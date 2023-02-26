@@ -294,6 +294,24 @@
   }
 }
 
+.upload-files {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.6rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 4rem;
+  padding: 1.5rem 3.5rem 1.5rem 4rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
 .music-page {
   background: $bg-main;
   padding: 1rem 3.5rem 1rem 3.5rem;
@@ -338,5 +356,10 @@
   .profile-settings {
     height: 4rem;
     font-size: 1.4rem;
+  }
+  .upload-files {
+    height: 3rem;
+    font-size: 1.4rem;
+    padding: 1rem 3.5rem 1rem 3rem;
   }
 }

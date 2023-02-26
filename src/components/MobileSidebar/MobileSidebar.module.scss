@@ -12,6 +12,17 @@
   font-family: 'Montserrat';
   font-weight: 500;
   border-radius: 1rem 1rem 0 0;
+  max-height: 100vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
   &.active {
     bottom: 0;
   }

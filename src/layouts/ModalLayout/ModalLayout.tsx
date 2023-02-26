@@ -9,17 +9,27 @@ type ModalLayoutProps = {
   children: React.ReactNode;
   onClose: () => void;
   button: any;
+  title?: string;
 };
 
-const ModalLayout: React.FC<ModalLayoutProps> = ({ className, children, onClose, button }) => {
+const ModalLayout: React.FC<ModalLayoutProps> = ({
+  className,
+  children,
+  onClose,
+  button,
+  title,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, onClose, button);
   return (
     <div className={s['wrapper']}>
       <div className={`${s['modal']} ${s[className]}`} ref={ref}>
-        <button className={s['close']} onClick={onClose}>
-          <Icon src={closeSvg} id={'close'} className={'white'} />
-        </button>
+        <div className={s['top']}>
+          {title && <h3 className={s['title']}>{title}</h3>}
+          <button className={s['close']} onClick={onClose}>
+            <Icon src={closeSvg} id={'close'} className={'white'} />
+          </button>
+        </div>
         {children}
       </div>
     </div>

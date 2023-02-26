@@ -77,14 +77,14 @@ const Profile: React.FC = () => {
   const stories: { id: number; story: string; user: { id: number; name: string; img: string } }[] =
     [
       { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-      { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-      { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-      { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-      { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-      { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-      { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-      { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-      { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
+      // { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
+      // { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
+      // { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
+      // { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
+      // { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
+      // { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
+      // { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
+      // { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
     ];
 
   const friends: { id: number; img: string; name: string; onlineType: string }[] = [
@@ -280,7 +280,7 @@ const Profile: React.FC = () => {
               )}
             </div>
           )}
-          <ProfileContent contentType={'stories'} data={stories} />
+          <ProfileContent contentType={'stories'} data={stories} isAdmin={isAdmin} />
           {width <= 1150 && <ProfileContent contentType={'photos'} data={photos} />}
           <ProfileContent contentType={'friends'} data={friends} />
           <ProfileContent contentType={'groups'} data={groups} />

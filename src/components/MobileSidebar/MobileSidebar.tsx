@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './MobileSidebar.module.scss';
 import friendSvg from '../../assets/img/icons/friends.svg';
@@ -33,6 +33,14 @@ const MobileSidebar: React.FC = () => {
   const closeHander = () => {
     dispatch(setIsSidebarShow(false));
   };
+
+  useEffect(() => {
+    if (mobile.isSidebarShow) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [mobile.isSidebarShow]);
 
   const id = 'swugerd';
   const links = [

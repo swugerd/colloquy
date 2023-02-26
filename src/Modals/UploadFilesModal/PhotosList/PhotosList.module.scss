@@ -1,0 +1,49 @@
+@import '../../../scss/variables.scss';
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 1.5rem;
+}
+
+.photo {
+  flex-grow: 1;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  min-width: 30rem;
+  max-height: 30rem;
+  position: relative;
+  &.active {
+    &::before {
+      content: '';
+      background: rgba(0, 0, 0, 0.4);
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      border-radius: 1rem;
+      pointer-events: none;
+    }
+  }
+}
+
+.photo img {
+  border-radius: 1rem;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+@media (max-width: 550px) {
+  .photos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(8.5rem, 30vw));
+    grid-auto-rows: minmax(8.5rem, 30vw);
+    grid-gap: 1rem;
+  }
+  .photo {
+    min-width: unset;
+    max-height: unset;
+  }
+}

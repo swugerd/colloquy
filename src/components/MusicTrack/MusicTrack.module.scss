@@ -27,6 +27,10 @@
   max-width: 22.5rem;
 }
 
+.upload-music .forward {
+  display: none;
+}
+
 .track-img {
   height: 4rem;
   min-width: 4rem;
@@ -35,6 +39,16 @@
   & img {
     border-radius: 0.5rem;
     object-fit: cover;
+  }
+}
+
+.upload-track {
+  & .forward,
+  .delete {
+    display: none;
+  }
+  & .track-time {
+    margin-right: 3rem;
   }
 }
 
@@ -345,6 +359,24 @@
     & .delete {
       width: 1.5rem;
       height: 1.5rem;
+    }
+  }
+  .upload-track {
+    & .row {
+      flex-direction: column;
+    }
+    & .separator {
+      display: none;
+    }
+    & .track-author {
+      margin: 0;
+    }
+    & .track-author,
+    & .track-title {
+      max-width: 45vw;
+    }
+    & .track-time {
+      font-size: 1rem;
     }
   }
 }

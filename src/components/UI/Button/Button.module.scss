@@ -72,6 +72,15 @@
   margin: 2rem auto 0;
 }
 
+.add-media {
+  color: $white;
+  padding: 0.5rem 2rem;
+  font-family: 'Montserrat';
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin: auto auto 0;
+}
+
 @media (max-width: 1150px) {
   .auth-btn {
     font-size: 1.8rem;

@@ -9,6 +9,7 @@ import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import convertMembers from '../../utils/convertMembers';
 import useWindowSize from '../../hooks/useWindowResize';
 import Icon from '../UI/Icon/Icon';
+import mediaSvg from '../../assets/img/icons/media.svg';
 import userSvg from '../../assets/img/icons/user.svg';
 import viewsSvg from '../../assets/img/icons/views.svg';
 import achievementSvg from '../../assets/img/icons/achieve.svg';
@@ -17,6 +18,8 @@ import patternSvg from '../../assets/img/icons/patterns.svg';
 import gemSvg from '../../assets/img/icons/gem.svg';
 import classNames from 'classnames';
 import formatTime from '../../utils/formatTime';
+import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
+import UploadMediaModal from './../../Modals/UploadMediaModal/UploadMediaModal';
 
 type contentType =
   | 'stories'
@@ -77,6 +80,10 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
     isCollectionOpen,
   } = isOpen;
 
+  const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
+
+  const buttonRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (width < 740) {
       setvisibleFriends(2);
@@ -103,7 +110,12 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
     if (width < 550) {
       setVisiblePhotos(3);
     }
-  }, [width]);
+    if (isStoryModalOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [width, isStoryModalOpen]);
 
   const setTitle = (contentType: contentType) => {
     const titles = [
@@ -160,53 +172,65 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
       {
         type: 'stories',
         jsx: (
-          <Swiper
-            slidesPerView={2}
-            spaceBetween={30}
-            breakpoints={{
-              320: {
-                slidesPerView: 2,
-              },
-              400: {
-                slidesPerView: 3,
-              },
-              500: {
-                slidesPerView: 4,
-              },
-              700: {
-                slidesPerView: 5,
-              },
-              900: {
-                slidesPerView: 7,
-              },
-              1150: {
-                slidesPerView: className ? 3 : 2,
-              },
-            }}
-            navigation={{
-              prevEl: navigationPrevRef.current,
-              nextEl: navigationNextRef.current,
-            }}
-            modules={[Navigation]}>
-            {data?.map((item: any) => (
-              <SwiperSlide key={item.id}>
-                <Story id={item.id} story={item.story} user={item.user} className={'feed'} />
-              </SwiperSlide>
-            ))}
-            {isAdmin && (
-              <SwiperSlide>
-                <div className={s['add-story']}>
-                  <div className={s['add-icon']}></div>
-                </div>
-              </SwiperSlide>
+          <>
+            <Swiper
+              slidesPerView={2}
+              spaceBetween={30}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2,
+                },
+                400: {
+                  slidesPerView: 3,
+                },
+                500: {
+                  slidesPerView: 4,
+                },
+                700: {
+                  slidesPerView: 5,
+                },
+                900: {
+                  slidesPerView: 7,
+                },
+                1150: {
+                  slidesPerView: className ? 3 : 2,
+                },
+              }}
+              navigation={{
+                prevEl: navigationPrevRef.current,
+                nextEl: navigationNextRef.current,
+              }}
+              modules={[Navigation]}>
+              {data?.map((item: any) => (
+                <SwiperSlide key={item.id}>
+                  <Story id={item.id} story={item.story} user={item.user} className={'feed'} />
+                </SwiperSlide>
+              ))}
+              {isAdmin && (
+                <SwiperSlide>
+                  <div
+                    className={s['add-story']}
+                    onClick={() => setIsStoryModalOpen(true)}
+                    ref={buttonRef}>
+                    <div className={s['add-icon']}></div>
+                  </div>
+                </SwiperSlide>
+              )}
+              <button className={s['prev-button']} ref={navigationPrevRef}>
+                <Icon src={arrowSvg} id={'arrow'} className={'white'} />
+              </button>
+              <button className={s['next-button']} ref={navigationNextRef}>
+                <Icon src={arrowSvg} id={'arrow'} className={'white'} />
+              </button>
+            </Swiper>
+            {isStoryModalOpen && (
+              <UploadMediaModal
+                onClose={() => setIsStoryModalOpen(false)}
+                button={buttonRef}
+                mediaType={'story'}
+              />
             )}
-            <button className={s['prev-button']} ref={navigationPrevRef}>
-              <Icon src={arrowSvg} id={'arrow'} className={'white'} />
-            </button>
-            <button className={s['next-button']} ref={navigationNextRef}>
-              <Icon src={arrowSvg} id={'arrow'} className={'white'} />
-            </button>
-          </Swiper>
+          </>
         ),
       },
       {
