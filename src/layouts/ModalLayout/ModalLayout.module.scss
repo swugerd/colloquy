@@ -77,7 +77,21 @@
   padding: 2rem;
   background: $elem;
   width: 70rem;
-  max-height: 80rem;
+  display: flex;
+  flex-direction: column;
+  & .close {
+    width: 2rem;
+    height: 2rem;
+  }
+  & .top {
+    margin-bottom: 2rem;
+  }
+}
+
+.forward {
+  padding: 2rem;
+  background: $elem;
+  width: 70rem;
   display: flex;
   flex-direction: column;
   & .close {
@@ -111,9 +125,6 @@
   }
   .media {
     height: fit-content;
-  }
-  .files {
-    max-height: 90vh;
   }
 }
 

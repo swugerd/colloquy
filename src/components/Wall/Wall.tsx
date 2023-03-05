@@ -22,7 +22,36 @@ type WallProps = {
 };
 
 const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) => {
-  const posts = [
+  const posts: {
+    id: number;
+    user: { id: number; name: string; img: string };
+    date: string;
+    content: {
+      text?: string;
+      images?: { id: number; img: string }[];
+      videos?: { id: number; video: string; time: number }[];
+      circles?: { id: number; circle: string; time: number }[];
+      voices?: { id: number; voice: string; time: number }[];
+      music?: { id: number; track: string; author: string; name: string; time: number }[];
+    };
+    likes: number;
+    forwards: number;
+    comments: number;
+    views: number;
+    forwardPost?: {
+      id: number;
+      user: { id: number; name: string; img: string };
+      date: string;
+      content: {
+        text?: string;
+        images?: { id: number; img: string }[];
+        videos?: { id: number; video: string; time: number }[];
+        circles?: { id: number; circle: string; time: number }[];
+        voices?: { id: number; voice: string; time: number }[];
+        music?: { id: number; track: string; author: string; name: string; time: number }[];
+      };
+    };
+  }[] = [
     {
       id: 1,
       user: { id: 1, name: 'Пашок Кубыркин', img },
@@ -86,6 +115,46 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
       id: 2,
       user: { id: 1, name: 'Пашок Кубыркин', img },
       date: 'Вчера',
+      forwardPost: {
+        id: 1,
+        user: { id: 1, name: 'Павлентий Кубышкин', img },
+        date: '01.03.2023',
+        content: {
+          text: 'ьууп бу п тыц тут буп буп буп тыц  втфыивтфыdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsadsadsadsadasdsaивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
+          images: [
+            { id: 1, img },
+            { id: 2, img },
+            { id: 3, img },
+            { id: 4, img },
+            { id: 5, img },
+            { id: 6, img },
+            { id: 7, img },
+            { id: 8, img },
+          ],
+          videos: [
+            { id: 1, video, time: 5002 },
+            { id: 2, video, time: 5122 },
+            { id: 3, video, time: 1502 },
+            { id: 4, video, time: 1502 },
+            { id: 5, video, time: 1502 },
+            { id: 6, video, time: 1502 },
+          ],
+          music: [
+            {
+              id: 1,
+              track,
+              time: 123,
+              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
+              author: 'NaRk0PaShOk21rus',
+            },
+            { id: 2, track, time: 123, name: 'best dubstep', author: 'best author' },
+            { id: 3, track, time: 123, name: 'best dubstep', author: 'best author' },
+            { id: 4, track, time: 123, name: 'best dubstep', author: 'best author' },
+            { id: 5, track, time: 123, name: 'best dubstep', author: 'best author' },
+            { id: 6, track, time: 123, name: 'best dubstep', author: 'best author' },
+          ],
+        },
+      },
       content: {
         text: 'ьууп бу п тыц тут буп буп буп тыц цуц тсфиыиыфивифывтфыивтфыивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
         // music: [
@@ -216,12 +285,13 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
 
       <WallForm page={page} className={''} placeholder={placeholder} isAdmin={isAdmin} />
 
-      {posts.map(({ id, user, date, content, likes, forwards, comments, views }) => (
+      {posts.map(({ id, user, date, content, likes, forwards, comments, views, forwardPost }) => (
         <Post
           id={id}
           user={user}
           content={content}
           key={id}
+          isForwardPost={false}
           postType={{
             feed: {
               date: date,
@@ -229,6 +299,19 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
               forwards: forwards,
               comments: comments,
               views: views,
+              forwardPost:
+                forwardPost && Object.entries(forwardPost).length
+                  ? {
+                      id: forwardPost?.id || 0,
+                      user: {
+                        id: forwardPost?.user.id || 0,
+                        name: forwardPost?.user.name || '',
+                        img: forwardPost?.user.img,
+                      },
+                      date: forwardPost?.date || '',
+                      content: forwardPost?.content || {},
+                    }
+                  : undefined,
             },
           }}
         />

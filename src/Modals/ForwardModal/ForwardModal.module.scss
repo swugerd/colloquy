@@ -1,1 +1,66 @@
 @import '../../scss/variables.scss';
+
+.item {
+  width: fit-content;
+  & button {
+    display: flex;
+    align-items: center;
+    font-family: 'OpenSans';
+    font-size: 2rem;
+    color: $white;
+    font-weight: 500;
+  }
+  & + & {
+    margin-top: 1.2rem;
+  }
+}
+
+.list {
+  margin-bottom: auto;
+}
+
+.left {
+  margin-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.top {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.media-action {
+  background: $bg-main;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.send-button {
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.image {
+  height: 20rem;
+  width: 32rem;
+  & img {
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+}
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  & svg {
+    display: block;
+  }
+}

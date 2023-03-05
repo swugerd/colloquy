@@ -20,6 +20,7 @@ import useWindowSize from '../../hooks/useWindowResize';
 import { useAppDispatch } from '../../redux/store';
 import { setChatId } from '../../redux/mobile/slice';
 import { Message as MessageType } from '../../types';
+import MediaToUpload from '../../components/MediaToUpload/MediaToUpload';
 
 type MessagesProps = {
   isChatSelected: boolean;
@@ -379,7 +380,7 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
   };
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyPress);
+    if (chatId) document.addEventListener('keydown', handleKeyPress);
     if (chatId && width <= 1150) {
       dispatch(setChatId(parseInt(chatId)));
     } else {
@@ -390,6 +391,8 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
       dispatch(setChatId(0));
     };
   }, [chatId]);
+
+  const hasMediaToUpload = true;
 
   return (
     <div className={`${s['messages']} ${chatId ? s['selected'] : ''}`}>
@@ -466,9 +469,6 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
           </ul>
         </div>
       )}
-      {
-        // перенести всё в компонент быстрых сообщений
-      }
       {chatId ? (
         <div className={s['dialog']}>
           <div className={s['dialog-top']}>
@@ -503,7 +503,15 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
               placeholder={'Введите сообщение'}
               type={'text'}
               inputType={'send'}
+              page="message"
+              isTextarea={true}
+              classOptions={{
+                paperclipIcon: 'message-paperclip',
+                smileIcon: 'message-smile',
+                sendIcon: 'message-send',
+              }}
             />
+            {hasMediaToUpload && <MediaToUpload className={'message-page'} />}
           </div>
         </div>
       ) : (

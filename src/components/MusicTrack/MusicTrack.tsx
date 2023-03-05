@@ -14,9 +14,18 @@ type MusicTrackProps = {
   time: number;
   isRecs: boolean;
   className: string;
+  hasRemoveMediaButton?: boolean;
 };
 
-const MusicTrack: React.FC<MusicTrackProps> = ({ img, title, author, time, isRecs, className }) => {
+const MusicTrack: React.FC<MusicTrackProps> = ({
+  img,
+  title,
+  author,
+  time,
+  isRecs,
+  className,
+  hasRemoveMediaButton,
+}) => {
   return (
     <div className={`${s['wrapper']} ${isRecs ? s['recs-wrapper'] : ''} ${s[className]}`}>
       <div className={s['track-img']}>
@@ -35,12 +44,20 @@ const MusicTrack: React.FC<MusicTrackProps> = ({ img, title, author, time, isRec
         <span className={`${s['track-time']} ${isRecs && s['recs-time']}`}>{formatTime(time)}</span>
       </div>
       <div className={isRecs ? s['recs-actions'] : s['track-actions']}>
-        <button className={isRecs ? s['recs-forward'] : s['forward']}>
-          <Icon src={forwardSvg} id={'forward'} className={'gray'} />
-        </button>
-        <button className={s['delete']}>
-          <Icon src={removeSvg} id={'close'} className={'gray'} />
-        </button>
+        {hasRemoveMediaButton ? (
+          <button className={s['remove-media']} type="button">
+            <Icon src={removeSvg} id={'close'} className={'white'} />
+          </button>
+        ) : (
+          <>
+            <button className={isRecs ? s['recs-forward'] : s['forward']}>
+              <Icon src={forwardSvg} id={'forward'} className={'gray'} />
+            </button>
+            <button className={s['delete']}>
+              <Icon src={removeSvg} id={'close'} className={'gray'} />
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

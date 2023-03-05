@@ -144,6 +144,17 @@
   }
 }
 
+.remove-media {
+  width: 2rem;
+  height: 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 0.5rem;
+  & svg {
+    width: 50%;
+    height: 50%;
+  }
+}
+
 .forward {
   width: 1.8rem;
   height: 1.5rem;

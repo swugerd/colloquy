@@ -110,6 +110,16 @@
   }
 }
 
+.forward {
+  border-left: 0.5rem solid $green-light;
+  border-radius: 0;
+  padding: 0 1rem 1rem 1rem;
+  margin-bottom: 1rem;
+  & .content {
+    margin-bottom: 0;
+  }
+}
+
 .controls-icon {
   width: 2rem;
   height: 2rem;

@@ -2,12 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import Icon from '../Icon/Icon';
 import s from './WallForm.module.scss';
 import paperclipSvg from '../../../assets/img/icons/paperclip.svg';
+import ebalo from '../../../assets/uploads/test/ebalo.png';
+import video from '../../../assets/videos/video.mp4';
 import anonymSvg from '../../../assets/img/icons/anonym.svg';
 import smileSvg from '../../../assets/img/icons/smile.svg';
 import commentsSvg from '../../../assets/img/icons/comment.svg';
 import microSvg from '../../../assets/img/icons/voices.svg';
 import sendSvg from '../../../assets/img/icons/send.svg';
 import UploadFilesModal from '../../../Modals/UploadFilesModal/UploadFilesModal';
+import MusicTrack from '../../MusicTrack/MusicTrack';
+import Input from '../Input/Input';
+import MediaToUpload from '../../MediaToUpload/MediaToUpload';
 
 type WallFormProps = {
   page: 'profile' | 'feed' | 'group';
@@ -37,15 +42,34 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
 
   const [isAnonymActive, setIsAnonymActive] = useState(false);
 
+  const hasMediaToUpload = true;
+
   return page !== 'feed' ? (
     <>
       <form className={s['post-form']}>
         <div className={s['relative']}>
-          <textarea
+          <Input
+            className={'wall-textarea'}
+            placeholder={placeholder}
+            type={'text'}
+            inputType={'send'}
+            isTextarea={true}
+            setIsModalOpen={() => setIsModalOpen(true)}
+            button={paperClipRef}
+            classOptions={{
+              paperclipIcon: 'paperclip-icon-wall',
+              smileIcon: 'smile-icon-wall',
+              sendIcon: 'send-icon-wall',
+            }}
+          />
+          {hasMediaToUpload && (
+            <MediaToUpload className={page === 'profile' ? 'wall-page' : 'group-page'} />
+          )}
+          {/* <textarea
             className={s['input']}
             placeholder={placeholder}
-            onChange={textAreaAdjust}></textarea>
-          <button
+            onChange={textAreaAdjust}></textarea> */}
+          {/* <button
             className={`${s['controls-icon']} ${s['paperclip']}`}
             type="button"
             ref={paperClipRef}
@@ -54,7 +78,7 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
           </button>
           <button className={`${s['controls-icon']} ${s['smile']}`} type="button">
             <Icon src={smileSvg} id={'smile'} className={'gray'} />
-          </button>
+          </button> */}
         </div>
         <div className={s['input-controls']}>
           {page === 'profile' && isAdmin && (

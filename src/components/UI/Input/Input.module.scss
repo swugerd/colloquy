@@ -62,7 +62,9 @@
   }
 }
 
-.paperclip-icon {
+.paperclip-icon,
+.paperclip-icon-wall,
+.message-paperclip {
   width: 2rem;
   height: 2rem;
   position: absolute;
@@ -78,7 +80,9 @@
   }
 }
 
-.smile-icon {
+.smile-icon,
+.smile-icon-wall,
+.message-smile {
   width: 2rem;
   height: 2rem;
   position: absolute;
@@ -111,7 +115,9 @@
   transform: translateY(-50%);
 }
 
-.send-icon {
+.send-icon,
+.send-icon-wall,
+.message-send {
   width: 2rem;
   height: 1.5rem;
   position: absolute;
@@ -125,6 +131,22 @@
   &:hover svg path {
     fill: $white;
   }
+}
+
+.paperclip-icon-wall,
+.smile-icon-wall,
+.send-icon-wall {
+  top: 2rem;
+}
+
+.smile-icon-wall {
+  right: 1rem;
+}
+
+.message-paperclip,
+.message-send,
+.message-smile {
+  top: 2.5rem;
 }
 
 .close-icon {
@@ -258,6 +280,52 @@
   }
 }
 
+.wall-textarea,
+.forward-modal,
+.forward-modal-round {
+  border-radius: 1rem 1rem 0 0;
+  background: $elem;
+  padding: 1rem 4rem 1rem 4rem;
+  width: 100%;
+  min-height: 6rem;
+  max-height: 20rem;
+  height: fit-content;
+  overflow-y: auto;
+  display: block;
+  resize: none;
+  outline: none;
+  border: none;
+  color: $white;
+  font-family: 'Opensans';
+  font-size: 1.4rem;
+  font-weight: 400;
+  &::placeholder {
+    font-weight: 600;
+  }
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.forward-modal,
+.forward-modal-round {
+  background: $bg-main;
+  max-height: 10rem;
+  min-height: 4rem;
+  padding: 1rem 6rem 1rem 4.5rem;
+  height: 4rem;
+}
+
+.forward-modal-round {
+  border-radius: 1rem;
+}
+
 .messages {
   background: $bg-main;
   color: $white;
@@ -283,9 +351,24 @@
   font-weight: 600;
   font-size: 1.8rem;
   border: 2px solid transparent;
-  transition: 0.2s linear;
+  outline: none;
+  transition: border 0.2s linear;
+  min-height: 5rem;
   height: 5rem;
-  padding: 1.5rem 6.5rem 1.5rem 4rem;
+  max-height: 10rem;
+  padding: 1rem 6.5rem 1rem 4rem;
+  resize: none;
+  width: 100%;
+  border-radius: 1rem;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
   &::placeholder {
     color: $semi-white;
   }
@@ -330,6 +413,11 @@
 }
 
 @media (max-width: 550px) {
+  .message-paperclip,
+  .message-send,
+  .message-smile {
+    top: 2rem;
+  }
   .nav-content {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -345,9 +433,11 @@
     padding: 1rem 4rem 1rem 3.5rem;
   }
   .send-message {
+    min-height: 4rem;
     height: 4rem;
+    max-height: 8rem;
     font-size: 1.4rem;
-    padding: 1rem 6.5rem 1rem 3.5rem;
+    padding: 0.7rem 6.5rem 0.7rem 3.5rem;
   }
   .music-page {
     height: 4rem;

@@ -345,6 +345,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                 isAnonym: true,
               },
             }}
+            isForwardPost={false}
           />
         ))}
       {(page === 'blacklist' || page === 'moderation' || page === 'requests') &&

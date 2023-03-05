@@ -1,0 +1,147 @@
+@import '../../scss/variables.scss';
+
+.media-grid {
+  background: $elem;
+  padding: 1rem;
+  & > div:not(:last-child) {
+    border-bottom: 2px solid $sub-bg;
+  }
+}
+
+.image,
+.video {
+  width: 10rem;
+  height: 10rem;
+  flex-shrink: 0;
+  & > * {
+    border-radius: 1rem;
+    object-fit: cover;
+  }
+}
+
+.media-block {
+  position: relative;
+  &:hover .delete {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.media-row {
+  display: flex;
+  align-items: center;
+  grid-column-gap: 1rem;
+  overflow-x: scroll;
+  padding-bottom: 1rem;
+  & + & {
+    margin-top: 1rem;
+  }
+  &::-webkit-scrollbar {
+    background: transparent;
+    height: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.group-page {
+  & .media-row {
+    max-width: 58rem;
+  }
+}
+
+.wall-page {
+  & .media-row {
+    max-width: 45rem;
+  }
+}
+
+.message-page {
+  & .media-row {
+    max-width: 69rem;
+  }
+}
+
+.forward-media {
+  background: $bg-main;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.delete {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  opacity: 0;
+  transition: 0.2s linear;
+  visibility: hidden;
+  & svg {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+.tracks {
+  max-height: 20rem;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+@media (max-width: 1450px) {
+  .message-page {
+    & .media-row {
+      max-width: calc(100vw - 75rem);
+    }
+  }
+  .group-page {
+    & .media-row {
+      max-width: calc(100vw - 88rem);
+    }
+  }
+  .wall-page {
+    & .media-row {
+      max-width: calc(90vw - 70rem);
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .media-row {
+    max-width: 30vw;
+  }
+}
+
+@media (max-width: 1150px) {
+  .wall-page {
+    & .media-row {
+      max-width: none;
+    }
+  }
+  .message-page {
+    background: $sub-bg;
+    padding: 0;
+    margin-top: 1rem;
+    & .media-row {
+      max-width: calc(100vw - 6rem);
+    }
+  }
+  .group-page {
+    & .media-row {
+      max-width: calc(100vw - 6rem);
+    }
+  }
+}
