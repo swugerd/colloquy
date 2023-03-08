@@ -20,6 +20,8 @@ import classNames from 'classnames';
 import formatTime from '../../utils/formatTime';
 import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
 import UploadMediaModal from './../../Modals/UploadMediaModal/UploadMediaModal';
+import { useAppDispatch } from '../../redux/store';
+import { setIsUploadFilesModalOpen, setIsUploadMediaModalOpen } from '../../redux/modal/slice';
 
 type contentType =
   | 'stories'
@@ -80,8 +82,6 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
     isCollectionOpen,
   } = isOpen;
 
-  const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
-
   const buttonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -110,12 +110,14 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
     if (width < 550) {
       setVisiblePhotos(3);
     }
-    if (isStoryModalOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [width, isStoryModalOpen]);
+  }, [width]);
+
+  const dispatch = useAppDispatch();
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsUploadMediaModalOpen(true));
+  };
 
   const setTitle = (contentType: contentType) => {
     const titles = [
@@ -210,7 +212,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
                 <SwiperSlide>
                   <div
                     className={s['add-story']}
-                    onClick={() => setIsStoryModalOpen(true)}
+                    onClick={(e) => handleModalOpen(e)}
                     ref={buttonRef}>
                     <div className={s['add-icon']}></div>
                   </div>
@@ -223,13 +225,6 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
                 <Icon src={arrowSvg} id={'arrow'} className={'white'} />
               </button>
             </Swiper>
-            {isStoryModalOpen && (
-              <UploadMediaModal
-                onClose={() => setIsStoryModalOpen(false)}
-                button={buttonRef}
-                mediaType={'story'}
-              />
-            )}
           </>
         ),
       },

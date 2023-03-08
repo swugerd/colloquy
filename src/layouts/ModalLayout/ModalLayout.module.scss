@@ -17,6 +17,17 @@
 
 .modal {
   border-radius: 2rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 1rem);
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
 }
 
 .close {
@@ -118,7 +129,7 @@
 }
 
 @media (max-width: 1150px) {
-  .modal {
+  .modal:not(.accounts-modal) {
     align-self: flex-end;
     border-radius: 2rem 2rem 0 0;
     flex-grow: 1;

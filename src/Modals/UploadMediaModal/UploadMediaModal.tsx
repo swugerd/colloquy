@@ -11,11 +11,10 @@ import DragAndDropFile from '../../components/DragAndDropFile/DragAndDropFile';
 
 type UploadMediaModalProps = {
   onClose: () => void;
-  button: any;
   mediaType: 'story' | 'audio';
 };
 
-const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, button, mediaType }) => {
+const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, mediaType }) => {
   const title = [
     { id: 1, title: 'Создать историю', type: 'story' },
     { id: 2, title: 'Добавить музыку', type: 'audio' },
@@ -27,7 +26,6 @@ const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, button, me
     <ModalLayout
       className={mediaType === 'audio' && isMediaUploaded ? 'audio' : 'media'}
       onClose={onClose}
-      button={button}
       title={title}>
       {isMediaUploaded && mediaType === 'story' ? (
         <>

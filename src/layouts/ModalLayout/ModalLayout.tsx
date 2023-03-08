@@ -1,26 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Icon from '../../components/UI/Icon/Icon';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import closeSvg from '../../assets/img/icons/close.svg';
 import s from './ModalLayout.module.scss';
+import { useSelector } from 'react-redux';
+import { selectModal } from '../../redux/modal/selector';
 
 type ModalLayoutProps = {
   className: string;
   children: React.ReactNode;
   onClose: () => void;
-  button: any;
   title?: string;
 };
 
-const ModalLayout: React.FC<ModalLayoutProps> = ({
-  className,
-  children,
-  onClose,
-  button,
-  title,
-}) => {
+const ModalLayout: React.FC<ModalLayoutProps> = ({ className, children, onClose, title }) => {
   const ref = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref, onClose, button);
+  useEffect(() => {
+    document.body.classList.add('no-scroll');
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, []);
+  useOnClickOutside(ref, onClose);
   return (
     <div className={s['wrapper']}>
       <div className={`${s['modal']} ${s[className]}`} ref={ref}>

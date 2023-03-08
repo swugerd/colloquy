@@ -392,7 +392,7 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
     };
   }, [chatId]);
 
-  const hasMediaToUpload = true;
+  const hasMediaToUpload = false;
 
   return (
     <div className={`${s['messages']} ${chatId ? s['selected'] : ''}`}>

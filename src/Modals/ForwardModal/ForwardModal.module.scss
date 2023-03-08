@@ -10,8 +10,15 @@
     color: $white;
     font-weight: 500;
   }
+  & svg {
+    --transparent-color: black;
+  }
   & + & {
     margin-top: 1.2rem;
+  }
+  &.active button,
+  &.active svg {
+    color: $green-main;
   }
 }
 

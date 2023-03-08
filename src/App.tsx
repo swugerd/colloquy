@@ -30,9 +30,15 @@ import Group from './pages/Group/Group';
 import GroupMembers from './pages/GroupMembers/GroupMembers';
 import GroupCreate from './pages/GroupCreate/GroupCreate';
 import GroupAdmin from './pages/GroupAdmin/GroupAdmin';
+import MoreAccsModal from './Modals/MoreAccsModal/MoreAccsModal';
+import { selectModal } from './redux/modal/selector';
+import { useAppDispatch } from './redux/store';
+import { setIsMoreAccsModalOpen } from './redux/modal/slice';
 
 const App: React.FC = () => {
   const { isAuth } = useSelector(selectIsAuth);
+  const { modal } = useSelector(selectModal);
+  const dispatch = useAppDispatch();
 
   // const routes = [
   //   {
@@ -225,6 +231,9 @@ const App: React.FC = () => {
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            {modal.moreAccsModal.isOpen && (
+              <MoreAccsModal onClose={() => dispatch(setIsMoreAccsModalOpen(false))} />
+            )}
           </div>
         </>
       )}

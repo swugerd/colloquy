@@ -7,6 +7,8 @@ import microSvg from '../../../assets/img/icons/micro.svg';
 import sendSvg from '../../../assets/img/icons/send.svg';
 import s from './Input.module.scss';
 import Icon from '../Icon/Icon';
+import { useAppDispatch } from '../../../redux/store';
+import { setIsUploadFilesModalOpen, setIsUploadMediaModalOpen } from '../../../redux/modal/slice';
 
 type InputProps = {
   className: string;
@@ -17,7 +19,6 @@ type InputProps = {
   isTextarea?: boolean;
   page?: string;
   button?: any;
-  setIsModalOpen?: () => void;
   classOptions?: {
     searchIcon?: string;
     closeIcon?: string;
@@ -35,7 +36,6 @@ const Input: React.FC<InputProps> = ({
   inputType,
   button,
   isTextarea,
-  setIsModalOpen,
   id,
   page,
   classOptions = {
@@ -51,6 +51,13 @@ const Input: React.FC<InputProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { searchIcon, closeIcon, paperclipIcon, smileIcon, microIcon, sendIcon } = classOptions;
+
+  const dispatch = useAppDispatch();
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsUploadFilesModalOpen(true));
+  };
 
   useEffect(() => {
     if (button) button.current = buttonRef.current;
@@ -119,7 +126,7 @@ const Input: React.FC<InputProps> = ({
             className={s[paperclipIcon ? paperclipIcon : 'paperclip-icon']}
             ref={buttonRef}
             type="button"
-            onClick={setIsModalOpen}>
+            onClick={(e) => handleModalOpen(e)}>
             <Icon src={paperclipSvg} id={'paperclip'} className={'gray'} />
           </button>
           {isTextarea ? (

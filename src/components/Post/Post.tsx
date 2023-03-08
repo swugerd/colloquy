@@ -19,6 +19,8 @@ import closeSvg from '../../assets/img/icons/close.svg';
 import addSvg from '../../assets/img/icons/add.svg';
 import ForwardPost from '../ForwardPost/ForwardPost';
 import ForwardModal from '../../Modals/ForwardModal/ForwardModal';
+import { useAppDispatch } from '../../redux/store';
+import { setIsForwardModalOpen } from '../../redux/modal/slice';
 
 type PostProps = {
   id: number;
@@ -128,17 +130,14 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
 
   const { likes, comments, forwards, date, views } = feed || {};
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [isModalOpen]);
+  const dispatch = useAppDispatch();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsForwardModalOpen(true));
+  };
 
   const checkLastContent = (
     type: 'class' | 'element',
@@ -410,7 +409,9 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
             </button>
             <button
               className={`${s['actions-info']} ${s['forwards']}`}
-              onClick={() => setIsModalOpen(true)}
+              data-modalbutton={'forwardButton'}
+              // onClick={() => setIsModalOpen(true)}
+              onClick={(e) => handleModalOpen(e)}
               ref={buttonRef}>
               <Icon src={forwardSvg} id={'forward'} className={'only-gray'} />
               <span>{forwards}</span>
@@ -442,7 +443,6 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
             </div>
           </div>
         )}
-        {isModalOpen && <ForwardModal onClose={() => setIsModalOpen(false)} button={buttonRef} />}
       </div>
     </>
   );

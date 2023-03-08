@@ -7,10 +7,13 @@ import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
 import AccountCard from '../../components/AccountCard/AccountCard';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import Icon from '../../components/UI/Icon/Icon';
+import { useAppDispatch } from '../../redux/store';
+import { setIsMoreAccsModalOpen } from '../../redux/modal/slice';
 
 const Home: React.FC = () => {
   // Переделать адаптив под разные карточки аккаунтов
   // (для двух разных классов .card, .modal-card)
+  useSetPageTitle('Главная - colloquy');
   const accounts: { id: number; img: string; name: string }[] = [
     { id: 1, img, name: 'Пашок Кубыркин' },
     { id: 2, img, name: 'Овыфлвфы врфыоврыфол' },
@@ -19,9 +22,13 @@ const Home: React.FC = () => {
     { id: 5, img, name: 'Жесткий Пашок' },
     // { id: 6, img, name: 'Жесткий Пашок' },
   ];
-  useSetPageTitle('Главная - colloquy');
+  const dispatch = useAppDispatch();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsMoreAccsModalOpen(true));
+  };
+
   const buttonRef = useRef<HTMLButtonElement>(null);
   return (
     <>
@@ -51,7 +58,8 @@ const Home: React.FC = () => {
               )}
               <button
                 className={`${s['more-accs']}`}
-                onClick={() => setIsOpen(true)}
+                onClick={(e) => handleModalOpen(e)}
+                data-modalbutton="accountButton"
                 ref={buttonRef}>
                 <Icon src={dotsSvg} id={'dots'} className={'home-dots'} />
               </button>
@@ -62,17 +70,6 @@ const Home: React.FC = () => {
           ''
         )}
       </div>
-      {isOpen && (
-        <ModalLayout className="accounts-modal" onClose={() => setIsOpen(false)} button={buttonRef}>
-          <ul className={s['modal-list']}>
-            {accounts.map(({ id, img, name }) => (
-              <li key={id}>
-                <AccountCard id={id} name={name} img={img} className="modal-card" />
-              </li>
-            ))}
-          </ul>
-        </ModalLayout>
-      )}
     </>
   );
 };

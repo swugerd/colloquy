@@ -24,21 +24,7 @@ type WallFormProps = {
 const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdmin }) => {
   const [isRadioActive, setIsRadioActive] = useState(true);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [isModalOpen]);
-
   const paperClipRef = useRef<HTMLButtonElement>(null);
-
-  const textAreaAdjust = (e: any) => {
-    e.target.style.height = '1px';
-    e.target.style.height = `${e.target.scrollHeight}px`;
-  };
 
   const [isAnonymActive, setIsAnonymActive] = useState(false);
 
@@ -54,7 +40,6 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
             type={'text'}
             inputType={'send'}
             isTextarea={true}
-            setIsModalOpen={() => setIsModalOpen(true)}
             button={paperClipRef}
             classOptions={{
               paperclipIcon: 'paperclip-icon-wall',
@@ -65,20 +50,6 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
           {hasMediaToUpload && (
             <MediaToUpload className={page === 'profile' ? 'wall-page' : 'group-page'} />
           )}
-          {/* <textarea
-            className={s['input']}
-            placeholder={placeholder}
-            onChange={textAreaAdjust}></textarea> */}
-          {/* <button
-            className={`${s['controls-icon']} ${s['paperclip']}`}
-            type="button"
-            ref={paperClipRef}
-            onClick={() => setIsModalOpen(true)}>
-            <Icon src={paperclipSvg} id={'paperclip'} className={'gray'} />
-          </button>
-          <button className={`${s['controls-icon']} ${s['smile']}`} type="button">
-            <Icon src={smileSvg} id={'smile'} className={'gray'} />
-          </button> */}
         </div>
         <div className={s['input-controls']}>
           {page === 'profile' && isAdmin && (
@@ -141,9 +112,6 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
           </div>
         </div>
       </form>
-      {isModalOpen && (
-        <UploadFilesModal onClose={() => setIsModalOpen(false)} button={paperClipRef} />
-      )}
     </>
   ) : (
     <></>

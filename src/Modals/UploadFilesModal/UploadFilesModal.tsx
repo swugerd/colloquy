@@ -15,10 +15,9 @@ import DragAndDropFile from './../../components/DragAndDropFile/DragAndDropFile'
 
 type UploadFilesModalProps = {
   onClose: () => void;
-  button: any;
 };
 
-const UploadFilesModal: React.FC<UploadFilesModalProps> = ({ onClose, button }) => {
+const UploadFilesModal: React.FC<UploadFilesModalProps> = ({ onClose }) => {
   const items = [
     {
       id: 1,
@@ -108,7 +107,7 @@ const UploadFilesModal: React.FC<UploadFilesModalProps> = ({ onClose, button }) 
   };
 
   return (
-    <ModalLayout className={'files'} onClose={onClose} button={button} title="Добавить файлы">
+    <ModalLayout className={'files'} onClose={onClose} title="Добавить файлы">
       <div className={s['top']}>
         <ul className={s['list']}>
           {items.map(({ id, name, iconSettings }, index) => (
