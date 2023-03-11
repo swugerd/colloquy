@@ -6,6 +6,8 @@ import ebalo from '../../assets/uploads/test/image2.png';
 import { Link } from 'react-router-dom';
 import formatTime from '../../utils/formatTime';
 import Icon from '../UI/Icon/Icon';
+import { useAppDispatch } from './../../redux/store';
+import { setIsForwardModalOpen } from '../../redux/modal/slice';
 
 type MusicTrackProps = {
   img: string;
@@ -26,6 +28,13 @@ const MusicTrack: React.FC<MusicTrackProps> = ({
   className,
   hasRemoveMediaButton,
 }) => {
+  const dispatch = useAppDispatch();
+
+  const handleForwardModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsForwardModalOpen(true));
+  };
+
   return (
     <div className={`${s['wrapper']} ${isRecs ? s['recs-wrapper'] : ''} ${s[className]}`}>
       <div className={s['track-img']}>
@@ -50,7 +59,9 @@ const MusicTrack: React.FC<MusicTrackProps> = ({
           </button>
         ) : (
           <>
-            <button className={isRecs ? s['recs-forward'] : s['forward']}>
+            <button
+              className={isRecs ? s['recs-forward'] : s['forward']}
+              onClick={(e) => handleForwardModalOpen(e)}>
               <Icon src={forwardSvg} id={'forward'} className={'gray'} />
             </button>
             <button className={s['delete']}>

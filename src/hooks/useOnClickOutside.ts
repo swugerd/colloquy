@@ -6,7 +6,6 @@ import { setIsForwardModalOpen, setIsUploadFilesModalOpen } from '../redux/modal
 
 const useOnClickOutside = (ref: any, handler: (event: MouseEvent | KeyboardEvent) => void) => {
   const { modal } = useSelector(selectModal);
-  const dispatch = useAppDispatch();
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       handler(event);
@@ -29,14 +28,13 @@ const useOnClickOutside = (ref: any, handler: (event: MouseEvent | KeyboardEvent
     handler(event);
   };
   useEffect(() => {
-    document.addEventListener('click', listener);
+    document.addEventListener('mousedown', listener);
     document.addEventListener('keydown', handleKeyPress);
     return () => {
-      document.removeEventListener('click', listener);
+      document.removeEventListener('mousedown', listener);
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [ref, handler]);
-  return listener;
 };
 
 export default useOnClickOutside;

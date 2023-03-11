@@ -1,0 +1,210 @@
+@import '../../scss/variables.scss';
+
+.title {
+  font-family: 'Montserrat';
+  font-size: 2rem;
+  color: $white;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.comments {
+  margin-bottom: 1.5rem;
+}
+
+.comment + .comment {
+  margin-top: 1rem;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.user {
+  display: flex;
+  align-items: flex-start;
+}
+
+.user-img {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
+  & img {
+    border-radius: 50%;
+  }
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-family: 'OpenSans';
+  font-weight: 500;
+  color: $semi-white;
+  font-size: 1.4rem;
+}
+
+.activities {
+  display: flex;
+  align-items: center;
+}
+
+.activity {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-left: 1.5rem;
+  }
+}
+
+.count {
+  color: $green-main;
+}
+
+.media {
+  margin-bottom: 2rem;
+  position: relative;
+  height: 50rem;
+  & img,
+  & video {
+    border-radius: 1rem;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+
+.prev-btn,
+.next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5rem;
+  height: 3rem;
+}
+
+.prev-btn {
+  transform: rotate(90deg);
+}
+
+.next-btn {
+  transform: rotate(270deg);
+}
+
+.activities-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-title {
+  font-size: 2rem;
+  color: $white;
+  font-weight: 500;
+  font-family: 'Montserrat';
+  margin-bottom: 0.5rem;
+}
+
+.action-btn {
+  position: absolute;
+  top: 1rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 0.5rem;
+  right: 1rem;
+  & + & {
+    right: 5.5rem;
+  }
+  & svg {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+.prev-btn {
+  left: 1.5rem;
+}
+
+.next-btn {
+  right: 1.5rem;
+}
+
+.activity-count {
+  font-family: 'OpenSans';
+  font-size: 1.6rem;
+  color: $semi-white;
+  font-weight: 500;
+}
+
+.content-count {
+  font-family: 'OpenSans';
+  font-size: 2rem;
+  color: $white;
+  font-weight: 500;
+}
+
+.separator {
+  margin: 0 0.5rem;
+}
+
+.activity-icon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  & svg {
+    display: block;
+  }
+}
+
+.user-name {
+  font-size: 1.6rem;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  color: $white;
+}
+
+@media (max-width: 550px) {
+  .title {
+    font-size: 1.6rem;
+  }
+  .video-title {
+    font-size: 1.4rem;
+  }
+  .activity-icon {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  .activity-count {
+    font-size: 1.2rem;
+  }
+  .media {
+    height: 80vw;
+    margin-bottom: 1rem;
+  }
+  .content {
+    margin-bottom: 1.5rem;
+  }
+  .top {
+    margin-bottom: 1rem;
+  }
+  .prev-btn,
+  .next-btn {
+    width: 3rem;
+    height: 1.5rem;
+  }
+  .action-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & + & {
+      right: 4.5rem;
+    }
+  }
+}

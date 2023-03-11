@@ -102,6 +102,9 @@
 .link {
   display: flex;
   align-items: center;
+  color: $white;
+  font-weight: 500;
+  font-family: 'OpenSans';
 }
 
 .arrow-link .arrow svg {

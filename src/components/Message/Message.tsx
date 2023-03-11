@@ -13,6 +13,8 @@ import classNames from 'classnames';
 import useWindowSize from '../../hooks/useWindowResize';
 import { Link } from 'react-router-dom';
 import formatTime from '../../utils/formatTime';
+import { setIsForwardModalOpen } from '../../redux/modal/slice';
+import { useAppDispatch } from './../../redux/store';
 
 type MessageProps = {
   senderId: number;
@@ -34,6 +36,13 @@ const Message: React.FC<MessageProps> = ({
   hasAnimation,
 }) => {
   const { message: messageText, timestamp, images, videos, audios, forwardMessage } = message;
+
+  const dispatch = useAppDispatch();
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsForwardModalOpen(true));
+  };
 
   const { width } = useWindowSize();
 
@@ -180,7 +189,10 @@ const Message: React.FC<MessageProps> = ({
                 [s['images-six']]: images.length >= maxVisibleContent.images,
               })}>
               {images.map(({ id, img }, index) => (
-                <div className={`${s['image']} ${s[`grid-area-${index}`]}`} key={id}>
+                <div
+                  className={`${s['image']} ${s[`grid-area-${index}`]}`}
+                  key={id}
+                  onClick={(e) => handleModalOpen(e)}>
                   <img className={`${messageText ? s['b-none'] : ''}`} src={img} alt="" />
                 </div>
               ))}
@@ -196,7 +208,10 @@ const Message: React.FC<MessageProps> = ({
                 [s['videos-mobile']]: videos.length > maxVisibleContent.videos && width <= 768,
               })}>
               {videos.map(({ id, video }, index) => (
-                <div className={`${s['video']} ${s[`grid-area-${index}`]}`} key={id}>
+                <div
+                  className={`${s['video']} ${s[`grid-area-${index}`]}`}
+                  key={id}
+                  onClick={(e) => handleModalOpen(e)}>
                   <video
                     className={`${messageText ? s['b-none'] : ''}`}
                     src={video}

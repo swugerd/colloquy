@@ -9,6 +9,8 @@ import cat from '../../../assets/uploads/test/cat.png';
 import MusicTrack from '../../MusicTrack/MusicTrack';
 import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 import Icon from '../../UI/Icon/Icon';
+import { useAppDispatch } from '../../../redux/store';
+import { setCreateBaseModalType, setIsCreateBaseModalOpen } from '../../../redux/modal/slice';
 
 type PlaylistsDropDownProps = {
   className: string;
@@ -145,6 +147,15 @@ const PlaylistsDropDown: React.FC<PlaylistsDropDownProps> = ({ className }) => {
       ],
     },
   ];
+
+  const dispatch = useAppDispatch();
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsCreateBaseModalOpen(true));
+    dispatch(setCreateBaseModalType('playlist'));
+  };
+
   return (
     <>
       <div className={`${s['playlists']} ${playlists.length ? '' : s['nothing']} ${s[className]}`}>
@@ -158,9 +169,9 @@ const PlaylistsDropDown: React.FC<PlaylistsDropDownProps> = ({ className }) => {
             className={className}
           />
         ))}
-        <div className={s['create']}>
+        <button className={s['create']} onClick={(e) => handleModalOpen(e)}>
           <Icon src={addSvg} id={'add'} className={'white'} />
-        </div>
+        </button>
       </div>
       {playlists.length ? (
         <div className={`${s['info']} ${s[className]}`}>

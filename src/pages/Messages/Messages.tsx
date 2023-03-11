@@ -21,6 +21,12 @@ import { useAppDispatch } from '../../redux/store';
 import { setChatId } from '../../redux/mobile/slice';
 import { Message as MessageType } from '../../types';
 import MediaToUpload from '../../components/MediaToUpload/MediaToUpload';
+import {
+  setCreateBaseModalType,
+  setIsCreateBaseModalOpen,
+  setIsMediaListModalOpen,
+  setMediaListModalType,
+} from '../../redux/modal/slice';
 
 type MessagesProps = {
   isChatSelected: boolean;
@@ -41,6 +47,18 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
   const seventhUser = 8;
 
   const hasAnimation = true;
+
+  const handleCreateModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsCreateBaseModalOpen(true));
+    dispatch(setCreateBaseModalType('conversation'));
+  };
+
+  const handleMediaListModalOpen = (e: any, modalType: 'info' | 'media') => {
+    e.stopPropagation();
+    dispatch(setIsMediaListModalOpen(true));
+    dispatch(setMediaListModalType(modalType));
+  };
 
   const chats: {
     chatId: number;
@@ -329,6 +347,8 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
     },
   ];
 
+  const isDisscusion = true;
+
   const { width } = useWindowSize();
 
   const forwardMessage = (message: any, fromChat: any, toChat: any) => {
@@ -405,7 +425,7 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
               type={'text'}
               inputType={'search'}
             />
-            <button className={s['create-chat']}>
+            <button className={s['create-chat']} onClick={(e) => handleCreateModalOpen(e)}>
               <Icon src={createChatSvg} id={'createChat'} className={'create-chat'} />
             </button>
           </div>
@@ -472,12 +492,27 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
       {chatId ? (
         <div className={s['dialog']}>
           <div className={s['dialog-top']}>
-            <div className={s['dialog-avatar']}>
-              <img src={ebalo} alt="user" />
-            </div>
-            <span className={s['dialog-name']}>{chatId}</span>
-            <span className={s['dialog-online']}>В сети</span>
-            <button className={s['paperclip']}>
+            {isDisscusion ? (
+              <button className={s['link']} onClick={(e) => handleMediaListModalOpen(e, 'info')}>
+                <div className={s['dialog-avatar']}>
+                  <img src={ebalo} alt="user" />
+                </div>
+                <span className={s['dialog-name']}>{chatId}</span>
+              </button>
+            ) : (
+              <>
+                <Link className={s['link']} to={'/profile/swugerd'}>
+                  <div className={s['dialog-avatar']}>
+                    <img src={ebalo} alt="user" />
+                  </div>
+                  <span className={s['dialog-name']}>{chatId}</span>
+                </Link>
+                <span className={s['dialog-online']}>В сети</span>
+              </>
+            )}
+            <button
+              className={s['paperclip']}
+              onClick={(e) => handleMediaListModalOpen(e, 'media')}>
               <Icon src={paperClipSvg} id={'paperclip'} className={'gray'} />
             </button>
           </div>

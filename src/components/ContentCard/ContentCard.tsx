@@ -15,6 +15,8 @@ import numberWithSpaces from '../../utils/numberWithSpaces';
 import convertMembers from '../../utils/convertMembers';
 import Icon from '../UI/Icon/Icon';
 import useWindowSize from '../../hooks/useWindowResize';
+import { useAppDispatch } from './../../redux/store';
+import { setConfirmModalType, setIsConfirmModalOpen } from '../../redux/modal/slice';
 
 type ContentCardProps = {
   size: 'lg' | 'sm';
@@ -38,6 +40,15 @@ const ContentCard: React.FC<ContentCardProps> = ({
   isSearchPage,
   isAdmin,
 }) => {
+  const dispatch = useAppDispatch();
+  const handleConfirmModalOpen = (
+    e: any,
+    modalType: 'friend' | 'group' | 'pageDelete' | 'passwordEnter',
+  ) => {
+    e.stopPropagation();
+    dispatch(setIsConfirmModalOpen(true));
+    dispatch(setConfirmModalType(modalType));
+  };
   // сделать проп класснэйм и убрать условия (?)
   const { img, status, lastSeen, members, name, isPrivate } = contentData;
   const { width } = useWindowSize();
@@ -114,6 +125,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
               icon={closeSvg}
               id={'close'}
               hasLock={false}
+              onClick={(e) => handleConfirmModalOpen(e, 'friend')}
             />
           </>
         )}
@@ -132,7 +144,13 @@ const ContentCard: React.FC<ContentCardProps> = ({
           <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={false} />
         )}
         {type === 'group' && size === 'lg' && isSearchPage === false && (
-          <SquareButton className={'friend-button'} icon={closeSvg} id={'close'} hasLock={false} />
+          <SquareButton
+            className={'friend-button'}
+            icon={closeSvg}
+            id={'close'}
+            hasLock={false}
+            onClick={(e) => handleConfirmModalOpen(e, 'group')}
+          />
         )}
         {type === 'group' && size === 'lg' && isSearchPage && (
           <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={isPrivate} />

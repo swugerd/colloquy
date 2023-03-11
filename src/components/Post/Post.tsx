@@ -12,6 +12,8 @@ import formatTime from '../../utils/formatTime';
 import classNames from 'classnames';
 import anonymSvg from '../../assets/img/icons/anonym.svg';
 import useWindowSize from './../../hooks/useWindowResize';
+import trashSvg from '../../assets/img/icons/trash.svg';
+import editSvg from '../../assets/img/icons/edit.svg';
 import Icon from '../UI/Icon/Icon';
 import { Link } from 'react-router-dom';
 import SquareButton from '../UI/SquareButton/SquareButton';
@@ -20,7 +22,7 @@ import addSvg from '../../assets/img/icons/add.svg';
 import ForwardPost from '../ForwardPost/ForwardPost';
 import ForwardModal from '../../Modals/ForwardModal/ForwardModal';
 import { useAppDispatch } from '../../redux/store';
-import { setIsForwardModalOpen } from '../../redux/modal/slice';
+import { setIsForwardModalOpen, setIsPostContentModalOpen } from '../../redux/modal/slice';
 
 type PostProps = {
   id: number;
@@ -99,9 +101,21 @@ type PostProps = {
     };
   };
   isForwardPost: boolean;
+  isModalPost?: boolean;
+  isAdmin: boolean;
+  page: 'profile' | 'feed' | 'modal' | 'group';
 };
 
-const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost }) => {
+const Post: React.FC<PostProps> = ({
+  id,
+  user,
+  postType,
+  content,
+  isForwardPost,
+  isModalPost,
+  page,
+  isAdmin,
+}) => {
   const { name: userName, img: userImg } = user;
   const { text, images, videos, circles, voices, music } = content;
   const { width } = useWindowSize();
@@ -134,9 +148,14 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleModalOpen = (e: any) => {
+  const handleForwardModalOpen = (e: any) => {
     e.stopPropagation();
     dispatch(setIsForwardModalOpen(true));
+  };
+
+  const handlePostContentModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsPostContentModalOpen(true));
   };
 
   const checkLastContent = (
@@ -180,9 +199,12 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
 
   return (
     <>
-      <div className={`${s['post']} ${isForwardPost ? s['forward'] : ''}`}>
-        <div className={s['top-row']}>
-          <div className={s['user']}>
+      <div
+        className={`${s['post']} ${isForwardPost ? s['forward'] : ''} ${
+          isModalPost ? s['modal'] : ''
+        }`}>
+        <div className={`${s['top-row']}`}>
+          <div className={`${s['user']} ${page === 'modal' ? s['modal-margin'] : ''}`}>
             <Link to="/profile/swugerd">
               <HeaderAvatar
                 className="post"
@@ -192,16 +214,30 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
                 onlineType="pc-dnd"
               />
             </Link>
-            <div className={s['user-info']}>
+            <div className={`${s['user-info']}`}>
               <Link className={s['user-name']} to="/profile/swugerd">
                 {userName}
               </Link>
               <span className={s['post-date']}>{date}</span>
             </div>
           </div>
-          {feed && !isForwardPost && (
+          {feed && !isForwardPost && !isModalPost && page !== 'profile' && (
             <button className={s['hide']}>
               <Icon src={hideSvg} id={'hide'} className={'gray'} />
+            </button>
+          )}
+          {feed &&
+            !isForwardPost &&
+            (page === 'profile' || page === 'modal') &&
+            isAdmin &&
+            user.id === 1 && (
+              <button className={`${s['hide']}`}>
+                <Icon src={editSvg} id={'edit'} className={'gray'} />
+              </button>
+            )}
+          {feed && !isForwardPost && (page === 'profile' || page === 'modal') && isAdmin && (
+            <button className={`${s['hide']}`}>
+              <Icon src={trashSvg} id={'trash'} className={'gray'} />
             </button>
           )}
           {suggest && (
@@ -211,7 +247,12 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
             </div>
           )}
         </div>
-        <div className={s['content']}>
+        {
+          // вынести в компонент ui grid
+        }
+        <div
+          className={`${s['content']} ${!isModalPost ? s['cursor-pointer'] : ''}`}
+          onClick={!isModalPost ? (e) => handlePostContentModalOpen(e) : () => {}}>
           {!!text && <p className={s['post-text']}>{text}</p>}
           {!!images?.length && (
             <div
@@ -403,7 +444,9 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
               />
               <span>{activeAction ? likes && likes + 1 : likes}</span>
             </button>
-            <button className={`${s['actions-info']} ${s['comments']}`}>
+            <button
+              className={`${s['actions-info']} ${s['comments']}`}
+              onClick={!isModalPost ? (e) => handlePostContentModalOpen(e) : () => {}}>
               <Icon src={commentsSvg} id={'comments'} className={'only-gray'} />
               <span>{comments}</span>
             </button>
@@ -411,7 +454,7 @@ const Post: React.FC<PostProps> = ({ id, user, postType, content, isForwardPost 
               className={`${s['actions-info']} ${s['forwards']}`}
               data-modalbutton={'forwardButton'}
               // onClick={() => setIsModalOpen(true)}
-              onClick={(e) => handleModalOpen(e)}
+              onClick={(e) => handleForwardModalOpen(e)}
               ref={buttonRef}>
               <Icon src={forwardSvg} id={'forward'} className={'only-gray'} />
               <span>{forwards}</span>

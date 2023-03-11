@@ -21,7 +21,11 @@ import formatTime from '../../utils/formatTime';
 import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
 import UploadMediaModal from './../../Modals/UploadMediaModal/UploadMediaModal';
 import { useAppDispatch } from '../../redux/store';
-import { setIsUploadFilesModalOpen, setIsUploadMediaModalOpen } from '../../redux/modal/slice';
+import {
+  setIsUploadFilesModalOpen,
+  setIsUploadMediaModalOpen,
+  setUploadMediaModalType,
+} from '../../redux/modal/slice';
 
 type contentType =
   | 'stories'
@@ -117,6 +121,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
   const handleModalOpen = (e: any) => {
     e.stopPropagation();
     dispatch(setIsUploadMediaModalOpen(true));
+    dispatch(setUploadMediaModalType('story'));
   };
 
   const setTitle = (contentType: contentType) => {

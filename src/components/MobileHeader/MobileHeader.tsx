@@ -13,6 +13,7 @@ import paperclipSvg from '../../assets/img/icons/paperclip.svg';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
 import { Link, useNavigate } from 'react-router-dom';
+import { setIsMediaListModalOpen, setMediaListModalType } from '../../redux/modal/slice';
 
 const MobileHeader: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,9 +28,17 @@ const MobileHeader: React.FC = () => {
     setIsSideContentActive(!isSideContentActive);
   };
 
+  const handleModalOpen = (e: any, modalType: 'media' | 'info') => {
+    e.stopPropagation();
+    dispatch(setIsMediaListModalOpen(true));
+    dispatch(setMediaListModalType(modalType));
+  };
+
   useEffect(() => {
     dispatch(setTitle(document.title));
   }, [mobile]);
+
+  const isDisscusion = true;
 
   return width <= 1150 ? (
     <header className={s['wrapper']}>
@@ -59,14 +68,25 @@ const MobileHeader: React.FC = () => {
                 <Icon src={backSvg} id={'back'} className={'white'} />
               </div>
             </Link>
-            <Link to={'/profile/swugerd'} className={s['link']}>
-              <div className={s['user-img']}>
-                <img src={ebalo} alt="user" />
-              </div>
-              <span className={s['user-name']}>{mobile.chatId}</span>
-            </Link>
-            <span className={s['online']}>В сети</span>
-            <button className={s['paperclip']}>
+            {isDisscusion ? (
+              <button className={s['link']} onClick={(e) => handleModalOpen(e, 'info')}>
+                <div className={s['user-img']}>
+                  <img src={ebalo} alt="user" />
+                </div>
+                <span className={s['user-name']}>{mobile.chatId}</span>
+              </button>
+            ) : (
+              <>
+                <Link to={'/profile/swugerd'} className={s['link']}>
+                  <div className={s['user-img']}>
+                    <img src={ebalo} alt="user" />
+                  </div>
+                  <span className={s['user-name']}>{mobile.chatId}</span>
+                </Link>
+                <span className={s['online']}>В сети</span>
+              </>
+            )}
+            <button className={s['paperclip']} onClick={(e) => handleModalOpen(e, 'media')}>
               <Icon src={paperclipSvg} id={'paperclip'} className={'white'} />
             </button>
           </>

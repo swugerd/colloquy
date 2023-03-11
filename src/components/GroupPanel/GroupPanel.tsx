@@ -340,12 +340,14 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
             user={user}
             content={content}
             key={id}
+            isAdmin={false}
             postType={{
               suggest: {
                 isAnonym: true,
               },
             }}
             isForwardPost={false}
+            page={'group'}
           />
         ))}
       {(page === 'blacklist' || page === 'moderation' || page === 'requests') &&

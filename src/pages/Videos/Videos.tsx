@@ -11,11 +11,18 @@ import HeaderAvatar from '../../components/UI/HeaderAvatar/HeaderAvatar';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from './../../redux/store';
 import { setHasAddButton } from '../../redux/mobile/slice';
+import { setIsUploadMediaModalOpen, setUploadMediaModalType } from '../../redux/modal/slice';
 
 const Videos: React.FC = () => {
   useSetPageTitle('Видео');
 
   const dispatch = useAppDispatch();
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsUploadMediaModalOpen(true));
+    dispatch(setUploadMediaModalType('video'));
+  };
 
   useEffect(() => {
     dispatch(setHasAddButton(true));
@@ -36,7 +43,7 @@ const Videos: React.FC = () => {
     <div className={s['videos']}>
       <div className={s['top']}>
         <h4 className={s['page-title']}>Мои Видео</h4>
-        <button className={s['add-button']}>
+        <button className={s['add-button']} onClick={(e) => handleModalOpen(e)}>
           <Icon src={addSvg} id={'add'} className={'white'} />
         </button>
       </div>

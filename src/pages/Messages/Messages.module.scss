@@ -51,6 +51,11 @@
   }
 }
 
+.link {
+  display: flex;
+  align-items: center;
+}
+
 .messages-list {
   overflow-y: scroll;
   height: calc(100% - 60px);
@@ -167,12 +172,12 @@
   font-size: 1.6rem;
   color: $green-main;
   font-weight: 500;
-  margin-right: auto;
 }
 
 .paperclip {
   width: 2.5rem;
   height: 2.5rem;
+  margin-left: auto;
 }
 
 .dialog-inner {

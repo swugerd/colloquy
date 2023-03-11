@@ -48,6 +48,8 @@ const ForwardPost: React.FC<ForwardPostProps> = ({ forwardPost }) => {
         },
       }}
       isForwardPost={true}
+      isAdmin={false}
+      page="modal"
     />
   );
 };

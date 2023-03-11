@@ -11,13 +11,15 @@ import DragAndDropFile from '../../components/DragAndDropFile/DragAndDropFile';
 
 type UploadMediaModalProps = {
   onClose: () => void;
-  mediaType: 'story' | 'audio';
+  mediaType: 'story' | 'audio' | 'photo' | 'video' | 'files';
 };
 
 const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, mediaType }) => {
   const title = [
     { id: 1, title: 'Создать историю', type: 'story' },
     { id: 2, title: 'Добавить музыку', type: 'audio' },
+    { id: 2, title: 'Добавить фото', type: 'photo' },
+    { id: 2, title: 'Добавить видео', type: 'video' },
   ].find(({ type }) => type === mediaType)?.title;
 
   const isMediaUploaded = false;
@@ -27,7 +29,7 @@ const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, mediaType 
       className={mediaType === 'audio' && isMediaUploaded ? 'audio' : 'media'}
       onClose={onClose}
       title={title}>
-      {isMediaUploaded && mediaType === 'story' ? (
+      {isMediaUploaded && mediaType === 'story' && (
         <>
           <div className={s['video']}>
             <video src={video}></video>
@@ -37,7 +39,8 @@ const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, mediaType 
           </div>
           <Button className={'add-media'} text={'Опубликовать'} />
         </>
-      ) : isMediaUploaded && mediaType === 'audio' ? (
+      )}
+      {isMediaUploaded && mediaType === 'audio' && (
         <>
           <div className={s['track']}>
             <MusicTrack
@@ -51,9 +54,8 @@ const UploadMediaModal: React.FC<UploadMediaModalProps> = ({ onClose, mediaType 
           </div>
           <Button className={'add-media'} text={'Опубликовать'} />
         </>
-      ) : (
-        <DragAndDropFile mediaType={'audio'} />
       )}
+      {!isMediaUploaded && <DragAndDropFile mediaType={mediaType} />}
     </ModalLayout>
   );
 };

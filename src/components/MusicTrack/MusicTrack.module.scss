@@ -197,6 +197,35 @@
   transition: 0.2s linear;
 }
 
+.comment-track {
+  & .delete {
+    display: none;
+  }
+}
+
+.create-base {
+  padding: 0;
+  &:hover {
+    background: none;
+  }
+  flex-grow: 1;
+  & .row {
+    margin-right: auto;
+  }
+  & .forward {
+    display: none;
+  }
+  & .delete {
+    display: none;
+  }
+}
+
+.media-modal {
+  & .forward {
+    display: none;
+  }
+}
+
 .music-page {
   padding: 1rem;
   &:hover {
@@ -300,7 +329,8 @@
 }
 
 @media (max-width: 550px) {
-  .music-page {
+  .music-page,
+  .comment-track {
     & .track-img {
       height: 4rem;
       min-width: 4rem;
@@ -337,6 +367,14 @@
     & .recs-title,
     & .recs-time {
       font-size: 1rem !important;
+    }
+  }
+  .comment-track {
+    & .track-title {
+      max-width: calc(100vw - 26rem);
+    }
+    & .track-author {
+      max-width: calc(100vw - 26rem);
     }
   }
   .music-page.recs-wrapper {

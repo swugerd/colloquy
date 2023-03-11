@@ -13,6 +13,7 @@ import voice from '../../assets/uploads/test/voice.png';
 import track from '../../assets/uploads/test/ebalo.png';
 import Icon from '../UI/Icon/Icon';
 import WallForm from '../UI/WallForm/WallForm';
+import { Post as PostType } from '../../types';
 
 type WallProps = {
   className: string;
@@ -22,36 +23,7 @@ type WallProps = {
 };
 
 const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) => {
-  const posts: {
-    id: number;
-    user: { id: number; name: string; img: string };
-    date: string;
-    content: {
-      text?: string;
-      images?: { id: number; img: string }[];
-      videos?: { id: number; video: string; time: number }[];
-      circles?: { id: number; circle: string; time: number }[];
-      voices?: { id: number; voice: string; time: number }[];
-      music?: { id: number; track: string; author: string; name: string; time: number }[];
-    };
-    likes: number;
-    forwards: number;
-    comments: number;
-    views: number;
-    forwardPost?: {
-      id: number;
-      user: { id: number; name: string; img: string };
-      date: string;
-      content: {
-        text?: string;
-        images?: { id: number; img: string }[];
-        videos?: { id: number; video: string; time: number }[];
-        circles?: { id: number; circle: string; time: number }[];
-        voices?: { id: number; voice: string; time: number }[];
-        music?: { id: number; track: string; author: string; name: string; time: number }[];
-      };
-    };
-  }[] = [
+  const posts: PostType[] = [
     {
       id: 1,
       user: { id: 1, name: 'Пашок Кубыркин', img },
@@ -113,7 +85,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
     },
     {
       id: 2,
-      user: { id: 1, name: 'Пашок Кубыркин', img },
+      user: { id: 2, name: 'Пашок Кубыркин', img },
       date: 'Вчера',
       forwardPost: {
         id: 1,
@@ -179,7 +151,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
     },
     {
       id: 3,
-      user: { id: 1, name: 'Пашок Кубыркин', img },
+      user: { id: 3, name: 'Пашок Кубыркин', img },
       date: 'Вчера',
       content: {
         images: [
@@ -200,7 +172,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
     },
     {
       id: 4,
-      user: { id: 1, name: 'Пашок Кубыркин', img },
+      user: { id: 4, name: 'Пашок Кубыркин', img },
       date: 'Вчера',
       content: {
         text: 'ьууп бу п тыц тут буп буп буп тыц цуц тсфиыиыфивифывтфыивтфыивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
@@ -243,6 +215,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
       views: 12,
     },
   ];
+  const isPostAdmin = true;
   return (
     <div className={`${s['wall']} ${s[className]}`}>
       {/* <div className={s['hidden']}>
@@ -292,6 +265,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
           content={content}
           key={id}
           isForwardPost={false}
+          isAdmin={isPostAdmin}
           postType={{
             feed: {
               date: date,
@@ -302,18 +276,19 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
               forwardPost:
                 forwardPost && Object.entries(forwardPost).length
                   ? {
-                      id: forwardPost?.id || 0,
+                      id: forwardPost.id,
                       user: {
-                        id: forwardPost?.user.id || 0,
-                        name: forwardPost?.user.name || '',
-                        img: forwardPost?.user.img,
+                        id: forwardPost.user.id,
+                        name: forwardPost.user.name,
+                        img: forwardPost.user.img,
                       },
-                      date: forwardPost?.date || '',
-                      content: forwardPost?.content || {},
+                      date: forwardPost.date,
+                      content: forwardPost.content,
                     }
                   : undefined,
             },
           }}
+          page={page}
         />
       ))}
     </div>

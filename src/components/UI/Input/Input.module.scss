@@ -344,6 +344,141 @@
   }
 }
 
+.forward-mobile {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.2rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 3rem;
+  padding: 1.5rem 4rem 1.5rem 4rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+}
+
+.post-content {
+  background: $bg-main;
+  color: #ffffff;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.4rem;
+  border: 2px solid transparent;
+  outline: none;
+  transition: border 0.2s linear;
+  min-height: 4rem;
+  height: 4rem;
+  max-height: 10rem;
+  padding: 0.8rem 6.5rem 0.8rem 4rem;
+  resize: none;
+  width: 100%;
+  border-radius: 1rem;
+  display: block;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+  &::placeholder {
+    color: $semi-white;
+  }
+}
+
+.members-modal {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 5rem;
+  padding: 1.5rem 4rem 1.5rem 4rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+.create-base,
+.base-name {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 5rem;
+  padding: 1.5rem 4rem 1.5rem 4rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
+.base-name {
+  padding: 1.5rem;
+}
+
+.post-content-round {
+  background: $bg-main;
+  color: #ffffff;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.4rem;
+  border: 2px solid transparent;
+  outline: none;
+  transition: border 0.2s linear;
+  min-height: 4rem;
+  height: 4rem;
+  display: block;
+  max-height: 10rem;
+  padding: 0.8rem 6.5rem 0.8rem 4rem;
+  resize: none;
+  width: 100%;
+  border-radius: 1rem 1rem 0 0;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+  &::placeholder {
+    color: $semi-white;
+  }
+}
+
+.discuss {
+  font-size: 2rem;
+  font-family: 'OpenSans';
+  color: $white;
+  font-weight: 500;
+  border-radius: 0;
+  transition: 0.2s linear;
+  border-bottom: 2px solid transparent;
+  max-width: 20rem;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border-bottom: 2px solid $green-main;
+  }
+}
+
 .send-message {
   background: $bg-main;
   color: $white;
@@ -353,6 +488,7 @@
   border: 2px solid transparent;
   outline: none;
   transition: border 0.2s linear;
+  display: block;
   min-height: 5rem;
   height: 5rem;
   max-height: 10rem;
@@ -371,9 +507,6 @@
   }
   &::placeholder {
     color: $semi-white;
-  }
-  &:focus {
-    border: 2px solid $green-main;
   }
 }
 
@@ -417,6 +550,20 @@
   .message-send,
   .message-smile {
     top: 2rem;
+  }
+  .members-modal {
+    height: 4rem;
+    font-size: 1.4rem;
+  }
+  .base-name {
+    height: 3rem;
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+  .create-base {
+    height: 4rem;
+    font-size: 1.4rem;
+    padding: 1rem 3.5rem 1rem 3.5rem;
   }
   .nav-content {
     padding-top: 1rem;

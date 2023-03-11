@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setHasArrowButton, setHasUploadButton } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
+import { setIsUploadMediaModalOpen, setUploadMediaModalType } from '../../redux/modal/slice';
 
 type MusicProps = {
   tab: 'list' | 'playlists' | 'recs';
@@ -37,6 +38,12 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
       dispatch(setHasUploadButton(false));
     };
   }, []);
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsUploadMediaModalOpen(true));
+    dispatch(setUploadMediaModalType('audio'));
+  };
 
   const { width } = useWindowSize();
 
@@ -154,7 +161,7 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
             ))}
             {tab === 'list' && width > 550 && (
               <li className={s['upload-button']}>
-                <button className={s['upload']}>
+                <button className={s['upload']} onClick={(e) => handleModalOpen(e)}>
                   <Icon src={uploadSvg} id={'upload'} className={'white'} />
                 </button>
               </li>

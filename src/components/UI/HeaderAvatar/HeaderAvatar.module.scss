@@ -70,6 +70,12 @@
   margin-right: 1rem;
 }
 
+.members-modal {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-right: 1rem;
+}
+
 .chat-image {
   width: 4rem;
   height: 4rem;
@@ -216,5 +222,13 @@
   .music-activity {
     width: 4rem;
     height: 4rem;
+  }
+  .members-modal {
+    width: 4.5rem;
+    height: 4.5rem;
+    & img + div {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 }

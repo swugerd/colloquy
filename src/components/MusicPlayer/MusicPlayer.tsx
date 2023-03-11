@@ -12,12 +12,21 @@ import closeSvg from '../../assets/img/icons/close.svg';
 import addSvg from '../../assets/img/icons/add.svg';
 import { Link } from 'react-router-dom';
 import Icon from '../UI/Icon/Icon';
+import { useDispatch } from 'react-redux';
+import { setIsForwardModalOpen } from '../../redux/modal/slice';
 
 type MusicPlayerProps = {
   className: string;
 };
 
 const MusicPlayer: React.FC<MusicPlayerProps> = ({ className }) => {
+  const dispatch = useDispatch();
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsForwardModalOpen(true));
+  };
+
   return (
     <div className={`${s['player']} ${s[className]}`}>
       <div className={s['player-pannel']}>
@@ -67,7 +76,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ className }) => {
         <button className={s['shuffle-icon']}>
           <Icon src={shuffleSvg} id={'shuffle'} className={'gray'} />
         </button>
-        <button className={s['forward-icon']}>
+        <button className={s['forward-icon']} onClick={(e) => handleModalOpen(e)}>
           <Icon src={forwardSvg} id={'forward'} className={'gray'} />
         </button>
         <button className={s['add-icon']}>

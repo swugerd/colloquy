@@ -70,6 +70,10 @@
   border-radius: 0 0 1rem 1rem;
 }
 
+.post-modal {
+  background: $bg-main;
+}
+
 .delete {
   width: 2rem;
   height: 2rem;
@@ -123,6 +127,12 @@
   .media-row {
     max-width: 30vw;
   }
+  .forward-media,
+  .post-modal {
+    & .media-row {
+      max-width: none;
+    }
+  }
 }
 
 @media (max-width: 1150px) {
@@ -143,5 +153,13 @@
     & .media-row {
       max-width: calc(100vw - 6rem);
     }
+  }
+}
+
+@media (max-width: 550px) {
+  .image,
+  .video {
+    width: 7.5rem;
+    height: 7.5rem;
   }
 }

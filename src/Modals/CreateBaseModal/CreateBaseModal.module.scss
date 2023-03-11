@@ -1,0 +1,221 @@
+@import '../../scss/variables.scss';
+
+.wrapper {
+  display: flex;
+}
+
+.left {
+  max-width: 28rem;
+  margin-right: auto;
+}
+
+.playlists {
+  & .left {
+    max-width: 39rem;
+    flex-grow: 1;
+    margin-right: 3rem;
+  }
+  & .right {
+    flex: 1 1 30%;
+  }
+  & + button {
+    margin-top: 1rem;
+  }
+}
+
+.private {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  & span {
+    color: $white;
+    font-family: 'OpenSans';
+    font-weight: 500;
+    font-size: 2rem;
+    margin-left: 1.5rem;
+  }
+}
+
+.sub-title {
+  font-family: 'OpenSans';
+  font-size: 2rem;
+  color: $white;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
+
+.block {
+  margin-bottom: 2rem;
+}
+
+.caption {
+  margin-bottom: 0;
+}
+
+.list {
+  max-height: 30rem;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.item + .item {
+  margin-top: 1rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  transition: 0.2s linear;
+  border-radius: 1rem;
+  cursor: pointer;
+  &.active {
+    background: rgba(31, 31, 31, 0.5);
+  }
+}
+
+.user-img {
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
+  & img {
+    border-radius: 50%;
+  }
+}
+
+.user-name {
+  margin-right: auto;
+  font-family: 'Montserrat';
+  font-size: 1.6rem;
+  color: $white;
+  font-weight: 500;
+}
+
+.input {
+  display: none;
+}
+
+.uploaded-photo {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background: $green-main;
+  border: 0.5rem solid $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  & img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
+}
+
+.text {
+  width: 18rem;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $white;
+  margin: 0 auto;
+  & span {
+    color: $green-main;
+  }
+}
+
+@media (max-width: 1150px) {
+  .left {
+    max-width: 100%;
+    flex-grow: 1;
+    margin-right: 5rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .sub-title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  .playlists {
+    .left {
+      max-width: none;
+      margin-right: 0;
+    }
+    .private span {
+      font-size: 1.4rem;
+    }
+  }
+  .text.mobile {
+    color: $green-main;
+    width: fit-content;
+  }
+  .caption-title {
+    font-size: 1.4rem;
+  }
+  .caption {
+    flex-grow: 0.7;
+    margin-left: 1rem;
+  }
+  .block {
+    margin-bottom: 1rem;
+  }
+  .wrapper {
+    flex-direction: column-reverse;
+  }
+  .right {
+    display: flex;
+    justify-content: space-between;
+  }
+  .uploaded-photo {
+    width: 7.5rem;
+    height: 7.5rem;
+    border: 3px solid $white;
+  }
+  .user-img {
+    width: 4rem;
+    height: 4rem;
+  }
+  .user-name {
+    font-size: 1.4rem;
+  }
+  .left {
+    margin-right: 0;
+  }
+  .list {
+    max-height: 19rem;
+  }
+  .item + .item {
+    margin-top: 0;
+  }
+  .user {
+    padding: 0.8rem;
+  }
+  .user.active {
+    background: none;
+  }
+}

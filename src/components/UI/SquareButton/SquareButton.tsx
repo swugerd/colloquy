@@ -8,11 +8,12 @@ type SquareButtonProps = {
   icon: string;
   id: string;
   hasLock?: boolean;
+  onClick?: (e: any) => void;
 };
 
-const SquareButton: React.FC<SquareButtonProps> = ({ className, icon, id, hasLock }) => {
+const SquareButton: React.FC<SquareButtonProps> = ({ className, icon, id, hasLock, onClick }) => {
   return (
-    <button className={`${s['button']} ${s[className]}`}>
+    <button className={`${s['button']} ${s[className]}`} onClick={onClick ? onClick : () => {}}>
       <Icon src={icon} id={id} className={'white'} />
       <div className={s['lock']}>
         {hasLock && <Icon src={lockSvg} id={'lock'} className={'green'} />}

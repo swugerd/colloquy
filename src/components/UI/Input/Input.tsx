@@ -19,6 +19,7 @@ type InputProps = {
   isTextarea?: boolean;
   page?: string;
   button?: any;
+  initialValue?: string;
   classOptions?: {
     searchIcon?: string;
     closeIcon?: string;
@@ -38,6 +39,7 @@ const Input: React.FC<InputProps> = ({
   isTextarea,
   id,
   page,
+  initialValue,
   classOptions = {
     searchIcon: 'search-icon',
     closeIcon: 'close-icon',
@@ -47,7 +49,7 @@ const Input: React.FC<InputProps> = ({
     sendIcon: 'send-icon',
   },
 }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initialValue ? initialValue : '');
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { searchIcon, closeIcon, paperclipIcon, smileIcon, microIcon, sendIcon } = classOptions;
@@ -61,7 +63,10 @@ const Input: React.FC<InputProps> = ({
 
   useEffect(() => {
     if (button) button.current = buttonRef.current;
-  }, [button]);
+    if (inputRef.current && initialValue) {
+      inputRef.current.style.width = initialValue?.length * 20 + 'px';
+    }
+  }, [button, initialValue]);
 
   const textAreaAdjust = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = '1px';
@@ -93,6 +98,7 @@ const Input: React.FC<InputProps> = ({
             value={value}
             onChange={changeValueHandler}
             id={id}
+            ref={inputRef}
           />
         </div>
       )}

@@ -1,0 +1,74 @@
+@import '../../scss/variables.scss';
+
+.notify {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.user-img {
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+  margin-right: 1.5rem;
+  & img {
+    border-radius: 50%;
+  }
+}
+
+.notify-type {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -0.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: $green-main;
+  border: 2px solid $sub-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & svg {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+.info {
+  color: $white;
+  font-family: 'OpenSans';
+  max-width: 20rem;
+  margin-right: 1.5rem;
+}
+
+.user-name {
+  font-size: 1.6rem;
+}
+
+.text {
+  font-size: 1.4rem;
+}
+
+.content {
+  color: $green-main;
+  font-weight: 500;
+}
+
+.preview-media {
+  width: 6rem;
+  height: 6rem;
+  & img {
+    border-radius: 1rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .notify {
+    display: none;
+  }
+}

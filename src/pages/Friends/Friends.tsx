@@ -143,7 +143,7 @@ const Friends: React.FC<FriendsProps> = ({ isSearchPage }) => {
         </div>
         <div className={sideContentS['mobile-block']}>
           <h4 className={sideContentS['sub-title']}>Возраст</h4>
-          <div className={sideContentS['row']}>
+          <div className={`${sideContentS['row']} ${sideContentS['age']}`}>
             <SelectComponent
               placeholder={'От'}
               options={age}

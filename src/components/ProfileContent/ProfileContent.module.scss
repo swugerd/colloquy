@@ -36,7 +36,7 @@
 
 .add-story {
   width: 11rem;
-  height: 15rem;
+  height: 19rem;
   background: $elem;
   border-radius: 1rem;
   display: flex;
@@ -463,6 +463,10 @@
     width: 5rem;
     height: 6rem;
   }
+  .add-story {
+    width: 8rem;
+    height: 19rem;
+  }
 }
 
 .photo-title {
@@ -551,6 +555,10 @@
       max-width: none;
     }
   }
+  .add-story {
+    width: 12rem;
+    height: 19rem;
+  }
 }
 
 @media (max-width: 550px) {
@@ -604,5 +612,9 @@
   }
   .track-time {
     font-size: 1.2rem;
+  }
+  .add-story {
+    width: 10rem;
+    height: 15rem;
   }
 }

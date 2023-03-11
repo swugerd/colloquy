@@ -1,0 +1,80 @@
+@import '../../scss/variables.scss';
+
+.members-list {
+  margin-top: 2rem;
+  padding-right: 1rem;
+  max-height: 43.7rem;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.3rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  & + & {
+    margin-top: 1.5rem;
+  }
+}
+
+.action-btn {
+  width: 3rem;
+  height: 3rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  & {
+    margin-left: 1.5rem;
+  }
+  & svg {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  & span {
+    font-family: 'Montserrat';
+    font-size: 2rem;
+    color: $white;
+    font-weight: 500;
+  }
+}
+
+.admin {
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+}
+
+@media (max-width: 550px) {
+  .members-list {
+    margin-top: 1rem;
+  }
+  .user-link span {
+    font-size: 1.6rem;
+  }
+  .action-btn {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    & svg {
+      display: block;
+    }
+  }
+  .admin {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+}

@@ -16,11 +16,11 @@
 .user {
   display: flex;
   align-items: center;
+  margin-right: auto;
 }
 
 .top-row {
   display: flex;
-  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
@@ -32,6 +32,9 @@
 .hide {
   width: 2.5rem;
   height: 2.5rem;
+  & + & {
+    margin-left: 1.5rem;
+  }
 }
 
 .row {
@@ -143,6 +146,19 @@
 }
 
 .content {
+  margin-bottom: 1.5rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.modal-margin {
+  margin-right: 2rem;
+}
+
+.modal {
+  padding: 0;
   margin-bottom: 1.5rem;
 }
 
@@ -631,6 +647,21 @@
   }
   .more-btn {
     align-self: flex-end;
+  }
+  .modal {
+    & .user {
+      align-items: flex-start;
+    }
+    & .modal-margin {
+      margin-right: 1rem;
+    }
+    & .hide + .hide {
+      margin-left: 1rem;
+    }
+    & .hide {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 }
 

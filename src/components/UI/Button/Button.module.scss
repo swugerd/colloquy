@@ -72,6 +72,15 @@
   margin: 2rem auto 0;
 }
 
+.create-base {
+  color: $white;
+  padding: 0.8rem 2rem;
+  font-family: 'Montserrat';
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 2rem auto 0;
+}
+
 .add-media {
   color: $white;
   padding: 0.5rem 2rem;
@@ -106,6 +115,11 @@
   .group-create {
     font-size: 1.6rem;
     padding: 0.5rem 1rem;
+  }
+  .create-base {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    margin: 1.5rem 0 0 0;
   }
 }
 

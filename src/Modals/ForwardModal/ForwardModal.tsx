@@ -12,14 +12,8 @@ import video from '../../assets/videos/video.mp4';
 import SelectComponent from '../../components/UI/SelectComponent/SelectComponent';
 import Input from '../../components/UI/Input/Input';
 import MediaToUpload from '../../components/MediaToUpload/MediaToUpload';
-
-// адаптив
-
-// посмотреть, что делать, когда открыта модалка репоста и нажата кнопка добавить файл (открывать модалку поверх другой)
-
-// перенести модалки в редакс
-
-// сделать компонент уведомлений (всплывающих)
+import MusicTrack from '../../components/MusicTrack/MusicTrack';
+import useWindowSize from './../../hooks/useWindowResize';
 
 type ForwardModalProps = {
   onClose: () => void;
@@ -37,7 +31,10 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
     { id: 3, label: 'скамерулио', img, value: 'скамерулио' },
     { id: 4, label: 'дабстеп гейминг', img, value: 'дабстеп гейминг' },
   ];
-  const hasMediaToUpload = false;
+
+  const { width } = useWindowSize();
+
+  const hasMediaToUpload = true;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -79,7 +76,6 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
   ].find(({ type }) => type === 'photo')?.title;
 
   const previewContent = {
-    id: 1,
     content: {
       src: img,
     },
@@ -109,7 +105,7 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
               </li>
             ))}
           </ul>
-          {selectedIndex !== 0 && (
+          {selectedIndex !== 0 && width > 550 && (
             <SelectComponent
               placeholder={
                 selectedIndex === 2 ? 'Введите имя собеседника' : 'Введите название сообщества'
@@ -134,6 +130,29 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
           </div>
         </div>
       </div>
+      {selectedIndex !== 0 && width <= 550 && (
+        <div className={s['forward-targets']}>
+          <Input
+            className={'forward-mobile'}
+            placeholder={
+              selectedIndex === 2 ? 'Введите имя собеседника' : 'Введите название сообщества'
+            }
+            type={'text'}
+            inputType={'search'}
+          />
+          <ul className={s['targets-list']}>
+            {users.map(({ id, label, img }) => (
+              <li className={s['target-item']} key={id}>
+                <div className={s['user-img']}>
+                  <img src={img} alt="" />
+                </div>
+                <span className={s['user-name']}>{label}</span>
+                <button className={s['forward-btn']}>Отправить</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className={s['bottom']}>
         <Input
           className={hasMediaToUpload ? 'forward-modal' : 'forward-modal-round'}

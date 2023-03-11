@@ -3,4 +3,5 @@ export type ModalOpenButtons = [
   'uploadMediaButton',
   'forwardButton',
   'accountButton',
+  'postContentButton',
 ];
