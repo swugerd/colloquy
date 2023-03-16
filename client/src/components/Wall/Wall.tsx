@@ -14,6 +14,7 @@ import track from '../../assets/uploads/test/ebalo.png';
 import Icon from '../UI/Icon/Icon';
 import WallForm from '../UI/WallForm/WallForm';
 import { Post as PostType } from '../../types';
+import Preloader from '../Preloader/Preloader';
 
 type WallProps = {
   className: string;
@@ -216,6 +217,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin }) =>
     },
   ];
   const isPostAdmin = true;
+  const isLoading = true;
   return (
     <div className={`${s['wall']} ${s[className]}`}>
       {/* <div className={s['hidden']}>

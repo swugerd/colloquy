@@ -1,0 +1,37 @@
+@import '../../scss/variables.scss';
+
+// .rect {
+//   &-1 {
+//     animation: moveRects 1s linear forwards infinite;
+//   }
+//   &-2 {
+//     animation: moveRects 1s linear forwards 0.2s infinite;
+//   }
+//   &-3 {
+//     animation: moveRects 1s linear forwards 0.4s infinite;
+//   }
+//   &-4 {
+//     animation: moveRects 1s linear forwards 0.6s infinite;
+//   }
+//   &-5 {
+//     animation: moveRects 1s linear forwards 0.8s infinite;
+//   }
+//   &-6 {
+//     animation: moveRects 1s linear forwards 1s infinite;
+//   }
+//   &-7 {
+//     animation: moveRects 1s linear forwards 1.2s infinite;
+//   }
+//   &-8 {
+//     animation: moveRects 1s linear forwards 1.4s infinite;
+//   }
+// }
+
+// @keyframes moveRects {
+//   0% {
+//     transform: translate(0, 0);
+//   }
+//   100% {
+//     transform: translate(0, -30px);
+//   }
+// }
