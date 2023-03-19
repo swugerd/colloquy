@@ -1,73 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Примерные эндпоинты для рест апи
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Аутентификация
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### @POST /api/auth/login - авторизация
 
-## Description
+### @POST /api/auth/register - регистрация
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Роли/Города/Тематики
 
-## Installation
+### @POST /api/roles - добавление роли
 
-```bash
-$ yarn install
-```
+### @GET /api/roles/:value - получение роли по значению
 
-## Running the app
+### @POST /api/cities - добавление города
 
-```bash
-# development
-$ yarn run start
+### @GET /api/cities/:value - получение города по значению
 
-# watch mode
-$ yarn run start:dev
+### @POST /api/thematics - добавление тематики
 
-# production mode
-$ yarn run start:prod
-```
+### @GET /api/temathics/:value - получение тематики по значению
 
-## Test
+## Пользователи
 
-```bash
-# unit tests
-$ yarn run test
+### @POST /api/users - добавление пользователя
 
-# e2e tests
-$ yarn run test:e2e
+### @GET /api/users - получение пользователей
 
-# test coverage
-$ yarn run test:cov
-```
+### @GET /api/users/:id - получение пользователя по id
 
-## Support
+### @PUT /api/users/:id - обновление информации о пользователе
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### @DELETE /api/users/:id - удаление пользователя
 
-## Stay in touch
+### @POST /api/users/role - выдача роли пользователю
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Медиа
 
-## License
+### @GET /api/media/photos:/id?load={number} - получение всех фото для пользователя или группы
 
-Nest is [MIT licensed](LICENSE).
+### @POST /api/media/photos:/id - добавление фото для пользователя или группы
+
+### @DELETE /api/media/photos:/id - удаление фото для пользователя или группы
+
+### @GET /api/media/videos:/id?load={number} - получение всех видео для пользователя или группы
+
+### @POST /api/media/videos:/id - добавление видео для пользователя или группы
+
+### @DELETE /api/media/videos:/id - удаление видео для пользователя или группы
+
+### @GET /api/media/audios:/id?load={number} - получение всех треков для пользователя или группы
+
+### @POST /api/media/audios:/id - добавление трека для пользователя или группы
+
+### @DELETE /api/media/audios:/id - удаление трека для пользователя или группы
+
+### @GET /api/media/stories:/id - получение всех сторис для пользователя или группы
+
+### @POST /api/media/stories:/id - добавление сторис для пользователя или группы
+
+### @DELETE /api/media/stories:/id - удаление сторис для пользователя или группы
+
+## Посты/Лента
+
+### @GET /api/getFeedPosts:/id?load={number} - получение постов для новостей
+
+### @GET /api/getFeedStories:/id - получение сторис для новостей
+
+### @GET /api/getProfilePosts:/id?load={number} - получение постов для профиля
+
+## Друзья
+
+### @GET /api/friends:/id?filter={string}&search={string} - получение друзей
+
+### @GET /api/friends:/id - получение друзей
+
+# ........
