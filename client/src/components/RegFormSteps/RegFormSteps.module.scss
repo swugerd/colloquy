@@ -76,9 +76,19 @@
   font-weight: 600;
   color: $white;
   text-align: center;
+  margin-bottom: 1rem;
   & span {
     color: $green-main;
   }
+}
+
+.error {
+  font-family: 'Montserrat';
+  color: $red-light;
+  font-weight: 500;
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 1rem 0;
 }
 
 @media (max-width: 500px) {
@@ -102,7 +112,8 @@
     width: 12.5rem;
     height: 12.5rem;
   }
-  .text {
+  .text,
+  .error {
     font-size: 1.2rem;
   }
 }

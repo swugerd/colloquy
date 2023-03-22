@@ -8,7 +8,7 @@ type PreloaderProps = {
 const Preloader: React.FC<PreloaderProps> = ({ className }) => {
   return (
     <div className={`${s['preloader']} ${className ? s[className] : ''}`}>
-      <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path id="path1" d="M11 6L6 11L11 16L16 11L11 6Z" fill="white">
           <animate
             attributeName="opacity"

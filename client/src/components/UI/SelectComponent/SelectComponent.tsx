@@ -6,6 +6,7 @@ import s from './SelectComponent.module.scss';
 type SelectComponentProps = {
   placeholder: string;
   options: {
+    id: number;
     value: string;
     label: string;
     img?: string;
@@ -18,6 +19,9 @@ type SelectComponentProps = {
     className: string;
   };
   id?: string;
+  name: string;
+  value: string;
+  setValue: (value: any) => void;
 };
 
 const SelectComponent: React.FC<SelectComponentProps> = ({
@@ -27,6 +31,9 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
   className,
   indicatorIconSettings,
   id,
+  name,
+  value,
+  setValue,
 }) => {
   const DropdownIndicator = (props: any) => {
     return (
@@ -62,7 +69,10 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
       <Select
         placeholder={placeholder}
         id={id}
+        onChange={(selectedOption: any) => setValue({ [name]: parseInt(selectedOption.id) })}
         options={options}
+        name={name}
+        defaultInputValue={options.find((option) => Number(option.id) === Number(value))?.label}
         className={`${className ? s[className] : ''}`}
         classNames={{
           control: (state: any) => `${s['control']} ${state.isFocused ? s['focus'] : ''}`,

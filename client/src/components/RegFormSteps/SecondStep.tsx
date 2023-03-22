@@ -7,16 +7,37 @@ import maleSvg from '../../assets/img/icons/male.svg';
 import femaleSvg from '../../assets/img/icons/female.svg';
 import SelectComponent from '../UI/SelectComponent/SelectComponent';
 import GenderInput from '../UI/GenderInput/GenderInput';
+import Button from '../UI/Button/Button';
 
-const SecondStep: React.FC = () => {
+// поменять типы
+
+type SecondStepProps = {
+  user_name: string;
+  user_surname: string;
+  user_patronymic: string;
+  user_birthdate: string;
+  user_gender: string;
+  city_id: any;
+  updateFields: (fields: any) => void;
+  onSubmit: (event: any) => void;
+};
+
+const SecondStep: React.FC<SecondStepProps> = ({
+  user_name,
+  user_surname,
+  user_patronymic,
+  user_birthdate,
+  user_gender,
+  city_id,
+  updateFields,
+  onSubmit,
+}) => {
   const cities = [
-    { value: 'moscow', label: 'Москва' },
-    { value: 'ivanteevka', label: 'Ивантеевка' },
-    { value: 'pivo', label: 'Пиво' },
-    { value: 'da', label: 'Козел' },
+    { id: 1, value: 'Moscow', label: 'Москва' },
+    { id: 2, value: 'Ivanteevka', label: 'Ивантеевка' },
   ];
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <div className={s['input-block']}>
         <label className={s['label']} htmlFor="firstname">
           Имя <span className={s['required']}>*</span>
@@ -27,6 +48,9 @@ const SecondStep: React.FC = () => {
           type={'text'}
           inputType={'default'}
           id="firstname"
+          name="user_name"
+          value={user_name}
+          setValue={updateFields}
         />
       </div>
       <div className={s['input-block']}>
@@ -39,6 +63,9 @@ const SecondStep: React.FC = () => {
           type={'text'}
           inputType={'default'}
           id="lastname"
+          name="user_surname"
+          value={user_surname}
+          setValue={updateFields}
         />
       </div>
       <div className={s['input-block']}>
@@ -51,6 +78,9 @@ const SecondStep: React.FC = () => {
           type={'text'}
           inputType={'default'}
           id="patronymic"
+          name="user_patronymic"
+          value={user_patronymic}
+          setValue={updateFields}
         />
       </div>
       <div className={s['input-block']}>
@@ -63,6 +93,9 @@ const SecondStep: React.FC = () => {
           type={'date'}
           inputType={'default'}
           id="birthDate"
+          name="user_birthdate"
+          value={user_birthdate}
+          setValue={updateFields}
         />
       </div>
       <div className={s['input-block']}>
@@ -70,8 +103,22 @@ const SecondStep: React.FC = () => {
           Пол <span className={s['required']}>*</span>
         </label>
         <div className={`${s['input-block']} ${s['d-flex']}`}>
-          <GenderInput type={'male'} icon={maleSvg} inputType={'radio'} />
-          <GenderInput type={'female'} icon={femaleSvg} inputType={'radio'} />
+          <GenderInput
+            type={'male'}
+            icon={maleSvg}
+            inputType={'radio'}
+            value={'male'}
+            setValue={updateFields}
+            checked={user_gender === 'male' ? true : false}
+          />
+          <GenderInput
+            type={'female'}
+            icon={femaleSvg}
+            inputType={'radio'}
+            value={'female'}
+            setValue={updateFields}
+            checked={user_gender === 'female' ? true : false}
+          />
         </div>
       </div>
       <div className={s['input-block']}>
@@ -83,10 +130,14 @@ const SecondStep: React.FC = () => {
             placeholder={'Выберите из списка'}
             options={cities}
             noOptionsMessage={'Город не найден'}
+            name={'city_id'}
+            setValue={updateFields}
+            value={city_id}
           />
         </div>
       </div>
-    </>
+      <Button className={'reg-btn'} text={'Следующий шаг'} />
+    </form>
   );
 };
 

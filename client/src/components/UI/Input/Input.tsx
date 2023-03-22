@@ -20,6 +20,9 @@ type InputProps = {
   page?: string;
   button?: any;
   initialValue?: string;
+  value: string;
+  setValue: (value: any) => void;
+  name: string;
   classOptions?: {
     searchIcon?: string;
     closeIcon?: string;
@@ -39,6 +42,9 @@ const Input: React.FC<InputProps> = ({
   isTextarea,
   id,
   page,
+  name,
+  value,
+  setValue,
   initialValue,
   classOptions = {
     searchIcon: 'search-icon',
@@ -49,7 +55,7 @@ const Input: React.FC<InputProps> = ({
     sendIcon: 'send-icon',
   },
 }) => {
-  const [value, setValue] = useState(initialValue ? initialValue : '');
+  // const [value, setValue] = useState(initialValue ? initialValue : '');
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { searchIcon, closeIcon, paperclipIcon, smileIcon, microIcon, sendIcon } = classOptions;
@@ -77,7 +83,8 @@ const Input: React.FC<InputProps> = ({
   };
 
   const changeValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    // setValue(e.target.value);
+    setValue({ [name]: e.target.value });
   };
 
   const clearInputHandler = () => {
@@ -96,6 +103,7 @@ const Input: React.FC<InputProps> = ({
             type={type}
             placeholder={placeholder}
             value={value}
+            name={name}
             onChange={changeValueHandler}
             id={id}
             ref={inputRef}
@@ -110,6 +118,7 @@ const Input: React.FC<InputProps> = ({
             type={type}
             placeholder={placeholder}
             value={value}
+            name={name}
             onChange={changeValueHandler}
             ref={inputRef}
             id={id}
@@ -139,6 +148,7 @@ const Input: React.FC<InputProps> = ({
             <textarea
               className={s[className]}
               placeholder={placeholder}
+              name={name}
               onChange={textAreaAdjust}></textarea>
           ) : (
             <input
@@ -146,6 +156,7 @@ const Input: React.FC<InputProps> = ({
               type={type}
               placeholder={placeholder}
               value={value}
+              name={name}
               onChange={changeValueHandler}
               id={id}
             />

@@ -11,15 +11,13 @@ import { useAppDispatch } from '../../redux/store';
 import { setIsMoreAccsModalOpen } from '../../redux/modal/slice';
 
 const Home: React.FC = () => {
-  // Переделать адаптив под разные карточки аккаунтов
-  // (для двух разных классов .card, .modal-card)
   useSetPageTitle('Главная - colloquy');
   const accounts: { id: number; img: string; name: string }[] = [
-    { id: 1, img, name: 'Пашок Кубыркин' },
-    { id: 2, img, name: 'Овыфлвфы врфыоврыфол' },
-    { id: 3, img, name: 'да нет' },
-    { id: 4, img, name: 'Жесткий Пашок' },
-    { id: 5, img, name: 'Жесткий Пашок' },
+    // { id: 1, img, name: 'Пашок Кубыркин' },
+    // { id: 2, img, name: 'Овыфлвфы врфыоврыфол' },
+    // { id: 3, img, name: 'да нет' },
+    // { id: 4, img, name: 'Жесткий Пашок' },
+    // { id: 5, img, name: 'Жесткий Пашок' },
     // { id: 6, img, name: 'Жесткий Пашок' },
   ];
   const dispatch = useAppDispatch();

@@ -84,6 +84,15 @@
   margin-bottom: 3rem;
 }
 
+.error {
+  font-size: 1.8rem;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  color: $red-light;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 @media (max-width: 500px) {
   .title {
     font-size: 2rem;
