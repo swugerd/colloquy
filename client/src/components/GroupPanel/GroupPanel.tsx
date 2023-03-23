@@ -41,17 +41,17 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
   const navigate = useNavigate();
 
   const cities = [
-    { value: 'moscow', label: 'Москва' },
-    { value: 'ivanteevka', label: 'Ивантеевка' },
-    { value: 'pivo', label: 'Пиво' },
-    { value: 'da', label: 'Козел' },
+    { id: 1, value: 'moscow', label: 'Москва' },
+    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
+    { id: 3, value: 'pivo', label: 'Пиво' },
+    { id: 4, value: 'da', label: 'Козел' },
   ];
 
   const themes = [
-    { value: 'politics', label: 'Политика' },
-    { value: 'games', label: 'Игры' },
-    { value: 'talking', label: 'Общение' },
-    { value: 'programming', label: 'Программирование' },
+    { id: 1, value: 'politics', label: 'Политика' },
+    { id: 2, value: 'games', label: 'Игры' },
+    { id: 3, value: 'talking', label: 'Общение' },
+    { id: 4, value: 'programming', label: 'Программирование' },
   ];
 
   const posts = [
@@ -249,6 +249,9 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                 placeholder={'Что-то гениальное'}
                 type={'text'}
                 inputType={'default'}
+                value={''}
+                setValue={() => {}}
+                name={''}
               />
             </div>
             <div className={s['mobile-block']}>
@@ -257,6 +260,9 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                 className={'group-info'}
                 placeholder={'Девиз сообщества'}
                 type={'text'}
+                value={''}
+                setValue={() => {}}
+                name={''}
                 inputType={'default'}
               />
               <span className={s['max']}>Максимальная длина 50 символов</span>
@@ -271,6 +277,9 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                   options={cities}
                   noOptionsMessage={'Город не найден'}
                   className={'side-select'}
+                  name={''}
+                  value={''}
+                  setValue={() => {}}
                 />
               </div>
               <div className={s['mobile-block']}>
@@ -280,6 +289,9 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                   options={themes}
                   noOptionsMessage={'Тема не найдена'}
                   className={'side-select'}
+                  name={''}
+                  value={''}
+                  setValue={() => {}}
                 />
               </div>
               <div className={s['mobile-block']}>
@@ -289,6 +301,9 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                   placeholder={'@example'}
                   type={'text'}
                   inputType="default"
+                  name={''}
+                  value={''}
+                  setValue={() => {}}
                 />
               </div>
               {width > 550 && (

@@ -35,6 +35,9 @@ const MusicDropDown: React.FC = () => {
         placeholder={'Искать музыку'}
         type="text"
         inputType="search"
+        name={''}
+        value={''}
+        setValue={() => {}}
       />
       <div className={s['nav']}>
         {buttons.map(({ id, title }, index) => (

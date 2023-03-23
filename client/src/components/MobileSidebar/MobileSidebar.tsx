@@ -24,6 +24,7 @@ import { setIsSidebarShow } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
+import useAuth from '../../hooks/useAuth';
 
 const MobileSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -122,6 +123,14 @@ const MobileSidebar: React.FC = () => {
       path: 'shop',
     },
   ];
+
+  const { logout } = useAuth();
+
+  const handleLogOut = () => {
+    localStorage.removeItem('jwtToken');
+    logout();
+  };
+
   return width <= 1150 ? (
     <div className={`${s['wrapper']} ${mobile.isSidebarShow ? s['active'] : ''}`}>
       <div className={s['top']}>
@@ -206,7 +215,7 @@ const MobileSidebar: React.FC = () => {
               </Link>
             </li>
             <li className={s['nav-item']}>
-              <Link className={s['nav-link']} to="/" onClick={() => dispatch(setIsAuth(false))}>
+              <Link className={s['nav-link']} to="/" onClick={handleLogOut}>
                 <div className={`${s['nav-img']} ${s['exit']}`}>
                   <Icon src={exitSvg} id={'exit'} className={''} />
                 </div>

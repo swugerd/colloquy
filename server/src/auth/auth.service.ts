@@ -7,7 +7,21 @@ import { HttpException, UnauthorizedException } from '@nestjs/common/exceptions'
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt/dist';
 import * as bcrypt from 'bcryptjs';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { UploadedFile } from '../files/files.service';
 
+interface DecodedToken {
+  id: number;
+  email: string;
+  roles: {
+    id: number;
+    role_name: string;
+    role_value: string;
+    role_desc: string;
+  }[];
+  iat: number;
+  exp: number;
+}
 @Injectable()
 export class AuthService {
   constructor(
@@ -21,7 +35,7 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async registration(userDto: CreateUserDto, image: any) {
+  async registration(userDto: CreateUserDto, image: UploadedFile) {
     const candidate = await this.userService.getUserByEmailOrLogin(
       'registration',
       userDto.user_email,
@@ -43,6 +57,22 @@ export class AuthService {
     return this.generateToken(user);
   }
 
+  async refreshToken({ token }: RefreshTokenDto) {
+    const { id, email, roles } = this.jwtService.decode(token) as DecodedToken;
+    const payload = { id, email, roles };
+    return {
+      token: this.jwtService.sign(payload),
+    };
+  }
+
+  async removeToken(authHeader: string) {
+    const token = authHeader.replace('Bearer', '');
+    return {
+      message: 'Токен удалён',
+      token,
+    };
+  }
+
   async validateUser(userDto: UserLoginDto, type: 'login' | 'registration') {
     const user = await this.userService.getUserByEmailOrLogin(type, userDto.emailOrLogin);
     if (!user) throw new UnauthorizedException({ message: 'Пользователь не найден' });
@@ -54,7 +84,7 @@ export class AuthService {
   }
 
   async generateToken({ id, user_email, roles }: User) {
-    const payload = { email: user_email, id, roles };
+    const payload = { id, email: user_email, roles };
     return {
       token: this.jwtService.sign(payload),
     };

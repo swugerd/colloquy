@@ -118,6 +118,9 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
                 src: searchSvg,
                 className: 'search-dropdown',
               }}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
           )}
         </div>
@@ -139,6 +142,9 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
             }
             type={'text'}
             inputType={'search'}
+            name={''}
+            value={''}
+            setValue={() => {}}
           />
           <ul className={s['targets-list']}>
             {users.map(({ id, label, img }) => (
@@ -161,6 +167,9 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
           inputType={'send'}
           isTextarea={true}
           page="message"
+          name={''}
+          value={''}
+          setValue={() => {}}
         />
         {hasMediaToUpload && <MediaToUpload className={'forward-media'} />}
       </div>

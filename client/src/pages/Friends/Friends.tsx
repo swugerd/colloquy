@@ -83,13 +83,14 @@ const Friends: React.FC<FriendsProps> = ({ isSearchPage }) => {
   ];
 
   const cities = [
-    { value: 'moscow', label: 'Москва' },
-    { value: 'ivanteevka', label: 'Ивантеевка' },
-    { value: 'pivo', label: 'Пиво' },
-    { value: 'da', label: 'Козел' },
+    { id: 1, value: 'moscow', label: 'Москва' },
+    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
+    { id: 3, value: 'pivo', label: 'Пиво' },
+    { id: 4, value: 'da', label: 'Козел' },
   ];
 
   const age = Array.from({ length: 87 }, (_, i) => ({
+    id: i,
     value: (i + 14).toString(),
     label: (i + 14).toString(),
   }));
@@ -138,6 +139,9 @@ const Friends: React.FC<FriendsProps> = ({ isSearchPage }) => {
               options={cities}
               noOptionsMessage={'Город не найден'}
               className={'side-select'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
           </div>
         </div>
@@ -149,20 +153,40 @@ const Friends: React.FC<FriendsProps> = ({ isSearchPage }) => {
               options={age}
               noOptionsMessage={''}
               className={'side-select-age'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
             <SelectComponent
               placeholder={'До'}
               options={age}
               noOptionsMessage={''}
               className={'side-select-age'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
           </div>
         </div>
         <div className={sideContentS['gender-block']}>
           <h4 className={sideContentS['sub-title']}>Пол</h4>
           <div className={sideContentS['row']}>
-            <GenderInput type={'male'} icon={maleSvg} inputType={'checkbox'} />
-            <GenderInput type={'female'} icon={femaleSvg} inputType={'checkbox'} />
+            <GenderInput
+              type={'male'}
+              icon={maleSvg}
+              inputType={'checkbox'}
+              checked={false}
+              value={''}
+              setValue={() => {}}
+            />
+            <GenderInput
+              type={'female'}
+              icon={femaleSvg}
+              inputType={'checkbox'}
+              checked={false}
+              value={''}
+              setValue={() => {}}
+            />
           </div>
         </div>
         <div className={sideContentS['online-row']}>

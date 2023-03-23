@@ -419,6 +419,9 @@ const PostContentModal: React.FC<PostContentModalProps> = ({ onClose, modalType 
         inputType={'send'}
         page={'message'}
         isTextarea={true}
+        name={''}
+        value={''}
+        setValue={() => {}}
       />
       {hasMediaToUpload && <MediaToUpload className={'post-modal'} />}
     </ModalLayout>

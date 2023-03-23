@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FirstStep from '../../components/RegFormSteps/FirstStep';
 import SecondStep from '../../components/RegFormSteps/SecondStep';
 import ThirdStep from '../../components/RegFormSteps/ThirdStep';
@@ -11,6 +11,8 @@ import s from './Register.module.scss';
 import { useAppDispatch } from './../../redux/store';
 import axios, { AxiosError } from 'axios';
 import Preloader from '../../components/Preloader/Preloader';
+import jwtDecode from 'jwt-decode';
+import { DecodedToken } from '../../hooks/useAuth';
 
 interface INITIAL_DATA_TYPE {
   user_nickname: '';
@@ -29,6 +31,10 @@ interface INITIAL_DATA_TYPE {
 const Register: React.FC = () => {
   useSetPageTitle('Регистрация');
 
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
   const INITIAL_DATA: INITIAL_DATA_TYPE = {
     user_nickname: '',
     user_email: '',
@@ -45,6 +51,7 @@ const Register: React.FC = () => {
 
   const [regData, setRegData] = useState(INITIAL_DATA);
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
   const updateFields = (fields: any) => {
@@ -102,6 +109,12 @@ const Register: React.FC = () => {
         });
         if (status === 201) {
           setIsLoading(false);
+
+          localStorage.setItem('jwtToken', data.token);
+
+          dispatch(setIsAuth(true));
+
+          navigate('/feed');
         }
       } catch (error: any) {
         if (error.response?.data.statusCode === 400) {

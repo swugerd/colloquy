@@ -144,6 +144,9 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
           placeholder={'Искать музыку'}
           type={'text'}
           inputType={'search'}
+          name={''}
+          value={''}
+          setValue={() => {}}
         />
         <nav className={s['music-nav']}>
           <ul className={s['links-list']}>

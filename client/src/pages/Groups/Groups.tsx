@@ -76,17 +76,17 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
   ];
 
   const cities = [
-    { value: 'moscow', label: 'Москва' },
-    { value: 'ivanteevka', label: 'Ивантеевка' },
-    { value: 'pivo', label: 'Пиво' },
-    { value: 'da', label: 'Козел' },
+    { id: 1, value: 'moscow', label: 'Москва' },
+    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
+    { id: 3, value: 'pivo', label: 'Пиво' },
+    { id: 4, value: 'da', label: 'Козел' },
   ];
 
   const themes = [
-    { value: 'politics', label: 'Политика' },
-    { value: 'games', label: 'Игры' },
-    { value: 'talking', label: 'Общение' },
-    { value: 'programming', label: 'Программирование' },
+    { id: 1, value: 'politics', label: 'Политика' },
+    { id: 2, value: 'games', label: 'Игры' },
+    { id: 3, value: 'talking', label: 'Общение' },
+    { id: 4, value: 'programming', label: 'Программирование' },
   ];
 
   const children = [
@@ -135,14 +135,33 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
               options={cities}
               noOptionsMessage={'Город не найден'}
               className={'side-select'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
           </div>
         </div>
         <div className={sideContentS['align-end']}>
           <h4 className={sideContentS['sub-title']}>Участники</h4>
           <div className={`${sideContentS['row']} ${sideContentS['input']}`}>
-            <Input className={'side-count'} placeholder={'От'} type={'text'} inputType="default" />
-            <Input className={'side-count'} placeholder={'До'} type={'text'} inputType="default" />
+            <Input
+              className={'side-count'}
+              placeholder={'От'}
+              type={'text'}
+              inputType="default"
+              name={''}
+              value={''}
+              setValue={() => {}}
+            />
+            <Input
+              className={'side-count'}
+              placeholder={'До'}
+              type={'text'}
+              inputType="default"
+              name={''}
+              value={''}
+              setValue={() => {}}
+            />
           </div>
         </div>
         <div>
@@ -153,6 +172,9 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
               options={themes}
               noOptionsMessage={'Тема не найдена'}
               className={'side-select'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
           </div>
         </div>

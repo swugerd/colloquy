@@ -10,6 +10,8 @@ import arrowSvg from '../../../assets/img/icons/arrow.svg';
 import { setIsAuth } from '../../../redux/auth/slice';
 import { useAppDispatch } from './../../../redux/store';
 import Icon from '../../UI/Icon/Icon';
+import axios from 'axios';
+import useAuth from '../../../hooks/useAuth';
 
 const ProfileDropDown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +30,13 @@ const ProfileDropDown: React.FC = () => {
     e.stopPropagation();
   };
 
+  const { logout } = useAuth();
+
+  const handleLogOut = () => {
+    localStorage.removeItem('jwtToken');
+    logout();
+  };
+
   return (
     <div className={s['wrapper']}>
       <ul className={s['list']}>
@@ -40,7 +49,7 @@ const ProfileDropDown: React.FC = () => {
           </Link>
         </li>
         <li className={`${s['item']} ${iconS['profile-hover']}`}>
-          <Link className={s['link']} to="/" onClick={() => dispatch(setIsAuth(false))}>
+          <Link className={s['link']} to="/" onClick={handleLogOut}>
             <div className={`${s['icon']} ${s['switch-acc']}`}>
               <Icon src={switchAccSvg} id={'switchAcc'} className={'white'} />
             </div>
@@ -72,7 +81,7 @@ const ProfileDropDown: React.FC = () => {
           </ul>
         </li>
         <li className={`${s['item']} ${iconS['profile-hover']}`}>
-          <Link className={s['exit-link']} to="/" onClick={() => dispatch(setIsAuth(false))}>
+          <Link className={s['exit-link']} to="/" onClick={handleLogOut}>
             <div className={`${s['icon']} ${s['exit']}`}>
               <Icon src={exitSvg} id={'exit'} className={'white'} />
             </div>

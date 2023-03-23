@@ -46,7 +46,15 @@ const FastMessagesList: React.FC = () => {
       </div>
       <div className={s['wrapper-bottom']}>
         {/* <div className={s['input-block']}></div> */}
-        <Input className="fm-input-search" type="text" placeholder="Поиск" inputType="search" />
+        <Input
+          className="fm-input-search"
+          type="text"
+          placeholder="Поиск"
+          inputType="search"
+          value={''}
+          setValue={() => {}}
+          name={''}
+        />
       </div>
     </>
   );

@@ -208,10 +208,10 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
   };
 
   const cities = [
-    { value: 'moscow', label: 'Москва' },
-    { value: 'ivanteevka', label: 'Ивантеевка' },
-    { value: 'pivo', label: 'Пиво' },
-    { value: 'da', label: 'Козел' },
+    { id: 1, value: 'moscow', label: 'Москва' },
+    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
+    { id: 3, value: 'pivo', label: 'Пиво' },
+    { id: 4, value: 'da', label: 'Козел' },
   ];
 
   const children = [
@@ -289,6 +289,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                       type={'text'}
                       inputType={'default'}
                       id={'name'}
+                      name={''}
+                      value={''}
+                      setValue={() => {}}
                     />
                   </div>
                   <div className={s['input-block']}>
@@ -301,6 +304,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                       type={'text'}
                       inputType={'default'}
                       id={'surname'}
+                      name={''}
+                      value={''}
+                      setValue={() => {}}
                     />
                   </div>
                   <div className={`${s['input-block']} ${s['patronymic']}`}>
@@ -313,6 +319,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                       type={'text'}
                       inputType={'default'}
                       id={'patronymic'}
+                      name={''}
+                      value={''}
+                      setValue={() => {}}
                     />
                   </div>
                 </div>
@@ -328,6 +337,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     className={'profile-select'}
                     noOptionsMessage={'Город не найден'}
                     id={'city'}
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
                 <div className={s['input-block']}>
@@ -340,6 +352,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'date'}
                     inputType={'default'}
                     id="birthDate"
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
                 <div className={s['input-block']}>
@@ -352,6 +367,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'text'}
                     inputType={'default'}
                     id={'nickname'}
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
                 <div className={s['input-block']}>
@@ -364,6 +382,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'password'}
                     inputType={'default'}
                     id={'password'}
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
               </div>
@@ -379,6 +400,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'tel'}
                     inputType={'default'}
                     id="mainPhone"
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
                 <div className={s['input-block']}>
@@ -391,6 +415,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'tel'}
                     inputType={'default'}
                     id="subPhone"
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
                 <div className={s['input-block']}>
@@ -403,6 +430,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'text'}
                     inputType={'default'}
                     id={'telegram'}
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
                 <div className={s['input-block']}>
@@ -415,6 +445,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     type={'text'}
                     inputType={'default'}
                     id={'status'}
+                    name={''}
+                    value={''}
+                    setValue={() => {}}
                   />
                 </div>
               </div>

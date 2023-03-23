@@ -34,6 +34,7 @@ import { setHasArrowButton, setTitle } from '../../redux/mobile/slice';
 import Wall from '../../components/Wall/Wall';
 import Icon from '../../components/UI/Icon/Icon';
 import SideContent from '../../components/SideContent/SideContent';
+import useAuth from '../../hooks/useAuth';
 
 const Feed: React.FC = () => {
   useSetPageTitle('Новости');
@@ -46,6 +47,8 @@ const Feed: React.FC = () => {
     };
   }, []);
   const { mobile } = useSelector(selectMobile);
+
+  const { user, isLoading, errorMessage, login } = useAuth();
 
   const stories = [
     { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },

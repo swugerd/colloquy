@@ -35,4 +35,9 @@ export class UsersService {
     });
     return user;
   }
+
+  async getUserById(id: number) {
+    const user = await this.userRepository.findByPk(id, { include: { all: true } });
+    return user;
+  }
 }

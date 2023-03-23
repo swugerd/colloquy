@@ -9,7 +9,7 @@ import * as path from 'path';
 import * as uuid from 'uuid';
 import * as mime from 'mime-types';
 
-interface UploadedFile {
+export interface UploadedFile {
   buffer: Buffer;
   originalname: string;
   mimetype: string;
@@ -42,7 +42,7 @@ export class FilesService {
         writeStream.end();
       });
     } catch (error) {
-      throw new InternalServerErrorException(`Failed to create file: ${error.message}`);
+      throw new InternalServerErrorException(`Ошибка записи файла: ${error.message}`);
     }
 
     return fileName;

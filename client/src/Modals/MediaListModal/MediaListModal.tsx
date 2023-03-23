@@ -133,6 +133,9 @@ const MediaListModal: React.FC<MediaListModalProps> = ({ onClose }) => {
                       type={'text'}
                       inputType={'default'}
                       initialValue="вайбер"
+                      name={''}
+                      value={''}
+                      setValue={() => {}}
                     />
                     <button className={s['edit-name']}>
                       <Icon src={markdownSvg} id={'markdown'} className={'white'} />

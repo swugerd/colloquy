@@ -32,6 +32,9 @@ const MembersModal: React.FC<MembersModalProps> = ({ onClose }) => {
         placeholder={'Начните вводить'}
         type={'text'}
         inputType={'search'}
+        name={''}
+        value={''}
+        setValue={() => {}}
       />
       <ul className={s['members-list']}>
         {members.map(({ id, img, name, isModerator }) => (

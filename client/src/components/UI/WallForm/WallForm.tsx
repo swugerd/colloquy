@@ -46,6 +46,9 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
               smileIcon: 'smile-icon-wall',
               sendIcon: 'send-icon-wall',
             }}
+            name={''}
+            value={''}
+            setValue={() => {}}
           />
           {hasMediaToUpload && (
             <MediaToUpload className={page === 'profile' ? 'wall-page' : 'group-page'} />

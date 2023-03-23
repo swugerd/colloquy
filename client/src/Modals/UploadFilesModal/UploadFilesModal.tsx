@@ -138,6 +138,9 @@ const UploadFilesModal: React.FC<UploadFilesModalProps> = ({ onClose }) => {
             placeholder={`Искать ${contentType}`}
             type={'text'}
             inputType={'search'}
+            name={''}
+            value={''}
+            setValue={() => {}}
           />
         </div>
       )}

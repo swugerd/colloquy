@@ -424,6 +424,9 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
               placeholder={'Поиск собеседника'}
               type={'text'}
               inputType={'search'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
             <button className={s['create-chat']} onClick={(e) => handleCreateModalOpen(e)}>
               <Icon src={createChatSvg} id={'createChat'} className={'create-chat'} />
@@ -540,6 +543,9 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
               inputType={'send'}
               page="message"
               isTextarea={true}
+              name={''}
+              value={''}
+              setValue={() => {}}
               classOptions={{
                 paperclipIcon: 'message-paperclip',
                 smileIcon: 'message-smile',

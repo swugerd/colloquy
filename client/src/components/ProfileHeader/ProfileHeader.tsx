@@ -6,10 +6,12 @@ import arrowSvg from '../../assets/img/icons/arrow.svg';
 import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import Icon from '../UI/Icon/Icon';
+import useAuth from '../../hooks/useAuth';
 
 const ProfileHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { user, isLoading } = useAuth();
   useOnClickOutside(ref, () => setIsOpen(false));
   return (
     <div
@@ -24,7 +26,7 @@ const ProfileHeader: React.FC = () => {
           onlineType="pc-online"
         />
         <span className={s['header__profile-name']} title="Максимилиан">
-          Максимилиан
+          {!isLoading ? user?.user_name : 'Загрузка..'}
         </span>
         <div className={s['header__profile-arrow']}>
           <Icon src={arrowSvg} id={'arrow'} className={'white'} />

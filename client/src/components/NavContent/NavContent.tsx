@@ -145,6 +145,9 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
           placeholder={'Начните вводить'}
           type={'text'}
           inputType={'search'}
+          name={''}
+          value={''}
+          setValue={() => {}}
         />
         {width <= 550 && (
           <div className={`${s['buttons']} ${mobile.backText ? s['dnone'] : ''}`}>

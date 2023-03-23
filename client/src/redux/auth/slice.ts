@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './types';
 const initialState: AuthState = {
-  isAuth: false,
+  isAuth: localStorage.getItem('jwtToken') ? true : false,
 };
 
 const AuthSlice = createSlice({

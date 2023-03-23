@@ -73,6 +73,9 @@ const CreateBaseModal: React.FC<CreateBaseModalProps> = ({ onClose, title }) => 
               placeholder={'Искать'}
               type={'text'}
               inputType={'search'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
           </div>
           <ul className={s['list']}>
@@ -138,6 +141,9 @@ const CreateBaseModal: React.FC<CreateBaseModalProps> = ({ onClose, title }) => 
               placeholder={'Начните вводить'}
               type={'text'}
               inputType={'default'}
+              name={''}
+              value={''}
+              setValue={() => {}}
             />
             {modal.createBaseModal.modalType === 'conversation' ? (
               ''
