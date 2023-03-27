@@ -19,9 +19,9 @@ const FastMessages: React.FC = () => {
     name: string;
     img: string;
   }[] = [
-    { id: 1, name: 'Олег', img: '../../assets/img/header/ebalo.png' },
-    { id: 2, name: 'Паша', img: '../../assets/img/header/ebalo.png' },
-    { id: 3, name: 'Дима', img: '../../assets/img/header/ebalo.png' },
+    // { id: 1, name: 'Олег', img: '../../assets/img/header/ebalo.png' },
+    // { id: 2, name: 'Паша', img: '../../assets/img/header/ebalo.png' },
+    // { id: 3, name: 'Дима', img: '../../assets/img/header/ebalo.png' },
   ];
 
   const dispatch = useAppDispatch();

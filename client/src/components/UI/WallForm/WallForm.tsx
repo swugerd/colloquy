@@ -28,7 +28,7 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
 
   const [isAnonymActive, setIsAnonymActive] = useState(false);
 
-  const hasMediaToUpload = true;
+  const hasMediaToUpload = false;
 
   return page !== 'feed' ? (
     <>

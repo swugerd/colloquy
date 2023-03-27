@@ -44,6 +44,10 @@
   }
 }
 
+.views.mobile {
+  display: none;
+}
+
 .delete-btn {
   position: absolute;
   transition: 0.2s linear;

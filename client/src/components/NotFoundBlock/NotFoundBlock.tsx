@@ -9,8 +9,8 @@ type NotFoundBlockProps = {
 
 const NotFoundBlock: React.FC<NotFoundBlockProps> = ({ className, text }) => {
   return (
-    <div className={s['wrapper']}>
-      <div className={s[className]}>
+    <div className={`${s['wrapper']} ${className ? s[className] : ''}`}>
+      <div className={s['image']}>
         <img src={nothingImg} alt="nothing-img" />
       </div>
       <p className={s['nothing-text']}>{text}</p>

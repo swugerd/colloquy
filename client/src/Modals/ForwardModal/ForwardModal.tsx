@@ -34,7 +34,7 @@ const ForwardModal: React.FC<ForwardModalProps> = ({ onClose }) => {
 
   const { width } = useWindowSize();
 
-  const hasMediaToUpload = true;
+  const hasMediaToUpload = false;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 

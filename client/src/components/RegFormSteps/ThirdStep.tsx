@@ -22,7 +22,7 @@ const ThirdStep: React.FC<ThirdStepProps> = ({
   const handleFileUpload = (e: any) => {
     const selectedImage = e.target.files[0];
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-    if (!allowedMimeTypes.includes(selectedImage.type)) {
+    if (!allowedMimeTypes.includes(selectedImage?.type)) {
       setError('Неверный формат изображения (png, jpg, jpeg)');
       setImage('');
       updateFields({ user_avatar: '', user_avatar_cache: '' });

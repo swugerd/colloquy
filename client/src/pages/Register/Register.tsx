@@ -13,6 +13,7 @@ import axios, { AxiosError } from 'axios';
 import Preloader from '../../components/Preloader/Preloader';
 import jwtDecode from 'jwt-decode';
 import { DecodedToken } from '../../hooks/useAuth';
+import { useAxios } from '../../hooks/useAxios';
 
 interface INITIAL_DATA_TYPE {
   user_nickname: '';
@@ -54,6 +55,15 @@ const Register: React.FC = () => {
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const {
+    response,
+    isLoading: isCitiesLoading,
+    error,
+  } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/cities`,
+  });
+
   const updateFields = (fields: any) => {
     setRegData((prev) => {
       return { ...prev, ...fields };
@@ -69,6 +79,9 @@ const Register: React.FC = () => {
       onSubmit={(event: any) => handleSubmit(event, index)}
     />,
     <SecondStep
+      cities={response}
+      isLoading={isCitiesLoading}
+      error={error}
       {...regData}
       updateFields={updateFields}
       onSubmit={(event: any) => handleSubmit(event, index)}
@@ -99,6 +112,16 @@ const Register: React.FC = () => {
           }
           //@ts-ignore
           formData.append(key, regData[key]);
+        }
+        if (regData['city_id'] === 0) {
+          formData.delete('city_id');
+        }
+        if (
+          regData['user_birthdate'] &&
+          new Date().getFullYear() - new Date(regData['user_birthdate']).getFullYear() < 14
+        ) {
+          setErrorMessage('Тебе меньше 14 лет');
+          return;
         }
         setIsLoading(true);
         const { data, status } = await axios({

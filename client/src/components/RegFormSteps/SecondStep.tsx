@@ -8,6 +8,7 @@ import femaleSvg from '../../assets/img/icons/female.svg';
 import SelectComponent from '../UI/SelectComponent/SelectComponent';
 import GenderInput from '../UI/GenderInput/GenderInput';
 import Button from '../UI/Button/Button';
+import { useAxios } from '../../hooks/useAxios';
 
 // поменять типы
 
@@ -20,6 +21,13 @@ type SecondStepProps = {
   city_id: any;
   updateFields: (fields: any) => void;
   onSubmit: (event: any) => void;
+  cities: {
+    id: number;
+    value: string;
+    label: string;
+  }[];
+  isLoading: boolean;
+  error: any;
 };
 
 const SecondStep: React.FC<SecondStepProps> = ({
@@ -31,11 +39,10 @@ const SecondStep: React.FC<SecondStepProps> = ({
   city_id,
   updateFields,
   onSubmit,
+  isLoading,
+  error,
+  cities,
 }) => {
-  const cities = [
-    { id: 1, value: 'Moscow', label: 'Москва' },
-    { id: 2, value: 'Ivanteevka', label: 'Ивантеевка' },
-  ];
   return (
     <form onSubmit={onSubmit}>
       <div className={s['input-block']}>
@@ -125,16 +132,18 @@ const SecondStep: React.FC<SecondStepProps> = ({
         <label className={s['label']} htmlFor="city">
           Город
         </label>
-        <div>
-          <SelectComponent
-            placeholder={'Выберите из списка'}
-            options={cities}
-            noOptionsMessage={'Город не найден'}
-            name={'city_id'}
-            setValue={updateFields}
-            value={city_id}
-          />
-        </div>
+        {!isLoading && (
+          <div>
+            <SelectComponent
+              placeholder={'Выберите из списка'}
+              options={cities}
+              noOptionsMessage={'Город не найден'}
+              name={'city_id'}
+              setValue={updateFields}
+              value={city_id}
+            />
+          </div>
+        )}
       </div>
       <Button className={'reg-btn'} text={'Следующий шаг'} />
     </form>

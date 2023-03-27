@@ -29,7 +29,7 @@ const HeaderAvatar: React.FC<HeaderAvatarProps> = ({
   return (
     <div className={s[className]} title={title}>
       <div className={s['image-block']}>
-        <img src={img} alt="profile" />
+        <img src={`${process.env.REACT_APP_HOSTNAME}/${img}`} alt="profile" />
         {indicatorClass && onlineType && (
           <OnlineIndicator
             onlineType={onlineType}

@@ -20,19 +20,19 @@ const ProfileHeader: React.FC = () => {
       <button onClick={() => setIsOpen(!isOpen)}>
         <HeaderAvatar
           className={'header__profile-image'}
-          img={ebalo}
+          img={!isLoading && user ? user.user_avatar : ''}
           indicatorClass={['sm-indicator', 'border-sub-bg']}
-          title="Олег"
-          onlineType="pc-online"
+          title={!isLoading && user ? user.user_name : ''}
+          onlineType={!isLoading && user ? user.online_type : ''}
         />
-        <span className={s['header__profile-name']} title="Максимилиан">
+        <span className={s['header__profile-name']} title={!isLoading ? user?.user_name : ''}>
           {!isLoading ? user?.user_name : 'Загрузка..'}
         </span>
         <div className={s['header__profile-arrow']}>
           <Icon src={arrowSvg} id={'arrow'} className={'white'} />
         </div>
       </button>
-      {isOpen && <ProfileDropDown />}
+      {isOpen && <ProfileDropDown setIsDropdownOpen={setIsOpen} />}
     </div>
   );
 };

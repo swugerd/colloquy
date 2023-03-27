@@ -42,3 +42,16 @@
   width: 10rem;
   height: 10rem;
 }
+
+.profile {
+  margin: 0 auto;
+  align-self: center;
+  & .image {
+    width: 30rem;
+    height: 30rem;
+  }
+  & .nothing-text {
+    font-size: 2.4rem;
+    margin-top: 3rem;
+  }
+}

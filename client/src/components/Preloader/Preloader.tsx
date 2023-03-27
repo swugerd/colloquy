@@ -14,7 +14,7 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
+            dur=".8s"
             begin="0s"
             repeatCount="indefinite"
           />
@@ -22,8 +22,8 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="2s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -32,16 +32,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="2s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="4s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -50,16 +50,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="4s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="6s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -68,16 +68,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="6s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="8s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -86,16 +86,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="8s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="10s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -104,16 +104,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="8s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="10s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -122,16 +122,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="8s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="10s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>
@@ -140,16 +140,16 @@ const Preloader: React.FC<PreloaderProps> = ({ className }) => {
             attributeName="opacity"
             from="0"
             to="1"
-            dur="1s"
-            begin="8s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
           <animate
             attributeName="opacity"
             from="1"
             to="0"
-            dur="1s"
-            begin="10s"
+            dur=".8s"
+            begin="0s"
             repeatCount="indefinite"
           />
         </path>

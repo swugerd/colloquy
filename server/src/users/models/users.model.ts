@@ -7,7 +7,7 @@ import {
   Model,
   BelongsToMany,
 } from 'sequelize-typescript';
-import { City } from 'src/groups/models/cities.model';
+import { City } from 'src/cities/models/cities.model';
 import { Role } from 'src/roles/models/roles.model';
 import { UserRoles } from 'src/roles/models/user-roles.model';
 
@@ -44,7 +44,7 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @ForeignKey(() => City)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  city_id: number;
+  city_id: number | undefined;
 
   @Column({ type: DataType.DATE, allowNull: false })
   user_birthdate: string;
@@ -76,8 +76,8 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.DATE, allowNull: false, defaultValue: new Date().toISOString() })
   last_seen: string;
 
-  @Column({ type: DataType.STRING, allowNull: false, defaultValue: 'online' })
-  online_type: string;
+  @Column({ type: DataType.STRING, allowNull: false, defaultValue: 'pc-online' })
+  online_type: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline';
 
   @BelongsTo(() => City)
   city: City;

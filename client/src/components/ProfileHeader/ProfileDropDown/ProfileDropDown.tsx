@@ -13,7 +13,11 @@ import Icon from '../../UI/Icon/Icon';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 
-const ProfileDropDown: React.FC = () => {
+type ProfileDropDownProps = {
+  setIsDropdownOpen: (isOpen: boolean) => void;
+};
+
+const ProfileDropDown: React.FC<ProfileDropDownProps> = ({ setIsDropdownOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -30,17 +34,18 @@ const ProfileDropDown: React.FC = () => {
     e.stopPropagation();
   };
 
-  const { logout } = useAuth();
+  const { logout } = useAuth(false);
 
   const handleLogOut = () => {
-    localStorage.removeItem('jwtToken');
     logout();
   };
 
   return (
     <div className={s['wrapper']}>
       <ul className={s['list']}>
-        <li className={`${s['item']} ${iconS['profile-hover']}`}>
+        <li
+          className={`${s['item']} ${iconS['profile-hover']}`}
+          onClick={() => setIsDropdownOpen(false)}>
           <Link className={s['link']} to="/settings">
             <div className={`${s['icon']} ${s['settings']}`}>
               <Icon src={settingsSvg} id={'settings'} className={'white'} />
@@ -49,12 +54,12 @@ const ProfileDropDown: React.FC = () => {
           </Link>
         </li>
         <li className={`${s['item']} ${iconS['profile-hover']}`}>
-          <Link className={s['link']} to="/" onClick={handleLogOut}>
+          <div className={s['link']} onClick={handleLogOut}>
             <div className={`${s['icon']} ${s['switch-acc']}`}>
               <Icon src={switchAccSvg} id={'switchAcc'} className={'white'} />
             </div>
             <span className={s['text']}>Смена аккаунта</span>
-          </Link>
+          </div>
         </li>
         <li
           className={`${s['item']} ${s['activity-item']} ${iconS['profile-hover']}`}
@@ -81,12 +86,12 @@ const ProfileDropDown: React.FC = () => {
           </ul>
         </li>
         <li className={`${s['item']} ${iconS['profile-hover']}`}>
-          <Link className={s['exit-link']} to="/" onClick={handleLogOut}>
+          <div className={s['exit-link']} onClick={handleLogOut}>
             <div className={`${s['icon']} ${s['exit']}`}>
               <Icon src={exitSvg} id={'exit'} className={'white'} />
             </div>
             <span className={s['text']}>Выйти</span>
-          </Link>
+          </div>
         </li>
       </ul>
     </div>

@@ -5,7 +5,7 @@ import { useAppDispatch } from './../redux/store';
 import { setIsAuth } from '../redux/auth/slice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-interface User {
+export interface User {
   id: number;
   user_name: string;
   user_surname: string;
@@ -15,7 +15,7 @@ interface User {
     id: number;
     city_name: string;
     city_value: string;
-  }[];
+  };
   createdAt: string;
   last_seen: string;
   online_type: string;
@@ -27,7 +27,8 @@ interface User {
   }[];
   updatedAt: string;
   user_about: string;
-  uesr_avatar: string;
+  user_avatar: string;
+  user_status: string;
   user_birthdate: string;
   user_email: string;
   user_gender: string;
@@ -49,9 +50,7 @@ export interface DecodedToken {
   exp: number;
 }
 
-// оптимизировать, чтобы не было лишних запросов
-
-const useAuth = () => {
+const useAuth = (shouldCheckAuth: boolean = true) => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -60,7 +59,6 @@ const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogLoading, setIsLogLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('jwtToken');
@@ -72,12 +70,18 @@ const useAuth = () => {
         if (expirationTime < currentTime) {
           // Token has expired, request a new token
           try {
-            const response = await axios.post('http://localhost:5000/api/refreshToken', { token });
+            const response = await axios.post(
+              `${process.env.REACT_APP_HOSTNAME}/api/auth/refreshToken`,
+              {
+                token,
+              },
+            );
             localStorage.setItem('jwtToken', response.data.token);
             setIsLoading(false);
             dispatch(setIsAuth(true));
           } catch (error) {
             console.error(error);
+            localStorage.removeItem('jwtToken');
             setIsLoading(false);
             dispatch(setIsAuth(false));
           }
@@ -85,12 +89,18 @@ const useAuth = () => {
           // Token is still valid, fetch user data
           const userId = decodedToken.id;
           try {
-            const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
+            const response = await axios({
+              method: 'get',
+              url: `${process.env.REACT_APP_HOSTNAME}/api/users/getById/${userId}`,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
             setUser(response.data);
             setIsLoading(false);
             dispatch(setIsAuth(true));
           } catch (error) {
-            console.error(error);
+            localStorage.removeItem('jwtToken');
             setIsLoading(false);
             dispatch(setIsAuth(false));
           }
@@ -99,7 +109,7 @@ const useAuth = () => {
         setIsLoading(false);
       }
     };
-    checkAuth();
+    shouldCheckAuth && checkAuth();
   }, []);
 
   const login = async (emailOrLogin: string, password: string) => {
@@ -108,7 +118,7 @@ const useAuth = () => {
       setIsLogLoading(true);
       const loginResponse = await axios({
         method: 'post',
-        url: 'http://localhost:5000/api/auth/login',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/auth/login`,
         data: JSON.stringify({
           emailOrLogin,
           user_password: password,
@@ -120,7 +130,9 @@ const useAuth = () => {
 
       const decodedToken: DecodedToken = jwtDecode(loginResponse.data.token);
 
-      const getUserResponse = await axios.get(`http://localhost:5000/api/users/${decodedToken.id}`);
+      const getUserResponse = await axios.get(
+        `${process.env.REACT_APP_HOSTNAME}/api/users/getById/${decodedToken.id}`,
+      );
       setUser(getUserResponse.data);
 
       localStorage.setItem('jwtToken', loginResponse.data.token);
@@ -136,6 +148,7 @@ const useAuth = () => {
       } else {
         setErrorMessage('Ошибка сервера');
         dispatch(setIsAuth(false));
+        localStorage.removeItem('jwtToken');
       }
       setIsLoading(false);
       setIsLogLoading(false);
@@ -146,7 +159,7 @@ const useAuth = () => {
     try {
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:5000/api/auth/logout',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/auth/logout`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -160,6 +173,8 @@ const useAuth = () => {
       console.error(error);
       setIsLoading(false);
       dispatch(setIsAuth(false));
+    } finally {
+      localStorage.removeItem('jwtToken');
     }
   };
 

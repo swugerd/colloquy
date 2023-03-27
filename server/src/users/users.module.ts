@@ -1,5 +1,6 @@
+import { FilesModule } from './../files/files.module';
 import { RolesModule } from './../roles/roles.module';
-import { City } from 'src/groups/models/cities.model';
+import { City } from 'src/cities/models/cities.model';
 import { UserRoles } from './../roles/models/user-roles.model';
 import { Role } from './../roles/models/roles.model';
 import { User } from './models/users.model';
@@ -11,7 +12,7 @@ import { Module } from '@nestjs/common';
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
-  imports: [SequelizeModule.forFeature([User, Role, UserRoles, City]), RolesModule],
+  imports: [SequelizeModule.forFeature([User, Role, UserRoles, City]), RolesModule, FilesModule],
   exports: [UsersService],
 })
 export class UsersModule {}

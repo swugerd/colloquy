@@ -43,7 +43,6 @@ const MobileSidebar: React.FC = () => {
     }
   }, [mobile.isSidebarShow]);
 
-  const id = 'swugerd';
   const links = [
     {
       id: 1,
@@ -124,7 +123,7 @@ const MobileSidebar: React.FC = () => {
     },
   ];
 
-  const { logout } = useAuth();
+  const { logout, user, isLoading } = useAuth();
 
   const handleLogOut = () => {
     localStorage.removeItem('jwtToken');
@@ -134,17 +133,22 @@ const MobileSidebar: React.FC = () => {
   return width <= 1150 ? (
     <div className={`${s['wrapper']} ${mobile.isSidebarShow ? s['active'] : ''}`}>
       <div className={s['top']}>
-        <Link to={`/profile/${id}`} className={s['profile-link']} onClick={closeHander}>
+        <Link
+          to={`/profile/${user && !isLoading && user.user_nickname}`}
+          className={s['profile-link']}
+          onClick={closeHander}>
           <HeaderAvatar
             className={'mobile-sidebar'}
-            img={img}
-            title={'Олег'}
-            onlineType={'pc-online'}
+            img={!isLoading && user ? user.user_avatar : 'Загрузка'}
+            title={!isLoading && user ? user.user_name : ''}
+            onlineType={!isLoading && user ? user.online_type : ''}
             indicatorClass={[`${width >= 550 ? 'lg-indicator' : 'md-indicator'}`, 'border-sub-bg']}
           />
           <div className={s['info']}>
-            <span className={s['name']}>Олег Киреев</span>
-            <p className={s['status']}>статус</p>
+            <span className={s['name']}>
+              {!isLoading && user ? `${user.user_name} ${user.user_surname}` : 'Загрузка'}
+            </span>
+            <p className={s['status']}>{!isLoading && user ? user.user_status : 'Загрузка'}</p>
           </div>
         </Link>
         <div className={s['actions']} onClick={closeHander}>

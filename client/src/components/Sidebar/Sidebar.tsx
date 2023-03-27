@@ -15,10 +15,14 @@ import videosSvg from '../../assets/img/icons/videos.svg';
 import musicSvg from '../../assets/img/icons/music.svg';
 import appsSvg from '../../assets/img/icons/apps.svg';
 import gamesSvg from '../../assets/img/icons/games.svg';
+import useAuth from '../../hooks/useAuth';
 
 const Sidebar: React.FC = () => {
   const { width } = useWindowSize();
-  const id = 'swugerd';
+  // const id = 'swugerd';
+
+  const { isLoading, user } = useAuth();
+
   const links = [
     {
       id: 1,
@@ -40,7 +44,7 @@ const Sidebar: React.FC = () => {
         hoverClass: 'profile',
       },
       text: 'Профиль',
-      path: `profile/${id}`,
+      path: `profile/${!isLoading && user && user.user_nickname}`,
     },
     {
       id: 3,

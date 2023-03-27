@@ -3,23 +3,22 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { SequelizeConfigService } from './config/sequelizeConfig.service';
 import { databaseConfig } from './config/configuration';
-import { UsersService } from './users/users.service';
-import { UsersController } from './users/users.controller';
-import { GroupsController } from './groups/groups.controller';
-import { GroupsService } from './groups/groups.service';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
 import { GroupsModule } from './groups/groups.module';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
-import { FilesService } from './files/files.service';
 import { FilesModule } from './files/files.module';
+import * as path from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { CitiesModule } from './cities/cities.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, '..', 'src', 'static'),
     }),
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
@@ -33,8 +32,9 @@ import { FilesModule } from './files/files.module';
     GroupsModule,
     AuthModule,
     FilesModule,
+    CitiesModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, FilesService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

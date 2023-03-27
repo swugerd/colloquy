@@ -1,6 +1,6 @@
 import { UserRoles } from './../roles/models/user-roles.model';
 import { Role } from './../roles/models/roles.model';
-import { City } from 'src/groups/models/cities.model';
+import { City } from 'src/cities/models/cities.model';
 import { User } from '../users/models/users.model';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions, SequelizeOptionsFactory } from '@nestjs/sequelize';

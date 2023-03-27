@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Settings.module.scss';
 import sideContentS from '../../components/SideContent/SideContent.module.scss';
@@ -24,8 +24,9 @@ import SelectComponent from '../../components/UI/SelectComponent/SelectComponent
 import useWindowSize from './../../hooks/useWindowResize';
 import { useAppDispatch } from './../../redux/store';
 import { setHasArrowButton } from '../../redux/mobile/slice';
-import img from '../../assets/uploads/test/ebalo.png';
+import closeSvg from '../../assets/img/icons/close.svg';
 import ContentCard from '../../components/ContentCard/ContentCard';
+import { useAxios } from '../../hooks/useAxios';
 
 type SettingsProps = {
   page: 'profile' | 'privacy' | 'blacklist';
@@ -207,12 +208,10 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     }
   };
 
-  const cities = [
-    { id: 1, value: 'moscow', label: 'Москва' },
-    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
-    { id: 3, value: 'pivo', label: 'Пиво' },
-    { id: 4, value: 'da', label: 'Козел' },
-  ];
+  const { response: cities, isLoading: isCitiesLoading } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/cities`,
+  });
 
   const children = [
     <div className={sideContentS['group']} key={'1'}>
@@ -247,8 +246,6 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     </div>,
   ];
 
-  const hasError = true;
-
   const { width } = useWindowSize();
 
   const users = [
@@ -267,6 +264,42 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     { id: 8, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
   ];
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // const [image, setImage] = useState(user_avatar_cache || '');
+  const [image, setImage] = useState('');
+  const [imageError, setImageError] = useState('');
+
+  const handleFileUpload = (e: any) => {
+    const selectedImage = e.target.files[0];
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!allowedMimeTypes.includes(selectedImage?.type)) {
+      setImageError('Неверный формат изображения (png, jpg, jpeg)');
+      setImage('');
+      // updateFields({ user_avatar: '', user_avatar_cache: '' });
+      return;
+    }
+    setImage(URL.createObjectURL(selectedImage));
+    setImageError('');
+    // updateFields({
+    //   user_avatar: selectedImage,
+    //   user_avatar_cache: URL.createObjectURL(selectedImage),
+    // });
+  };
+
+  const clearInputValue = () => {
+    setImage('');
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
+
+  // вывести данные в настройках
+
+  // сделать удаление страницы
+
+  // начать разбираться с вебсокетами + попробовать сделать статусы онлайна (возможно убрать из бд)
+
   return (
     <>
       <div className={s['settings']}>
@@ -275,9 +308,24 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
           <>
             <div className={s['profile-settings']}>
               <div className={s['top-info']}>
-                <div className={s['avatar']}>
-                  <img src={ebalo} alt="avatar" />
-                </div>
+                <label
+                  className={`${s['avatar-label']} ${image ? s['avatar-preview'] : ''}`}
+                  htmlFor="avatar-upload">
+                  <div className={s['avatar']}>
+                    <img src={image ? image : ebalo} alt="avatar" />
+                  </div>
+                  <button className={s['undo-preview']} onClick={clearInputValue}>
+                    <Icon src={closeSvg} id={'close'} className={'white'} />
+                  </button>
+                  <input
+                    className={s['inp-dis']}
+                    onChange={handleFileUpload}
+                    type="file"
+                    id="avatar-upload"
+                    name="avatar-upload"
+                    ref={inputRef}
+                  />
+                </label>
                 <div className={s['main-info']}>
                   <div className={s['input-block']}>
                     <label className={s['input-title']} htmlFor={'name'}>
@@ -331,18 +379,20 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                   <label className={s['input-title']} htmlFor={'city'}>
                     Город
                   </label>
-                  <SelectComponent
-                    placeholder={'Выберите'}
-                    options={cities}
-                    className={'profile-select'}
-                    noOptionsMessage={'Город не найден'}
-                    id={'city'}
-                    name={''}
-                    value={''}
-                    setValue={() => {}}
-                  />
+                  {!isCitiesLoading && (
+                    <SelectComponent
+                      placeholder={'Выберите'}
+                      options={cities}
+                      className={'profile-select'}
+                      noOptionsMessage={'Город не найден'}
+                      id={'city'}
+                      name={''}
+                      value={''}
+                      setValue={() => {}}
+                    />
+                  )}
                 </div>
-                <div className={s['input-block']}>
+                {/* <div className={s['input-block']}>
                   <label className={s['input-title']} htmlFor={'birthdate'}>
                     Дата рождения
                   </label>
@@ -356,7 +406,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     value={''}
                     setValue={() => {}}
                   />
-                </div>
+                </div> */}
                 <div className={s['input-block']}>
                   <label className={s['input-title']} htmlFor={'nickname'}>
                     Никнейм
@@ -372,7 +422,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     setValue={() => {}}
                   />
                 </div>
-                <div className={s['input-block']}>
+                {/* <div className={s['input-block']}>
                   <label className={s['input-title']} htmlFor={'password'}>
                     Пароль
                   </label>
@@ -386,7 +436,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     value={''}
                     setValue={() => {}}
                   />
-                </div>
+                </div> */}
               </div>
               <h4 className={s['sub-title']}>Дополнительно</h4>
               <div className={s['input-grid']}>
@@ -462,7 +512,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
               </div>
             </div>
             <>
-              {hasError && (
+              {imageError && (
                 <p className={s['error']}>Неверный формат изображения (png, jpg, jpeg)</p>
               )}
               <Button className={'group-create'} text={'Сохранить'} />
