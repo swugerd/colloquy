@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, FormEvent } from 'react';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Settings.module.scss';
 import sideContentS from '../../components/SideContent/SideContent.module.scss';
@@ -27,10 +27,29 @@ import { setHasArrowButton } from '../../redux/mobile/slice';
 import closeSvg from '../../assets/img/icons/close.svg';
 import ContentCard from '../../components/ContentCard/ContentCard';
 import { useAxios } from '../../hooks/useAxios';
+import useAuth from './../../hooks/useAuth';
+import Preloader from '../../components/Preloader/Preloader';
+import { setIsAuth } from '../../redux/auth/slice';
+import axios from 'axios';
 
 type SettingsProps = {
   page: 'profile' | 'privacy' | 'blacklist';
 };
+
+interface INITIAL_DATA_TYPE {
+  user_nickname: string;
+  user_name: string;
+  user_surname: string;
+  user_patronymic: string;
+  city_id: number;
+  user_telegram: string;
+  user_status: string;
+  user_phone: string;
+  user_sub_phone: string;
+  user_about: string;
+  user_avatar: string;
+  user_avatar_cache: string;
+}
 
 const Settings: React.FC<SettingsProps> = ({ page }) => {
   const title = [
@@ -208,6 +227,38 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     }
   };
 
+  const { user, isLoading: isUserLoading } = useAuth();
+
+  // const INITIAL_DATA: INITIAL_DATA_TYPE = {
+  //   user_nickname: !isUserLoading && user?.user_nickname ? user.user_nickname : '',
+  //   user_name: !isUserLoading && user?.user_name ? user.user_name : '',
+  //   user_surname: !isUserLoading && user?.user_surname ? user.user_surname : '',
+  //   user_patronymic: !isUserLoading && user?.user_patronymic ? user.user_patronymic : '',
+  //   city_id: !isUserLoading && user?.city.id ? user.city.id : 0,
+  //   user_avatar: !isUserLoading && user?.user_avatar ? user.user_avatar : '',
+  //   user_telegram: !isUserLoading && user?.user_telegram ? user.user_telegram : '',
+  //   user_phone: !isUserLoading && user?.user_phone ? user.user_phone : '',
+  //   user_sub_phone: !isUserLoading && user?.user_sub_phone ? user.user_sub_phone : '',
+  //   user_status: !isUserLoading && user?.user_status ? user.user_status : '',
+  //   user_about: !isUserLoading && user?.user_about ? user.user_about : '',
+  //   user_avatar_cache: '',
+  // };
+
+  const [profileData, setProfileData] = useState<INITIAL_DATA_TYPE>({
+    user_nickname: !isUserLoading && user?.user_nickname ? user.user_nickname : '',
+    user_name: !isUserLoading && user?.user_name ? user.user_name : '',
+    user_surname: !isUserLoading && user?.user_surname ? user.user_surname : '',
+    user_patronymic: !isUserLoading && user?.user_patronymic ? user.user_patronymic : '',
+    city_id: !isUserLoading && user?.city.id ? user.city.id : Number(''),
+    user_avatar: !isUserLoading && user?.user_avatar ? user.user_avatar : '',
+    user_telegram: !isUserLoading && user?.user_telegram ? user.user_telegram : '',
+    user_phone: !isUserLoading && user?.user_phone ? user.user_phone : '',
+    user_sub_phone: !isUserLoading && user?.user_sub_phone ? user.user_sub_phone : '',
+    user_status: !isUserLoading && user?.user_status ? user.user_status : '',
+    user_about: !isUserLoading && user?.user_about ? user.user_about : '',
+    user_avatar_cache: '',
+  });
+
   const { response: cities, isLoading: isCitiesLoading } = useAxios({
     method: 'get',
     url: `${process.env.REACT_APP_HOSTNAME}/api/cities`,
@@ -264,9 +315,30 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     { id: 8, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
   ];
 
+  useEffect(() => {
+    if (!isUserLoading) {
+      setProfileData((prev) => {
+        return {
+          ...prev,
+          user_nickname: user?.user_nickname ?? '',
+          user_name: user?.user_name ?? '',
+          user_surname: user?.user_surname ?? '',
+          user_patronymic: user?.user_patronymic ?? '',
+          city_id: user?.city.id ?? 0,
+          user_avatar: '',
+          user_telegram: user?.user_telegram ?? '',
+          user_phone: user?.user_phone ?? '',
+          user_sub_phone: user?.user_sub_phone ?? '',
+          user_status: user?.user_status ?? '',
+          user_about: user?.user_about ?? '',
+          user_avatar_cache: user?.user_avatar ?? '',
+        };
+      });
+    }
+  }, [isUserLoading]);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // const [image, setImage] = useState(user_avatar_cache || '');
   const [image, setImage] = useState('');
   const [imageError, setImageError] = useState('');
 
@@ -276,25 +348,88 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     if (!allowedMimeTypes.includes(selectedImage?.type)) {
       setImageError('Неверный формат изображения (png, jpg, jpeg)');
       setImage('');
-      // updateFields({ user_avatar: '', user_avatar_cache: '' });
+      setProfileData({
+        ...profileData,
+        user_avatar: '',
+        user_avatar_cache: user?.user_avatar ?? '',
+      });
       return;
     }
     setImage(URL.createObjectURL(selectedImage));
     setImageError('');
-    // updateFields({
-    //   user_avatar: selectedImage,
-    //   user_avatar_cache: URL.createObjectURL(selectedImage),
-    // });
+    setProfileData({
+      ...profileData,
+      user_avatar: selectedImage,
+      user_avatar_cache: URL.createObjectURL(selectedImage),
+    });
   };
 
   const clearInputValue = () => {
     setImage('');
+    setProfileData({ ...profileData, user_avatar: '', user_avatar_cache: user?.user_avatar ?? '' });
     if (inputRef && inputRef.current) {
       inputRef.current.value = '';
     }
   };
 
-  // вывести данные в настройках
+  const updateFields = (fields: any) => {
+    setProfileData((prev) => {
+      return { ...prev, ...fields };
+    });
+  };
+
+  const handleTextAreaChange = (e: any) => {
+    setProfileData((prev) => {
+      return { ...prev, user_about: e.target.value };
+    });
+  };
+
+  const [serverError, setServerError] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+    if (user) {
+      try {
+        setServerError(false);
+        setValidationError('');
+        setImageError('');
+        setIsUpdated(false);
+
+        if (!profileData.user_name || !profileData.user_surname || !profileData.user_nickname) {
+          setValidationError('Заполните все обязательные поля');
+          return;
+        }
+
+        for (const key in profileData) {
+          if (
+            (key === 'user_phone' && !profileData.user_phone) ||
+            (key === 'user_sub_phone' && !profileData.user_sub_phone) ||
+            (key === 'user_telegram' && !profileData.user_telegram)
+          ) {
+            continue;
+          }
+          // @ts-ignore
+          formData.append(key, profileData[key]);
+        }
+
+        const { data, status } = await axios({
+          method: 'put',
+          url: `${process.env.REACT_APP_HOSTNAME}/api/users/${user.id}`,
+          data: formData,
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        setIsUpdated(true);
+      } catch (error: any) {
+        setServerError(true);
+        setIsUpdated(false);
+      }
+    }
+  };
+
+  // добавить маску на поля телефона
 
   // сделать удаление страницы
 
@@ -302,97 +437,103 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
 
   return (
     <>
-      <div className={s['settings']}>
-        <h4 className={s['title']}>{title}</h4>
-        {page === 'profile' && (
-          <>
-            <div className={s['profile-settings']}>
-              <div className={s['top-info']}>
-                <label
-                  className={`${s['avatar-label']} ${image ? s['avatar-preview'] : ''}`}
-                  htmlFor="avatar-upload">
-                  <div className={s['avatar']}>
-                    <img src={image ? image : ebalo} alt="avatar" />
-                  </div>
-                  <button className={s['undo-preview']} onClick={clearInputValue}>
-                    <Icon src={closeSvg} id={'close'} className={'white'} />
-                  </button>
-                  <input
-                    className={s['inp-dis']}
-                    onChange={handleFileUpload}
-                    type="file"
-                    id="avatar-upload"
-                    name="avatar-upload"
-                    ref={inputRef}
-                  />
-                </label>
-                <div className={s['main-info']}>
-                  <div className={s['input-block']}>
-                    <label className={s['input-title']} htmlFor={'name'}>
-                      Имя
-                    </label>
-                    <Input
-                      className={'profile-settings'}
-                      placeholder={'Ваше имя'}
-                      type={'text'}
-                      inputType={'default'}
-                      id={'name'}
-                      name={''}
-                      value={''}
-                      setValue={() => {}}
+      {!isUserLoading && !isCitiesLoading ? (
+        <div className={s['settings']}>
+          <h4 className={s['title']}>{title}</h4>
+          {page === 'profile' && (
+            <>
+              <form className={s['profile-settings']} onSubmit={handleSubmit}>
+                <div className={s['top-info']}>
+                  <label
+                    className={`${s['avatar-label']} ${image ? s['avatar-preview'] : ''}`}
+                    htmlFor="avatar-upload">
+                    <div className={s['avatar']}>
+                      <img
+                        src={
+                          image
+                            ? image
+                            : `${process.env.REACT_APP_HOSTNAME}/${profileData.user_avatar_cache}`
+                        }
+                        alt="avatar"
+                      />
+                    </div>
+                    <button className={s['undo-preview']} onClick={clearInputValue}>
+                      <Icon src={closeSvg} id={'close'} className={'white'} />
+                    </button>
+                    <input
+                      className={s['inp-dis']}
+                      onChange={handleFileUpload}
+                      type="file"
+                      id="avatar-upload"
+                      name="avatar-upload"
+                      ref={inputRef}
                     />
-                  </div>
-                  <div className={s['input-block']}>
-                    <label className={s['input-title']} htmlFor={'surname'}>
-                      Фамилия
-                    </label>
-                    <Input
-                      className={'profile-settings'}
-                      placeholder={'Ваша фамилия'}
-                      type={'text'}
-                      inputType={'default'}
-                      id={'surname'}
-                      name={''}
-                      value={''}
-                      setValue={() => {}}
-                    />
-                  </div>
-                  <div className={`${s['input-block']} ${s['patronymic']}`}>
-                    <label className={s['input-title']} htmlFor={'patronymic'}>
-                      Отчество
-                    </label>
-                    <Input
-                      className={'profile-settings'}
-                      placeholder={'Ваше отчество'}
-                      type={'text'}
-                      inputType={'default'}
-                      id={'patronymic'}
-                      name={''}
-                      value={''}
-                      setValue={() => {}}
-                    />
+                  </label>
+                  <div className={s['main-info']}>
+                    <div className={s['input-block']}>
+                      <label className={s['input-title']} htmlFor={'name'}>
+                        Имя
+                      </label>
+                      <Input
+                        className={'profile-settings'}
+                        placeholder={'Ваше имя'}
+                        type={'text'}
+                        inputType={'default'}
+                        id={'name'}
+                        name={'user_name'}
+                        value={profileData.user_name}
+                        setValue={updateFields}
+                      />
+                    </div>
+                    <div className={s['input-block']}>
+                      <label className={s['input-title']} htmlFor={'surname'}>
+                        Фамилия
+                      </label>
+                      <Input
+                        className={'profile-settings'}
+                        placeholder={'Ваша фамилия'}
+                        type={'text'}
+                        inputType={'default'}
+                        id={'surname'}
+                        name={'user_surname'}
+                        value={profileData.user_surname}
+                        setValue={updateFields}
+                      />
+                    </div>
+                    <div className={`${s['input-block']} ${s['patronymic']}`}>
+                      <label className={s['input-title']} htmlFor={'patronymic'}>
+                        Отчество
+                      </label>
+                      <Input
+                        className={'profile-settings'}
+                        placeholder={'Ваше отчество'}
+                        type={'text'}
+                        inputType={'default'}
+                        id={'patronymic'}
+                        name={'user_patronymic'}
+                        value={profileData.user_patronymic}
+                        setValue={updateFields}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className={s['input-grid']}>
-                <div className={s['input-block']}>
-                  <label className={s['input-title']} htmlFor={'city'}>
-                    Город
-                  </label>
-                  {!isCitiesLoading && (
+                <div className={s['input-grid']}>
+                  <div className={s['input-block']}>
+                    <label className={s['input-title']} htmlFor={'city'}>
+                      Город
+                    </label>
                     <SelectComponent
                       placeholder={'Выберите'}
                       options={cities}
                       className={'profile-select'}
                       noOptionsMessage={'Город не найден'}
                       id={'city'}
-                      name={''}
-                      value={''}
-                      setValue={() => {}}
+                      name={'city_id'}
+                      value={String(user?.city.id)}
+                      setValue={updateFields}
                     />
-                  )}
-                </div>
-                {/* <div className={s['input-block']}>
+                  </div>
+                  {/* <div className={s['input-block']}>
                   <label className={s['input-title']} htmlFor={'birthdate'}>
                     Дата рождения
                   </label>
@@ -407,22 +548,22 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     setValue={() => {}}
                   />
                 </div> */}
-                <div className={s['input-block']}>
-                  <label className={s['input-title']} htmlFor={'nickname'}>
-                    Никнейм
-                  </label>
-                  <Input
-                    className={'profile-settings'}
-                    placeholder={'Ваш никнейм'}
-                    type={'text'}
-                    inputType={'default'}
-                    id={'nickname'}
-                    name={''}
-                    value={''}
-                    setValue={() => {}}
-                  />
-                </div>
-                {/* <div className={s['input-block']}>
+                  <div className={s['input-block']}>
+                    <label className={s['input-title']} htmlFor={'nickname'}>
+                      Никнейм
+                    </label>
+                    <Input
+                      className={'profile-settings'}
+                      placeholder={'Ваш никнейм'}
+                      type={'text'}
+                      inputType={'default'}
+                      id={'nickname'}
+                      name={'user_nickname'}
+                      value={profileData.user_nickname}
+                      setValue={updateFields}
+                    />
+                  </div>
+                  {/* <div className={s['input-block']}>
                   <label className={s['input-title']} htmlFor={'password'}>
                     Пароль
                   </label>
@@ -437,135 +578,146 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     setValue={() => {}}
                   />
                 </div> */}
-              </div>
-              <h4 className={s['sub-title']}>Дополнительно</h4>
-              <div className={s['input-grid']}>
-                <div className={s['input-block']}>
-                  <label className={s['input-title']} htmlFor={'mainPhone'}>
-                    {width >= 1300 ? 'Мобильный телефон' : 'Моб. Телефон'}
-                  </label>
-                  <Input
-                    className={'profile-settings'}
-                    placeholder={'Ваш телефон'}
-                    type={'tel'}
-                    inputType={'default'}
-                    id="mainPhone"
-                    name={''}
-                    value={''}
-                    setValue={() => {}}
-                  />
                 </div>
-                <div className={s['input-block']}>
-                  <label className={s['input-title']} htmlFor={'subPhone'}>
-                    {width >= 1300 ? 'Дополнительный телефон' : 'Доп. Телефон'}
-                  </label>
-                  <Input
-                    className={'profile-settings'}
-                    placeholder={'Ваш доп. телефон'}
-                    type={'tel'}
-                    inputType={'default'}
-                    id="subPhone"
-                    name={''}
-                    value={''}
-                    setValue={() => {}}
-                  />
-                </div>
-                <div className={s['input-block']}>
-                  <label className={s['input-title']} htmlFor={'telegram'}>
-                    Телеграм
-                  </label>
-                  <Input
-                    className={'profile-settings'}
-                    placeholder={'Ваш телеграм'}
-                    type={'text'}
-                    inputType={'default'}
-                    id={'telegram'}
-                    name={''}
-                    value={''}
-                    setValue={() => {}}
-                  />
-                </div>
-                <div className={s['input-block']}>
-                  <label className={s['input-title']} htmlFor={'status'}>
-                    Статус
-                  </label>
-                  <Input
-                    className={'profile-settings'}
-                    placeholder={'Ваш статус'}
-                    type={'text'}
-                    inputType={'default'}
-                    id={'status'}
-                    name={''}
-                    value={''}
-                    setValue={() => {}}
-                  />
-                </div>
-              </div>
-              <div className={s['about-block']}>
-                <label className={s['input-title']} htmlFor="about">
-                  О себе
-                </label>
-                <textarea
-                  className={s['about-input']}
-                  placeholder="Расскажите о себе"
-                  id="about"></textarea>
-              </div>
-            </div>
-            <>
-              {imageError && (
-                <p className={s['error']}>Неверный формат изображения (png, jpg, jpeg)</p>
-              )}
-              <Button className={'group-create'} text={'Сохранить'} />
-            </>
-          </>
-        )}
-        {page === 'privacy' && (
-          <div className={s['privacy-settings']}>
-            <ul>
-              {privacySettings.map(({ id, iconSettings, label, name }) => (
-                <li
-                  className={`${s['option-item']} ${checkboxes[label] ? s['active'] : ''}`}
-                  key={id}>
-                  <div className={s['option-icon']}>
-                    <Icon
-                      src={iconSettings.src}
-                      id={iconSettings.iconId}
-                      className={iconSettings.className}
+                <h4 className={s['sub-title']}>Дополнительно</h4>
+                <div className={s['input-grid']}>
+                  <div className={s['input-block']}>
+                    <label className={s['input-title']} htmlFor={'mainPhone'}>
+                      {width >= 1300 ? 'Мобильный телефон' : 'Моб. Телефон'}
+                    </label>
+                    <Input
+                      className={'profile-settings'}
+                      placeholder={'Ваш телефон'}
+                      type={'tel'}
+                      inputType={'default'}
+                      id="mainPhone"
+                      name={'user_phone'}
+                      value={profileData.user_phone}
+                      setValue={updateFields}
                     />
                   </div>
-                  <label className={s['option-label']} htmlFor={label}>
-                    {name}
+                  <div className={s['input-block']}>
+                    <label className={s['input-title']} htmlFor={'subPhone'}>
+                      {width >= 1300 ? 'Дополнительный телефон' : 'Доп. Телефон'}
+                    </label>
+                    <Input
+                      className={'profile-settings'}
+                      placeholder={'Ваш доп. телефон'}
+                      type={'tel'}
+                      inputType={'default'}
+                      id="subPhone"
+                      name={'user_sub_phone'}
+                      value={profileData.user_sub_phone}
+                      setValue={updateFields}
+                    />
+                  </div>
+                  <div className={s['input-block']}>
+                    <label className={s['input-title']} htmlFor={'telegram'}>
+                      Телеграм
+                    </label>
+                    <Input
+                      className={'profile-settings'}
+                      placeholder={'Ваш телеграм'}
+                      type={'text'}
+                      inputType={'default'}
+                      id={'telegram'}
+                      name={'user_telegram'}
+                      value={profileData.user_telegram}
+                      setValue={updateFields}
+                    />
+                  </div>
+                  <div className={s['input-block']}>
+                    <label className={s['input-title']} htmlFor={'status'}>
+                      Статус
+                    </label>
+                    <Input
+                      className={'profile-settings'}
+                      placeholder={'Ваш статус'}
+                      type={'text'}
+                      inputType={'default'}
+                      id={'status'}
+                      name={'user_status'}
+                      value={profileData.user_status}
+                      setValue={updateFields}
+                    />
+                  </div>
+                </div>
+                <div className={s['about-block']}>
+                  <label className={s['input-title']} htmlFor="about">
+                    О себе
                   </label>
-                  <InputButton
-                    checked={checkboxes[label] || false}
-                    onChange={handleCheckboxChange}
-                    name={label}
-                    id={label}
-                    type={'checkbox'}
-                    className={'profile-option'}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {page === 'blacklist' &&
-          users.map(({ id, name, img, status, lastSeen }) => (
-            <div className={s['item']} key={id}>
-              <ContentCard
-                size={'lg'}
-                contentData={{
-                  img,
-                  status,
-                  lastSeen,
-                  name,
-                }}
-                type={page === 'blacklist' || page === 'moderation' ? 'blacklist' : 'orders'}
-                isSearchPage={false}
-              />
+                  <textarea
+                    className={s['about-input']}
+                    placeholder="Расскажите о себе"
+                    id="about"
+                    name="user_about"
+                    value={profileData.user_about}
+                    onChange={(e) => handleTextAreaChange(e)}></textarea>
+                </div>
+                <Button className={'group-create'} text={'Сохранить'} />
+              </form>
+              <>
+                {imageError && (
+                  <p className={s['error']}>Неверный формат изображения (png, jpg, jpeg)</p>
+                )}
+                {validationError && <p className={s['error']}>Заполните обязательные поля</p>}
+                {serverError && (
+                  <p className={s['error']}>Данные используются другим пользователем</p>
+                )}
+                {isUpdated && <p className={s['success']}>Информация обновлена!</p>}
+              </>
+            </>
+          )}
+          {page === 'privacy' && (
+            <div className={s['privacy-settings']}>
+              <ul>
+                {privacySettings.map(({ id, iconSettings, label, name }) => (
+                  <li
+                    className={`${s['option-item']} ${checkboxes[label] ? s['active'] : ''}`}
+                    key={id}>
+                    <div className={s['option-icon']}>
+                      <Icon
+                        src={iconSettings.src}
+                        id={iconSettings.iconId}
+                        className={iconSettings.className}
+                      />
+                    </div>
+                    <label className={s['option-label']} htmlFor={label}>
+                      {name}
+                    </label>
+                    <InputButton
+                      checked={checkboxes[label] || false}
+                      onChange={handleCheckboxChange}
+                      name={label}
+                      id={label}
+                      type={'checkbox'}
+                      className={'profile-option'}
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
-      </div>
+          )}
+          {page === 'blacklist' &&
+            users.map(({ id, name, img, status, lastSeen }) => (
+              <div className={s['item']} key={id}>
+                <ContentCard
+                  size={'lg'}
+                  contentData={{
+                    img,
+                    status,
+                    lastSeen,
+                    name,
+                  }}
+                  type={page === 'blacklist' || page === 'moderation' ? 'blacklist' : 'orders'}
+                  isSearchPage={false}
+                />
+              </div>
+            ))}
+        </div>
+      ) : (
+        <Preloader className={'settings'} />
+      )}
       <SideContent className={'notifies'} titles={['Навигация']}>
         {children}
       </SideContent>

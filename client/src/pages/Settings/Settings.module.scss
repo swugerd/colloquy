@@ -132,12 +132,20 @@
   }
 }
 
-.error {
+.profile-settings {
   margin-bottom: 2rem;
+}
+
+.error,
+.success {
   text-align: center;
   color: $red-light;
   font-size: 1.8rem;
   font-weight: 500;
+}
+
+.success {
+  color: $green-light;
 }
 
 .option-item {

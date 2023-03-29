@@ -126,7 +126,7 @@ const Register: React.FC = () => {
         setIsLoading(true);
         const { data, status } = await axios({
           method: 'post',
-          url: 'http://localhost:5000/api/auth/registration',
+          url: `${process.env.REACT_APP_HOSTNAME}/api/auth/registration`,
           data: formData,
           headers: { 'Content-Type': 'multipart/form-data' },
         });

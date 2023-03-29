@@ -49,22 +49,22 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.DATE, allowNull: false })
   user_birthdate: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false, unique: true })
   user_nickname: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
   user_password: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false, unique: true })
   user_email: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.STRING, allowNull: true, unique: true })
   user_phone: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.STRING, allowNull: true, unique: true })
   user_sub_phone: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.STRING, allowNull: true, unique: true })
   user_telegram: string;
 
   @Column({ type: DataType.STRING, allowNull: true })
