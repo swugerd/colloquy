@@ -20,7 +20,7 @@ type InputProps = {
   page?: string;
   button?: any;
   initialValue?: string;
-  value: string;
+  value: string | null;
   setValue: (value: any) => void;
   name: string;
   classOptions?: {
@@ -31,6 +31,7 @@ type InputProps = {
     microIcon?: string;
     sendIcon?: string;
   };
+  onChange?: (value: any) => void;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -46,6 +47,7 @@ const Input: React.FC<InputProps> = ({
   value,
   setValue,
   initialValue,
+  onChange,
   classOptions = {
     searchIcon: 'search-icon',
     closeIcon: 'close-icon',
@@ -83,8 +85,7 @@ const Input: React.FC<InputProps> = ({
   };
 
   const changeValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setValue(e.target.value);
-    setValue({ [name]: e.target.value });
+    onChange ? onChange(e) : setValue({ [name]: e.target.value });
   };
 
   const clearInputHandler = () => {
@@ -102,7 +103,7 @@ const Input: React.FC<InputProps> = ({
             className={`${s['input']} ${s[className]}`}
             type={type}
             placeholder={placeholder}
-            value={value}
+            value={value ? value : ''}
             name={name}
             onChange={changeValueHandler}
             id={id}
@@ -117,7 +118,7 @@ const Input: React.FC<InputProps> = ({
             className={`${s['input']} ${s[className]}`}
             type={type}
             placeholder={placeholder}
-            value={value}
+            value={value ? value : ''}
             name={name}
             onChange={changeValueHandler}
             ref={inputRef}
@@ -155,7 +156,7 @@ const Input: React.FC<InputProps> = ({
               className={`${s['input']} ${s[className]}`}
               type={type}
               placeholder={placeholder}
-              value={value}
+              value={value ? value : ''}
               name={name}
               onChange={changeValueHandler}
               id={id}

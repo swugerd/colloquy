@@ -2,10 +2,10 @@ import { FilesService } from './../files/files.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesService } from './../roles/roles.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/users.model';
-import { Op } from 'sequelize';
+import { Op, where } from 'sequelize';
 import { UploadedFile } from 'src/files/files.service';
 
 @Injectable()
@@ -55,9 +55,37 @@ export class UsersService {
 
   async updateUserById(id: number, dto: UpdateUserDto, image?: UploadedFile) {
     const user = await this.userRepository.findByPk(id, { include: { all: true } });
+
+    for (const key in dto) {
+      if (dto[key] === '') {
+        dto[key] = null;
+      }
+
+      if (key === 'user_phone' || key === 'user_sub_phone') {
+        if (dto[key] !== null) {
+          dto[key] = dto[key].replace(/\D/g, '');
+          if (dto[key].length !== 11 || dto[key][0] !== '7') {
+            throw new HttpException(
+              'Неверный формат телефона +7 (777) 777 77-77',
+              HttpStatus.BAD_REQUEST,
+            );
+          }
+          continue;
+        }
+      }
+    }
+
     return user.update({
       ...dto,
       user_avatar: image ? await this.fileService.createFile(image, user.id) : user.user_avatar,
     });
+  }
+
+  async deleteUserById(id: number) {
+    const user = await this.userRepository.findByPk(id, { include: { all: true } });
+
+    await this.fileService.deleteFile(user.user_avatar);
+
+    return user.destroy();
   }
 }

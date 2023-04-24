@@ -18,13 +18,14 @@ import img from '../../assets/uploads/test/ebalo.png';
 import { Link, NavLink } from 'react-router-dom';
 import Notify from '../UI/Notify/Notify';
 import { useSelector } from 'react-redux';
-import { setIsAuth } from '../../redux/auth/slice';
+import { setIsAuth, setUserNickname } from '../../redux/auth/slice';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setIsSidebarShow } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
 import useAuth from '../../hooks/useAuth';
+import { selectIsAuth } from '../../redux/auth/selector';
 
 const MobileSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,13 +36,19 @@ const MobileSidebar: React.FC = () => {
     dispatch(setIsSidebarShow(false));
   };
 
+  const { logout, user, isLoading } = useAuth();
+
+  const {
+    user: { nickname: userNickname },
+  } = useSelector(selectIsAuth);
+
   useEffect(() => {
     if (mobile.isSidebarShow) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
     }
-  }, [mobile.isSidebarShow]);
+  }, [mobile.isSidebarShow, isLoading]);
 
   const links = [
     {
@@ -123,8 +130,6 @@ const MobileSidebar: React.FC = () => {
     },
   ];
 
-  const { logout, user, isLoading } = useAuth();
-
   const handleLogOut = () => {
     localStorage.removeItem('jwtToken');
     logout();
@@ -134,7 +139,7 @@ const MobileSidebar: React.FC = () => {
     <div className={`${s['wrapper']} ${mobile.isSidebarShow ? s['active'] : ''}`}>
       <div className={s['top']}>
         <Link
-          to={`/profile/${user && !isLoading && user.user_nickname}`}
+          to={`/profile/${user && !isLoading && userNickname}`}
           className={s['profile-link']}
           onClick={closeHander}>
           <HeaderAvatar

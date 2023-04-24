@@ -10,6 +10,7 @@ import {
   Put,
   UploadedFile,
   UseInterceptors,
+  Delete,
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -41,5 +42,10 @@ export class UsersController {
     @UploadedFile() image?: UploadedFileType,
   ) {
     return this.userService.updateUserById(id, dto, image);
+  }
+
+  @Delete('/:id')
+  deleteById(@Param('id') id: number) {
+    return this.userService.deleteUserById(id);
   }
 }

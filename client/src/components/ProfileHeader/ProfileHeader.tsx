@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './ProfileHeader.module.scss';
 import ebalo from '../../assets/uploads/test/ebalo.png';
@@ -7,11 +7,29 @@ import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import Icon from '../UI/Icon/Icon';
 import useAuth from '../../hooks/useAuth';
+import { useAppDispatch } from '../../redux/store';
+import { useAxios } from '../../hooks/useAxios';
+import { setUserName } from '../../redux/auth/slice';
+import { selectIsAuth } from '../../redux/auth/selector';
+import { useSelector } from 'react-redux';
 
 const ProfileHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { user, isLoading } = useAuth();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      dispatch(setUserName(user?.user_name));
+    }
+  }, [isLoading]);
+
+  const {
+    user: { name: userName },
+  } = useSelector(selectIsAuth);
+
   useOnClickOutside(ref, () => setIsOpen(false));
   return (
     <div
@@ -26,7 +44,7 @@ const ProfileHeader: React.FC = () => {
           onlineType={!isLoading && user ? user.online_type : ''}
         />
         <span className={s['header__profile-name']} title={!isLoading ? user?.user_name : ''}>
-          {!isLoading ? user?.user_name : 'Загрузка..'}
+          {!isLoading ? userName : 'Загрузка..'}
         </span>
         <div className={s['header__profile-arrow']}>
           <Icon src={arrowSvg} id={'arrow'} className={'white'} />

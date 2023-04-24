@@ -20,6 +20,7 @@ export interface UploadedFile {
 @Injectable()
 export class FilesService {
   constructor(@InjectModel(User) private readonly userRepository: typeof User) {}
+
   async createFile(file: UploadedFile, userId?: number): Promise<string> {
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     const fileMimeType = mime.lookup(file.originalname);
@@ -54,5 +55,13 @@ export class FilesService {
     }
 
     return fileName;
+  }
+
+  async deleteFile(fileName: string) {
+    const filePath = path.resolve(__dirname, '..', '..', 'src', 'static');
+
+    const deletedFile = await fs.promises.unlink(path.join(filePath, fileName));
+
+    return deletedFile;
   }
 }

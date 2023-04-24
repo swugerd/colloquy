@@ -5,8 +5,8 @@ export class UpdateUserDto {
   readonly city_id?: number;
   readonly user_nickname?: string;
   readonly user_about?: string;
-  readonly user_phone?: string;
-  readonly user_sub_phone?: string;
+  user_phone?: string;
+  user_sub_phone?: string;
   readonly user_telegram?: string;
   readonly user_status?: string;
   readonly user_avatar?: string;

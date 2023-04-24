@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowResize';
 import Icon from '../UI/Icon/Icon';
@@ -16,12 +16,28 @@ import musicSvg from '../../assets/img/icons/music.svg';
 import appsSvg from '../../assets/img/icons/apps.svg';
 import gamesSvg from '../../assets/img/icons/games.svg';
 import useAuth from '../../hooks/useAuth';
+import { useAppDispatch } from '../../redux/store';
+import { setUserNickname } from '../../redux/auth/slice';
+import { selectIsAuth } from '../../redux/auth/selector';
+import { useSelector } from 'react-redux';
 
 const Sidebar: React.FC = () => {
   const { width } = useWindowSize();
   // const id = 'swugerd';
 
   const { isLoading, user } = useAuth();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      dispatch(setUserNickname(user?.user_nickname));
+    }
+  }, [isLoading]);
+
+  const {
+    user: { nickname: userNickname },
+  } = useSelector(selectIsAuth);
 
   const links = [
     {
@@ -44,7 +60,7 @@ const Sidebar: React.FC = () => {
         hoverClass: 'profile',
       },
       text: 'Профиль',
-      path: `profile/${!isLoading && user && user.user_nickname}`,
+      path: `profile/${!isLoading && user && userNickname}`,
     },
     {
       id: 3,

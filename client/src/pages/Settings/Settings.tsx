@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, FormEvent } from 'react';
+import React, { useEffect, useRef, useState, FormEvent } from 'react';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Settings.module.scss';
 import sideContentS from '../../components/SideContent/SideContent.module.scss';
@@ -19,7 +19,6 @@ import ebalo from '../../assets/uploads/test/ebalo.png';
 import Icon from '../../components/UI/Icon/Icon';
 import Button from '../../components/UI/Button/Button';
 import SideContent from '../../components/SideContent/SideContent';
-import Input from '../../components/UI/Input/Input';
 import SelectComponent from '../../components/UI/SelectComponent/SelectComponent';
 import useWindowSize from './../../hooks/useWindowResize';
 import { useAppDispatch } from './../../redux/store';
@@ -29,8 +28,11 @@ import ContentCard from '../../components/ContentCard/ContentCard';
 import { useAxios } from '../../hooks/useAxios';
 import useAuth from './../../hooks/useAuth';
 import Preloader from '../../components/Preloader/Preloader';
-import { setIsAuth } from '../../redux/auth/slice';
+import { setIsAuth, setUserName, setUserNickname } from '../../redux/auth/slice';
 import axios from 'axios';
+import Input from '../../components/UI/Input/Input';
+import { PatternFormat } from 'react-number-format';
+import { setConfirmModalType, setIsConfirmModalOpen } from '../../redux/modal/slice';
 
 type SettingsProps = {
   page: 'profile' | 'privacy' | 'blacklist';
@@ -40,13 +42,13 @@ interface INITIAL_DATA_TYPE {
   user_nickname: string;
   user_name: string;
   user_surname: string;
-  user_patronymic: string;
+  user_patronymic: string | null;
   city_id: number;
-  user_telegram: string;
-  user_status: string;
-  user_phone: string;
-  user_sub_phone: string;
-  user_about: string;
+  user_telegram: string | null;
+  user_status: string | null;
+  user_phone: string | null;
+  user_sub_phone: string | null;
+  user_about: string | null;
   user_avatar: string;
   user_avatar_cache: string;
 }
@@ -68,6 +70,12 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
       dispatch(setHasArrowButton(false));
     };
   }, []);
+
+  const handleModalOpen = (e: any) => {
+    e.stopPropagation();
+    dispatch(setIsConfirmModalOpen(true));
+    dispatch(setConfirmModalType('pageDelete'));
+  };
 
   const routes = [
     {
@@ -229,21 +237,6 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
 
   const { user, isLoading: isUserLoading } = useAuth();
 
-  // const INITIAL_DATA: INITIAL_DATA_TYPE = {
-  //   user_nickname: !isUserLoading && user?.user_nickname ? user.user_nickname : '',
-  //   user_name: !isUserLoading && user?.user_name ? user.user_name : '',
-  //   user_surname: !isUserLoading && user?.user_surname ? user.user_surname : '',
-  //   user_patronymic: !isUserLoading && user?.user_patronymic ? user.user_patronymic : '',
-  //   city_id: !isUserLoading && user?.city.id ? user.city.id : 0,
-  //   user_avatar: !isUserLoading && user?.user_avatar ? user.user_avatar : '',
-  //   user_telegram: !isUserLoading && user?.user_telegram ? user.user_telegram : '',
-  //   user_phone: !isUserLoading && user?.user_phone ? user.user_phone : '',
-  //   user_sub_phone: !isUserLoading && user?.user_sub_phone ? user.user_sub_phone : '',
-  //   user_status: !isUserLoading && user?.user_status ? user.user_status : '',
-  //   user_about: !isUserLoading && user?.user_about ? user.user_about : '',
-  //   user_avatar_cache: '',
-  // };
-
   const [profileData, setProfileData] = useState<INITIAL_DATA_TYPE>({
     user_nickname: !isUserLoading && user?.user_nickname ? user.user_nickname : '',
     user_name: !isUserLoading && user?.user_name ? user.user_name : '',
@@ -293,7 +286,11 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
           />
         </Link>
       ))}
-      <Button className={'page-delete'} text={'Удалить страницу'} />
+      <Button
+        className={'page-delete'}
+        text={'Удалить страницу'}
+        onClick={(e) => handleModalOpen(e)}
+      />
     </div>,
   ];
 
@@ -338,6 +335,20 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
   }, [isUserLoading]);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const formatPhoneNumber = (value: any) => {
+    if (!value) {
+      return '';
+    }
+
+    return value
+      .replace(/\D/g, '')
+      .replace(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+$1 ($2) $3 $4 $5');
+  };
+
+  const normalizePhoneNumber = (value: any) => {
+    return value.replace(/\s/g, '');
+  };
 
   const [image, setImage] = useState('');
   const [imageError, setImageError] = useState('');
@@ -385,7 +396,10 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
   };
 
   const [serverError, setServerError] = useState(false);
+  const [phoneFormatError, setPhoneFormatError] = useState(false);
+
   const [validationError, setValidationError] = useState('');
+
   const [isUpdated, setIsUpdated] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -394,6 +408,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     if (user) {
       try {
         setServerError(false);
+        setPhoneFormatError(false);
         setValidationError('');
         setImageError('');
         setIsUpdated(false);
@@ -404,13 +419,6 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
         }
 
         for (const key in profileData) {
-          if (
-            (key === 'user_phone' && !profileData.user_phone) ||
-            (key === 'user_sub_phone' && !profileData.user_sub_phone) ||
-            (key === 'user_telegram' && !profileData.user_telegram)
-          ) {
-            continue;
-          }
           // @ts-ignore
           formData.append(key, profileData[key]);
         }
@@ -422,16 +430,19 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         setIsUpdated(true);
+        dispatch(setUserName(profileData.user_name));
+        dispatch(setUserNickname(profileData.user_nickname));
       } catch (error: any) {
-        setServerError(true);
+        if (error.response.status === 500) {
+          setServerError(true);
+        }
+        if (error.response.status === 400) {
+          setPhoneFormatError(true);
+        }
         setIsUpdated(false);
       }
     }
   };
-
-  // добавить маску на поля телефона
-
-  // сделать удаление страницы
 
   // начать разбираться с вебсокетами + попробовать сделать статусы онлайна (возможно убрать из бд)
 
@@ -511,7 +522,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                         inputType={'default'}
                         id={'patronymic'}
                         name={'user_patronymic'}
-                        value={profileData.user_patronymic}
+                        value={profileData.user_patronymic ? profileData.user_patronymic : ''}
                         setValue={updateFields}
                       />
                     </div>
@@ -585,7 +596,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     <label className={s['input-title']} htmlFor={'mainPhone'}>
                       {width >= 1300 ? 'Мобильный телефон' : 'Моб. Телефон'}
                     </label>
-                    <Input
+                    {/* <Input
                       className={'profile-settings'}
                       placeholder={'Ваш телефон'}
                       type={'tel'}
@@ -594,13 +605,27 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                       name={'user_phone'}
                       value={profileData.user_phone}
                       setValue={updateFields}
+                    /> */}
+                    <PatternFormat
+                      format="+# (###) ### ##-##"
+                      mask="_"
+                      customInput={Input}
+                      name={'user_phone'}
+                      className={'profile-settings'}
+                      placeholder={'Ваш телефон'}
+                      value={profileData.user_phone || ''}
+                      onChange={(e: any) => {
+                        updateFields({ user_phone: e.target.value });
+                      }}
+                      setValue={() => {}}
+                      inputType={'default'}
                     />
                   </div>
                   <div className={s['input-block']}>
                     <label className={s['input-title']} htmlFor={'subPhone'}>
                       {width >= 1300 ? 'Дополнительный телефон' : 'Доп. Телефон'}
                     </label>
-                    <Input
+                    {/* <Input
                       className={'profile-settings'}
                       placeholder={'Ваш доп. телефон'}
                       type={'tel'}
@@ -609,6 +634,20 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                       name={'user_sub_phone'}
                       value={profileData.user_sub_phone}
                       setValue={updateFields}
+                    /> */}
+                    <PatternFormat
+                      format="+# (###) ### ##-##"
+                      mask="_"
+                      customInput={Input}
+                      name={'user_sub_phone'}
+                      className={'profile-settings'}
+                      placeholder={'Ваш доп. телефон'}
+                      value={profileData.user_sub_phone || ''}
+                      onChange={(e: any) => {
+                        updateFields({ user_sub_phone: e.target.value });
+                      }}
+                      setValue={() => {}}
+                      inputType={'default'}
                     />
                   </div>
                   <div className={s['input-block']}>
@@ -651,7 +690,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     placeholder="Расскажите о себе"
                     id="about"
                     name="user_about"
-                    value={profileData.user_about}
+                    value={profileData.user_about ? profileData.user_about : ''}
                     onChange={(e) => handleTextAreaChange(e)}></textarea>
                 </div>
                 <Button className={'group-create'} text={'Сохранить'} />
@@ -663,6 +702,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                 {validationError && <p className={s['error']}>Заполните обязательные поля</p>}
                 {serverError && (
                   <p className={s['error']}>Данные используются другим пользователем</p>
+                )}
+                {phoneFormatError && (
+                  <p className={s['error']}>Неверный формат телефона +7 (777) 777 77-77</p>
                 )}
                 {isUpdated && <p className={s['success']}>Информация обновлена!</p>}
               </>
