@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import s from './ProfileDropDown.module.scss';
 import iconS from '../../UI/Icon/Icon.module.scss';
@@ -12,25 +12,38 @@ import { useAppDispatch } from './../../../redux/store';
 import Icon from '../../UI/Icon/Icon';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
+import { SocketContext } from '../../../contexts/SocketContext';
 
 type ProfileDropDownProps = {
   setIsDropdownOpen: (isOpen: boolean) => void;
+  setOnlineStatus: (onlineStatus: string) => void;
 };
 
-const ProfileDropDown: React.FC<ProfileDropDownProps> = ({ setIsDropdownOpen }) => {
+const ProfileDropDown: React.FC<ProfileDropDownProps> = ({
+  setIsDropdownOpen,
+  setOnlineStatus,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const [activeIndex, setActiveIndex] = useState(0);
   const statuses = [
-    { id: 1, name: 'В сети', className: 'green' },
-    { id: 2, name: 'Не беспокоить', className: 'red' },
-    { id: 3, name: 'Нет на месте', className: 'yellow' },
-    { id: 4, name: 'Не в сети', className: 'gray' },
+    { id: 1, name: 'В сети', className: 'green', status: 'pc-online' },
+    { id: 2, name: 'Не беспокоить', className: 'red', status: 'pc-dnd' },
+    { id: 3, name: 'Нет на месте', className: 'yellow', status: 'pc-afk' },
+    { id: 4, name: 'Не в сети', className: 'gray', status: 'pc-offline' },
   ];
 
+  const socket = useContext(SocketContext);
+
   // типизировать ивент
-  const changeIndexHandler = (e: any, index: number) => {
+  const changeIndexHandler = (e: any, status: string, index: number) => {
     setActiveIndex(index);
+    if (socket) {
+      socket.emit('statusChange', status);
+    }
+    setOnlineStatus(status);
+
     e.stopPropagation();
   };
 
@@ -74,11 +87,11 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = ({ setIsDropdownOpen }) 
             </div>
           </div>
           <ul className={`${s['status-list']} ${isOpen && s['active']}`}>
-            {statuses.map(({ id, name, className }, index) => (
+            {statuses.map(({ id, name, className, status }, index) => (
               <li
                 className={`${s['status-item']} ${activeIndex === index ? s['active'] : ''}`}
                 key={id}
-                onClick={(e) => changeIndexHandler(e, index)}>
+                onClick={(e) => changeIndexHandler(e, status, index)}>
                 <div className={`${s['status-icon']} ${s[className]}`}></div>
                 <span>{name}</span>
               </li>

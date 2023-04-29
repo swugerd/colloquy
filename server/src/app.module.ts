@@ -11,6 +11,7 @@ import { FilesModule } from './files/files.module';
 import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { CitiesModule } from './cities/cities.module';
+import { GatewayModule } from './gateway/gateway.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CitiesModule } from './cities/cities.module';
     AuthModule,
     FilesModule,
     CitiesModule,
+    GatewayModule,
   ],
   controllers: [],
   providers: [],

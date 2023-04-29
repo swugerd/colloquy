@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Header from '../../components/Header/Header';
 import MobileFooter from '../../components/MobileFooter/MobileFooter';
@@ -32,6 +32,8 @@ import CreateBaseModal from './../../Modals/CreateBaseModal/CreateBaseModal';
 import MembersModal from '../../Modals/MembersModal/MembersModal';
 import MediaListModal from './../../Modals/MediaListModal/MediaListModal';
 import ConfirmModal from '../../Modals/ConfirmModal/ConfirmModal';
+import { Socket, io } from 'socket.io-client';
+import { SocketContext, SocketProvider, socket } from '../../contexts/SocketContext';
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -59,65 +61,79 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     },
   };
 
-  return (
-    <div className={`${s['wrapper']}`}>
-      {
-        <>
-          <Header />
-          <MobileHeader />
-          {mobile.chatId ? '' : <MobileFooter />}
-        </>
-      }
-      <div className="container">
-        <div className={s['content']}>
-          {
-            <>
-              <MobileSidebar />
-              <Sidebar />
-            </>
-          }
-          <main
-            className={`${s['main']} ${mobile.title === 'Сообщения' ? s['messages'] : ''} ${
-              mobile.chatId ? s['selected'] : ''
-            }`}>
-            {children}
+  useEffect(() => {
+    if (socket) {
+      socket.on('connect', () => {
+        console.log('ws connected -', socket.id);
+      });
 
-            {modal.uploadMediaModal.isOpen && (
-              <UploadMediaModal
-                onClose={() => dispatch(setIsUploadMediaModalOpen(false))}
-                mediaType={modal.uploadMediaModal.modalType}
-              />
-            )}
-            {modal.postContentModal.isOpen && (
-              <PostContentModal
-                onClose={() => dispatch(setIsPostContentModalOpen(false))}
-                modalType={'video'}
-              />
-            )}
-            {modal.forwardModal.isOpen && (
-              <ForwardModal onClose={() => dispatch(setIsForwardModalOpen(false))} />
-            )}
-            {modal.uploadFilesModal.isOpen && (
-              <UploadFilesModal onClose={() => dispatch(setIsUploadFilesModalOpen(false))} />
-            )}
-            {modal.createBaseModal.isOpen && (
-              <CreateBaseModal
-                onClose={() => dispatch(setIsCreateBaseModalOpen(false))}
-                title={
-                  modal.createBaseModal.modalType === 'conversation'
-                    ? 'Создать беседу'
-                    : 'Создать плейлист'
-                }
-              />
-            )}
-            {modal.mediaListModal.isOpen && (
-              <MediaListModal onClose={() => dispatch(setIsMediaListModalOpen(false))} />
-            )}
-            {modal.membersModal.isOpen && (
-              <MembersModal onClose={() => dispatch(setIsMembersModalOpen(false))} />
-            )}
-            {modal.confirmModal.isOpen && <ConfirmModal />}
-            {/* {notify && (
+      socket.emit('statusChange', 'pc-online');
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, []);
+
+  return (
+    <SocketProvider value={socket}>
+      <div className={`${s['wrapper']}`}>
+        {
+          <>
+            <Header />
+            <MobileHeader />
+            {mobile.chatId ? '' : <MobileFooter />}
+          </>
+        }
+        <div className="container">
+          <div className={s['content']}>
+            {
+              <>
+                <MobileSidebar />
+                <Sidebar />
+              </>
+            }
+            <main
+              className={`${s['main']} ${mobile.title === 'Сообщения' ? s['messages'] : ''} ${
+                mobile.chatId ? s['selected'] : ''
+              }`}>
+              {children}
+
+              {modal.uploadMediaModal.isOpen && (
+                <UploadMediaModal
+                  onClose={() => dispatch(setIsUploadMediaModalOpen(false))}
+                  mediaType={modal.uploadMediaModal.modalType}
+                />
+              )}
+              {modal.postContentModal.isOpen && (
+                <PostContentModal
+                  onClose={() => dispatch(setIsPostContentModalOpen(false))}
+                  modalType={'video'}
+                />
+              )}
+              {modal.forwardModal.isOpen && (
+                <ForwardModal onClose={() => dispatch(setIsForwardModalOpen(false))} />
+              )}
+              {modal.uploadFilesModal.isOpen && (
+                <UploadFilesModal onClose={() => dispatch(setIsUploadFilesModalOpen(false))} />
+              )}
+              {modal.createBaseModal.isOpen && (
+                <CreateBaseModal
+                  onClose={() => dispatch(setIsCreateBaseModalOpen(false))}
+                  title={
+                    modal.createBaseModal.modalType === 'conversation'
+                      ? 'Создать беседу'
+                      : 'Создать плейлист'
+                  }
+                />
+              )}
+              {modal.mediaListModal.isOpen && (
+                <MediaListModal onClose={() => dispatch(setIsMediaListModalOpen(false))} />
+              )}
+              {modal.membersModal.isOpen && (
+                <MembersModal onClose={() => dispatch(setIsMembersModalOpen(false))} />
+              )}
+              {modal.confirmModal.isOpen && <ConfirmModal />}
+              {/* {notify && (
               <PopUpNotify
                 type={notify.type}
                 user={notify.user}
@@ -125,10 +141,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 previewMeida={notify.previewMedia ? notify.previewMedia : ''}
               />
             )} */}
-          </main>
+            </main>
+          </div>
         </div>
       </div>
-    </div>
+    </SocketProvider>
   );
 };
 

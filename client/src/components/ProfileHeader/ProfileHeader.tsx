@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './ProfileHeader.module.scss';
 import ebalo from '../../assets/uploads/test/ebalo.png';
@@ -12,6 +12,7 @@ import { useAxios } from '../../hooks/useAxios';
 import { setUserName } from '../../redux/auth/slice';
 import { selectIsAuth } from '../../redux/auth/selector';
 import { useSelector } from 'react-redux';
+import { SocketContext } from '../../contexts/SocketContext';
 
 const ProfileHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,11 +21,26 @@ const ProfileHeader: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const socket = useContext(SocketContext);
+
+  const [onlineStatus, setOnlineStatus] = useState('pc-online');
+
   useEffect(() => {
     if (!isLoading && user) {
       dispatch(setUserName(user?.user_name));
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('statusChange', (data) => {
+        console.log(socket.id, data);
+      });
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [socket]);
 
   const {
     user: { name: userName },
@@ -41,7 +57,7 @@ const ProfileHeader: React.FC = () => {
           img={!isLoading && user ? user.user_avatar : ''}
           indicatorClass={['sm-indicator', 'border-sub-bg']}
           title={!isLoading && user ? user.user_name : ''}
-          onlineType={!isLoading && user ? user.online_type : ''}
+          onlineType={onlineStatus}
         />
         <span className={s['header__profile-name']} title={!isLoading ? user?.user_name : ''}>
           {!isLoading ? userName : 'Загрузка..'}
@@ -50,7 +66,9 @@ const ProfileHeader: React.FC = () => {
           <Icon src={arrowSvg} id={'arrow'} className={'white'} />
         </div>
       </button>
-      {isOpen && <ProfileDropDown setIsDropdownOpen={setIsOpen} />}
+      {isOpen && (
+        <ProfileDropDown setIsDropdownOpen={setIsOpen} setOnlineStatus={setOnlineStatus} />
+      )}
     </div>
   );
 };

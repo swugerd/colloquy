@@ -41,6 +41,15 @@ const Feed: React.FC = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // сделать один экзэмпляр инстенса сокета в редаксе
+
+    // разобраться с подключение/отключением и отправкой запросов с разных клиентов
+
+    // сделать логику статусов онлайна (вход, выход, изменение вручную)
+
+    // вернуть стрикт мод
+
     dispatch(setHasArrowButton(true));
     return () => {
       dispatch(setHasArrowButton(false));
