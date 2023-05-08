@@ -7,12 +7,19 @@ import { User } from './models/users.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
+import { FriendsModule } from 'src/friends/friends.module';
+import { FriendsRequests } from 'src/friends/models/friend-requests.model';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
-  imports: [SequelizeModule.forFeature([User, Role, UserRoles, City]), RolesModule, FilesModule],
+  imports: [
+    SequelizeModule.forFeature([User, Role, UserRoles, City, FriendsRequests]),
+    RolesModule,
+    FilesModule,
+    forwardRef(() => FriendsModule),
+  ],
   exports: [UsersService],
 })
 export class UsersModule {}

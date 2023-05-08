@@ -6,6 +6,8 @@ import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions, SequelizeOptionsFactory } from '@nestjs/sequelize';
 import { EnumConfig } from './enumConfig/enumConfig';
 import { Injectable } from '@nestjs/common';
+import { Friends } from 'src/friends/models/friends.model';
+import { FriendsRequests } from 'src/friends/models/friend-requests.model';
 
 @Injectable()
 export class SequelizeConfigService implements SequelizeOptionsFactory {
@@ -24,7 +26,7 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
       username,
       password,
       database,
-      models: [User, City, Role, UserRoles],
+      models: [User, City, Role, UserRoles, Friends, FriendsRequests],
       autoLoadModels: true,
       synchronize: true,
     };

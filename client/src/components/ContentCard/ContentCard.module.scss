@@ -61,7 +61,11 @@
 .last-seen {
   color: $green-main;
   font-size: 1.8rem;
-  //   margin-top: auto;
+}
+
+.last-seen-sm {
+  color: $green-main;
+  font-size: 1.4rem;
 }
 
 .rec-members {

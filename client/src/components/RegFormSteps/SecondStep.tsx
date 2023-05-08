@@ -117,6 +117,7 @@ const SecondStep: React.FC<SecondStepProps> = ({
             value={'male'}
             setValue={updateFields}
             checked={user_gender === 'male' ? true : false}
+            name={'user_gender'}
           />
           <GenderInput
             type={'female'}
@@ -125,7 +126,11 @@ const SecondStep: React.FC<SecondStepProps> = ({
             value={'female'}
             setValue={updateFields}
             checked={user_gender === 'female' ? true : false}
+            name={'user_gender'}
           />
+          {
+            // сделать заполнение объетка с фильтром и отправлять на сервер с задержкой в секунду
+          }
         </div>
       </div>
       <div className={s['input-block']}>

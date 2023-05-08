@@ -42,6 +42,7 @@ type ProfileContentProps = {
   data: any;
   className?: string;
   isAdmin?: boolean;
+  userId?: number;
 };
 
 // поставить шрифт, переделать компонент
@@ -51,6 +52,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
   data,
   className,
   isAdmin,
+  userId,
 }) => {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
@@ -163,12 +165,12 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
                   <Link to="/friends" className={s['friend']} key={item.id}>
                     <HeaderAvatar
                       className={className ? 'group-content' : 'content-block'}
-                      img={item.img}
+                      img={item.user?.user_avatar}
                       title={''}
                       onlineType={item.onlineType}
                       indicatorClass={['lg-indicator', 'border-friend']}
                     />
-                    <span className={s['name']}>{item.name}</span>
+                    <span className={s['name']}>{item.user?.user_name}</span>
                   </Link>
                 ),
               )}
@@ -247,21 +249,38 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
               </Link>
               <p className={s['online']}>
                 Онлайн:{' '}
-                <span>{data?.filter((item: any) => item.onlineType !== 'pc-offline').length}</span>
+                <span>
+                  {
+                    data?.filter(
+                      (item: any) =>
+                        item?.[userId === item?.user?.id ? 'friend' : 'user']?.online_type !==
+                        'pc-offline',
+                    ).length
+                  }
+                </span>
               </p>
             </div>
             <div className={s['friend-list']}>
               {data?.map((item: any, index: number) =>
                 index >= visibleFriends ? null : (
-                  <Link to="/friends" className={s['friend']} key={item.id}>
+                  <Link
+                    to={`/profile/${
+                      item?.[userId === item?.user?.id ? 'friend' : 'user']?.user_nickname
+                    }`}
+                    className={s['friend']}
+                    key={item?.id}>
                     <HeaderAvatar
                       className={'content-block'}
-                      img={item.img}
-                      title={''}
-                      onlineType={item.onlineType}
+                      img={item?.[userId === item?.user?.id ? 'friend' : 'user']?.user_avatar}
+                      title={item?.[userId === item?.user?.id ? 'friend' : 'user']?.user_nickname}
+                      onlineType={
+                        item?.[userId === item?.user?.id ? 'friend' : 'user']?.online_type
+                      }
                       indicatorClass={['sm-indicator', 'border-elem']}
                     />
-                    <span className={s['name']}>{item.name}</span>
+                    <span className={s['name']}>
+                      {item?.[userId === item?.user?.id ? 'friend' : 'user']?.user_name}
+                    </span>
                   </Link>
                 ),
               )}

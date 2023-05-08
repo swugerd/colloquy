@@ -59,6 +59,7 @@ const useAuth = (shouldCheckAuth: boolean = true) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogLoading, setIsLogLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('jwtToken');

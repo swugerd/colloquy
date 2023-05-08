@@ -21,26 +21,14 @@ const ProfileHeader: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const socket = useContext(SocketContext);
-
-  const [onlineStatus, setOnlineStatus] = useState('pc-online');
+  const [onlineStatus, setOnlineStatus] = useState('');
 
   useEffect(() => {
     if (!isLoading && user) {
+      setOnlineStatus(user?.online_type !== 'pc-offline' ? user?.online_type : 'pc-online');
       dispatch(setUserName(user?.user_name));
     }
   }, [isLoading]);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('statusChange', (data) => {
-        console.log(socket.id, data);
-      });
-      return () => {
-        socket.disconnect();
-      };
-    }
-  }, [socket]);
 
   const {
     user: { name: userName },

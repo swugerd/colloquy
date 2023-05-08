@@ -5,15 +5,22 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/users.model';
-import { Op, where } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { UploadedFile } from 'src/files/files.service';
+import { FriendsService } from 'src/friends/friends.service';
+import { UserQueryParams } from './validators/user-query.validator';
+import * as moment from 'moment';
+import { FriendsRequests } from 'src/friends/models/friend-requests.model';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User) private readonly userRepository: typeof User,
+    @InjectModel(FriendsRequests)
+    private readonly friendsRequestsRepository: typeof FriendsRequests,
     private readonly roleService: RolesService,
     private readonly fileService: FilesService,
+    private readonly friendsService: FriendsService,
   ) {}
 
   async createUser(dto: CreateUserDto) {
@@ -38,6 +45,36 @@ export class UsersService {
       include: { all: true },
     });
     return user;
+  }
+
+  async getAllUsers() {
+    const users = await this.userRepository.findAll({
+      include: { all: true },
+    });
+    return users;
+  }
+
+  async getAllUsersWithoutMe(id: number) {
+    const friendsIds = (await this.friendsService.getFriendsById(id)).map(
+      (item) => item[Number(id) === item.friend.id ? 'user' : 'friend'].id,
+    );
+
+    const friendsReqsIds = (
+      await this.friendsRequestsRepository.findAll({
+        where: { [Op.or]: { user_income_id: id, user_outcome_id: id } },
+      })
+    ).map((item) => {
+      return Number(item.user_income_id) === Number(id)
+        ? item.user_outcome_id
+        : item.user_income_id;
+    });
+
+    const users = await this.userRepository.findAll({
+      where: { [Op.not]: { id: [id, ...friendsIds, ...friendsReqsIds] } },
+      include: { all: true },
+      order: Sequelize.fn('random'),
+    });
+    return users;
   }
 
   async getUserById(id: number) {
@@ -87,5 +124,59 @@ export class UsersService {
     await this.fileService.deleteFile(user.user_avatar);
 
     return user.destroy();
+  }
+
+  async filterUsers(query: UserQueryParams) {
+    const { userId, q, city, ageFrom, ageTo, femaleGender, maleGender, online } = query;
+
+    const today = new Date();
+    const ageFromTimestamp = ageTo ? today.getFullYear() - ageTo : 1900;
+    const ageToTimestamp = ageFrom ? today.getFullYear() - ageFrom : 2009;
+
+    const friendsIds = (await this.friendsService.getFriendsById(userId)).map(
+      (item) => item[Number(userId) === item.friend.id ? 'user' : 'friend'].id,
+    );
+
+    const friendsReqsIds = (
+      await this.friendsRequestsRepository.findAll({
+        where: { [Op.or]: { user_income_id: userId, user_outcome_id: userId } },
+      })
+    ).map((item) => {
+      return Number(item.user_income_id) === Number(userId)
+        ? item.user_outcome_id
+        : item.user_income_id;
+    });
+
+    const where = {
+      [Op.not]: { id: [userId, ...friendsIds, ...friendsReqsIds] },
+      ...(q
+        ? {
+            [Op.or]: [
+              { user_name: { [Op.like]: `%${q}%` } },
+              { user_nickname: { [Op.like]: `%${q}%` } },
+            ],
+          }
+        : {}),
+      ...(city ? { city_id: city } : {}),
+      ...{
+        user_birthdate: {
+          [Op.between]: [
+            moment(`${ageFromTimestamp}-01-01`).format('YYYY-MM-DD HH:mm:ssZ'),
+            moment(`${ageToTimestamp}-12-31`).format('YYYY-MM-DD HH:mm:ssZ'),
+          ],
+        },
+      },
+      ...(maleGender
+        ? { user_gender: maleGender }
+        : femaleGender
+        ? { user_gender: femaleGender }
+        : maleGender && femaleGender
+        ? { user_gender: { [Op.or]: [maleGender, femaleGender] } }
+        : {}),
+      ...(online ? { online_type: { [Op.notIn]: ['pc-offline'] } } : {}),
+    };
+
+    const users = this.userRepository.findAll({ where });
+    return users;
   }
 }

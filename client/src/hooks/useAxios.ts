@@ -11,9 +11,14 @@ export const useAxios: (axiosParams: {
     Authorization?: string;
     ['Content-Type']?: string;
   };
-}) => { response: any; isLoading: boolean; error: any } = (axiosParams: {
+}) => {
+  response: any;
+  isLoading: boolean;
+  error: any;
+  setResponse: (response: any) => void;
+} = (axiosParams: {
   method: string;
-  url: string;
+  url: string | null;
   data?: any;
   headers?: {
     Authorization?: string;
@@ -22,11 +27,13 @@ export const useAxios: (axiosParams: {
 }) => {
   const [response, setResponse] = useState(undefined);
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentRequest, setCurrentRequest] = useState('');
 
   useEffect(() => {
     const fetchData = async (params: any) => {
       try {
+        setIsLoading(true);
         const result = await axios.request(params);
         setResponse(result.data);
       } catch (error: any) {
@@ -35,8 +42,11 @@ export const useAxios: (axiosParams: {
         setIsLoading(false);
       }
     };
-    fetchData(axiosParams);
-  }, []);
+    if (axiosParams.url && axiosParams.url !== currentRequest) {
+      setCurrentRequest(axiosParams.url);
+      fetchData(axiosParams);
+    }
+  }, [axiosParams.url, currentRequest]);
 
-  return { response, error, isLoading };
+  return { response, error, isLoading, setResponse };
 };

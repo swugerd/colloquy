@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import SquareButton from '../UI/SquareButton/SquareButton';
 import s from './ContentCard.module.scss';
@@ -17,10 +17,14 @@ import Icon from '../UI/Icon/Icon';
 import useWindowSize from '../../hooks/useWindowResize';
 import { useAppDispatch } from './../../redux/store';
 import { setConfirmModalType, setIsConfirmModalOpen } from '../../redux/modal/slice';
+import moment from 'moment';
+import 'moment/locale/ru';
+import { User } from '../../hooks/useAuth';
+import axios from 'axios';
 
 type ContentCardProps = {
   size: 'lg' | 'sm';
-  type: 'friend' | 'group' | 'members' | 'blacklist' | 'moderation' | 'orders';
+  type: string | null;
   contentData: {
     img: string;
     status?: string;
@@ -28,9 +32,15 @@ type ContentCardProps = {
     members?: number;
     isPrivate?: boolean;
     name: string;
+    link: string;
   };
   isSearchPage: boolean;
   isAdmin?: boolean;
+  currentUser?: User | null | undefined;
+  user?: User | null | undefined;
+  setResponse?: (response: any) => void;
+  responseLink?: string;
+  onlineType?: string;
 };
 
 const ContentCard: React.FC<ContentCardProps> = ({
@@ -38,9 +48,15 @@ const ContentCard: React.FC<ContentCardProps> = ({
   contentData,
   type,
   isSearchPage,
+  user,
+  currentUser,
+  setResponse,
   isAdmin,
+  responseLink,
+  onlineType,
 }) => {
   const dispatch = useAppDispatch();
+
   const handleConfirmModalOpen = (
     e: any,
     modalType: 'friend' | 'group' | 'pageDelete' | 'passwordEnter',
@@ -50,27 +66,112 @@ const ContentCard: React.FC<ContentCardProps> = ({
     dispatch(setConfirmModalType(modalType));
   };
   // сделать проп класснэйм и убрать условия (?)
-  const { img, status, lastSeen, members, name, isPrivate } = contentData;
+  const { img, status, lastSeen, members, name, isPrivate, link } = contentData;
+
   const { width } = useWindowSize();
+
   const [isActionsOpen, setIsActionsOpen] = useState(false);
+
+  const [params, setParams] = useSearchParams();
+
+  const addFriend = async () => {
+    if (currentUser && user) {
+      const response: any = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/${user.id}`,
+        data: {
+          user2_id: currentUser.id,
+        },
+      });
+      const users = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/filter?filterType=income&userId=${user.id}`,
+      });
+      setResponse && setResponse(users.data);
+    }
+  };
+
+  const createFriendReq = async () => {
+    if (currentUser && user) {
+      const response: any = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/req/${user.id}`,
+        data: {
+          user_income_id: currentUser.id,
+        },
+      });
+      const users = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/users/filter?userId=${user.id}`,
+      });
+      setResponse && setResponse(users.data);
+    }
+  };
+
+  const deleteFriend = async () => {
+    if (currentUser && user) {
+      const response: any = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/${user.id}`,
+        data: {
+          user2_id: currentUser.id,
+        },
+      });
+      const users = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/${
+          params.get('filter') === 'online'
+            ? `filter?filterType=${params.get('filter')}&userId=${user.id}`
+            : user.id
+        }`,
+      });
+      setResponse && setResponse(users.data);
+    }
+  };
+
+  const deleteFriendReq = async () => {
+    if (currentUser && user) {
+      const response: any = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/req/${user.id}`,
+        data: {
+          user_income_id: currentUser.id,
+        },
+      });
+      const users = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/filter?${
+          params.get('filter') && `filterType=${params.get('filter')}&`
+        }userId=${user.id}`,
+      });
+      setResponse && setResponse(users.data);
+    }
+  };
+
   return (
     <div className={size === 'lg' ? s['friend'] : sideContentS['user']}>
       <Link
         className={size === 'lg' ? s['link'] : ''}
-        to={type === 'friend' ? '/profile/swugerd' : '/groups/colloquy'}>
+        to={
+          type === 'friend' || type === 'income' || type === 'outcome'
+            ? `/profile/${link}`
+            : `/groups/${link}`
+        }>
         <HeaderAvatar
           className={size === 'lg' ? 'friend' : 'recs'}
           img={img}
           title={'image'}
           indicatorClass={
-            type === 'friend'
+            type === 'friend' || type === 'income' || type === 'outcome'
               ? [
                   size === 'lg' ? 'friend-indicator' : 'sm-indicator',
                   size === 'lg' ? 'border-friend' : 'border-elem',
                 ]
               : undefined
           }
-          onlineType={type === 'friend' ? 'pc-online' : ''}
+          onlineType={
+            type === 'friend' || type === 'income' || type === 'outcome' ? onlineType : ''
+          }
         />
         <div
           className={`${size === 'lg' ? s['friend-info'] : sideContentS['user-info']} ${
@@ -107,7 +208,11 @@ const ContentCard: React.FC<ContentCardProps> = ({
               <span>{members && numberWithSpaces(members)}</span> участников
             </p>
           ) : (
-            lastSeen && <span className={s['last-seen']}>Был в сети {lastSeen}</span>
+            lastSeen && (
+              <span className={s[size === 'lg' ? 'last-seen' : 'last-seen-sm']}>
+                Был в сети {moment(lastSeen).locale('ru').fromNow()}
+              </span>
+            )
           )}
         </div>
       </Link>
@@ -125,7 +230,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
               icon={closeSvg}
               id={'close'}
               hasLock={false}
-              onClick={(e) => handleConfirmModalOpen(e, 'friend')}
+              onClick={deleteFriend}
             />
           </>
         )}
@@ -137,11 +242,23 @@ const ContentCard: React.FC<ContentCardProps> = ({
               id={'messages'}
               hasLock={false}
             />
-            <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={false} />
+            <SquareButton
+              className={'friend-button'}
+              icon={addSvg}
+              id={'add'}
+              hasLock={false}
+              onClick={createFriendReq}
+            />
           </>
         )}
         {type === 'friend' && size === 'sm' && (
-          <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={false} />
+          <SquareButton
+            className={'friend-button'}
+            icon={addSvg}
+            id={'add'}
+            hasLock={false}
+            onClick={createFriendReq}
+          />
         )}
         {type === 'group' && size === 'lg' && isSearchPage === false && (
           <SquareButton
@@ -221,6 +338,35 @@ const ContentCard: React.FC<ContentCardProps> = ({
               icon={addSvg}
               id={'add'}
               hasLock={isPrivate}
+            />
+          </>
+        )}
+        {type === 'income' && (
+          <>
+            <SquareButton
+              className={'friend-button'}
+              icon={closeSvg}
+              id={'close'}
+              hasLock={false}
+              onClick={deleteFriendReq}
+            />
+            <SquareButton
+              className={'friend-button'}
+              icon={addSvg}
+              id={'add'}
+              hasLock={isPrivate}
+              onClick={addFriend}
+            />
+          </>
+        )}
+        {type === 'outcome' && (
+          <>
+            <SquareButton
+              className={'friend-button'}
+              icon={closeSvg}
+              id={'close'}
+              hasLock={false}
+              onClick={deleteFriendReq}
             />
           </>
         )}

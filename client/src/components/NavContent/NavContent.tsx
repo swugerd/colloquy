@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import s from './NavContent.module.scss';
 import findFriendsSvg from '../../assets/img/icons/find-friends.svg';
 import findGroupsSvg from '../../assets/img/icons/find-groups.svg';
@@ -22,9 +22,11 @@ import { selectMobile } from '../../redux/mobile/selector';
 type NavContentProps = {
   page: 'friends' | 'groups' | 'members';
   isSearchPage: boolean;
+  setValue: (fields: any) => void;
+  value: string;
 };
 
-const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
+const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage, setValue, value }) => {
   const { width } = useWindowSize();
 
   const { mobile } = useSelector(selectMobile);
@@ -68,6 +70,24 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
 
   const [selectedFilter, setSelectedFilter] = useState(0);
   const [onSearchPage, setOnsearchPage] = useState(false);
+
+  const [params, setSearchParams] = useSearchParams();
+
+  const filterType = params.get('filter');
+
+  useEffect(() => {
+    if (!isSearchPage) {
+      setSelectedFilter(
+        filterType === 'online'
+          ? 1
+          : filterType === 'income'
+          ? 2
+          : filterType === 'outcome'
+          ? 3
+          : 0,
+      );
+    }
+  }, [params]);
 
   const members = page === 'members' ? 123456 : 0;
 
@@ -145,9 +165,9 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage }) => {
           placeholder={'Начните вводить'}
           type={'text'}
           inputType={'search'}
-          name={''}
-          value={''}
-          setValue={() => {}}
+          name={'q'}
+          value={value}
+          setValue={setValue}
         />
         {width <= 550 && (
           <div className={`${s['buttons']} ${mobile.backText ? s['dnone'] : ''}`}>

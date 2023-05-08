@@ -11,9 +11,14 @@ import {
   UploadedFile,
   UseInterceptors,
   Delete,
+  Query,
+  ValidationPipe,
+  ParseIntPipe,
+  ParseBoolPipe,
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UserQueryParams } from './validators/user-query.validator';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +27,40 @@ export class UsersController {
   @Post()
   create(@Body() dto: CreateUserDto) {
     return this.userService.createUser(dto);
+  }
+
+  @Get()
+  getAll() {
+    return this.userService.getAllUsers();
+  }
+
+  @Get('/filter')
+  filter(
+    @Query('userId') userId: number,
+    @Query('q') q?: string,
+    @Query('city') city?: number,
+    @Query('ageFrom') ageFrom?: number,
+    @Query('ageTo') ageTo?: number,
+    @Query('maleGender') maleGender?: string,
+    @Query('femaleGender') femaleGender?: string,
+    @Query('online') online?: boolean,
+  ) {
+    const query: UserQueryParams = {
+      userId,
+      q,
+      city,
+      ageFrom,
+      ageTo,
+      maleGender,
+      femaleGender,
+      online,
+    };
+    return this.userService.filterUsers(query);
+  }
+
+  @Get('/:id')
+  getAllWithoutMe(@Param('id') id: number) {
+    return this.userService.getAllUsersWithoutMe(id);
   }
 
   @Get('/getById/:id')

@@ -750,6 +750,7 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
                     status,
                     lastSeen,
                     name,
+                    link: '',
                   }}
                   type={page === 'blacklist' || page === 'moderation' ? 'blacklist' : 'orders'}
                   isSearchPage={false}

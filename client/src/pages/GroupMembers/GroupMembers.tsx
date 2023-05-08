@@ -119,6 +119,7 @@ const GroupMembers: React.FC = () => {
             checked={false}
             value={''}
             setValue={() => {}}
+            name=""
           />
           <GenderInput
             type={'female'}
@@ -127,6 +128,7 @@ const GroupMembers: React.FC = () => {
             checked={false}
             value={''}
             setValue={() => {}}
+            name=""
           />
         </div>
       </div>
@@ -147,7 +149,7 @@ const GroupMembers: React.FC = () => {
   return (
     <>
       <div className={s['members']}>
-        <NavContent page={'members'} isSearchPage={true} />
+        <NavContent page={'members'} isSearchPage={true} setValue={() => {}} value={''} />
         <ul className={s['list']}>
           {members.map(({ id, name, img, status, lastSeen }) => (
             <li className={s['item']} key={id}>
@@ -158,6 +160,7 @@ const GroupMembers: React.FC = () => {
                   status,
                   lastSeen,
                   name,
+                  link: '',
                 }}
                 type={'members'}
                 isSearchPage={false}

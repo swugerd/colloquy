@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize';
 import {
   BelongsTo,
   Column,
@@ -73,7 +74,11 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: true })
   user_about: string;
 
-  @Column({ type: DataType.DATE, allowNull: false, defaultValue: new Date().toISOString() })
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  })
   last_seen: string;
 
   @Column({ type: DataType.STRING, allowNull: false, defaultValue: 'pc-online' })

@@ -12,11 +12,13 @@ import * as path from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { CitiesModule } from './cities/cities.module';
 import { GatewayModule } from './gateway/gateway.module';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+      load: [databaseConfig],
     }),
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, '..', 'src', 'static'),
@@ -25,9 +27,6 @@ import { GatewayModule } from './gateway/gateway.module';
       imports: [ConfigModule],
       useClass: SequelizeConfigService,
     }),
-    ConfigModule.forRoot({
-      load: [databaseConfig],
-    }),
     RolesModule,
     UsersModule,
     GroupsModule,
@@ -35,6 +34,7 @@ import { GatewayModule } from './gateway/gateway.module';
     FilesModule,
     CitiesModule,
     GatewayModule,
+    FriendsModule,
   ],
   controllers: [],
   providers: [],

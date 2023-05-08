@@ -72,7 +72,9 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
         onChange={(selectedOption: any) => setValue({ [name]: parseInt(selectedOption.id) })}
         options={options}
         name={name}
-        defaultInputValue={options.find((option) => Number(option.id) === Number(value))?.label}
+        defaultInputValue={
+          value ? options?.find((option) => Number(option.id) === Number(value))?.label : ''
+        }
         className={`${className ? s[className] : ''}`}
         classNames={{
           control: (state: any) => `${s['control']} ${state.isFocused ? s['focus'] : ''}`,

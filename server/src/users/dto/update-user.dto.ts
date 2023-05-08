@@ -10,4 +10,6 @@ export class UpdateUserDto {
   readonly user_telegram?: string;
   readonly user_status?: string;
   readonly user_avatar?: string;
+  readonly online_type?: 'pc-online' | 'pc-dnd' | 'pc-afk' | 'pc-offline';
+  readonly id?: number;
 }

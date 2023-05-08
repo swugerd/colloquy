@@ -375,6 +375,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({ page, title }) => {
                 status,
                 lastSeen,
                 name,
+                link: '',
               }}
               type={page === 'blacklist' || page === 'moderation' ? 'blacklist' : 'orders'}
               isSearchPage={false}

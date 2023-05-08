@@ -8,6 +8,7 @@ type InputButtonProps = {
   name: string;
   id: string;
   type: 'radio' | 'checkbox';
+  value?: string;
 };
 
 const InputButton: React.FC<InputButtonProps> = ({
@@ -16,6 +17,7 @@ const InputButton: React.FC<InputButtonProps> = ({
   onChange,
   name,
   id,
+  value,
   type,
 }) => {
   return (
@@ -25,8 +27,9 @@ const InputButton: React.FC<InputButtonProps> = ({
         name={name}
         className={`${s['inp-disabled']}`}
         checked={checked}
-        onChange={onChange}
+        onChange={(e: any) => onChange({ [name]: e.target.value })}
         id={id}
+        value={value}
       />
       <div className={`${s['custom-btn']} ${s['custom-btn-small']}`}></div>
     </div>

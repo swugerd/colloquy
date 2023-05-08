@@ -17,7 +17,7 @@ import appsSvg from '../../assets/img/icons/apps.svg';
 import gamesSvg from '../../assets/img/icons/games.svg';
 import useAuth from '../../hooks/useAuth';
 import { useAppDispatch } from '../../redux/store';
-import { setUserNickname } from '../../redux/auth/slice';
+import { setUserId, setUserNickname } from '../../redux/auth/slice';
 import { selectIsAuth } from '../../redux/auth/selector';
 import { useSelector } from 'react-redux';
 
@@ -32,6 +32,7 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     if (!isLoading && user) {
       dispatch(setUserNickname(user?.user_nickname));
+      dispatch(setUserId(user?.id));
     }
   }, [isLoading]);
 

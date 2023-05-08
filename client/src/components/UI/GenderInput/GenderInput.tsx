@@ -10,6 +10,7 @@ type GenderInputProps = {
   inputType: 'radio' | 'checkbox';
   checked: boolean;
   value: string;
+  name: string;
   setValue: (value: any) => void;
 };
 
@@ -20,16 +21,17 @@ const GenderInput: React.FC<GenderInputProps> = ({
   inputType,
   value,
   setValue,
+  name,
   checked,
 }) => {
   return (
     <div className={`${s['radio-btn']} ${className ? s[className] : ''}`}>
       <input
         type={inputType}
-        name="user_gender"
+        name={name}
         value={value}
         checked={checked}
-        onChange={(e: any) => setValue({ user_gender: e.target.value })}
+        onChange={(e: any) => setValue({ [name]: e.target.value })}
         className={`${s['inp-disabled']} ${iconS['inp-check']}`}
       />
       <div className={`${s['custom-btn']} ${s[type === 'male' ? 'male' : 'female']}`}>

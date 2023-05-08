@@ -18,7 +18,7 @@ import img from '../../assets/uploads/test/ebalo.png';
 import { Link, NavLink } from 'react-router-dom';
 import Notify from '../UI/Notify/Notify';
 import { useSelector } from 'react-redux';
-import { setIsAuth, setUserNickname } from '../../redux/auth/slice';
+import { setIsAuth, setUserId, setUserName, setUserNickname } from '../../redux/auth/slice';
 import { selectMobile } from '../../redux/mobile/selector';
 import { setIsSidebarShow } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
@@ -39,7 +39,7 @@ const MobileSidebar: React.FC = () => {
   const { logout, user, isLoading } = useAuth();
 
   const {
-    user: { nickname: userNickname },
+    user: { nickname: userNickname, name: userName },
   } = useSelector(selectIsAuth);
 
   useEffect(() => {
@@ -130,6 +130,14 @@ const MobileSidebar: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    if (!isLoading && user) {
+      dispatch(setUserNickname(user?.user_nickname));
+      dispatch(setUserId(user?.id));
+      dispatch(setUserName(user?.user_name));
+    }
+  }, [isLoading]);
+
   const handleLogOut = () => {
     localStorage.removeItem('jwtToken');
     logout();
@@ -150,9 +158,7 @@ const MobileSidebar: React.FC = () => {
             indicatorClass={[`${width >= 550 ? 'lg-indicator' : 'md-indicator'}`, 'border-sub-bg']}
           />
           <div className={s['info']}>
-            <span className={s['name']}>
-              {!isLoading && user ? `${user.user_name} ${user.user_surname}` : 'Загрузка'}
-            </span>
+            <span className={s['name']}>{!isLoading && user ? `${userName}` : 'Загрузка'}</span>
             <p className={s['status']}>{!isLoading && user ? user.user_status : 'Загрузка'}</p>
           </div>
         </Link>

@@ -5,6 +5,7 @@ import s from './Profile.module.scss';
 import moreSvg from '../../assets/img/icons/dots.svg';
 import chatSvg from '../../assets/img/icons/chat.svg';
 import addSvg from '../../assets/img/icons/add.svg';
+import markSvg from '../../assets/img/icons/markdown.svg';
 import blockSvg from '../../assets/img/icons/block.svg';
 import { useAppDispatch } from './../../redux/store';
 import { setChatId, setIsInfoName } from '../../redux/mobile/slice';
@@ -20,6 +21,7 @@ import useAuth, { User } from '../../hooks/useAuth';
 import { useAxios } from '../../hooks/useAxios';
 import Preloader from '../../components/Preloader/Preloader';
 import NotFoundBlock from '../../components/NotFoundBlock/NotFoundBlock';
+import axios from 'axios';
 
 const Profile: React.FC = () => {
   useSetPageTitle('Профиль');
@@ -85,27 +87,27 @@ const Profile: React.FC = () => {
 
   // Переделать css и вынести блоки с медиа в компонент
 
-  const stories: { id: number; story: string; user: { id: number; name: string; img: string } }[] =
-    [
-      { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-      // { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-      // { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-      // { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-      // { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-      // { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-      // { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-      // { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-      // { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-    ];
+  // const stories: { id: number; story: string; user: { id: number; name: string; img: string } }[] =
+  //   [
+  //     // { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
+  //     // { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
+  //     // { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
+  //     // { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
+  //     // { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
+  //     // { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
+  //     // { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
+  //     // { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
+  //     // { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
+  //   ];
 
-  const friends: { id: number; img: string; name: string; onlineType: string }[] = [
-    { id: 1, img: ava, name: 'Рабадонович скамерулевичивоынар', onlineType: 'pc-online' },
-    { id: 2, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-dnd' },
-    { id: 3, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-afk' },
-    { id: 4, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-offline' },
-    { id: 5, img: ava, name: 'Паша', onlineType: 'pc-offline' },
-    { id: 6, img: ava, name: 'Паша', onlineType: 'pc-offline' },
-  ];
+  // const friends: { id: number; img: string; name: string; onlineType: string }[] = [
+  //   { id: 1, img: ava, name: 'Рабадонович скамерулевичивоынар', onlineType: 'pc-online' },
+  //   { id: 2, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-dnd' },
+  //   { id: 3, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-afk' },
+  //   { id: 4, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-offline' },
+  //   { id: 5, img: ava, name: 'Паша', onlineType: 'pc-offline' },
+  //   { id: 6, img: ava, name: 'Паша', onlineType: 'pc-offline' },
+  // ];
 
   const groups: { id: number; img: string; name: string; members: number }[] = [
     { id: 1, img: ava, name: 'ВЫОЛФВРЫФШГРВЫРФЫ вфывыф фвыв', members: 12 },
@@ -160,6 +162,96 @@ const Profile: React.FC = () => {
 
   const user: User | {} = !isLoading && response ? response : {};
 
+  const {
+    response: requests,
+    error: requestsError,
+    isLoading: isRequestsLoading,
+  } = useAxios({
+    method: 'get',
+    url:
+      currentUser && (user as User).id && currentUser.id !== (user as User).id
+        ? `${process.env.REACT_APP_HOSTNAME}/api/friends/req/${currentUser.id}?userId=${
+            (user as User)?.id
+          }`
+        : '',
+  });
+
+  const {
+    response: friends,
+    error: friendsError,
+    isLoading: isFriendsLoading,
+  } = useAxios({
+    method: 'get',
+    url:
+      currentUser && (user as User).id
+        ? `${process.env.REACT_APP_HOSTNAME}/api/friends/${(user as User).id}
+          `
+        : '',
+  });
+
+  const createFriendReq = async () => {
+    const response =
+      currentUser && !isCurrentUserLoading && user
+        ? await axios({
+            method: 'post',
+            url: `${process.env.REACT_APP_HOSTNAME}/api/friends/req/${currentUser.id}`,
+            data: {
+              user_income_id: (user as User).id,
+            },
+          })
+        : '';
+    setActionIcon(null);
+  };
+
+  const addFriend = async () => {
+    if (currentUser && user) {
+      const response: any = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/friends/${currentUser.id}`,
+        data: {
+          user2_id: (user as User).id,
+        },
+      });
+    }
+    setActionIcon(null);
+  };
+
+  const [actionIcon, setActionIcon] = useState<{
+    id: string;
+    icon: string;
+    func: () => void;
+  } | null>(null);
+
+  useEffect(() => {
+    if (currentUser && requests?.user_income_id === currentUser.id) {
+      setActionIcon({
+        icon: markSvg,
+        id: 'markdown',
+        func: addFriend,
+      });
+    }
+
+    if (
+      currentUser &&
+      friends &&
+      !friends?.some(
+        (item: any) => item.user1_id === currentUser.id || item.user2_id === currentUser.id,
+      ) &&
+      requests?.user_income_id !== currentUser.id &&
+      requests?.user_outcome_id !== currentUser.id
+    ) {
+      setActionIcon({
+        icon: addSvg,
+        id: 'add',
+        func: createFriendReq,
+      });
+    }
+
+    if (user && currentUser && currentUser.id === (user as User).id) {
+      setActionIcon(null);
+    }
+  }, [friends, requests, currentUser]);
+
   const isAdmin = userRoute === currentUser?.user_nickname ? true : false;
 
   const formatPhoneNumber = (number: number) => {
@@ -206,7 +298,14 @@ const Profile: React.FC = () => {
                       </button>
                       <div className={`${s['actions']} ${isActionsOpen ? s['active'] : ''}`}>
                         <SquareButton className={'more-btn'} icon={chatSvg} id={'messages'} />
-                        <SquareButton className={'more-btn'} icon={addSvg} id={'add'} />
+                        {actionIcon && (
+                          <SquareButton
+                            className={'more-btn'}
+                            icon={actionIcon.icon}
+                            id={actionIcon.id}
+                            onClick={actionIcon.func}
+                          />
+                        )}
                         <SquareButton className={'more-btn'} icon={blockSvg} id={'block'} />
                       </div>
                     </div>
@@ -489,9 +588,9 @@ const Profile: React.FC = () => {
               )}
             </div>
           )}
-          <ProfileContent contentType={'stories'} data={stories} isAdmin={isAdmin} />
+          {/* <ProfileContent contentType={'stories'} data={[]} isAdmin={isAdmin} /> */}
           {width <= 1150 && <ProfileContent contentType={'photos'} data={photos} />}
-          <ProfileContent contentType={'friends'} data={friends} />
+          <ProfileContent contentType={'friends'} data={friends} userId={(user as User).id} />
           <ProfileContent contentType={'groups'} data={groups} />
           <ProfileContent contentType={'music'} data={music} />
           <ProfileContent contentType={'videos'} data={videos} />
@@ -522,9 +621,17 @@ const Profile: React.FC = () => {
                       <button className={`${s['more-btn']} ${s['list-btn']}`}>
                         <Icon src={chatSvg} id={'messages'} className={'profile-action'} />
                       </button>
-                      <button className={`${s['more-btn']} ${s['list-btn']}`}>
-                        <Icon src={addSvg} id={'add'} className={'profile-action'} />
-                      </button>
+                      {actionIcon && (
+                        <button
+                          className={`${s['more-btn']} ${s['list-btn']}`}
+                          onClick={actionIcon.func}>
+                          <Icon
+                            src={actionIcon.icon}
+                            id={actionIcon.id}
+                            className={'profile-action'}
+                          />
+                        </button>
+                      )}
                       <button className={`${s['more-btn']} ${s['list-btn']}`}>
                         <Icon src={blockSvg} id={'block'} className={'profile-action'} />
                       </button>

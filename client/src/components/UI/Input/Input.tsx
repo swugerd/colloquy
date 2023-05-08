@@ -89,7 +89,7 @@ const Input: React.FC<InputProps> = ({
   };
 
   const clearInputHandler = () => {
-    setValue('');
+    setValue({ [name]: '' });
     if (inputRef.current) {
       inputRef.current.focus();
     }

@@ -102,6 +102,7 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
                   status,
                   name,
                   members,
+                  link: '',
                 }}
                 type={'group'}
                 isSearchPage={false}
@@ -116,6 +117,7 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
                   status,
                   name,
                   members,
+                  link: '',
                 }}
                 type={'group'}
                 isSearchPage={false}
@@ -195,7 +197,7 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
   return (
     <>
       <div className={s['groups']}>
-        <NavContent page={'groups'} isSearchPage={isSearchPage} />
+        <NavContent page={'groups'} isSearchPage={isSearchPage} setValue={() => {}} value={''} />
         <ul className={s['list']}>
           {groups.map(({ id, name, img, status, members, isPrivate }) => (
             <li className={s['item']} key={id}>
@@ -207,6 +209,7 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
                   members,
                   name,
                   isPrivate,
+                  link: '',
                 }}
                 type={'group'}
                 isSearchPage={isSearchPage}

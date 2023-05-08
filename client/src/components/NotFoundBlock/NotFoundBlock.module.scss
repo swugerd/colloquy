@@ -43,6 +43,17 @@
   height: 10rem;
 }
 
+.friends {
+  & .image {
+    width: 20rem;
+    height: 20rem;
+  }
+  & .nothing-text {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+  }
+}
+
 .profile {
   margin: 0 auto;
   align-self: center;

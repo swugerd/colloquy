@@ -14,6 +14,7 @@ import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { SocketContext } from '../../../contexts/SocketContext';
+import { selectIsAuth } from '../../../redux/auth/selector';
 
 type ProfileDropDownProps = {
   setIsDropdownOpen: (isOpen: boolean) => void;
@@ -35,12 +36,15 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = ({
   ];
 
   const socket = useContext(SocketContext);
+  const {
+    user: { id },
+  } = useSelector(selectIsAuth);
 
   // типизировать ивент
   const changeIndexHandler = (e: any, status: string, index: number) => {
     setActiveIndex(index);
-    if (socket) {
-      socket.emit('statusChange', status);
+    if (socket && id) {
+      socket.emit('statusChange', { id, online_type: status });
     }
     setOnlineStatus(status);
 
