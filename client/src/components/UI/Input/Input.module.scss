@@ -545,6 +545,25 @@
   }
 }
 
+.video-name {
+  background: $bg-main;
+  color: $white;
+  font-family: 'OpenSans';
+  font-weight: 600;
+  font-size: 1.6rem;
+  border: 2px solid transparent;
+  transition: 0.2s linear;
+  height: 4rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  &::placeholder {
+    color: $semi-white;
+  }
+  &:focus {
+    border: 2px solid $green-main;
+  }
+}
+
 @media (max-width: 550px) {
   .message-paperclip,
   .message-send,

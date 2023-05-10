@@ -12,8 +12,11 @@ import addSvg from '../../assets/img/icons/add.svg';
 import paperclipSvg from '../../assets/img/icons/paperclip.svg';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { setIsMediaListModalOpen, setMediaListModalType } from '../../redux/modal/slice';
+import { useAxios } from '../../hooks/useAxios';
+import { selectIsAuth } from '../../redux/auth/selector';
+import { User } from '../../hooks/useAuth';
 
 const MobileHeader: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,6 +42,22 @@ const MobileHeader: React.FC = () => {
   }, [mobile]);
 
   const isDisscusion = true;
+
+  const { pathname } = useLocation();
+
+  const userRoute = pathname.split('/')[pathname.split('/').length - 1];
+
+  const {
+    response: user,
+    error: userError,
+    isLoading: isUserLoading,
+  }: { response: User; error: any; isLoading: boolean } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/users/getByNickname/${userRoute}`,
+  });
+  const {
+    user: { id: currentUserId },
+  } = useSelector(selectIsAuth);
 
   return width <= 1150 ? (
     <header className={s['wrapper']}>
@@ -98,7 +117,7 @@ const MobileHeader: React.FC = () => {
             <Icon src={arrowSvg} id={'arrow'} className={'white'} />
           </button>
         )}
-        {mobile.hasAddButton && (
+        {!!(mobile.hasAddButton && currentUserId && user && user.id === currentUserId) && (
           <button className={`${s['add']}`} onClick={arrowHandler}>
             <Icon src={addSvg} id={'add'} className={'white'} />
           </button>

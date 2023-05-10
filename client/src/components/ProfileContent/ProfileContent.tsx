@@ -26,6 +26,10 @@ import {
   setIsUploadMediaModalOpen,
   setUploadMediaModalType,
 } from '../../redux/modal/slice';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/auth/selector';
+import { useAxios } from '../../hooks/useAxios';
+import { User } from '../../hooks/useAuth';
 
 type contentType =
   | 'stories'
@@ -43,9 +47,8 @@ type ProfileContentProps = {
   className?: string;
   isAdmin?: boolean;
   userId?: number;
+  pageType: 'profile' | 'group';
 };
-
-// поставить шрифт, переделать компонент
 
 const ProfileContent: React.FC<ProfileContentProps> = ({
   contentType,
@@ -53,6 +56,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
   className,
   isAdmin,
   userId,
+  pageType,
 }) => {
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
@@ -125,6 +129,18 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
     dispatch(setIsUploadMediaModalOpen(true));
     dispatch(setUploadMediaModalType('story'));
   };
+
+  const {
+    response: user,
+    error: userError,
+    isLoading: isUserLoading,
+  }: { response: User; error: any; isLoading: boolean } = useAxios({
+    method: 'get',
+    url:
+      pageType === 'profile' && userId
+        ? `${process.env.REACT_APP_HOSTNAME}/api/users/getById/${userId}`
+        : '',
+  });
 
   const setTitle = (contentType: contentType) => {
     const titles = [
@@ -364,7 +380,13 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
         jsx: (
           <div className={s['content']}>
             <div className={s['top']}>
-              <Link to="/groups" className={s['link']}>
+              <Link
+                to={`${
+                  pageType === 'profile'
+                    ? `/videos/${user?.user_nickname}`
+                    : `/groups/colloquy/videos`
+                }`}
+                className={s['link']}>
                 <span className={s['all']}>Показать все</span>
                 <div className={s['arrow']}>
                   <Icon src={arrowSvg} id={'arrow'} className={'white'} />
@@ -375,21 +397,26 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
             <div className={s['group-list']}>
               {data?.map((item: any, index: number) =>
                 index >= visibleVideos ? null : (
-                  <div className={s['video-item']} key={item.id}>
+                  <div className={s['video-item']} key={item?.id}>
                     <div className={s['video']}>
                       <video controls={className ? true : false}>
-                        <source src={item.video} type="video/mp4" />
+                        <source
+                          src={`${process.env.REACT_APP_HOSTNAME}/${item?.video_url}`}
+                          type="video/mp4"
+                        />
                       </video>
                     </div>
                     <div className={s['group-info']}>
-                      <span className={s['video-name']}>{item.name}</span>
-                      <Link to="/profile/swugerd" className={s['video-author']}>
-                        {item.author}
+                      <span className={s['video-name']}>{item?.user?.user_name}</span>
+                      <Link
+                        to={`/profile/${item?.user?.user_nickname}`}
+                        className={s['video-author']}>
+                        {item?.user?.user_name}
                       </Link>
-                      <div className={s['views']}>
+                      {/* <div className={s['views']}>
                         <Icon src={viewsSvg} id={'views'} className={'white'} />
                         <span>{item.views}</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 ),
@@ -405,7 +432,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
             {data?.map((item: any, index: number) =>
               index >= visiblePhotos ? null : (
                 <div className={s['photo']} key={item.id}>
-                  <img src={item.img} alt="content" />
+                  <img src={`${process.env.REACT_APP_HOSTNAME}/${item.photo_url}`} alt="content" />
                 </div>
               ),
             )}
@@ -522,7 +549,11 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
               <h5 className={s['sub-title']}>{setTitle(contentType)}</h5>
               {contentType === 'photos' && (
                 <Link
-                  to="/photos"
+                  to={`${
+                    pageType === 'profile'
+                      ? `/photos/${user?.user_nickname}`
+                      : `/groups/colloquy/photos`
+                  }`}
                   className={classNames({
                     [s['link']]: contentType !== 'photos',
                     [s['photo-link']]: contentType === 'photos',

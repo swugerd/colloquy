@@ -86,7 +86,7 @@ const UploadFilesModal: React.FC<UploadFilesModalProps> = ({ onClose }) => {
     },
     {
       id: 4,
-      component: <DragAndDropFile mediaType={'files'} />,
+      component: <DragAndDropFile mediaType={'files'} onChange={() => {}} inputRef={undefined} />,
       type: 'file',
     },
   ];

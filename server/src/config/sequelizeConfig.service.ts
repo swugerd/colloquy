@@ -8,6 +8,10 @@ import { EnumConfig } from './enumConfig/enumConfig';
 import { Injectable } from '@nestjs/common';
 import { Friends } from 'src/friends/models/friends.model';
 import { FriendsRequests } from 'src/friends/models/friend-requests.model';
+import { Group } from 'src/groups/models/group.model';
+import { Thematic } from 'src/thematics/models/thematics.model';
+import { Photo } from 'src/photos/models/photos.model';
+import { Video } from 'src/videos/models/video.model';
 
 @Injectable()
 export class SequelizeConfigService implements SequelizeOptionsFactory {
@@ -26,7 +30,18 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
       username,
       password,
       database,
-      models: [User, City, Role, UserRoles, Friends, FriendsRequests],
+      models: [
+        User,
+        City,
+        Thematic,
+        Role,
+        UserRoles,
+        Friends,
+        FriendsRequests,
+        Group,
+        Photo,
+        Video,
+      ],
       autoLoadModels: true,
       synchronize: true,
     };

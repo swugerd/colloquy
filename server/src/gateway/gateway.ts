@@ -18,16 +18,6 @@ export class MyGateway {
 
   constructor(private readonly usersService: UsersService) {}
 
-  // onModuleInit() {
-  //   this.server.on('connection', (socket) => {
-  //     console.log('ws init connected - ' + socket.id);
-
-  //     socket.on('disconnect', () => {
-  //       console.log('ws disconnected - ' + socket.id);
-  //     });
-  //   });
-  // }
-
   @SubscribeMessage('statusChange')
   onStatusChange(
     @MessageBody()

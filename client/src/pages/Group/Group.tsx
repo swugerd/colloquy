@@ -152,7 +152,12 @@ const Group: React.FC = () => {
           )}
         </div>
         <div className={s['group-content']}>
-          <ProfileContent contentType={'members'} data={members} className={'members-content'} />
+          <ProfileContent
+            contentType={'members'}
+            data={members}
+            className={'members-content'}
+            pageType={'group'}
+          />
           {isClosed ? (
             ''
           ) : (
@@ -162,10 +167,26 @@ const Group: React.FC = () => {
                 data={stories}
                 className={'stories-content'}
                 isAdmin={isAdmin}
+                pageType={'group'}
               />
-              <ProfileContent contentType={'photos'} data={photos} className={'photos-content'} />
-              <ProfileContent contentType={'videos'} data={videos} className={'videos-content'} />
-              <ProfileContent contentType={'music'} data={music} className={'music-content'} />
+              <ProfileContent
+                contentType={'photos'}
+                data={photos}
+                className={'photos-content'}
+                pageType={'group'}
+              />
+              <ProfileContent
+                contentType={'videos'}
+                data={videos}
+                className={'videos-content'}
+                pageType={'group'}
+              />
+              <ProfileContent
+                contentType={'music'}
+                data={music}
+                className={'music-content'}
+                pageType={'group'}
+              />
             </>
           )}
         </div>

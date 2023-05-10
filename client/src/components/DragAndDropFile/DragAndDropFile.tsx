@@ -8,9 +8,11 @@ import uploadSvg from '../../assets/img/icons/upload.svg';
 
 type DragAndDropFileProps = {
   mediaType: 'story' | 'audio' | 'files' | 'photo' | 'video';
+  onChange: (e: any) => void;
+  inputRef: any;
 };
 
-const DragAndDropFile: React.FC<DragAndDropFileProps> = ({ mediaType }) => {
+const DragAndDropFile: React.FC<DragAndDropFileProps> = ({ mediaType, onChange, inputRef }) => {
   const { width } = useWindowSize();
   return (
     <div className={s['border-file']}>
@@ -33,7 +35,13 @@ const DragAndDropFile: React.FC<DragAndDropFileProps> = ({ mediaType }) => {
         <label className={s['green']} htmlFor={'story'}>
           Выберите {width > 1150 ? 'вручную' : 'файл'}
         </label>
-        <input className={s['inv-input']} type="file" id="story" />
+        <input
+          className={s['inv-input']}
+          type="file"
+          id="story"
+          onChange={onChange}
+          ref={inputRef}
+        />
       </p>
     </div>
   );

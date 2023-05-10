@@ -17,7 +17,7 @@
 
 .modal {
   border-radius: 2rem;
-  overflow-y: auto;
+  // overflow-y: auto;
   max-height: calc(100vh - 1rem);
   &::-webkit-scrollbar {
     background: transparent;

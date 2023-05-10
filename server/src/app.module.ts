@@ -13,6 +13,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { CitiesModule } from './cities/cities.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { FriendsModule } from './friends/friends.module';
+import { PhotosModule } from './photos/photos.module';
+import { ThematicsModule } from './thematics/thematics.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { FriendsModule } from './friends/friends.module';
     CitiesModule,
     GatewayModule,
     FriendsModule,
+    PhotosModule,
+    ThematicsModule,
+    VideosModule,
   ],
   controllers: [],
   providers: [],

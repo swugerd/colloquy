@@ -1,5 +1,6 @@
 import { CitiesService } from './cities.service';
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CityDto } from './dto/city.dto';
 
 @Controller('cities')
 export class CitiesController {
@@ -7,5 +8,15 @@ export class CitiesController {
   @Get()
   getCities() {
     return this.citiesService.getAll();
+  }
+
+  @Get('/:value')
+  getCityByValue(@Param('value') value: string) {
+    return this.citiesService.getByValue(value);
+  }
+
+  @Post()
+  createCity(@Body() dto: CityDto) {
+    return this.citiesService.create(dto);
   }
 }

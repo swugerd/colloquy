@@ -234,7 +234,6 @@
 }
 
 .photo-top {
-  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -244,6 +243,7 @@
   display: flex;
   align-items: center;
   font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .photo-title {
@@ -254,7 +254,8 @@
 
 .photos {
   display: grid;
-  grid-template: repeat(2, 15rem) / repeat(2, 15rem);
+  grid-template-columns: repeat(2, 15rem);
+  grid-auto-rows: 15rem;
   grid-gap: 1rem;
 }
 
@@ -443,7 +444,8 @@
     max-width: 13rem;
   }
   .photos {
-    grid-template: repeat(4, 15rem) / repeat(1, 1fr);
+    grid-template-columns: 1fr;
+    grid-auto-rows: 15rem;
   }
   .row {
     flex-direction: column;

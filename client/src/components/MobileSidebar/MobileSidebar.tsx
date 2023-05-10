@@ -93,7 +93,7 @@ const MobileSidebar: React.FC = () => {
         hoverClass: 'photos',
       },
       text: 'Фотографии',
-      path: 'photos',
+      path: `photos/${!isLoading && user && userNickname}`,
     },
     {
       id: 5,
@@ -104,7 +104,7 @@ const MobileSidebar: React.FC = () => {
         hoverClass: 'videos',
       },
       text: 'Видео',
-      path: 'videos',
+      path: `videos/${!isLoading && user && userNickname}`,
     },
     {
       id: 6,

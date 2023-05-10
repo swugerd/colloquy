@@ -63,6 +63,8 @@ const App: React.FC = () => {
               <Route path="/groups/:name/moderation" element={<GroupAdmin page={'moderation'} />} />
               <Route path="/groups/:name/requests" element={<GroupAdmin page={'requests'} />} />
               <Route path="/groups/:name/members" element={<GroupMembers />} />
+              <Route path="/groups/:name/photos" element={<Photos pageType={'group'} />} />
+              <Route path="/groups/:name/videos" element={<Videos pageType={'group'} />} />
               <Route path="/groups/:name" element={<Group />} />
               <Route path="*" element={<NotFound />} />
             </Route>
@@ -72,8 +74,8 @@ const App: React.FC = () => {
             </Route>
             <Route path="/circles" element={<Circles />} />
             <Route path="/voices" element={<Voices />} />
-            <Route path="/photos" element={<Photos />} />
-            <Route path="/videos" element={<Videos />} />
+            <Route path="/photos/:username" element={<Photos pageType={'profile'} />} />
+            <Route path="/videos/:username" element={<Videos pageType={'profile'} />} />
             <Route path="/music">
               <Route index element={<Music tab="list" />} />
               <Route path="/music/playlists" element={<Music tab="playlists" />} />

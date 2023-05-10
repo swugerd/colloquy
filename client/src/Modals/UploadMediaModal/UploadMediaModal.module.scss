@@ -4,14 +4,43 @@
   margin-bottom: 3rem;
 }
 
-.video {
+.video,
+.photo {
   width: 25rem;
   height: 35rem;
   position: relative;
   align-self: center;
-  & video {
+  & video,
+  img {
     border-radius: 1rem;
     object-fit: cover;
+  }
+}
+
+.video {
+  height: 31rem;
+}
+
+.error {
+  text-align: center;
+  font-size: 1.6rem;
+  color: $red-light;
+  font-family: 'Montserrat';
+  margin-top: 2rem;
+}
+
+.shadow {
+  border-radius: 50%;
+}
+
+.close.shadow {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 1rem;
+  transition: 0.2s linear;
+  z-index: 100;
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -24,7 +53,8 @@
 }
 
 @media (max-width: 1150px) {
-  .video {
+  .video,
+  .photo {
     min-width: 15rem;
     min-height: 20rem;
     width: 30vw;

@@ -7,6 +7,8 @@
   width: 100%;
   margin-left: 4.5rem;
   font-family: 'Montserrat';
+  display: flex;
+  flex-direction: column;
 }
 
 .top {
@@ -31,11 +33,18 @@
   display: grid;
   grid-gap: 3rem;
   grid-template-columns: repeat(4, minmax(19rem, 26rem));
-  grid-template-rows: auto;
+  grid-auto-rows: minmax(19rem, 26rem);
 }
 
 .photo {
   border-radius: 1rem;
+}
+
+.photo-block {
+  height: 100%;
+  & img {
+    object-fit: cover;
+  }
 }
 
 .photo-item {
@@ -46,10 +55,15 @@
   }
 }
 
+.green {
+  color: $green-main;
+  font-weight: 600;
+}
+
 .photo-info,
 .delete-btn {
   position: absolute;
-  opacity: 1;
+  opacity: 0;
   transition: 0.2s linear;
 }
 

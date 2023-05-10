@@ -63,8 +63,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   };
 
   const { user } = useAuth();
-  // const lastActivityTimeRef = useRef(Date.now());
-  // const isAfkRef = useRef(false);
 
   useEffect(() => {
     if (socket && user) {
@@ -75,48 +73,19 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         online_type: user && user?.online_type !== 'pc-offline' ? user?.online_type : 'pc-online',
       });
 
-      setInterval(() => {
-        socket.emit('keepAlive', { id: user.id });
-      }, 5000);
+      const handleUnLoad = () => {
+        socket.emit('statusChange', {
+          id: user.id,
+          online_type: 'pc-offline',
+        });
+      };
 
-      // АФК статус при бездействии
-      // const handleUserActivity = () => {
-      //   lastActivityTimeRef.current = Date.now();
-      //   if (isAfkRef.current) {
-      //     isAfkRef.current = false;
-      //     socket.emit('statusChange', {
-      //       id: user.id,
-      //       online_type: user?.online_type !== 'pc-offline' ? user?.online_type : 'pc-online',
-      //     });
-      //   }
-      // };
-
-      // const handleCheckAfk = () => {
-      //   const now = Date.now();
-      // 30min
-      //   const afkTime = 3000;
-      //   const timeSinceLastActivity = now - lastActivityTimeRef.current;
-      //   if (!isAfkRef.current && timeSinceLastActivity >= afkTime) {
-      //     isAfkRef.current = true;
-      //     socket.emit('statusChange', { id: user.id, online_type: 'pc-afk' });
-      //   }
-      // };
-
-      // if (user?.user_status !== 'pc-offline') {
-      //   window.addEventListener('keydown', handleUserActivity);
-      //   window.addEventListener('mousemove', handleUserActivity);
-      // }
-
-      // const intervalId =
-      //   user?.user_status !== 'pc-offline' ? setInterval(handleCheckAfk, 1000) : '';
+      window.addEventListener('beforeunload', handleUnLoad);
 
       return () => {
-        socket.emit('statusChange', { id: user.id, online_type: 'pc-offline' });
+        handleUnLoad();
         socket.disconnect();
-
-        // intervalId && clearInterval(intervalId);
-        // window.removeEventListener('mousemove', handleUserActivity);
-        // window.removeEventListener('keydown', handleUserActivity);
+        window.removeEventListener('beforeunload', handleUnLoad);
       };
     }
   }, [user]);

@@ -66,3 +66,17 @@
     margin-top: 3rem;
   }
 }
+
+.media-page {
+  margin: 0 auto;
+  min-height: 90%;
+  justify-content: center;
+  & .image {
+    width: 35rem;
+    height: 35rem;
+  }
+  & .nothing-text {
+    font-size: 2.4rem;
+    margin-top: 3rem;
+  }
+}

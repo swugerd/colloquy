@@ -24,8 +24,6 @@ import NotFoundBlock from '../../components/NotFoundBlock/NotFoundBlock';
 import axios from 'axios';
 
 const Profile: React.FC = () => {
-  useSetPageTitle('Профиль');
-
   const { user: currentUser, isLoading: isCurrentUserLoading } = useAuth();
 
   const { pathname } = useLocation();
@@ -85,30 +83,6 @@ const Profile: React.FC = () => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isActionsOpen, setIsActionsOpen] = useState(false);
 
-  // Переделать css и вынести блоки с медиа в компонент
-
-  // const stories: { id: number; story: string; user: { id: number; name: string; img: string } }[] =
-  //   [
-  //     // { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-  //     // { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-  //     // { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-  //     // { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-  //     // { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-  //     // { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-  //     // { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-  //     // { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-  //     // { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-  //   ];
-
-  // const friends: { id: number; img: string; name: string; onlineType: string }[] = [
-  //   { id: 1, img: ava, name: 'Рабадонович скамерулевичивоынар', onlineType: 'pc-online' },
-  //   { id: 2, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-dnd' },
-  //   { id: 3, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-afk' },
-  //   { id: 4, img: ava, name: 'Рабадонович скамерулевич', onlineType: 'pc-offline' },
-  //   { id: 5, img: ava, name: 'Паша', onlineType: 'pc-offline' },
-  //   { id: 6, img: ava, name: 'Паша', onlineType: 'pc-offline' },
-  // ];
-
   const groups: { id: number; img: string; name: string; members: number }[] = [
     { id: 1, img: ava, name: 'ВЫОЛФВРЫФШГРВЫРФЫ вфывыф фвыв', members: 12 },
     { id: 2, img: ava, name: 'ВЫОЛФВРЫФШГРВЫРФЫ вфывыф фвыв', members: 24244 },
@@ -132,35 +106,14 @@ const Profile: React.FC = () => {
     { id: 7, img: ava, name: 'трек', author: 'фредбер медведь' },
   ];
 
-  const videos: { id: number; video: string; name: string; author: string; views: number }[] = [
-    {
-      id: 1,
-      video,
-      name: 'трек трек трек трек трек вырфо',
-      author: 'фредбер медведь вроыфрвыфло',
-      views: 123,
-    },
-    { id: 2, video, name: 'трек', author: 'фредбер медведь вроыфрвыфло', views: 123 },
-    { id: 3, video, name: 'трек', author: 'фредбефредбер медведь вроыфрвыфлоедь', views: 123 },
-    { id: 4, video, name: 'трек', author: 'фредбер медведь', views: 123 },
-    { id: 5, video, name: 'трек', author: 'фредбер медведь', views: 123 },
-  ];
-
-  const photos: { id: number; img: string }[] = [
-    { id: 1, img: ava },
-    { id: 2, img: ava },
-    { id: 3, img: ava },
-    { id: 4, img: ava },
-    { id: 5, img: ava },
-    { id: 6, img: ava },
-  ];
-
   const { response, error, isLoading } = useAxios({
     method: 'get',
     url: `${process.env.REACT_APP_HOSTNAME}/api/users/getByNickname/${userRoute}`,
   });
 
   const user: User | {} = !isLoading && response ? response : {};
+
+  useSetPageTitle(response ? `${response.user_name} ${response.user_surname}` : '', response);
 
   const {
     response: requests,
@@ -187,6 +140,28 @@ const Profile: React.FC = () => {
         ? `${process.env.REACT_APP_HOSTNAME}/api/friends/${(user as User).id}
           `
         : '',
+  });
+
+  const {
+    response: photos,
+    error: photosError,
+    isLoading: isPhotosLoading,
+  } = useAxios({
+    method: 'get',
+    url: Object.entries(user).length
+      ? `${process.env.REACT_APP_HOSTNAME}/api/photos/${(user as User).id}?type=user`
+      : '',
+  });
+
+  const {
+    response: videos,
+    error: videosError,
+    isLoading: isVideosLoading,
+  } = useAxios({
+    method: 'get',
+    url: Object.entries(user).length
+      ? `${process.env.REACT_APP_HOSTNAME}/api/videos/${(user as User).id}?type=user`
+      : '',
   });
 
   const createFriendReq = async () => {
@@ -263,7 +238,7 @@ const Profile: React.FC = () => {
     return <NotFoundBlock className={'profile'} text={'Пользователь не найден'} />;
   }
 
-  return !isLoading && !isCurrentUserLoading ? (
+  return !isLoading && !isCurrentUserLoading && !isFriendsLoading && !isPhotosLoading ? (
     <>
       <div className={`${s['profile']} ${isSticky ? s['sticky'] : ''}`} ref={profileRef}>
         <div className={`${s['left']}`}>
@@ -589,12 +564,31 @@ const Profile: React.FC = () => {
             </div>
           )}
           {/* <ProfileContent contentType={'stories'} data={[]} isAdmin={isAdmin} /> */}
-          {width <= 1150 && <ProfileContent contentType={'photos'} data={photos} />}
-          <ProfileContent contentType={'friends'} data={friends} userId={(user as User).id} />
-          <ProfileContent contentType={'groups'} data={groups} />
-          <ProfileContent contentType={'music'} data={music} />
-          <ProfileContent contentType={'videos'} data={videos} />
-          {width <= 1150 && <ProfileContent contentType={'collection'} data={undefined} />}
+          {width <= 1150 && (
+            <ProfileContent
+              contentType={'photos'}
+              data={photos}
+              pageType={'profile'}
+              userId={(user as User).id}
+            />
+          )}
+          <ProfileContent
+            contentType={'friends'}
+            data={friends}
+            userId={(user as User).id}
+            pageType={'profile'}
+          />
+          <ProfileContent contentType={'groups'} data={groups} pageType={'profile'} />
+          {/* <ProfileContent contentType={'music'} data={music} pageType={'profile'} /> */}
+          <ProfileContent
+            contentType={'videos'}
+            data={videos}
+            pageType={'profile'}
+            userId={(user as User).id}
+          />
+          {/* {width <= 1150 && (
+            <ProfileContent contentType={'collection'} data={undefined} pageType={'profile'} />
+          )} */}
         </div>
         <div className={s['right']}>
           {width > 1150 && (
@@ -777,8 +771,17 @@ const Profile: React.FC = () => {
               </div>
             </div>
           )}
-          {width > 1150 && <ProfileContent contentType={'photos'} data={photos} />}
-          {width > 1150 && <ProfileContent contentType={'collection'} data={null} />}
+          {width > 1150 && (
+            <ProfileContent
+              contentType={'photos'}
+              data={photos}
+              pageType={'profile'}
+              userId={(user as User).id}
+            />
+          )}
+          {/* {width > 1150 && (
+            <ProfileContent contentType={'collection'} data={null} pageType={'profile'} />
+          )} */}
         </div>
       </div>
       <div className={s['feed']} ref={feedRef}>

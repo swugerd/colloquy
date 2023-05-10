@@ -127,7 +127,7 @@ const Sidebar: React.FC = () => {
         hoverClass: 'photos',
       },
       text: 'Фотографии',
-      path: 'photos',
+      path: `photos/${!isLoading && user && userNickname}`,
     },
     {
       id: 9,
@@ -138,7 +138,7 @@ const Sidebar: React.FC = () => {
         hoverClass: 'videos',
       },
       text: 'Видео',
-      path: 'videos',
+      path: `videos/${!isLoading && user && userNickname}`,
     },
     {
       id: 10,

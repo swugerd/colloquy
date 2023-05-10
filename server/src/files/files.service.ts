@@ -21,8 +21,8 @@ export interface UploadedFile {
 export class FilesService {
   constructor(@InjectModel(User) private readonly userRepository: typeof User) {}
 
-  async createFile(file: UploadedFile, userId?: number): Promise<string> {
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+  async createFile(file: UploadedFile, userId?: number, isVideo?: boolean): Promise<string> {
+    const allowedMimeTypes = isVideo ? ['video/mp4'] : ['image/jpeg', 'image/png', 'image/jpg'];
     const fileMimeType = mime.lookup(file.originalname);
     if (fileMimeType && !allowedMimeTypes.includes(fileMimeType)) {
       throw new BadRequestException('Недопустимый формат файла');
