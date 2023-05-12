@@ -19,6 +19,7 @@ import {
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserQueryParams } from './validators/user-query.validator';
+import { BlacklistDto } from 'src/groups/dto/blacklist.dto';
 
 @Controller('users')
 export class UsersController {
@@ -71,6 +72,21 @@ export class UsersController {
   @Get('/getByNickname/:nickname')
   getByNickname(@Param('nickname') nickname: string) {
     return this.userService.getUserByNickname(nickname);
+  }
+
+  @Get('/blacklist/:id')
+  getUsersFromBlacklist(@Param('id') userId: number) {
+    return this.userService.getUsersFromBlacklist(userId);
+  }
+
+  @Post('/blacklist/:id')
+  addUserToBlacklist(@Param('id') userId: number, @Body() dto: BlacklistDto) {
+    return this.userService.addUserToBlacklist(userId, dto);
+  }
+
+  @Delete('/blacklist/:id')
+  removeUserFromBlacklist(@Param('id') userId: number, @Body() dto: BlacklistDto) {
+    return this.userService.removeUserFromBlacklist(userId, dto);
   }
 
   @Put(':id')

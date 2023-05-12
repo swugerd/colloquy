@@ -10,6 +10,7 @@ import * as uuid from 'uuid';
 import * as mime from 'mime-types';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/users/models/users.model';
+import { Group } from 'src/groups/models/group.model';
 
 export interface UploadedFile {
   buffer: Buffer;
@@ -19,9 +20,17 @@ export interface UploadedFile {
 
 @Injectable()
 export class FilesService {
-  constructor(@InjectModel(User) private readonly userRepository: typeof User) {}
+  constructor(
+    @InjectModel(User) private readonly userRepository: typeof User,
+    @InjectModel(Group) private readonly groupRepository: typeof Group,
+  ) {}
 
-  async createFile(file: UploadedFile, userId?: number, isVideo?: boolean): Promise<string> {
+  async createFile(
+    file: UploadedFile,
+    userId?: number,
+    isVideo?: boolean,
+    groupId?: number,
+  ): Promise<string> {
     const allowedMimeTypes = isVideo ? ['video/mp4'] : ['image/jpeg', 'image/png', 'image/jpg'];
     const fileMimeType = mime.lookup(file.originalname);
     if (fileMimeType && !allowedMimeTypes.includes(fileMimeType)) {
@@ -45,9 +54,18 @@ export class FilesService {
         writeStream.write(file.buffer);
         writeStream.end();
       });
-      if (userId) {
+      if (userId || groupId) {
         await fs.promises.unlink(
-          path.join(filePath, (await this.userRepository.findByPk(userId)).user_avatar),
+          path.join(
+            filePath,
+            userId
+              ? (
+                  await this.userRepository.findByPk(userId)
+                ).user_avatar
+              : (
+                  await this.groupRepository.findByPk(groupId)
+                ).group_avatar,
+          ),
         );
       }
     } catch (error) {

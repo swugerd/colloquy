@@ -444,11 +444,9 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
     }
   };
 
-  // начать разбираться с вебсокетами + попробовать сделать статусы онлайна (возможно убрать из бд)
-
   return (
     <>
-      {!isUserLoading && !isCitiesLoading ? (
+      {!isUserLoading && !isCitiesLoading && profileData.user_avatar_cache ? (
         <div className={s['settings']}>
           <h4 className={s['title']}>{title}</h4>
           {page === 'profile' && (

@@ -44,19 +44,6 @@ const Group: React.FC = () => {
     { id: 6, img: ebalo, name: 'Паша', onlineType: 'pc-offline' },
   ];
 
-  const stories: { id: number; story: string; user: { id: number; name: string; img: string } }[] =
-    [
-      { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img: ebalo } },
-      { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img: ebalo } },
-    ];
-
   const photos: { id: number; img: string }[] = [
     { id: 1, img: ebalo },
     { id: 2, img: ebalo },
@@ -78,21 +65,6 @@ const Group: React.FC = () => {
     { id: 3, video, name: 'трек', author: 'фредбефредбер медведь вроыфрвыфлоедь', views: 123 },
     { id: 4, video, name: 'трек', author: 'фредбер медведь', views: 123 },
     { id: 5, video, name: 'трек', author: 'фредбер медведь', views: 123 },
-  ];
-
-  const music: { id: number; img: string; time: number; name: string; author: string }[] = [
-    {
-      id: 1,
-      img: ebalo,
-      time: 123,
-      name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-      author: 'NaRk0PaShOk21rus',
-    },
-    { id: 2, img: ebalo, time: 123, name: 'best dubstep', author: 'best author' },
-    { id: 3, img: ebalo, time: 123, name: 'best dubstep', author: 'best author' },
-    { id: 4, img: ebalo, time: 123, name: 'best dubstep', author: 'best author' },
-    { id: 5, img: ebalo, time: 123, name: 'best dubstep', author: 'best author' },
-    { id: 6, img: ebalo, time: 123, name: 'best dubstep', author: 'best author' },
   ];
 
   return (
@@ -163,13 +135,6 @@ const Group: React.FC = () => {
           ) : (
             <>
               <ProfileContent
-                contentType={'stories'}
-                data={stories}
-                className={'stories-content'}
-                isAdmin={isAdmin}
-                pageType={'group'}
-              />
-              <ProfileContent
                 contentType={'photos'}
                 data={photos}
                 className={'photos-content'}
@@ -179,12 +144,6 @@ const Group: React.FC = () => {
                 contentType={'videos'}
                 data={videos}
                 className={'videos-content'}
-                pageType={'group'}
-              />
-              <ProfileContent
-                contentType={'music'}
-                data={music}
-                className={'music-content'}
                 pageType={'group'}
               />
             </>

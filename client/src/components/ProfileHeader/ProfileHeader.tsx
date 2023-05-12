@@ -17,38 +17,38 @@ import { SocketContext } from '../../contexts/SocketContext';
 const ProfileHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
 
   const dispatch = useAppDispatch();
 
   const [onlineStatus, setOnlineStatus] = useState('');
 
   useEffect(() => {
-    if (!isLoading && user) {
+    if (user) {
       setOnlineStatus(user?.online_type !== 'pc-offline' ? user?.online_type : 'pc-online');
       dispatch(setUserName(user?.user_name));
     }
-  }, [isLoading]);
+  }, [user]);
 
   const {
     user: { name: userName },
   } = useSelector(selectIsAuth);
 
   useOnClickOutside(ref, () => setIsOpen(false));
-  return (
+  return user ? (
     <div
       ref={ref}
       className={`${s['header__profile-info']} ${s['header-hover']} ${isOpen && s['active']}`}>
       <button onClick={() => setIsOpen(!isOpen)}>
         <HeaderAvatar
           className={'header__profile-image'}
-          img={!isLoading && user ? user.user_avatar : ''}
+          img={user ? user.user_avatar : ''}
           indicatorClass={['sm-indicator', 'border-sub-bg']}
-          title={!isLoading && user ? user.user_name : ''}
+          title={user ? user.user_name : ''}
           onlineType={onlineStatus}
         />
-        <span className={s['header__profile-name']} title={!isLoading ? user?.user_name : ''}>
-          {!isLoading ? userName : 'Загрузка..'}
+        <span className={s['header__profile-name']} title={user ? user?.user_name : ''}>
+          {userName}
         </span>
         <div className={s['header__profile-arrow']}>
           <Icon src={arrowSvg} id={'arrow'} className={'white'} />
@@ -58,6 +58,8 @@ const ProfileHeader: React.FC = () => {
         <ProfileDropDown setIsDropdownOpen={setIsOpen} setOnlineStatus={setOnlineStatus} />
       )}
     </div>
+  ) : (
+    <p className={s['header__profile-name']}>Загрузка...</p>
   );
 };
 

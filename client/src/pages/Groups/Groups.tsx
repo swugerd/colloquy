@@ -89,6 +89,12 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
     { id: 4, value: 'programming', label: 'Программирование' },
   ];
 
+  // начать переносить вывод групп + поиск + группу на клиент
+
+  // доделать апи изменения группы + перенести на клиент
+
+  // админка (возможно реквесты на закрытую группу) + фото/видео + предложка
+
   const children = [
     <div key="1">
       <ul className={sideContentS['friend-list']}>

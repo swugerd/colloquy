@@ -407,7 +407,9 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
                       </video>
                     </div>
                     <div className={s['group-info']}>
-                      <span className={s['video-name']}>{item?.user?.user_name}</span>
+                      <span className={s['video-name']} title={item?.video_name}>
+                        {item?.video_name}
+                      </span>
                       <Link
                         to={`/profile/${item?.user?.user_nickname}`}
                         className={s['video-author']}>

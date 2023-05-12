@@ -16,6 +16,7 @@ import { FriendsModule } from './friends/friends.module';
 import { PhotosModule } from './photos/photos.module';
 import { ThematicsModule } from './thematics/thematics.module';
 import { VideosModule } from './videos/videos.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { VideosModule } from './videos/videos.module';
     PhotosModule,
     ThematicsModule,
     VideosModule,
+    PostsModule,
   ],
   controllers: [],
   providers: [],

@@ -12,6 +12,11 @@ import { Group } from 'src/groups/models/group.model';
 import { Thematic } from 'src/thematics/models/thematics.model';
 import { Photo } from 'src/photos/models/photos.model';
 import { Video } from 'src/videos/models/video.model';
+import { GroupMember } from 'src/groups/models/group-members.model';
+import { Blacklist } from 'src/groups/models/blacklist.model';
+import { GroupRequest } from 'src/groups/models/group-requests.model';
+import { GroupSuggest } from 'src/groups/models/group-suggest.model';
+import { Post } from 'src/posts/models/post.model';
 
 @Injectable()
 export class SequelizeConfigService implements SequelizeOptionsFactory {
@@ -41,6 +46,11 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
         Group,
         Photo,
         Video,
+        GroupMember,
+        Blacklist,
+        GroupRequest,
+        GroupSuggest,
+        Post,
       ],
       autoLoadModels: true,
       synchronize: true,
