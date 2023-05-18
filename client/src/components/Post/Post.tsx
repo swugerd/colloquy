@@ -23,13 +23,14 @@ import ForwardPost from '../ForwardPost/ForwardPost';
 import ForwardModal from '../../Modals/ForwardModal/ForwardModal';
 import { useAppDispatch } from '../../redux/store';
 import { setIsForwardModalOpen, setIsPostContentModalOpen } from '../../redux/modal/slice';
+import wordDeclension from '../../utils/wordDeclension';
 
 type PostProps = {
   id: number;
   user: {
     id: number;
-    name: string;
-    img: string;
+    user_name: string;
+    user_avatar: string;
   };
   content: {
     text?: string;
@@ -71,8 +72,8 @@ type PostProps = {
         id: number;
         user: {
           id: number;
-          name: string;
-          img: string;
+          user_name: string;
+          user_avatar: string;
         };
         date: string;
         content: {
@@ -116,7 +117,7 @@ const Post: React.FC<PostProps> = ({
   page,
   isAdmin,
 }) => {
-  const { name: userName, img: userImg } = user;
+  const { user_name: userName, user_avatar: userImg } = user;
   const { text, images, videos, circles, voices, music } = content;
   const { width } = useWindowSize();
   const maxVisibleContent: {
@@ -184,15 +185,6 @@ const Post: React.FC<PostProps> = ({
         )
       );
     }
-  };
-
-  const wordDeclension = (value: number, words: string[]) => {
-    value = Math.abs(value) % 100;
-    const num = value % 10;
-    if (value > 10 && value < 20) return words[2];
-    if (num > 1 && num < 5) return words[1];
-    if (num === 1) return words[0];
-    return words[2];
   };
 
   const [activeAction, setactiveAction] = useState(false);
@@ -467,12 +459,14 @@ const Post: React.FC<PostProps> = ({
         )}
         {suggest && (
           <div className={s['row']}>
-            <button
-              className={`${s['controls-icon']} ${s['anonym']} ${s['separator']}`}
-              onClick={() => setIsAnonymActive(!isAnonymActive)}>
-              <Icon src={anonymSvg} id={'anonym'} className={isAnonymActive ? 'gray' : 'green'} />
-            </button>
-            <div className={s['media-action']} onClick={() => setIsRadioActive(!isRadioActive)}>
+            <div className={`${s['controls-icon']} ${s['anonym']}`}>
+              <Icon
+                src={anonymSvg}
+                id={'anonym'}
+                className={!postType.suggest?.isAnonym ? 'gray' : 'green'}
+              />
+            </div>
+            {/* <div className={s['media-action']} onClick={() => setIsRadioActive(!isRadioActive)}>
               <div className={s['radio-btn']}>
                 <input
                   type="checkbox"
@@ -483,7 +477,7 @@ const Post: React.FC<PostProps> = ({
                 <div className={`${s['custom-btn']}`}></div>
               </div>
               <div className={s['text']}>Добавить медиа в сообщество</div>
-            </div>
+            </div> */}
           </div>
         )}
       </div>

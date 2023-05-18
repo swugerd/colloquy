@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ContentCard from '../../components/ContentCard/ContentCard';
 import NavContent from '../../components/NavContent/NavContent';
 import ebalo from '../../assets/uploads/test/ebalo.png';
@@ -20,34 +20,116 @@ import {
 } from '../../redux/mobile/slice';
 import { selectMobile } from '../../redux/mobile/selector';
 import { useSelector } from 'react-redux';
+import { useAxios } from '../../hooks/useAxios';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import Preloader from '../../components/Preloader/Preloader';
+import { selectIsAuth } from '../../redux/auth/selector';
 
 const GroupMembers: React.FC = () => {
-  const members = [
-    {
-      id: 1,
-      name: 'Egor_Bdвфывыф asdhjвыфash',
-      img: ebalo,
-      status: 'егорчик топчикик кмон брооо егорчик топчикик кмон брооо егорчик топчикик кмон брооо',
-    },
-    { id: 2, name: 'Egor_B', img: ebalo, lastSeen: 'вчера в 12:22' },
-    { id: 3, name: 'Egor_B', img: ebalo },
-    { id: 4, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
-    { id: 5, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
-    { id: 6, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
-    { id: 7, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
-    { id: 8, name: 'Egor_B', img: ebalo, status: 'егорчик топчик', lastSeen: 'вчера в 12:22' },
-  ];
+  const { pathname } = useLocation();
 
-  const isAdmin = true;
+  const groupRoute = pathname.split('/')[pathname.split('/').length - 2];
 
-  useSetPageTitle(`Список участников - ${members.length}`);
+  const {
+    response: group,
+    isLoading: isGroupLoading,
+    error: groupError,
+  } = useAxios({
+    method: 'get',
+    url: groupRoute ? `${process.env.REACT_APP_HOSTNAME}/api/groups/getByAdress/${groupRoute}` : '',
+  });
+
+  const {
+    user: { id: userId },
+  } = useSelector(selectIsAuth);
+
+  const [params, setSearchParams] = useSearchParams();
+
+  const [usersUrl, setUsersUrl] = useState('');
+
+  const [filterData, setFilterData] = useState<{ [key: string]: any }>({
+    city: '',
+    ageFrom: '',
+    ageTo: '',
+    maleGender: '',
+    femaleGender: '',
+    online: '',
+    userId: 0,
+    groupId: 0,
+    q: '',
+  });
+
+  const handleFilterUrl = (fields: any) => {
+    setFilterData((prev) => {
+      return { ...prev, ...fields };
+    });
+
+    if (fields['online']) {
+      if (filterData.online !== '') {
+        setFilterData((prev) => {
+          return { ...prev, online: '' };
+        });
+      }
+    }
+
+    if (fields['maleGender'] || fields['femaleGender']) {
+      if (filterData.maleGender !== '') {
+        setFilterData((prev) => {
+          return { ...prev, maleGender: '' };
+        });
+      }
+
+      if (filterData.femaleGender !== '') {
+        setFilterData((prev) => {
+          return { ...prev, femaleGender: '' };
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (userId && group) {
+      setFilterData({ ...filterData, userId, groupId: group.id });
+    }
+  }, [group, userId]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setUsersUrl(
+        group && userId
+          ? `${process.env.REACT_APP_HOSTNAME}/api/users/filter?groupId=${
+              group.id
+            }&userId=${userId}${filterData?.q ? `&q=${filterData.q}` : ''}${
+              filterData?.city ? `&city=${filterData.city}` : ''
+            }${filterData?.ageFrom ? `&ageFrom=${filterData.ageFrom}` : ''}${
+              filterData?.ageTo ? `&ageTo=${filterData.ageTo}` : ''
+            }${filterData?.femaleGender ? `&femaleGender=${filterData.femaleGender}` : ''}${
+              filterData?.maleGender ? `&maleGender=${filterData.maleGender}` : ''
+            }${filterData?.online ? `&online=${filterData.online}` : ''}`
+          : '',
+      );
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [filterData, userId, group]);
+
+  const {
+    response: members,
+    isLoading: isMembersLoading,
+    error: membersError,
+    setResponse: setMembers,
+  } = useAxios({
+    method: 'get',
+    url: usersUrl,
+  });
+
+  useSetPageTitle(group ? `Список участников - ${group.group_name}` : 'Группа не найдена', group);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(setHasArrowButton(true));
-    dispatch(setMembersCount(members.length));
+    dispatch(setMembersCount(members && isMembersLoading ? members.length : 0));
     dispatch(setHasBackButton('Вернуться к сообществу'));
     dispatch(setBackButtonType('button'));
     return () => {
@@ -57,12 +139,14 @@ const GroupMembers: React.FC = () => {
     };
   }, []);
 
-  const cities = [
-    { id: 1, value: 'moscow', label: 'Москва' },
-    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
-    { id: 3, value: 'pivo', label: 'Пиво' },
-    { id: 4, value: 'da', label: 'Козел' },
-  ];
+  const {
+    response: cities,
+    error: citiesError,
+    isLoading: isCitiesLoading,
+  } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/cities`,
+  });
 
   const age = Array.from({ length: 87 }, (_, i) => ({
     id: i,
@@ -80,9 +164,9 @@ const GroupMembers: React.FC = () => {
             options={cities}
             noOptionsMessage={'Город не найден'}
             className={'side-select'}
-            name={''}
-            value={''}
-            setValue={() => {}}
+            name={'city'}
+            value={filterData.city}
+            setValue={handleFilterUrl}
           />
         </div>
       </div>
@@ -94,18 +178,18 @@ const GroupMembers: React.FC = () => {
             options={age}
             noOptionsMessage={''}
             className={'side-select-age'}
-            name={''}
-            value={''}
-            setValue={() => {}}
+            name={'ageFrom'}
+            value={filterData.ageFrom}
+            setValue={handleFilterUrl}
           />
           <SelectComponent
             placeholder={'До'}
             options={age}
             noOptionsMessage={''}
             className={'side-select-age'}
-            name={''}
-            value={''}
-            setValue={() => {}}
+            name={'ageTo'}
+            value={filterData.ageTo}
+            setValue={handleFilterUrl}
           />
         </div>
       </div>
@@ -116,30 +200,31 @@ const GroupMembers: React.FC = () => {
             type={'male'}
             icon={maleSvg}
             inputType={'checkbox'}
-            checked={false}
-            value={''}
-            setValue={() => {}}
-            name=""
+            checked={filterData.maleGender === 'male' ? true : false}
+            value={'male'}
+            setValue={handleFilterUrl}
+            name="maleGender"
           />
           <GenderInput
             type={'female'}
             icon={femaleSvg}
             inputType={'checkbox'}
-            checked={false}
-            value={''}
-            setValue={() => {}}
-            name=""
+            checked={filterData.femaleGender === 'female' ? true : false}
+            value={'female'}
+            setValue={handleFilterUrl}
+            name="femaleGender"
           />
         </div>
       </div>
       <div className={sideContentS['online-row']}>
         <InputButton
-          checked={undefined}
-          onChange={undefined}
-          name={''}
+          checked={filterData.online ? true : false}
+          onChange={handleFilterUrl}
+          name={'online'}
           id="online"
           type={'checkbox'}
           className={'side-online'}
+          value="online"
         />
         <label htmlFor="online">Сейчас в сети</label>
       </div>
@@ -149,25 +234,38 @@ const GroupMembers: React.FC = () => {
   return (
     <>
       <div className={s['members']}>
-        <NavContent page={'members'} isSearchPage={true} setValue={() => {}} value={''} />
+        <NavContent
+          page={'members'}
+          isSearchPage={true}
+          setValue={handleFilterUrl}
+          value={filterData.q}
+        />
         <ul className={s['list']}>
-          {members.map(({ id, name, img, status, lastSeen }) => (
-            <li className={s['item']} key={id}>
-              <ContentCard
-                size={'lg'}
-                contentData={{
-                  img,
-                  status,
-                  lastSeen,
-                  name,
-                  link: '',
-                }}
-                type={'members'}
-                isSearchPage={false}
-                isAdmin={isAdmin}
-              />
-            </li>
-          ))}
+          {members && !isMembersLoading ? (
+            members.map((member: any, index: number) => (
+              <li className={s['item']} key={member.id}>
+                <ContentCard
+                  size={'lg'}
+                  contentData={{
+                    img: member.user_avatar,
+                    status: member.user_status,
+                    lastSeen: member.online_type === 'pc-offline' ? member.updatedAt : '',
+                    name: member.user_name,
+                    link: member.user_nickname,
+                  }}
+                  type={'members'}
+                  onlineType={member.online_type}
+                  isSearchPage={false}
+                  user={userId}
+                  currentUser={member}
+                  group={group}
+                  setResponse={setMembers}
+                />
+              </li>
+            ))
+          ) : (
+            <Preloader />
+          )}
         </ul>
       </div>
       <SideContent className={'friends'} titles={['Улучшим поиск']}>

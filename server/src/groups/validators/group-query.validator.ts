@@ -22,4 +22,10 @@ export class GroupQueryParams {
   @IsOptional()
   @IsNumber()
   membersTo?: number = 0;
+
+  @IsOptional()
+  isPrivate?: boolean = false;
+
+  @IsOptional()
+  filterType?: string = '';
 }

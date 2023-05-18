@@ -24,8 +24,8 @@ export class Blacklist extends Model<Blacklist, BlacklistCreationAttrs> {
   @Column({ type: DataType.INTEGER, allowNull: false })
   blocked_user_id: number;
 
-  @BelongsTo(() => User, 'user_id')
-  user: User;
+  @BelongsTo(() => User, 'blocked_user_id')
+  blockedUser: User;
 
   @BelongsTo(() => Group, 'group_id')
   group: Group;

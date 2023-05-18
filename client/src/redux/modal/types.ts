@@ -30,7 +30,7 @@ export interface ModalState {
   };
   confirmModal: {
     isOpen: boolean;
-    modalType: 'friend' | 'group' | 'pageDelete' | 'passwordEnter';
+    modalType: 'friend' | 'group' | 'pageDelete' | 'passwordEnter' | 'groupDelete';
   };
   openModalButtons: ModalOpenButtons;
 }

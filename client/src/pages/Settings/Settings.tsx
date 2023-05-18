@@ -336,20 +336,6 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const formatPhoneNumber = (value: any) => {
-    if (!value) {
-      return '';
-    }
-
-    return value
-      .replace(/\D/g, '')
-      .replace(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2}).*/, '+$1 ($2) $3 $4 $5');
-  };
-
-  const normalizePhoneNumber = (value: any) => {
-    return value.replace(/\s/g, '');
-  };
-
   const [image, setImage] = useState('');
   const [imageError, setImageError] = useState('');
 

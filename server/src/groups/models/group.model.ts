@@ -11,6 +11,10 @@ import { City } from 'src/cities/models/cities.model';
 import { Thematic } from 'src/thematics/models/thematics.model';
 import { User } from 'src/users/models/users.model';
 import { GroupMember } from './group-members.model';
+import { Photo } from 'src/photos/models/photos.model';
+import { Video } from 'src/videos/models/video.model';
+import { GroupRequest } from './group-requests.model';
+import { Blacklist } from './blacklist.model';
 
 interface GroupCreationAttrs {
   group_name: string;
@@ -66,6 +70,21 @@ export class Group extends Model<Group, GroupCreationAttrs> {
   @BelongsTo(() => User, 'creator_id')
   creator: User;
 
+  @BelongsTo(() => Group, 'id')
+  group: Group;
+
+  @HasMany(() => Photo)
+  photos: Photo;
+
+  @HasMany(() => Video)
+  videos: Video;
+
   @HasMany(() => GroupMember)
   members: GroupMember;
+
+  @HasMany(() => Blacklist)
+  blacklistedUsers: Blacklist;
+
+  @HasMany(() => GroupRequest)
+  requests: GroupRequest;
 }

@@ -38,8 +38,19 @@ export class GroupsController {
     @Query('thematic') thematic?: number,
     @Query('membersFrom') membersFrom?: number,
     @Query('membersTo') membersTo?: number,
+    @Query('filterType') filterType?: string,
+    @Query('isPrivate') isPrivate?: boolean,
   ) {
-    const query: GroupQueryParams = { userId, q, city, thematic, membersFrom, membersTo };
+    const query: GroupQueryParams = {
+      userId,
+      q,
+      city,
+      thematic,
+      membersFrom,
+      membersTo,
+      filterType,
+      isPrivate,
+    };
     return this.groupsService.filterGroups(query);
   }
 
@@ -93,7 +104,7 @@ export class GroupsController {
     return this.groupsService.joinGroup(userId, dto);
   }
 
-  @Post('/exit/:id')
+  @Delete('/exit/:id')
   quitFromGroupByUserId(@Param('id') userId: number, @Body() dto: GroupRequestDto) {
     return this.groupsService.quitGroup(userId, dto);
   }
@@ -128,7 +139,7 @@ export class GroupsController {
   }
 
   @Get('/mods/:id')
-  getAllGroupModerators(@Param('id') group_id: number, @Body() admin_id: { user_id: number }) {
+  getAllGroupModerators(@Param('id') group_id: number, @Query('userId') admin_id: string) {
     return this.groupsService.getMods(group_id, admin_id);
   }
 

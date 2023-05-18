@@ -38,6 +38,7 @@ export class UsersController {
   @Get('/filter')
   filter(
     @Query('userId') userId: number,
+    @Query('groupId') groupId: number,
     @Query('q') q?: string,
     @Query('city') city?: number,
     @Query('ageFrom') ageFrom?: number,
@@ -55,6 +56,7 @@ export class UsersController {
       maleGender,
       femaleGender,
       online,
+      groupId,
     };
     return this.userService.filterUsers(query);
   }

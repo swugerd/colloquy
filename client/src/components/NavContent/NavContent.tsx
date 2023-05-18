@@ -18,6 +18,7 @@ import numberWithSpaces from '../../utils/numberWithSpaces';
 import useWindowSize from '../../hooks/useWindowResize';
 import { useSelector } from 'react-redux';
 import { selectMobile } from '../../redux/mobile/selector';
+import { useAxios } from '../../hooks/useAxios';
 
 type NavContentProps = {
   page: 'friends' | 'groups' | 'members';
@@ -77,19 +78,47 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage, setValue, v
 
   useEffect(() => {
     if (!isSearchPage) {
-      setSelectedFilter(
-        filterType === 'online'
-          ? 1
-          : filterType === 'income'
-          ? 2
-          : filterType === 'outcome'
-          ? 3
-          : 0,
-      );
+      if (page === 'friends') {
+        setSelectedFilter(
+          filterType === 'online'
+            ? 1
+            : filterType === 'income'
+            ? 2
+            : filterType === 'outcome'
+            ? 3
+            : 0,
+        );
+      }
+      if (page === 'groups') {
+        setSelectedFilter(filterType === 'created' ? 1 : 0);
+      }
     }
   }, [params]);
 
-  const members = page === 'members' ? 123456 : 0;
+  const { pathname } = useLocation();
+
+  const groupRoute = pathname.split('/')[pathname.split('/').length - 2];
+
+  const {
+    response: group,
+    isLoading: isGroupLoading,
+    error: groupError,
+  } = useAxios({
+    method: 'get',
+    url:
+      page === 'members'
+        ? `${process.env.REACT_APP_HOSTNAME}/api/groups/getByAdress/${groupRoute}`
+        : '',
+  });
+
+  const {
+    response: members,
+    isLoading: isMembersLoading,
+    error: membersError,
+  } = useAxios({
+    method: 'get',
+    url: group ? `${process.env.REACT_APP_HOSTNAME}/api/groups/members/${group.id}` : '',
+  });
 
   return (
     <div className={`${s['nav']} ${page === 'members' ? s['members'] : ''}`}>
@@ -104,7 +133,9 @@ const NavContent: React.FC<NavContentProps> = ({ page, isSearchPage, setValue, v
               ) : (
                 <>
                   Список участников -{' '}
-                  <span className={s['members']}>{numberWithSpaces(members)}</span>
+                  <span className={s['members']}>
+                    {members && numberWithSpaces(members.length)}
+                  </span>
                 </>
               )}
             </h4>

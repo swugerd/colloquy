@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavContent from '../../components/NavContent/NavContent';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Groups.module.scss';
@@ -15,6 +15,11 @@ import Input from '../../components/UI/Input/Input';
 import { useAppDispatch } from '../../redux/store';
 import { setBackButtonType, setHasArrowButton, setHasBackButton } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
+import { useAxios } from '../../hooks/useAxios';
+import useAuth from '../../hooks/useAuth';
+import Preloader from '../../components/Preloader/Preloader';
+import NotFoundBlock from '../../components/NotFoundBlock/NotFoundBlock';
+import { useSearchParams } from 'react-router-dom';
 
 type GroupsProps = {
   isSearchPage: boolean;
@@ -40,97 +45,156 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
 
   const { width } = useWindowSize();
 
-  const recGroups = [
-    {
-      id: 1,
-      img: ebalo,
-      members: 123,
-      name: 'Egor_b',
-    },
-    {
-      id: 2,
-      img: ebalo,
-      name: 'Egor_b',
-      members: 123456,
-      status: 'Егорчик топчик',
-    },
-    {
-      id: 3,
-      img: ebalo,
-      name: 'Egor_b',
-      members: 12,
-      status: 'Егорчик топчик',
-    },
-  ];
+  const { user, isLoading: isUserLoading } = useAuth();
 
-  const groups = [
-    { id: 1, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: true },
-    { id: 2, name: 'Egor_B', img: ebalo, members: 12345, private: false },
-    { id: 3, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: true },
-    { id: 4, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: false },
-    { id: 5, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: false },
-    { id: 6, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: true },
-    { id: 7, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: false },
-    { id: 8, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: false },
-    { id: 9, name: 'Egor_B', img: ebalo, members: 12, status: 'егорчик топчик', isPrivate: false },
-  ];
+  const [params, setParams] = useSearchParams();
 
-  const cities = [
-    { id: 1, value: 'moscow', label: 'Москва' },
-    { id: 2, value: 'ivanteevka', label: 'Ивантеевка' },
-    { id: 3, value: 'pivo', label: 'Пиво' },
-    { id: 4, value: 'da', label: 'Козел' },
-  ];
+  const [filterData, setFilterData] = useState<{ [key: string]: any }>({
+    city: '',
+    thematic: '',
+    isPrivate: '',
+    membersFrom: '',
+    membersTo: '',
+    userId: 0,
+    q: '',
+  });
 
-  const themes = [
-    { id: 1, value: 'politics', label: 'Политика' },
-    { id: 2, value: 'games', label: 'Игры' },
-    { id: 3, value: 'talking', label: 'Общение' },
-    { id: 4, value: 'programming', label: 'Программирование' },
-  ];
+  const [groupsUrl, setGroupsUrl] = useState('');
 
-  // начать переносить вывод групп + поиск + группу на клиент
+  const handleFilterUrl = (fields: any) => {
+    setFilterData((prev) => {
+      return { ...prev, ...fields };
+    });
 
-  // доделать апи изменения группы + перенести на клиент
+    if (fields['isPrivate']) {
+      if (filterData.isPrivate !== '') {
+        setFilterData((prev) => {
+          return { ...prev, isPrivate: '' };
+        });
+      }
+    }
+  };
 
-  // админка (возможно реквесты на закрытую группу) + фото/видео + предложка
+  useEffect(() => {
+    if (isSearchPage && user) {
+      setFilterData({ ...filterData, userId: user.id });
+    }
+    if (!isSearchPage) {
+      setFilterData({});
+    }
+  }, [isSearchPage, user]);
+
+  useEffect(() => {
+    if (isSearchPage) {
+      const timeout = setTimeout(() => {
+        setGroupsUrl(
+          user
+            ? `${process.env.REACT_APP_HOSTNAME}/api/groups/filter?userId=${user.id}${
+                filterData?.q ? `&q=${filterData.q}` : ''
+              }${filterData?.city ? `&city=${filterData.city}` : ''}${
+                filterData?.thematic ? `&thematic=${filterData.thematic}` : ''
+              }${filterData?.membersFrom ? `&membersFrom=${filterData.membersFrom}` : ''}${
+                filterData?.membersTo ? `&membersTo=${filterData.membersTo}` : ''
+              }${filterData?.isPrivate ? `&isPrivate=${filterData.isPrivate}` : ''}`
+            : '',
+        );
+      }, 500);
+      return () => clearTimeout(timeout);
+    } else {
+      setGroupsUrl(
+        user ? `${process.env.REACT_APP_HOSTNAME}/api/groups/filter?userId=${user.id}` : '',
+      );
+    }
+  }, [filterData, user]);
+
+  const {
+    response: userGroups,
+    isLoading: isUserGroupsLoading,
+    error: userGroupsError,
+    setResponse: setUserGroups,
+  } = useAxios({
+    method: 'get',
+    url: user
+      ? `${process.env.REACT_APP_HOSTNAME}/api/groups/${
+          params.get('filter') === null
+            ? user.id
+            : `filter?filterType=${params.get('filter')}&userId=${user.id}`
+        }`
+      : '',
+  });
+
+  const {
+    response: groups,
+    isLoading: isGroupsLoading,
+    error: groupsError,
+    setResponse: setGroups,
+  } = useAxios({
+    method: 'get',
+    url: groupsUrl,
+  });
+
+  const {
+    response: cities,
+    isLoading: isCitiesLoading,
+    error: citiesError,
+  } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/cities`,
+  });
+
+  const {
+    response: themes,
+    isLoading: isThemesLoading,
+    error: themesError,
+  } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/thematics`,
+  });
 
   const children = [
     <div key="1">
       <ul className={sideContentS['friend-list']}>
-        {recGroups.map(({ id, img, status, name, members }, index) =>
-          width <= 1150 && index < 2 ? (
-            <li className={s['item']} key={id}>
-              <ContentCard
-                size={'sm'}
-                contentData={{
-                  img,
-                  status,
-                  name,
-                  members,
-                  link: '',
-                }}
-                type={'group'}
-                isSearchPage={false}
-              />
-            </li>
-          ) : width > 1150 ? (
-            <li className={s['item']} key={id}>
-              <ContentCard
-                size={'sm'}
-                contentData={{
-                  img,
-                  status,
-                  name,
-                  members,
-                  link: '',
-                }}
-                type={'group'}
-                isSearchPage={false}
-              />
-            </li>
-          ) : null,
-        )}
+        {groups &&
+          groups.map(({ group }: any, index: number) =>
+            width <= 1150 && index < 2 ? (
+              <li className={s['item']} key={group.id}>
+                <ContentCard
+                  size={'sm'}
+                  contentData={{
+                    img: group.group_avatar,
+                    status: group.group_status,
+                    name: group.group_name,
+                    members: group.members.length,
+                    link: group.group_adress,
+                  }}
+                  type={'group'}
+                  isSearchPage={false}
+                  setResponse={setGroups}
+                  group={group}
+                  user={user}
+                />
+              </li>
+            ) : width > 1150 ? (
+              <li className={s['item']} key={group.id}>
+                <ContentCard
+                  size={'sm'}
+                  contentData={{
+                    img: group.group_avatar,
+                    status: group.group_status,
+                    name: group.group_name,
+                    members: group.members.length,
+                    link: group.group_adress,
+                    isPrivate: group.is_private,
+                  }}
+                  type={'group'}
+                  isSearchPage={false}
+                  setResponse={setGroups}
+                  group={group}
+                  user={user}
+                />
+              </li>
+            ) : null,
+          )}
       </ul>
     </div>,
     isSearchPage && (
@@ -143,9 +207,9 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
               options={cities}
               noOptionsMessage={'Город не найден'}
               className={'side-select'}
-              name={''}
-              value={''}
-              setValue={() => {}}
+              name={'city'}
+              value={filterData.city}
+              setValue={handleFilterUrl}
             />
           </div>
         </div>
@@ -157,18 +221,18 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
               placeholder={'От'}
               type={'text'}
               inputType="default"
-              name={''}
-              value={''}
-              setValue={() => {}}
+              name={'membersFrom'}
+              value={filterData.membersFrom}
+              setValue={handleFilterUrl}
             />
             <Input
               className={'side-count'}
               placeholder={'До'}
               type={'text'}
               inputType="default"
-              name={''}
-              value={''}
-              setValue={() => {}}
+              name={'membersTo'}
+              value={filterData.membersTo}
+              setValue={handleFilterUrl}
             />
           </div>
         </div>
@@ -180,22 +244,23 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
               options={themes}
               noOptionsMessage={'Тема не найдена'}
               className={'side-select'}
-              name={''}
-              value={''}
-              setValue={() => {}}
+              name={'thematic'}
+              value={filterData.thematic}
+              setValue={handleFilterUrl}
             />
           </div>
         </div>
         <div className={`${sideContentS['online-row']} ${sideContentS['align-end']}`}>
           <InputButton
-            checked={undefined}
-            onChange={undefined}
-            name={''}
-            id="online"
+            checked={filterData.isPrivate ? true : false}
+            onChange={handleFilterUrl}
+            name={'isPrivate'}
+            id="isPrivate"
             type={'checkbox'}
             className={'side-online'}
+            value="true"
           />
-          <label htmlFor="online">Закрытые сообщества</label>
+          <label htmlFor="isPrivate">Закрытые сообщества</label>
         </div>
       </div>
     ),
@@ -203,25 +268,61 @@ const Groups: React.FC<GroupsProps> = ({ isSearchPage }) => {
   return (
     <>
       <div className={s['groups']}>
-        <NavContent page={'groups'} isSearchPage={isSearchPage} setValue={() => {}} value={''} />
+        <NavContent
+          page={'groups'}
+          isSearchPage={isSearchPage}
+          setValue={handleFilterUrl}
+          value={filterData.q}
+        />
+        {(isGroupsLoading || isUserGroupsLoading) && <Preloader className="friends" />}
+        {!isUserGroupsLoading && !isSearchPage && userGroups?.length === 0 && (
+          <NotFoundBlock className={'friends'} text={'Ты ещё не вступал в группы'} />
+        )}
         <ul className={s['list']}>
-          {groups.map(({ id, name, img, status, members, isPrivate }) => (
-            <li className={s['item']} key={id}>
-              <ContentCard
-                size={'lg'}
-                contentData={{
-                  img,
-                  status,
-                  members,
-                  name,
-                  isPrivate,
-                  link: '',
-                }}
-                type={'group'}
-                isSearchPage={isSearchPage}
-              />
-            </li>
-          ))}
+          {!isSearchPage &&
+            userGroups &&
+            userGroups?.map(({ group }: any) => (
+              <li className={s['item']} key={group.id}>
+                <ContentCard
+                  size={'lg'}
+                  contentData={{
+                    img: group.group_avatar,
+                    status: group.group_status,
+                    members: group.members?.length,
+                    name: group.group_name,
+                    isPrivate: group.is_private,
+                    link: group.group_adress,
+                  }}
+                  type={'group'}
+                  isSearchPage={isSearchPage}
+                  setResponse={setUserGroups}
+                  group={group}
+                  user={user}
+                />
+              </li>
+            ))}
+          {isSearchPage &&
+            groups &&
+            groups?.map(({ group }: any) => (
+              <li className={s['item']} key={group.id}>
+                <ContentCard
+                  size={'lg'}
+                  contentData={{
+                    img: group.group_avatar,
+                    status: group.group_status,
+                    members: group.members?.length,
+                    name: group.group_name,
+                    isPrivate: group.is_private,
+                    link: group.group_adress,
+                  }}
+                  type={'group'}
+                  isSearchPage={isSearchPage}
+                  setResponse={setGroups}
+                  group={group}
+                  user={user}
+                />
+              </li>
+            ))}
         </ul>
       </div>
       <SideContent

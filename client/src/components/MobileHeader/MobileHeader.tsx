@@ -53,8 +53,12 @@ const MobileHeader: React.FC = () => {
     isLoading: isUserLoading,
   }: { response: User; error: any; isLoading: boolean } = useAxios({
     method: 'get',
-    url: `${process.env.REACT_APP_HOSTNAME}/api/users/getByNickname/${userRoute}`,
+    url:
+      pathname === 'videos' || pathname === 'photos'
+        ? `${process.env.REACT_APP_HOSTNAME}/api/users/getByNickname/${userRoute}`
+        : '',
   });
+
   const {
     user: { id: currentUserId },
   } = useSelector(selectIsAuth);

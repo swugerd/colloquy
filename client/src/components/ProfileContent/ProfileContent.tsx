@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import Story from '../Story/Story';
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import convertMembers from '../../utils/convertMembers';
 import useWindowSize from '../../hooks/useWindowResize';
@@ -142,6 +142,22 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
         : '',
   });
 
+  const { pathname } = useLocation();
+
+  const groupRoute = pathname.split('/')[pathname.split('/').length - 1];
+
+  const {
+    response: group,
+    isLoading: isGroupLoading,
+    error: groupError,
+  } = useAxios({
+    method: 'get',
+    url:
+      pageType === 'group'
+        ? `${process.env.REACT_APP_HOSTNAME}/api/groups/getByAdress/${groupRoute}`
+        : '',
+  });
+
   const setTitle = (contentType: contentType) => {
     const titles = [
       { type: 'members', title: 'Участники' },
@@ -163,27 +179,26 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
         jsx: (
           <div className={s['content']}>
             <div className={s['top']}>
-              <Link to="/groups/colloquy/members" className={s['link']}>
+              <Link to={group ? `/groups/${group.group_adress}/members` : ''} className={s['link']}>
                 <span className={s['all']}>Показать все</span>
                 <div className={s['arrow']}>
                   <Icon src={arrowSvg} id={'arrow'} className={'white'} />
                 </div>
                 <span className={s['count']}>{data?.length}</span>
               </Link>
-              <p className={s['online']}>
-                Онлайн:{' '}
-                <span>{data?.filter((item: any) => item.onlineType !== 'pc-offline').length}</span>
-              </p>
             </div>
             <div className={s['friend-list']}>
               {data?.map((item: any, index: number) =>
                 index >= visibleMembers ? null : (
-                  <Link to="/friends" className={s['friend']} key={item.id}>
+                  <Link
+                    to={`/profile/${item.user?.user_nickname}`}
+                    className={s['friend']}
+                    key={item.user?.id * Math.random()}>
                     <HeaderAvatar
                       className={className ? 'group-content' : 'content-block'}
                       img={item.user?.user_avatar}
-                      title={''}
-                      onlineType={item.onlineType}
+                      title={item.user?.user_name}
+                      onlineType={item.user?.online_type}
                       indicatorClass={['lg-indicator', 'border-friend']}
                     />
                     <span className={s['name']}>{item.user?.user_name}</span>
@@ -318,20 +333,23 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
               </Link>
             </div>
             <div className={s['group-list']}>
-              {data?.map((item: any, index: number) =>
+              {data?.map(({ group }: any, index: number) =>
                 index >= visibleGroups ? null : (
-                  <Link to="/groups" className={s['group']} key={item.id}>
+                  <Link
+                    to={`/groups/${group?.group_adress}`}
+                    className={s['group']}
+                    key={group?.id * Math.random()}>
                     <HeaderAvatar
                       className={'content-block'}
-                      img={item.img}
-                      title={''}
+                      img={group?.group_avatar}
+                      title={group?.group_name}
                       onlineType={''}
                     />
                     <div className={s['group-info']}>
-                      <span className={s['group-name']}>{item.name}</span>
+                      <span className={s['group-name']}>{group?.group_name}</span>
                       <div className={s['members']}>
                         <Icon src={userSvg} id={'profile'} className={'green'} />
-                        <span>{convertMembers(item.members)}</span>
+                        <span>{convertMembers(group?.members.length)}</span>
                       </div>
                     </div>
                   </Link>

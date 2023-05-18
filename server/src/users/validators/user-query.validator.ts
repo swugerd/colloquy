@@ -12,6 +12,10 @@ export class UserQueryParams {
   userId: number;
 
   @IsOptional()
+  @IsNumber()
+  groupId?: number = 0;
+
+  @IsOptional()
   q?: string = '';
 
   @IsOptional()

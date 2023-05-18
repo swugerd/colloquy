@@ -9,6 +9,7 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { City } from 'src/cities/models/cities.model';
+import { GroupMember } from 'src/groups/models/group-members.model';
 import { Role } from 'src/roles/models/roles.model';
 import { UserRoles } from 'src/roles/models/user-roles.model';
 

@@ -25,7 +25,7 @@ type PostContentModalProps = {
 };
 
 const PostContentModal: React.FC<PostContentModalProps> = ({ onClose, modalType }) => {
-  const post: PostType = {
+  const post: any = {
     id: 1,
     user: { id: 1, name: 'Пашок Кубыркин', img },
     date: 'Вчера',
@@ -266,8 +266,8 @@ const PostContentModal: React.FC<PostContentModalProps> = ({ onClose, modalType 
           id={post.id}
           user={{
             id: post.user.id,
-            name: post.user.name,
-            img: post.user.img,
+            user_name: post.user.user_name,
+            user_avatar: post.user.img,
           }}
           content={post.content}
           isAdmin={isPostAdmin}
@@ -278,19 +278,6 @@ const PostContentModal: React.FC<PostContentModalProps> = ({ onClose, modalType 
               forwards: post.forwards,
               comments: post.comments,
               views: post.views,
-              forwardPost:
-                post.forwardPost && Object.entries(post.forwardPost).length
-                  ? {
-                      id: post.forwardPost.id,
-                      user: {
-                        id: post.forwardPost.user.id,
-                        name: post.forwardPost.user.name,
-                        img: post.forwardPost.user.img,
-                      },
-                      date: post.forwardPost.date,
-                      content: post.forwardPost.content,
-                    }
-                  : undefined,
             },
           }}
           isModalPost={true}

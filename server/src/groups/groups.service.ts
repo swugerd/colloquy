@@ -15,6 +15,9 @@ import { GroupRequest } from './models/group-requests.model';
 import { CreateSuggestDto } from './dto/create-suggest.dto';
 import { GroupSuggest } from './models/group-suggest.model';
 import { PostsService } from 'src/posts/posts.service';
+import { Photo } from 'src/photos/models/photos.model';
+import { Video } from 'src/videos/models/video.model';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class GroupsService {
@@ -40,6 +43,12 @@ export class GroupsService {
       );
     }
 
+    for (const key in dto) {
+      if (dto[key] === '') {
+        dto[key] = null;
+      }
+    }
+
     const fileName = await this.filesService.createFile(image);
 
     const createdGroup = await this.groupsRepository.create({ ...dto, group_avatar: fileName });
@@ -56,7 +65,14 @@ export class GroupsService {
   async getAllGroupsByUserId(id: number) {
     const groups = await this.groupsMembersRepository.findAll({
       where: { user_id: id },
-      include: { model: Group },
+      include: {
+        model: Group,
+        include: [
+          {
+            model: GroupMember,
+          },
+        ],
+      },
     });
 
     return groups;
@@ -72,7 +88,7 @@ export class GroupsService {
   }
 
   async filterGroups(query: GroupQueryParams) {
-    const { userId, membersFrom, membersTo, city, thematic, q } = query;
+    const { userId, membersFrom, membersTo, city, thematic, q, filterType, isPrivate } = query;
 
     const groupsIds = (
       await this.groupsMembersRepository.findAll({
@@ -80,8 +96,23 @@ export class GroupsService {
       })
     ).map((item) => item.group_id);
 
+    const blacklistedGroupsIds = (
+      await this.blacklistRepository.findAll({
+        where: { blocked_user_id: userId },
+      })
+    ).map((item) => item.group_id);
+
+    const privateGroupsIds = (
+      await this.groupsRequestsRepository.findAll({
+        where: { user_id: userId },
+      })
+    ).map((item) => item.group_id);
+
     const where = {
-      [Op.not]: { id: [...groupsIds] },
+      ...((groupsIds.length || blacklistedGroupsIds.length || privateGroupsIds.length) &&
+      filterType !== 'created'
+        ? { [Op.not]: { id: [...groupsIds, ...blacklistedGroupsIds, ...privateGroupsIds] } }
+        : {}),
       ...(q
         ? {
             [Op.or]: [
@@ -110,18 +141,48 @@ export class GroupsService {
               ) <= ${membersTo}`),
           }
         : {}),
+      ...(isPrivate ? { is_private: true } : {}),
+      ...(filterType === 'created' ? { creator_id: userId } : {}),
     };
 
     const groups = await this.groupsRepository.findAll({
       where,
-      include: { model: GroupMember },
+      include: {
+        model: Group,
+        include: [
+          {
+            model: GroupMember,
+          },
+        ],
+      },
     });
 
     return groups;
   }
 
   async getGroupByAdress(group_adress: string) {
-    const group = await this.groupsRepository.findOne({ where: { group_adress } });
+    const group = await this.groupsRepository.findOne({
+      where: { group_adress },
+      include: [
+        {
+          model: GroupMember,
+          as: 'members',
+          include: [
+            {
+              model: User,
+              as: 'user',
+            },
+          ],
+        },
+        {
+          model: Photo,
+          as: 'photos',
+        },
+        { model: Video, as: 'videos' },
+        { model: GroupRequest, as: 'requests' },
+        { model: Blacklist, as: 'blacklistedUsers' },
+      ],
+    });
     return group;
   }
 
@@ -167,6 +228,7 @@ export class GroupsService {
       where: {
         group_id,
       },
+      include: { model: User },
     });
     return users;
   }
@@ -202,7 +264,10 @@ export class GroupsService {
   }
 
   async getAllSuggest(group_id: number) {
-    const suggest = await this.groupSuggestRepository.findAll({ where: { group_id } });
+    const suggest = await this.groupSuggestRepository.findAll({
+      where: { group_id },
+      include: { model: User },
+    });
     return suggest;
   }
 
@@ -237,7 +302,9 @@ export class GroupsService {
       is_admin: false,
     });
 
-    return insertedMember;
+    const groups = await this.filterGroups({ userId: user_id });
+
+    return groups;
   }
 
   async quitGroup(user_id: number, { group_id }: GroupRequestDto) {
@@ -248,7 +315,10 @@ export class GroupsService {
   }
 
   async getReqs(group_id: number) {
-    const reqs = await this.groupsRequestsRepository.findAll({ where: { group_id } });
+    const reqs = await this.groupsRequestsRepository.findAll({
+      where: { group_id },
+      include: { model: User },
+    });
     return reqs;
   }
 
@@ -279,9 +349,10 @@ export class GroupsService {
     return deletedReq ? deletedReq.destroy() : '';
   }
 
-  async getMods(group_id: number, { user_id }: { user_id: number }) {
+  async getMods(group_id: number, user_id: string) {
     const moderators = await this.groupsMembersRepository.findAll({
       where: { group_id, is_admin: true, [Op.not]: { user_id } },
+      include: { model: User },
     });
     return moderators;
   }

@@ -21,6 +21,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import { User } from '../../hooks/useAuth';
 import axios from 'axios';
+import wordDeclension from '../../utils/wordDeclension';
 
 type ContentCardProps = {
   size: 'lg' | 'sm';
@@ -36,11 +37,12 @@ type ContentCardProps = {
   };
   isSearchPage: boolean;
   isAdmin?: boolean;
-  currentUser?: User | null | undefined;
-  user?: User | null | undefined;
+  currentUser?: any;
+  user?: any;
   setResponse?: (response: any) => void;
   responseLink?: string;
   onlineType?: string;
+  group?: any;
 };
 
 const ContentCard: React.FC<ContentCardProps> = ({
@@ -54,6 +56,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
   isAdmin,
   responseLink,
   onlineType,
+  group,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -148,12 +151,139 @@ const ContentCard: React.FC<ContentCardProps> = ({
     }
   };
 
+  // группы
+
+  const joinGroup = async (isPrivate?: boolean) => {
+    if (user && group) {
+      const response: any = await axios({
+        method: 'post',
+        url: isPrivate
+          ? `${process.env.REACT_APP_HOSTNAME}/api/groups/req/${user.id}`
+          : `${process.env.REACT_APP_HOSTNAME}/api/groups/join/${user.id}`,
+        data: {
+          group_id: group.id,
+        },
+      });
+      const groups = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/filter?userId=${user.id}`,
+      });
+      setResponse && setResponse(groups.data);
+    }
+  };
+
+  const quitGroup = async () => {
+    if (user && group) {
+      const response: any = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/exit/${user.id}`,
+        data: {
+          group_id: group.id,
+        },
+      });
+      const groups = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/${user.id}`,
+      });
+      setResponse && setResponse(groups.data);
+    }
+  };
+
+  const handleGroupReq = async (type: 'approve' | 'reject') => {
+    if (user && group) {
+      const response: any = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/req/${user.id}?type=${type}`,
+        data: {
+          group_id: group.id,
+        },
+      });
+
+      const reqs = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/req/${group.id}`,
+      });
+      setResponse && setResponse(reqs.data);
+    }
+  };
+
+  const hadnleKickMember = async () => {
+    if (currentUser && group) {
+      const response: any = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/exit/${currentUser.id}`,
+        data: {
+          group_id: group.id,
+        },
+      });
+
+      const members = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/users/filter?groupId=${group.id}&userId=${user}`,
+      });
+      setResponse && setResponse(members.data);
+    }
+  };
+
+  const handleAdminAction = async (action: 'add' | 'remove') => {
+    if (currentUser && group) {
+      const response: any = await axios({
+        method: 'put',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/mods/${group.id}?action=${action}`,
+        data: {
+          user_id: type === 'moderation' ? user.id : currentUser.id,
+        },
+      });
+
+      if (action === 'remove') {
+        const mods = await axios({
+          method: 'get',
+          url: `${process.env.REACT_APP_HOSTNAME}/api/groups/mods/${group.id}?userId=${currentUser}`,
+        });
+        setResponse && setResponse(mods.data);
+      }
+    }
+  };
+
+  const handleBlacklist = async (method: 'post' | 'delete') => {
+    if (currentUser && group) {
+      const response: any = await axios({
+        method,
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/blacklist/${group.id}`,
+        data: {
+          blocked_user_id: type === 'members' ? currentUser.id : user.id,
+        },
+      });
+
+      if (method === 'delete') {
+        const mods = await axios({
+          method: 'get',
+          url: `${process.env.REACT_APP_HOSTNAME}/api/groups/blacklist/${group.id}`,
+        });
+        setResponse && setResponse(mods.data);
+      }
+    }
+  };
+
+  const hasCrownButton =
+    type === 'members' &&
+    group.members.find((member: any) => member.user_id === currentUser.id).is_admin;
+
+  const isModerator =
+    type === 'members' && group.members.find((member: any) => member.user_id === user)?.is_admin;
+
   return (
     <div className={size === 'lg' ? s['friend'] : sideContentS['user']}>
       <Link
         className={size === 'lg' ? s['link'] : ''}
         to={
-          type === 'friend' || type === 'income' || type === 'outcome'
+          type === 'friend' ||
+          type === 'income' ||
+          type === 'outcome' ||
+          type === 'blacklist' ||
+          type === 'moderation' ||
+          type === 'orders' ||
+          type === 'members'
             ? `/profile/${link}`
             : `/groups/${link}`
         }>
@@ -162,16 +292,20 @@ const ContentCard: React.FC<ContentCardProps> = ({
           img={img}
           title={'image'}
           indicatorClass={
-            type === 'friend' || type === 'income' || type === 'outcome'
+            type === 'friend' ||
+            type === 'income' ||
+            type === 'outcome' ||
+            type === 'blacklist' ||
+            type === 'moderation' ||
+            type === 'orders' ||
+            type === 'members'
               ? [
                   size === 'lg' ? 'friend-indicator' : 'sm-indicator',
                   size === 'lg' ? 'border-friend' : 'border-elem',
                 ]
               : undefined
           }
-          onlineType={
-            type === 'friend' || type === 'income' || type === 'outcome' ? onlineType : ''
-          }
+          onlineType={onlineType}
         />
         <div
           className={`${size === 'lg' ? s['friend-info'] : sideContentS['user-info']} ${
@@ -205,7 +339,8 @@ const ContentCard: React.FC<ContentCardProps> = ({
           )}
           {type === 'group' && size === 'lg' ? (
             <p className={s['members']}>
-              <span>{members && numberWithSpaces(members)}</span> участников
+              <span>{members && numberWithSpaces(members)}</span>{' '}
+              {members && wordDeclension(members, ['участник', 'участника', 'участников'])}
             </p>
           ) : (
             lastSeen && (
@@ -260,70 +395,134 @@ const ContentCard: React.FC<ContentCardProps> = ({
             onClick={createFriendReq}
           />
         )}
-        {type === 'group' && size === 'lg' && isSearchPage === false && (
-          <SquareButton
-            className={'friend-button'}
-            icon={closeSvg}
-            id={'close'}
-            hasLock={false}
-            onClick={(e) => handleConfirmModalOpen(e, 'group')}
-          />
-        )}
-        {type === 'group' && size === 'lg' && isSearchPage && (
-          <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={isPrivate} />
-        )}
-        {type === 'group' && size === 'sm' && (
-          <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={isPrivate} />
-        )}
-        {type === 'members' && isAdmin && width > 550 && (
-          <>
-            <SquareButton
-              className={'friend-button'}
-              icon={blockSvg}
-              id={'block'}
-              hasLock={isPrivate}
-            />
-            <SquareButton
-              className={'friend-button'}
-              icon={crownSvg}
-              id={'crown'}
-              hasLock={isPrivate}
-            />
+        {type === 'group' &&
+          size === 'lg' &&
+          isSearchPage === false &&
+          group &&
+          user &&
+          group.creator_id !== user.id && (
             <SquareButton
               className={'friend-button'}
               icon={closeSvg}
               id={'close'}
               hasLock={false}
+              onClick={quitGroup}
             />
-          </>
+          )}
+        {type === 'group' && size === 'lg' && isSearchPage && (
+          <SquareButton
+            className={'friend-button'}
+            icon={addSvg}
+            id={'add'}
+            hasLock={isPrivate}
+            onClick={() => joinGroup(isPrivate)}
+          />
         )}
-        {type === 'members' && isAdmin && width <= 550 && (
-          <div className={s['more']}>
-            <button
-              className={`${s['more-btn']} ${isActionsOpen ? s['active'] : ''}`}
-              onClick={() => setIsActionsOpen(!isActionsOpen)}>
-              <Icon src={moreSvg} id={'dots'} className={'profile-dots'} />
-            </button>
-            <div className={`${s['actions']} ${isActionsOpen ? s['active'] : ''}`}>
-              <SquareButton className={'more-btn'} icon={messagesSvg} id={'messages'} />
-              <SquareButton className={'more-btn'} icon={addSvg} id={'add'} />
-              <SquareButton className={'more-btn'} icon={blockSvg} id={'block'} />
+        {type === 'group' && size === 'sm' && (
+          <SquareButton
+            className={'friend-button'}
+            icon={addSvg}
+            id={'add'}
+            hasLock={isPrivate}
+            onClick={() => joinGroup(isPrivate)}
+          />
+        )}
+        {type === 'members' &&
+          group.creator_id !== currentUser.id &&
+          isModerator &&
+          width > 550 &&
+          currentUser &&
+          currentUser.id !== user && (
+            <>
+              <SquareButton
+                className={'friend-button'}
+                icon={blockSvg}
+                id={'block'}
+                hasLock={isPrivate}
+                onClick={() => handleBlacklist('post')}
+              />
+              {!hasCrownButton && (
+                <SquareButton
+                  className={'friend-button'}
+                  icon={crownSvg}
+                  id={'crown'}
+                  hasLock={isPrivate}
+                  onClick={() => handleAdminAction('add')}
+                />
+              )}
+              <SquareButton
+                className={'friend-button'}
+                icon={closeSvg}
+                id={'close'}
+                hasLock={false}
+                onClick={hadnleKickMember}
+              />
+            </>
+          )}
+        {type === 'members' &&
+          isModerator &&
+          width <= 550 &&
+          group.creator_id !== currentUser.id &&
+          currentUser &&
+          isModerator &&
+          currentUser.id !== user && (
+            <div className={s['more']}>
+              <button
+                className={`${s['more-btn']} ${isActionsOpen ? s['active'] : ''}`}
+                onClick={() => setIsActionsOpen(!isActionsOpen)}>
+                <Icon src={moreSvg} id={'dots'} className={'profile-dots'} />
+              </button>
+              <div className={`${s['actions']} ${isActionsOpen ? s['active'] : ''}`}>
+                {!hasCrownButton && (
+                  <SquareButton
+                    className={'more-btn'}
+                    icon={crownSvg}
+                    id={'crown'}
+                    onClick={() => handleAdminAction('add')}
+                  />
+                )}
+
+                <SquareButton
+                  className={'more-btn'}
+                  icon={closeSvg}
+                  id={'close'}
+                  onClick={hadnleKickMember}
+                />
+
+                <SquareButton
+                  className={'more-btn'}
+                  icon={blockSvg}
+                  id={'block'}
+                  onClick={() => handleBlacklist('post')}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        {type === 'members' && isAdmin === false && (
-          <>
-            <SquareButton
-              className={'friend-button'}
-              icon={messagesSvg}
-              id={'messages'}
-              hasLock={false}
-            />
-            <SquareButton className={'friend-button'} icon={addSvg} id={'add'} hasLock={false} />
-          </>
-        )}
-        {(type === 'blacklist' || type === 'moderation') && (
-          <SquareButton className={'friend-button'} icon={closeSvg} id={'close'} hasLock={false} />
+          )}
+        {type === 'members' &&
+          (group.creator_id === currentUser.id || !isModerator) &&
+          currentUser &&
+          currentUser.id !== user && (
+            <>
+              <SquareButton
+                className={'friend-button'}
+                icon={messagesSvg}
+                id={'messages'}
+                hasLock={false}
+              />
+            </>
+          )}
+        {(type === 'blacklist' || type === 'moderation') && group.creator_id === currentUser && (
+          <SquareButton
+            className={'friend-button'}
+            icon={closeSvg}
+            id={'close'}
+            hasLock={false}
+            onClick={
+              type === 'moderation'
+                ? () => handleAdminAction('remove')
+                : () => handleBlacklist('delete')
+            }
+          />
         )}
         {type === 'orders' && (
           <>
@@ -332,12 +531,14 @@ const ContentCard: React.FC<ContentCardProps> = ({
               icon={closeSvg}
               id={'close'}
               hasLock={false}
+              onClick={() => handleGroupReq('reject')}
             />
             <SquareButton
               className={'friend-button'}
               icon={addSvg}
               id={'add'}
               hasLock={isPrivate}
+              onClick={() => handleGroupReq('approve')}
             />
           </>
         )}

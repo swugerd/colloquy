@@ -42,34 +42,11 @@ const Feed: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // сделать один экзэмпляр инстенса сокета в редаксе
-
-    // разобраться с подключение/отключением и отправкой запросов с разных клиентов
-
-    // сделать логику статусов онлайна (вход, выход, изменение вручную)
-
-    // вернуть стрикт мод
-
     dispatch(setHasArrowButton(true));
     return () => {
       dispatch(setHasArrowButton(false));
     };
   }, []);
-  const { mobile } = useSelector(selectMobile);
-
-  const { user, isLoading, errorMessage, login } = useAuth();
-
-  const stories = [
-    { id: 1, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-    { id: 2, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-    { id: 3, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-    { id: 4, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-    { id: 5, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-    { id: 6, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-    { id: 7, story: video, user: { id: 1, name: 'Пашок Кубыркин', img } },
-    { id: 8, story: video, user: { id: 2, name: 'Пашок Кубыркин', img } },
-    { id: 9, story: video, user: { id: 3, name: 'Пашок Кубыркин', img } },
-  ];
 
   const settings = {
     type: [
@@ -113,24 +90,6 @@ const Feed: React.FC = () => {
       },
       {
         id: 2,
-        name: 'Кружочки',
-        iconSettings: {
-          src: circlesSvg,
-          iconId: 'circles',
-          className: 'circles',
-        },
-      },
-      {
-        id: 3,
-        name: 'Войсы',
-        iconSettings: {
-          src: voicesSvg,
-          iconId: 'voices',
-          className: 'voices',
-        },
-      },
-      {
-        id: 4,
         name: 'Фотографии',
         iconSettings: {
           src: photosSvg,
@@ -139,7 +98,7 @@ const Feed: React.FC = () => {
         },
       },
       {
-        id: 5,
+        id: 3,
         name: 'Видео',
         iconSettings: {
           src: videosSvg,
@@ -147,75 +106,14 @@ const Feed: React.FC = () => {
           className: 'videos',
         },
       },
-      {
-        id: 6,
-        name: 'Музыка',
-        iconSettings: {
-          src: musicSvg,
-          iconId: 'music',
-          className: 'music',
-        },
-      },
-      {
-        id: 7,
-        name: 'Шаблоны',
-        iconSettings: {
-          src: patternsSvg,
-          iconId: 'patterns',
-          className: 'patterns',
-        },
-      },
     ],
   };
-
-  const navigationPrevRef = useRef<HTMLButtonElement>(null);
-  const navigationNextRef = useRef<HTMLButtonElement>(null);
 
   const [typeIndex, setTypeIndex] = useState(0);
   const [contentIndex, setContentIndex] = useState(0);
 
   const children = [
-    <div className={sideContentS['stories']} key={1}>
-      <Swiper
-        slidesPerView={2}
-        spaceBetween={20}
-        navigation={{
-          prevEl: navigationPrevRef.current,
-          nextEl: navigationNextRef.current,
-        }}
-        breakpoints={{
-          320: {
-            slidesPerView: 2,
-            spaceBetween: 0,
-          },
-          380: {
-            slidesPerView: 3,
-          },
-          768: {
-            slidesPerView: 4,
-          },
-          1000: {
-            slidesPerView: 5,
-          },
-          1150: {
-            slidesPerView: 2,
-          },
-        }}
-        modules={[Navigation]}>
-        {stories.map(({ id, story, user }) => (
-          <SwiperSlide key={id}>
-            <Story id={id} story={story} user={user} className={'feed'} />
-          </SwiperSlide>
-        ))}
-        <button className={sideContentS['prev-button']} ref={navigationPrevRef}>
-          <Icon src={arrowSvg} id={'arrow'} className={'white'} />
-        </button>
-        <button className={sideContentS['next-button']} ref={navigationNextRef}>
-          <Icon src={arrowSvg} id={'arrow'} className={'white'} />
-        </button>
-      </Swiper>
-    </div>,
-    <div className={`${sideContentS['options']}`} key={2}>
+    <div className={`${sideContentS['options']}`} key={1}>
       <div className={sideContentS['group']}>
         {settings.type.map(({ id, name, iconSettings }, index) => (
           <div
@@ -279,7 +177,7 @@ const Feed: React.FC = () => {
   return (
     <>
       <Wall className={'feed'} page={'feed'} placeholder={''} isAdmin={false} />
-      <SideContent titles={['Истории', 'Что будем показывать?']} className={'feed'}>
+      <SideContent titles={['Что будем показывать?']} className={'feed'}>
         {children}
       </SideContent>
     </>

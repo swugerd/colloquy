@@ -9,8 +9,8 @@ type ForwardPostProps = {
     id: number;
     user: {
       id: number;
-      name: string;
-      img: string;
+      user_name: string;
+      user_avatar: string;
     };
     date: string;
     content: {

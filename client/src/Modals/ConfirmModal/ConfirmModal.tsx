@@ -44,6 +44,14 @@ const ConfirmModal: React.FC = () => {
     dispatch(setIsConfirmModalOpen(false));
   };
 
+  const handleDeleteGroup = async () => {
+    const { data, status } = await axios({
+      method: 'delete',
+      url: `${process.env.REACT_APP_HOSTNAME}/api/users/${user && user.id}`,
+    });
+    dispatch(setIsConfirmModalOpen(false));
+  };
+
   return (
     <div className={s['wrapper']}>
       <div className={s['modal']} ref={modalRef}>
@@ -61,7 +69,9 @@ const ConfirmModal: React.FC = () => {
           </button>
           <button
             className={`${s['confirm-warn']} ${s['button']} ${timeout === 0 ? s['enabled'] : ''}`}
-            onClick={handleDeletePage}>
+            onClick={
+              modal.confirmModal.modalType === 'pageDelete' ? handleDeletePage : handleDeleteGroup
+            }>
             УДАЛИТЬ {timeout === 0 ? '' : <>({timeout})</>}
           </button>
         </div>

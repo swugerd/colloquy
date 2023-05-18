@@ -232,16 +232,14 @@
 @media (max-width: 1150px) {
   .feed {
     margin-bottom: 2rem;
-    & .block + .block {
-      position: fixed;
-      z-index: 200;
-      top: 5.5rem;
-      left: 0;
-      opacity: 0;
-      border-radius: 0 0 2rem 2rem;
-      transition: 0.2s linear;
-      pointer-events: none;
-    }
+    position: fixed;
+    z-index: 200;
+    top: 5.5rem;
+    left: 0;
+    opacity: 0;
+    border-radius: 0 0 2rem 2rem;
+    transition: 0.2s linear;
+    pointer-events: none;
   }
   .music {
     position: fixed;
@@ -346,10 +344,8 @@
     margin-top: 0;
   }
   .feed.active {
-    & .block + .block {
-      opacity: 1;
-      pointer-events: all;
-    }
+    opacity: 1;
+    pointer-events: all;
   }
   .side-content {
     max-width: 100%;

@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/users.model';
-import { Op, Sequelize } from 'sequelize';
+import { ModelStatic, Op, Sequelize } from 'sequelize';
 import { UploadedFile } from 'src/files/files.service';
 import { FriendsService } from 'src/friends/friends.service';
 import { UserQueryParams } from './validators/user-query.validator';
@@ -14,6 +14,7 @@ import { FriendsRequests } from 'src/friends/models/friend-requests.model';
 import { BlacklistDto } from 'src/groups/dto/blacklist.dto';
 import { Blacklist } from 'src/groups/models/blacklist.model';
 import { Friends } from 'src/friends/models/friends.model';
+import { GroupMember } from 'src/groups/models/group-members.model';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,7 @@ export class UsersService {
     @InjectModel(FriendsRequests)
     private readonly friendsRequestsRepository: typeof FriendsRequests,
     @InjectModel(Blacklist) private readonly blacklistRepository: typeof Blacklist,
+    @InjectModel(GroupMember) private readonly groupMembersRepository: typeof GroupMember,
     private readonly roleService: RolesService,
     private readonly fileService: FilesService,
     private readonly friendsService: FriendsService,
@@ -207,11 +209,11 @@ export class UsersService {
   }
 
   async filterUsers(query: UserQueryParams) {
-    const { userId, q, city, ageFrom, ageTo, femaleGender, maleGender, online } = query;
+    const { userId, q, city, ageFrom, ageTo, femaleGender, maleGender, online, groupId } = query;
 
     const today = new Date();
     const ageFromTimestamp = ageTo ? today.getFullYear() - ageTo : 1900;
-    const ageToTimestamp = ageFrom ? today.getFullYear() - ageFrom : 2009;
+    const ageToTimestamp = ageFrom ? today.getFullYear() - ageFrom : today.getFullYear() - 14;
 
     const friendsIds = (await this.friendsService.getFriendsById(userId)).map(
       (item) => item[Number(userId) === item.friend.id ? 'user' : 'friend'].id,
@@ -231,8 +233,10 @@ export class UsersService {
         : item.user_income_id;
     });
 
-    const where = {
-      [Op.not]: { id: [userId, ...friendsIds, ...friendsReqsIds, ...blacklistUsersIds] },
+    const userWhere = {
+      [Op.not]: {
+        id: groupId ? [userId] : [userId, ...friendsIds, ...friendsReqsIds, ...blacklistUsersIds],
+      },
       ...(q
         ? {
             [Op.or]: [
@@ -260,7 +264,27 @@ export class UsersService {
       ...(online ? { online_type: { [Op.notIn]: ['pc-offline'] } } : {}),
     };
 
-    const users = this.userRepository.findAll({ where });
-    return users;
+    const groupMemberWhere = {
+      user_id: {
+        [Op.not]: userId,
+      },
+      group_id: groupId,
+    };
+
+    const users = await this.userRepository.findAll({
+      where: userWhere,
+    });
+
+    const groupMembers = groupId
+      ? await this.groupMembersRepository.findAll({
+          where: groupMemberWhere,
+        })
+      : [];
+
+    const groupMemberUserIds = groupMembers.map((groupMember) => groupMember.user_id);
+
+    const filteredUsers = users.filter((user) => groupMemberUserIds.includes(user.id));
+
+    return groupId ? filteredUsers : users;
   }
 }

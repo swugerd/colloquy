@@ -2,8 +2,8 @@ export interface Post {
   id: number;
   user: {
     id: number;
-    name: string;
-    img: string;
+    user_name: string;
+    user_img: string;
   };
   date: string;
   forwardPost?: {

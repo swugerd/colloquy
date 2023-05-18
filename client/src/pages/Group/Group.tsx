@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Wall from '../../components/Wall/Wall';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import { useAppDispatch } from '../../redux/store';
@@ -13,6 +13,12 @@ import Icon from '../../components/UI/Icon/Icon';
 import ProfileContent from '../../components/ProfileContent/ProfileContent';
 import { setIsInfoName } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/auth/selector';
+import { useAxios } from '../../hooks/useAxios';
+import Preloader from '../../components/Preloader/Preloader';
+import NotFoundBlock from '../../components/NotFoundBlock/NotFoundBlock';
+import axios from 'axios';
 
 const Group: React.FC = () => {
   const { name } = useParams();
@@ -20,8 +26,39 @@ const Group: React.FC = () => {
 
   const { width } = useWindowSize();
 
-  const isAdmin = true;
-  const isClosed = false;
+  const {
+    user: { id: userId },
+  } = useSelector(selectIsAuth);
+
+  const { pathname } = useLocation();
+
+  const groupRoute = pathname.split('/')[pathname.split('/').length - 1];
+
+  const {
+    response: group,
+    isLoading: isGroupLoading,
+    error: groupError,
+  } = useAxios({
+    method: 'get',
+    url: `${process.env.REACT_APP_HOSTNAME}/api/groups/getByAdress/${groupRoute}`,
+  });
+
+  const isBlacklisted =
+    group && userId && group.blacklistedUsers.some((user: any) => user.blocked_user_id === userId);
+
+  const isAdmin =
+    group && userId && group.members.find((member: any) => member.user_id === userId)?.is_admin
+      ? true
+      : false;
+
+  const isClosed =
+    group &&
+    userId &&
+    group.is_private &&
+    !group.members.some((member: any) => member.user_id === userId);
+
+  const isMember =
+    group && userId && group.members.some((member: any) => member.user_id === userId);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,121 +72,146 @@ const Group: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const members: { id: number; img: string; name: string; onlineType: string }[] = [
-    { id: 1, img: ebalo, name: 'Рабадонович скамерулевичивоынар', onlineType: 'pc-online' },
-    { id: 2, img: ebalo, name: 'Рабадонович скамерулевич', onlineType: 'pc-dnd' },
-    { id: 3, img: ebalo, name: 'Рабадонович скамерулевич', onlineType: 'pc-afk' },
-    { id: 4, img: ebalo, name: 'Рабадонович скамерулевич', onlineType: 'pc-offline' },
-    { id: 5, img: ebalo, name: 'Паша', onlineType: 'pc-offline' },
-    { id: 6, img: ebalo, name: 'Паша', onlineType: 'pc-offline' },
-  ];
+  const members = group && group.members;
 
-  const photos: { id: number; img: string }[] = [
-    { id: 1, img: ebalo },
-    { id: 2, img: ebalo },
-    { id: 3, img: ebalo },
-    { id: 4, img: ebalo },
-    { id: 5, img: ebalo },
-    { id: 6, img: ebalo },
-  ];
+  const photos = group && group.photos;
 
-  const videos: { id: number; video: string; name: string; author: string; views: number }[] = [
-    {
-      id: 1,
-      video,
-      name: 'трек трек трек трек трек вырфо',
-      author: 'фредбер медведь вроыфрвыфло',
-      views: 123,
-    },
-    { id: 2, video, name: 'трек', author: 'фредбер медведь вроыфрвыфло', views: 123 },
-    { id: 3, video, name: 'трек', author: 'фредбефредбер медведь вроыфрвыфлоедь', views: 123 },
-    { id: 4, video, name: 'трек', author: 'фредбер медведь', views: 123 },
-    { id: 5, video, name: 'трек', author: 'фредбер медведь', views: 123 },
-  ];
+  const videos = group && group.videos;
+
+  const [isReqSent, setIsReqSent] = useState(false);
+
+  const createReq = async () => {
+    if (userId && group) {
+      const response: any = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/req/${userId}`,
+        data: {
+          group_id: group.id,
+        },
+      });
+      setIsReqSent(true);
+    }
+  };
+
+  const isUserReq = group && group.requests.some((req: any) => req.user_id === userId);
+
+  if (!isGroupLoading && !group) {
+    return <NotFoundBlock className={'profile'} text={'Группа не найдена'} />;
+  }
 
   return (
     <>
-      {isClosed ? (
-        <div className={s['closed']}>
-          <div className={s['lock']}>
-            <Icon src={lockSvg} id={'lock'} className={'green'} />
-          </div>
-          <p className={s['close-text']}>
-            Это закрытое сообщество, чтобы просмотривать содержимое, нужно быть участником
-          </p>
-          <div className={s['close-request']}>Подать заявку</div>
-        </div>
-      ) : (
-        <Wall
-          className={'group'}
-          page={'group'}
-          placeholder={isAdmin ? 'Что произошло сегодня?' : 'Предложите новость сообществу'}
-          isAdmin={isAdmin}
-        />
-      )}
-      <div className={s['group']}>
-        <div className={s['top']}>
-          <div className={s['avatar']}>
-            <img src={ebalo} alt="Аватар" />
-          </div>
-          <div className={s['group-info']}>
-            <div className={s['group-top']}>
-              <div className={s['row']}>
-                <h6 className={s['group-title']}>ламповый антонимыантонимы антонимыантонимы</h6>
-                <div className={s['buttons']}>
-                  <button className={s['group-action']}>
-                    <Icon src={exitSvg} id={'exit'} className={'white'} />
-                  </button>
-                  {isAdmin && (
-                    <Link className={s['group-action']} to="/groups/colloquy/edit">
-                      <Icon src={settingsSvg} id={'settings'} className={'white'} />
-                    </Link>
-                  )}
-                </div>
-              </div>
-              <p className={s['group-status']}>нет блять омонимы</p>
-            </div>
-            {width > 550 && (
-              <p className={s['group-about']}>
-                я просто хочу сказать всем ребятам, что я очень крутой и в принципе я просто
-                ламповый ламповый ламповый ламповый паря
-              </p>
-            )}
-          </div>
-          {width <= 550 && (
-            <p className={s['group-about']}>
-              я просто хочу сказать всем ребятам, что я очень крутой и в принципе я просто ламповый
-              ламповый ламповый ламповый паря
-            </p>
-          )}
-        </div>
-        <div className={s['group-content']}>
-          <ProfileContent
-            contentType={'members'}
-            data={members}
-            className={'members-content'}
-            pageType={'group'}
-          />
+      {group && !isGroupLoading ? (
+        <>
           {isClosed ? (
-            ''
+            <div className={s['closed']}>
+              {isBlacklisted && (
+                <>
+                  <div className={s['lock']}>
+                    <Icon src={lockSvg} id={'lock'} className={'green'} />
+                  </div>
+                  <p className={s['close-text']}>Вы в чёрном списке</p>
+                </>
+              )}
+              {(isReqSent || isUserReq) && !isBlacklisted ? (
+                <>
+                  <div className={s['lock']}>
+                    <Icon src={lockSvg} id={'lock'} className={'green'} />
+                  </div>
+                  <p className={s['close-text']}>Заявка отправлена</p>
+                </>
+              ) : !isBlacklisted ? (
+                <>
+                  <div className={s['lock']}>
+                    <Icon src={lockSvg} id={'lock'} className={'green'} />
+                  </div>
+                  <p className={s['close-text']}>
+                    Это закрытое сообщество, чтобы просмотривать содержимое, нужно быть участником
+                  </p>
+                  <button className={s['close-request']} onClick={createReq}>
+                    Подать заявку
+                  </button>
+                </>
+              ) : (
+                ''
+              )}
+            </div>
           ) : (
-            <>
-              <ProfileContent
-                contentType={'photos'}
-                data={photos}
-                className={'photos-content'}
-                pageType={'group'}
-              />
-              <ProfileContent
-                contentType={'videos'}
-                data={videos}
-                className={'videos-content'}
-                pageType={'group'}
-              />
-            </>
+            <Wall
+              className={'group'}
+              page={'group'}
+              placeholder={isAdmin ? 'Что произошло сегодня?' : 'Предложите новость сообществу'}
+              isAdmin={isAdmin}
+              withoutForm={isMember ? false : true}
+            />
           )}
-        </div>
-      </div>
+          <div className={s['group']}>
+            <div className={s['top']}>
+              <div className={s['avatar']}>
+                <img src={`${process.env.REACT_APP_HOSTNAME}/${group.group_avatar}`} alt="Аватар" />
+              </div>
+              <div className={s['group-info']}>
+                <div className={s['group-top']}>
+                  <div className={s['row']}>
+                    <h6 className={s['group-title']}>{group.group_name}</h6>
+                    <div className={s['buttons']}>
+                      {isMember && group && group.creator_id !== userId ? (
+                        <button className={s['group-action']}>
+                          <Icon src={exitSvg} id={'exit'} className={'white'} />
+                        </button>
+                      ) : (
+                        ''
+                      )}
+                      {isAdmin && (
+                        <Link
+                          className={s['group-action']}
+                          to={`/groups/${group.group_adress}/edit`}>
+                          <Icon src={settingsSvg} id={'settings'} className={'white'} />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                  {group.group_status && <p className={s['group-status']}>{group.group_status}</p>}
+                </div>
+                {width > 550 && group.group_about && (
+                  <p className={s['group-about']}>{group.group_about}</p>
+                )}
+              </div>
+              {width <= 550 && group.group_about && (
+                <p className={s['group-about']}>{group.group_about}</p>
+              )}
+            </div>
+            <div className={s['group-content']}>
+              <ProfileContent
+                contentType={'members'}
+                data={members}
+                className={'members-content'}
+                pageType={'group'}
+              />
+              {isClosed ? (
+                ''
+              ) : (
+                <>
+                  <ProfileContent
+                    contentType={'photos'}
+                    data={photos}
+                    className={'photos-content'}
+                    pageType={'group'}
+                  />
+                  <ProfileContent
+                    contentType={'videos'}
+                    data={videos}
+                    className={'videos-content'}
+                    pageType={'group'}
+                  />
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      ) : (
+        <Preloader className="profile" />
+      )}
     </>
   );
 };

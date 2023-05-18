@@ -92,7 +92,7 @@ const ModalSlice = createSlice({
     },
     setConfirmModalType(
       state,
-      action: PayloadAction<'friend' | 'group' | 'pageDelete' | 'passwordEnter'>,
+      action: PayloadAction<'friend' | 'group' | 'pageDelete' | 'passwordEnter' | 'groupDelete'>,
     ) {
       state.confirmModal.modalType = action.payload;
     },

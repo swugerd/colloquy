@@ -83,14 +83,6 @@ const Profile: React.FC = () => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isActionsOpen, setIsActionsOpen] = useState(false);
 
-  const groups: { id: number; img: string; name: string; members: number }[] = [
-    { id: 1, img: ava, name: 'ВЫОЛФВРЫФШГРВЫРФЫ вфывыф фвыв', members: 12 },
-    { id: 2, img: ava, name: 'ВЫОЛФВРЫФШГРВЫРФЫ вфывыф фвыв', members: 24244 },
-    { id: 3, img: ava, name: 'ВЫОЛФВРЫФШГРВЫРФЫ вфывыф фвыв', members: 1000000 },
-    { id: 4, img: ava, name: 'Паша', members: 2 },
-    { id: 5, img: ava, name: 'Паша', members: 100000 },
-  ];
-
   const music: { id: number; img: string; name: string; author: string }[] = [
     {
       id: 1,
@@ -113,7 +105,21 @@ const Profile: React.FC = () => {
 
   const user: User | {} = !isLoading && response ? response : {};
 
-  useSetPageTitle(response ? `${response.user_name} ${response.user_surname}` : '', response);
+  useSetPageTitle(
+    response ? `${response.user_name} ${response.user_surname}` : 'Пользователь не найден',
+    response,
+  );
+
+  const {
+    response: groups,
+    isLoading: isGroupsLoading,
+    error: groupsError,
+  } = useAxios({
+    method: 'get',
+    url: (user as User).id
+      ? `${process.env.REACT_APP_HOSTNAME}/api/groups/${(user as User).id}`
+      : '',
+  });
 
   const {
     response: requests,
@@ -238,7 +244,11 @@ const Profile: React.FC = () => {
     return <NotFoundBlock className={'profile'} text={'Пользователь не найден'} />;
   }
 
-  return !isLoading && !isCurrentUserLoading && !isFriendsLoading && !isPhotosLoading ? (
+  return !isLoading &&
+    !isCurrentUserLoading &&
+    !isFriendsLoading &&
+    !isPhotosLoading &&
+    !isGroupsLoading ? (
     <>
       <div className={`${s['profile']} ${isSticky ? s['sticky'] : ''}`} ref={profileRef}>
         <div className={`${s['left']}`}>

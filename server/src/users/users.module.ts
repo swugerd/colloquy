@@ -12,12 +12,22 @@ import { FriendsModule } from 'src/friends/friends.module';
 import { FriendsRequests } from 'src/friends/models/friend-requests.model';
 import { Blacklist } from 'src/groups/models/blacklist.model';
 import { Friends } from 'src/friends/models/friends.model';
+import { GroupMember } from 'src/groups/models/group-members.model';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
   imports: [
-    SequelizeModule.forFeature([User, Role, UserRoles, City, FriendsRequests, Blacklist, Friends]),
+    SequelizeModule.forFeature([
+      User,
+      Role,
+      UserRoles,
+      City,
+      FriendsRequests,
+      Blacklist,
+      Friends,
+      GroupMember,
+    ]),
     RolesModule,
     FilesModule,
     forwardRef(() => FriendsModule),
