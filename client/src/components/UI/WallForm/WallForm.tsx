@@ -1,38 +1,89 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Icon from '../Icon/Icon';
 import s from './WallForm.module.scss';
-import paperclipSvg from '../../../assets/img/icons/paperclip.svg';
-import ebalo from '../../../assets/uploads/test/ebalo.png';
-import video from '../../../assets/videos/video.mp4';
 import anonymSvg from '../../../assets/img/icons/anonym.svg';
-import smileSvg from '../../../assets/img/icons/smile.svg';
-import commentsSvg from '../../../assets/img/icons/comment.svg';
-import microSvg from '../../../assets/img/icons/voices.svg';
 import sendSvg from '../../../assets/img/icons/send.svg';
-import UploadFilesModal from '../../../Modals/UploadFilesModal/UploadFilesModal';
-import MusicTrack from '../../MusicTrack/MusicTrack';
 import Input from '../Input/Input';
 import MediaToUpload from '../../MediaToUpload/MediaToUpload';
+import axios from 'axios';
 
 type WallFormProps = {
   page: 'profile' | 'feed' | 'group';
   className: string;
   placeholder: string;
   isAdmin: boolean;
+  user?: any;
+  group?: any;
+  currentUserId?: number;
+  setPosts?: (data: any) => void;
+  postsApiLink?: string;
+  posts?: any;
 };
 
-const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdmin }) => {
-  const [isRadioActive, setIsRadioActive] = useState(true);
-
-  const paperClipRef = useRef<HTMLButtonElement>(null);
-
+const WallForm: React.FC<WallFormProps> = ({
+  page,
+  className,
+  placeholder,
+  isAdmin,
+  user,
+  group,
+  currentUserId,
+  setPosts,
+  postsApiLink,
+  posts,
+}) => {
   const [isAnonymActive, setIsAnonymActive] = useState(false);
 
   const hasMediaToUpload = false;
 
+  const [postText, setPostText] = useState({ post_text: '' });
+
+  const handleInputChange = (fields: any) => {
+    setPostText((prev) => {
+      return { ...prev, ...fields };
+    });
+  };
+
+  const handleFormSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (page === 'profile') {
+      const addedPost = await axios({
+        method: 'post',
+        url: currentUserId
+          ? `${process.env.REACT_APP_HOSTNAME}/api/posts/create/${currentUserId}`
+          : '',
+        data: {
+          post_text: postText.post_text,
+          ...(page === 'profile' && user ? { user_referer_id: user.id } : {}),
+        },
+      });
+
+      setPosts && setPosts([addedPost.data, ...posts]);
+    }
+
+    if (page === 'group') {
+      const addedPost = await axios({
+        method: 'post',
+        url: currentUserId
+          ? isAdmin
+            ? `${process.env.REACT_APP_HOSTNAME}/api/posts/create/${currentUserId}`
+            : `${process.env.REACT_APP_HOSTNAME}/api/groups/suggest/${currentUserId}`
+          : '',
+        data: {
+          [isAdmin ? 'post_text' : 'suggest_text']: postText.post_text,
+          ...(group ? { group_id: group.id, is_anonym: isAnonymActive } : {}),
+        },
+      });
+      setPosts && isAdmin && setPosts([addedPost.data, ...posts]);
+    }
+
+    setPostText({ post_text: '' });
+  };
+
   return page !== 'feed' ? (
     <>
-      <form className={s['post-form']}>
+      <form className={s['post-form']} onSubmit={(e: any) => handleFormSubmit(e)}>
         <div className={s['relative']}>
           <Input
             className={'wall-textarea'}
@@ -40,75 +91,31 @@ const WallForm: React.FC<WallFormProps> = ({ page, className, placeholder, isAdm
             type={'text'}
             inputType={'send'}
             isTextarea={true}
-            button={paperClipRef}
             classOptions={{
               paperclipIcon: 'paperclip-icon-wall',
               smileIcon: 'smile-icon-wall',
               sendIcon: 'send-icon-wall',
             }}
-            name={''}
-            value={''}
-            setValue={() => {}}
+            name={'post_text'}
+            value={postText.post_text ? postText.post_text : ''}
+            setValue={handleInputChange}
           />
           {hasMediaToUpload && (
             <MediaToUpload className={page === 'profile' ? 'wall-page' : 'group-page'} />
           )}
         </div>
         <div className={s['input-controls']}>
-          {page === 'profile' && isAdmin && (
+          {page === 'group' && (
             <>
-              <button className={`${s['controls-icon']} ${s['comments']}`} type="button">
-                <Icon src={commentsSvg} id={'comments'} className={'gray'} />
-              </button>
-              <div className={s['media-action']} onClick={() => setIsRadioActive(!isRadioActive)}>
-                <div className={s['radio-btn']}>
-                  <input
-                    type="checkbox"
-                    className={`${s['inp-disabled']}`}
-                    checked={isRadioActive}
-                    onChange={() => setIsRadioActive(!isRadioActive)}
-                  />
-                  <div className={`${s['custom-btn']}`}></div>
-                </div>
-                <div className={s['text']}>Добавить медиа на страницу</div>
-              </div>
-            </>
-          )}
-          {page === 'group' && isAdmin && (
-            <>
-              <button className={`${s['controls-icon']} ${s['comments']}`}>
-                <Icon src={commentsSvg} id={'comments'} className={'gray'} />
-              </button>
               <button
-                className={`${s['controls-icon']} ${s['anonym']} ${s['separator']}`}
-                onClick={() => setIsAnonymActive(!isAnonymActive)}>
-                <Icon src={anonymSvg} id={'anonym'} className={isAnonymActive ? 'gray' : 'green'} />
+                className={`${s['controls-icon']} ${s['anonym']}`}
+                onClick={() => setIsAnonymActive(!isAnonymActive)}
+                type="button">
+                <Icon src={anonymSvg} id={'anonym'} className={isAnonymActive ? 'green' : 'gray'} />
               </button>
-              <div className={s['media-action']} onClick={() => setIsRadioActive(!isRadioActive)}>
-                <div className={s['radio-btn']}>
-                  <input
-                    type="checkbox"
-                    className={`${s['inp-disabled']}`}
-                    checked={isRadioActive}
-                    onChange={() => setIsRadioActive(!isRadioActive)}
-                  />
-                  <div className={`${s['custom-btn']}`}></div>
-                </div>
-                <div className={s['text']}>Добавить медиа в сообщество</div>
-              </div>
             </>
-          )}
-          {page === 'group' && isAdmin === false && (
-            <button
-              className={`${s['controls-icon']} ${s['anonym']}`}
-              onClick={() => setIsAnonymActive(!isAnonymActive)}>
-              <Icon src={anonymSvg} id={'anonym'} className={isAnonymActive ? 'gray' : 'green'} />
-            </button>
           )}
           <div className={s['row']}>
-            <button className={`${s['controls-icon']} ${s['micro']}`}>
-              <Icon src={microSvg} id={'voices'} className={'gray'} />
-            </button>
             <button className={`${s['controls-icon']} ${s['send']}`}>
               <Icon src={sendSvg} id={'send'} className={'gray'} />
             </button>

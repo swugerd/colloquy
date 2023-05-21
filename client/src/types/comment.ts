@@ -2,8 +2,9 @@ export interface Comment {
   id: number;
   user: {
     id: number;
-    name: string;
-    img: string;
+    user_name: string;
+    user_avatar: string;
+    user_nickname: string;
   };
   date: string;
   replyUser?: {
@@ -40,5 +41,5 @@ export interface Comment {
       author: string;
     }[];
   };
-  likes: number;
+  likes: any;
 }

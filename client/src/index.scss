@@ -23,6 +23,15 @@ body {
   padding: 0;
   font-size: 1.6rem;
   background: $bg-main;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
 }
 
 button {

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ModalState } from './types';
-import img from '../../assets/uploads/test/image.png';
 const initialState: ModalState = {
   uploadFilesModal: {
     isOpen: false,
@@ -14,17 +13,11 @@ const initialState: ModalState = {
   },
   moreAccsModal: {
     isOpen: false,
-    accounts: [
-      { id: 1, img, name: 'Пашок Кубыркин' },
-      { id: 2, img, name: 'Овыфлвфы врфыоврыфол' },
-      { id: 3, img, name: 'да нет' },
-      { id: 4, img, name: 'Жесткий Пашок' },
-      { id: 5, img, name: 'Жесткий Пашок' },
-      // { id: 6, img, name: 'Жесткий Пашок' },
-    ],
+    accounts: [],
   },
   postContentModal: {
     isOpen: false,
+    id: 0,
   },
   openModalButtons: [
     'uploadFilesButton',
@@ -68,6 +61,9 @@ const ModalSlice = createSlice({
     },
     setIsPostContentModalOpen(state, action: PayloadAction<boolean>) {
       state.postContentModal.isOpen = action.payload;
+    },
+    setPostContentModalId(state, action: PayloadAction<number>) {
+      state.postContentModal.id = action.payload;
     },
     setIsCreateBaseModalOpen(state, action: PayloadAction<boolean>) {
       state.createBaseModal.isOpen = action.payload;
@@ -113,6 +109,7 @@ export const {
   setUploadMediaModalType,
   setConfirmModalType,
   setIsConfirmModalOpen,
+  setPostContentModalId,
 } = ModalSlice.actions;
 
 export default ModalSlice.reducer;

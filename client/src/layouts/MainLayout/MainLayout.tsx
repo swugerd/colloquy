@@ -44,23 +44,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { modal } = useSelector(selectModal);
   const dispatch = useAppDispatch();
   const { mobile } = useSelector(selectMobile);
-  const notify: {
-    id: number;
-    type: Notifies;
-    content: string;
-    previewMedia?: string;
-    user: { id: number; img: string; name: string };
-  } = {
-    id: 1,
-    type: 'comment',
-    content: 'фотографии',
-    previewMedia: img,
-    user: {
-      id: 1,
-      img,
-      name: 'Пашок Кубыркин',
-    },
-  };
 
   const { user } = useAuth();
 
@@ -123,7 +106,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               {modal.postContentModal.isOpen && (
                 <PostContentModal
                   onClose={() => dispatch(setIsPostContentModalOpen(false))}
-                  modalType={'video'}
+                  modalType={'post'}
                 />
               )}
               {modal.forwardModal.isOpen && (
@@ -149,14 +132,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <MembersModal onClose={() => dispatch(setIsMembersModalOpen(false))} />
               )}
               {modal.confirmModal.isOpen && <ConfirmModal />}
-              {/* {notify && (
-              <PopUpNotify
-                type={notify.type}
-                user={notify.user}
-                content={notify.content}
-                previewMeida={notify.previewMedia ? notify.previewMedia : ''}
-              />
-            )} */}
             </main>
           </div>
         </div>

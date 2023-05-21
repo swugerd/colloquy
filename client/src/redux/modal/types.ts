@@ -16,6 +16,7 @@ export interface ModalState {
   };
   postContentModal: {
     isOpen: boolean;
+    id: number;
   };
   createBaseModal: {
     isOpen: boolean;

@@ -80,3 +80,17 @@
     margin-top: 3rem;
   }
 }
+
+.comments-page {
+  margin: 0 auto;
+  min-height: 90%;
+  justify-content: center;
+  & .image {
+    width: 15rem;
+    height: 15rem;
+  }
+  & .nothing-text {
+    font-size: 2rem;
+    margin-top: 2rem;
+  }
+}

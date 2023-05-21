@@ -10,6 +10,7 @@ export const useAxios: (axiosParams: {
   headers?: {
     Authorization?: string;
     ['Content-Type']?: string;
+    ['X-Total-Count']?: string;
   };
 }) => {
   response: any;
@@ -23,6 +24,7 @@ export const useAxios: (axiosParams: {
   headers?: {
     Authorization?: string;
     ['Content-Type']?: string;
+    ['X-Total-Count']?: string;
   };
 }) => {
   const [response, setResponse] = useState(undefined);

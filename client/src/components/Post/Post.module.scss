@@ -162,7 +162,8 @@
   margin-bottom: 1.5rem;
 }
 
-.post-text {
+.post-text,
+.post-textarea {
   font-size: 1.6rem;
   font-weight: 500;
   color: $white;
@@ -171,6 +172,26 @@
   word-break: break-all;
   overflow-wrap: break-word;
   margin-bottom: 1rem;
+}
+
+.post-textarea {
+  background: $elem;
+  border: none;
+  border-bottom: 0.2rem solid $green-light;
+  resize: none;
+  min-height: 3rem;
+  height: 1px;
+  outline: none;
+  width: 100%;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
 }
 
 .post-images {
@@ -491,9 +512,6 @@
   align-items: center;
   & + & {
     margin-left: 1.5rem;
-  }
-  &:last-child {
-    margin-left: auto;
   }
   & svg {
     width: 2rem;

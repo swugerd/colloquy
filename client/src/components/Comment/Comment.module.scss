@@ -5,6 +5,7 @@
   border-radius: 1rem;
   padding: 1rem;
   display: flex;
+  flex-grow: 1;
   &.reply {
     margin-left: 5rem;
   }
@@ -70,6 +71,34 @@
   transform: scaleX(-1);
 }
 
+.textarea {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: $white;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  margin-bottom: 1rem;
+  background: rgb(44, 44, 44, 0.5);
+  border: none;
+  border-bottom: 0.2rem solid $green-light;
+  resize: none;
+  min-height: 3rem;
+  height: 1px;
+  outline: none;
+  width: 100%;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
 .row {
   display: flex;
   max-width: 57rem;
@@ -86,6 +115,10 @@
   & + & {
     margin-top: 1.5rem;
   }
+}
+
+.content {
+  width: 100%;
 }
 
 .image,
@@ -139,6 +172,12 @@
 .likes {
   display: flex;
   align-items: center;
+  & span {
+    transition: 0.2s linear;
+  }
+  &.active span {
+    color: $green-main;
+  }
 }
 
 .like-icon {

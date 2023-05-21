@@ -19,5 +19,6 @@ import { UsersModule } from 'src/users/users.module';
     FilesModule,
     PostsModule,
   ],
+  exports: [GroupsService],
 })
 export class GroupsModule {}

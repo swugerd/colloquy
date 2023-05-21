@@ -17,6 +17,8 @@ import { Blacklist } from 'src/groups/models/blacklist.model';
 import { GroupRequest } from 'src/groups/models/group-requests.model';
 import { GroupSuggest } from 'src/groups/models/group-suggest.model';
 import { Post } from 'src/posts/models/post.model';
+import { Like } from 'src/likes/models/like.model';
+import { Comment } from 'src/comments/models/comment.model';
 
 @Injectable()
 export class SequelizeConfigService implements SequelizeOptionsFactory {
@@ -51,6 +53,8 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
         GroupRequest,
         GroupSuggest,
         Post,
+        Like,
+        Comment,
       ],
       autoLoadModels: true,
       synchronize: true,

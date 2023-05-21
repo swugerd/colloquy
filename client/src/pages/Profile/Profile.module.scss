@@ -11,6 +11,7 @@
 .profile {
   background: $sub-bg;
   max-width: 63rem;
+  min-height: calc(100vh - 12rem);
   height: fit-content;
   margin: 0 4.5rem;
   border-radius: 2rem;
@@ -269,6 +270,8 @@
     margin: 0 0 2rem 0;
     min-width: 100%;
     flex-direction: column;
+    min-height: 40vh;
+    height: fit-content;
   }
   .right {
     width: 100%;

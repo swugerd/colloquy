@@ -88,6 +88,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
     response: posts,
     isLoading: isPostsLoading,
     error: postsError,
+    setResponse: setPosts,
   } = useAxios({
     method: 'get',
     url:
@@ -303,7 +304,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
           </Link>
         )}
       </div>
-      {(page === 'create' || page === 'edit') && (
+      {(page === 'create' || page === 'edit') && updateGroupData.group_avatar_cache && (
         <form onSubmit={page === 'create' ? handleCreateSubmit : handleUpdateSubmit}>
           <div className={`${s['content']}`}>
             <div className={s['avatar-block']}>
@@ -325,7 +326,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
                           : updateImage
                           ? updateImage
                           : updateGroupData && page === 'edit'
-                          ? `${process.env.REACT_APP_HOSTNAME}/${updateGroupData?.group_avatar_cache}`
+                          ? `${process.env.REACT_APP_HOSTNAME}/${updateGroupData.group_avatar_cache}`
                           : avatar
                       }
                       alt=""
@@ -487,6 +488,8 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
             }}
             isForwardPost={false}
             page={'group'}
+            group={group}
+            setPosts={setPosts}
           />
         ))
       ) : page === 'suggest' ? (

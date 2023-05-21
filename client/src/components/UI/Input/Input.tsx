@@ -82,6 +82,7 @@ const Input: React.FC<InputProps> = ({
     if (e.target.value === '') {
       e.target.style.height = '1px';
     }
+    setValue({ [name]: e.target.value });
   };
 
   const changeValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,13 +139,6 @@ const Input: React.FC<InputProps> = ({
       )}
       {inputType === 'send' && (
         <div className={s['input-block']}>
-          <button
-            className={s[paperclipIcon ? paperclipIcon : 'paperclip-icon']}
-            ref={buttonRef}
-            type="button"
-            onClick={(e) => handleModalOpen(e)}>
-            <Icon src={paperclipSvg} id={'paperclip'} className={'gray'} />
-          </button>
           {isTextarea ? (
             <textarea
               className={s[className]}
@@ -162,12 +156,6 @@ const Input: React.FC<InputProps> = ({
               id={id}
             />
           )}
-          <button className={s[smileIcon ? smileIcon : 'smile-icon']} type="button">
-            <Icon src={smileSvg} id={'smile'} className={'gray'} />
-          </button>
-          {/* <button className={s[microIcon]}>
-                        <img src={micro} alt="voice" />
-                    </button> */}
           {page === 'message' ? (
             <button className={s[sendIcon ? sendIcon : 'send-icon']}>
               <Icon src={sendSvg} id={'send'} className={'gray'} />

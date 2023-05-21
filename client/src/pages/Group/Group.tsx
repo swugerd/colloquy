@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Wall from '../../components/Wall/Wall';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import { useAppDispatch } from '../../redux/store';
@@ -95,9 +95,25 @@ const Group: React.FC = () => {
 
   const isUserReq = group && group.requests.some((req: any) => req.user_id === userId);
 
+  const navigate = useNavigate();
+
   if (!isGroupLoading && !group) {
     return <NotFoundBlock className={'profile'} text={'Группа не найдена'} />;
   }
+
+  const handleQuit = async () => {
+    if (userId && group) {
+      const response: any = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/groups/exit/${userId}`,
+        data: {
+          group_id: group.id,
+        },
+      });
+
+      navigate('/groups');
+    }
+  };
 
   return (
     <>
@@ -156,7 +172,7 @@ const Group: React.FC = () => {
                     <h6 className={s['group-title']}>{group.group_name}</h6>
                     <div className={s['buttons']}>
                       {isMember && group && group.creator_id !== userId ? (
-                        <button className={s['group-action']}>
+                        <button className={s['group-action']} onClick={handleQuit}>
                           <Icon src={exitSvg} id={'exit'} className={'white'} />
                         </button>
                       ) : (

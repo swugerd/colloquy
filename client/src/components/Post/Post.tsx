@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import s from './Post.module.scss';
-import hideSvg from '../../assets/img/icons/hide.svg';
 import playSvg from '../../assets/img/icons/play.svg';
 import dotsSvg from '../../assets/img/icons/dots.svg';
 import likeSvg from '../../assets/img/icons/like.svg';
-import forwardSvg from '../../assets/img/icons/forward.svg';
+import markSvg from '../../assets/img/icons/markdown.svg';
 import commentsSvg from '../../assets/img/icons/comment.svg';
-import viewsSvg from '../../assets/img/icons/views.svg';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import formatTime from '../../utils/formatTime';
 import classNames from 'classnames';
@@ -19,11 +17,17 @@ import { Link } from 'react-router-dom';
 import SquareButton from '../UI/SquareButton/SquareButton';
 import closeSvg from '../../assets/img/icons/close.svg';
 import addSvg from '../../assets/img/icons/add.svg';
-import ForwardPost from '../ForwardPost/ForwardPost';
-import ForwardModal from '../../Modals/ForwardModal/ForwardModal';
 import { useAppDispatch } from '../../redux/store';
-import { setIsForwardModalOpen, setIsPostContentModalOpen } from '../../redux/modal/slice';
+import {
+  setIsForwardModalOpen,
+  setIsPostContentModalOpen,
+  setPostContentModalId,
+} from '../../redux/modal/slice';
 import wordDeclension from '../../utils/wordDeclension';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/auth/selector';
+import axios from 'axios';
 
 type PostProps = {
   id: number;
@@ -31,6 +35,8 @@ type PostProps = {
     id: number;
     user_name: string;
     user_avatar: string;
+    user_nickname: string;
+    online_type: string;
   };
   content: {
     text?: string;
@@ -64,9 +70,9 @@ type PostProps = {
   postType: {
     feed?: {
       date: string;
-      likes?: number;
+      likes?: any;
       forwards?: number;
-      comments?: number;
+      comments?: any;
       views?: number;
       forwardPost?: {
         id: number;
@@ -105,6 +111,11 @@ type PostProps = {
   isModalPost?: boolean;
   isAdmin: boolean;
   page: 'profile' | 'feed' | 'modal' | 'group';
+  setPosts?: (data: any) => void;
+  posts?: any;
+  postsApiLink?: string;
+  isAnonym?: boolean;
+  group?: any;
 };
 
 const Post: React.FC<PostProps> = ({
@@ -116,8 +127,14 @@ const Post: React.FC<PostProps> = ({
   isModalPost,
   page,
   isAdmin,
+  setPosts,
+  postsApiLink,
+  isAnonym,
+  group,
+  posts,
 }) => {
-  const { user_name: userName, user_avatar: userImg } = user;
+  const { user_name: userName, user_avatar: userImg, user_nickname: userLink, online_type } = user;
+  const { group_name: groupName, group_avatar: groupImg, group_adress: groupLink } = group;
   const { text, images, videos, circles, voices, music } = content;
   const { width } = useWindowSize();
   const maxVisibleContent: {
@@ -138,12 +155,13 @@ const Post: React.FC<PostProps> = ({
     music: 1,
   };
 
-  const [isAnonymActive, setIsAnonymActive] = useState(false);
-  const [isRadioActive, setIsRadioActive] = useState(false);
+  const {
+    user: { id: userId },
+  } = useSelector(selectIsAuth);
 
   const { feed, suggest } = postType;
 
-  const { likes, comments, forwards, date, views } = feed || {};
+  const { likes, comments, date } = feed || {};
 
   const dispatch = useAppDispatch();
 
@@ -156,6 +174,7 @@ const Post: React.FC<PostProps> = ({
 
   const handlePostContentModalOpen = (e: any) => {
     e.stopPropagation();
+    dispatch(setPostContentModalId(id));
     dispatch(setIsPostContentModalOpen(true));
   };
 
@@ -187,7 +206,102 @@ const Post: React.FC<PostProps> = ({
     }
   };
 
-  const [activeAction, setactiveAction] = useState(false);
+  const handleSuggest = async (type: 'approve' | 'reject') => {
+    const response = await axios({
+      method: 'delete',
+      url: `${process.env.REACT_APP_HOSTNAME}/api/groups/suggest/${id}?type=${type}`,
+    });
+
+    const posts = await axios({
+      method: 'get',
+      url: group ? `${process.env.REACT_APP_HOSTNAME}/api/groups/suggest/${group.id}` : '',
+    });
+
+    setPosts && setPosts(posts.data);
+  };
+
+  const handleDeletePost = async () => {
+    const deletedPost = await axios({
+      method: 'delete',
+      url: `${process.env.REACT_APP_HOSTNAME}/api/posts/${id}`,
+    });
+
+    setPosts && setPosts(posts.filter((post: any) => post.id !== deletedPost.data.id));
+  };
+
+  const handleUpdatePost = async () => {
+    if (!changingText) return;
+    setChangingText(changingText);
+    setIsPostChanging(!isPostChanging);
+    const updatedPost = await axios({
+      method: 'put',
+      url: `${process.env.REACT_APP_HOSTNAME}/api/posts/${id}`,
+      data: {
+        post_text: changingText,
+      },
+    });
+  };
+
+  const handleTextareaVisibility = () => {
+    setChangingText(changingText);
+    setIsPostChanging(!isPostChanging);
+  };
+
+  const [activeAction, setactiveAction] = useState(
+    likes?.some((like: any) => like.user_id === userId),
+  );
+
+  const [likesLength, setLikesLength] = useState(likes?.length);
+
+  const handleLike = async () => {
+    setactiveAction(!activeAction);
+
+    if (!activeAction) {
+      setLikesLength((prev: any) => prev + 1);
+      const response = await axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/likes/${userId}`,
+        data: {
+          post_id: id,
+        },
+      });
+    } else {
+      setLikesLength((prev: any) => prev - 1);
+      const likeId = likes.find((like: any) => like.user_id === userId).id;
+      const response = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/likes/${likeId}`,
+      });
+    }
+
+    if (page === 'modal') {
+      const post = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_HOSTNAME}/api/posts/single/${id}`,
+      });
+      setPosts && setPosts(post.data);
+    }
+  };
+
+  const timeoutRef = useRef<any>(null);
+
+  const handleLikeClick = () => {
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(handleLike, 500);
+  };
+
+  const [changingText, setChangingText] = useState(text ? text : '');
+  const [isPostChanging, setIsPostChanging] = useState(false);
+
+  const textAreaAdjust = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setChangingText(e.target.value);
+    e.target.style.height = '1px';
+    e.target.style.height = `${e.target.scrollHeight}px`;
+    if (e.target.value === '') {
+      e.target.style.height = '1px';
+    }
+  };
 
   return (
     <>
@@ -197,55 +311,109 @@ const Post: React.FC<PostProps> = ({
         }`}>
         <div className={`${s['top-row']}`}>
           <div className={`${s['user']} ${page === 'modal' ? s['modal-margin'] : ''}`}>
-            <Link to="/profile/swugerd">
+            <Link
+              to={
+                ((page === 'group' || page === 'modal') && groupLink && isAnonym) ||
+                (page === 'feed' && groupLink)
+                  ? `/groups/${groupLink}`
+                  : `/profile/${userLink}`
+              }>
               <HeaderAvatar
                 className="post"
-                img={userImg}
-                title={'image'}
+                img={
+                  ((page === 'group' || page === 'modal') && groupImg && isAnonym) ||
+                  (page === 'feed' && groupImg)
+                    ? groupImg
+                    : userImg
+                }
+                title={
+                  ((page === 'group' || page === 'modal') && groupName && isAnonym) ||
+                  (page === 'feed' && groupName)
+                    ? groupName
+                    : userName
+                }
                 indicatorClass={['sm-indicator', 'border-elem']}
-                onlineType="pc-dnd"
+                onlineType={
+                  ((page === 'group' || page === 'modal') && groupName && isAnonym) ||
+                  (page === 'feed' && groupName)
+                    ? ''
+                    : online_type
+                }
               />
             </Link>
             <div className={`${s['user-info']}`}>
-              <Link className={s['user-name']} to="/profile/swugerd">
-                {userName}
+              <Link
+                className={s['user-name']}
+                to={
+                  ((page === 'group' || page === 'modal') && groupLink && isAnonym) ||
+                  (page === 'feed' && groupLink)
+                    ? `/groups/${groupLink}`
+                    : `/profile/${userLink}`
+                }>
+                {((page === 'group' || page === 'modal') && groupName && isAnonym) ||
+                (page === 'feed' && groupName)
+                  ? groupName
+                  : userName}
               </Link>
-              <span className={s['post-date']}>{date}</span>
+              <span className={s['post-date']}>{moment(date).locale('ru').fromNow()}</span>
             </div>
           </div>
-          {feed && !isForwardPost && !isModalPost && page !== 'profile' && (
-            <button className={s['hide']}>
-              <Icon src={hideSvg} id={'hide'} className={'gray'} />
-            </button>
-          )}
           {feed &&
             !isForwardPost &&
-            (page === 'profile' || page === 'modal') &&
-            isAdmin &&
-            user.id === 1 && (
-              <button className={`${s['hide']}`}>
+            (page === 'profile' || page === 'modal' || page === 'group') &&
+            user?.id === userId &&
+            !isPostChanging && (
+              <button className={`${s['hide']}`} onClick={handleTextareaVisibility}>
                 <Icon src={editSvg} id={'edit'} className={'gray'} />
               </button>
             )}
-          {feed && !isForwardPost && (page === 'profile' || page === 'modal') && isAdmin && (
-            <button className={`${s['hide']}`}>
-              <Icon src={trashSvg} id={'trash'} className={'gray'} />
-            </button>
-          )}
+          {feed &&
+            !isForwardPost &&
+            (page === 'profile' || page === 'modal' || page === 'group') &&
+            user?.id === userId &&
+            isPostChanging && (
+              <button className={`${s['hide']}`} onClick={handleUpdatePost}>
+                <Icon src={markSvg} id={'markdown'} className={'gray'} />
+              </button>
+            )}
+          {feed &&
+            !isForwardPost &&
+            (page === 'profile' || page === 'modal' || page === 'group') &&
+            isAdmin && (
+              <button className={`${s['hide']}`} onClick={handleDeletePost}>
+                <Icon src={trashSvg} id={'trash'} className={'gray'} />
+              </button>
+            )}
           {suggest && (
             <div className={s['row']}>
-              <SquareButton className={'post-button'} icon={closeSvg} id={'close'} />
-              <SquareButton className={'post-button'} icon={addSvg} id={'add'} />
+              <SquareButton
+                className={'post-button'}
+                icon={closeSvg}
+                id={'close'}
+                onClick={() => handleSuggest('reject')}
+              />
+              <SquareButton
+                className={'post-button'}
+                icon={addSvg}
+                id={'add'}
+                onClick={() => handleSuggest('approve')}
+              />
             </div>
           )}
         </div>
-        {
-          // вынести в компонент ui grid
-        }
         <div
           className={`${s['content']} ${!isModalPost ? s['cursor-pointer'] : ''}`}
-          onClick={!isModalPost ? (e) => handlePostContentModalOpen(e) : () => {}}>
-          {!!text && <p className={s['post-text']}>{text}</p>}
+          onClick={
+            !isModalPost && !isPostChanging ? (e) => handlePostContentModalOpen(e) : () => {}
+          }>
+          {!!text && !isPostChanging ? (
+            <p className={s['post-text']}>{changingText}</p>
+          ) : (
+            <textarea
+              className={s['post-textarea']}
+              value={changingText}
+              onChange={(e) => textAreaAdjust(e)}></textarea>
+          )}
           {!!images?.length && (
             <div
               className={classNames({
@@ -413,48 +581,25 @@ const Post: React.FC<PostProps> = ({
             </div>
           )}
         </div>
-        {postType.feed?.forwardPost && !!Object.entries(postType.feed?.forwardPost).length && (
-          <ForwardPost
-            forwardPost={{
-              id: postType.feed.forwardPost.id,
-              user: postType.feed.forwardPost.user,
-              date: postType.feed.forwardPost.date,
-              content: postType.feed.forwardPost.content,
-            }}
-          />
-        )}
         {feed && !isForwardPost && (
           <div className={s['actions']}>
             <button
               className={`${s['actions-info']} ${s['likes']} ${activeAction ? s['active'] : ''}`}
-              onClick={() => setactiveAction(!activeAction)}>
+              onClick={handleLikeClick}>
               <Icon
                 src={likeSvg}
                 id={'like'}
                 className={'only-gray'}
                 hoverClass={activeAction ? 'active' : ''}
               />
-              <span>{activeAction ? likes && likes + 1 : likes}</span>
+              <span>{likesLength}</span>
             </button>
             <button
               className={`${s['actions-info']} ${s['comments']}`}
               onClick={!isModalPost ? (e) => handlePostContentModalOpen(e) : () => {}}>
               <Icon src={commentsSvg} id={'comments'} className={'only-gray'} />
-              <span>{comments}</span>
+              <span>{comments.length}</span>
             </button>
-            <button
-              className={`${s['actions-info']} ${s['forwards']}`}
-              data-modalbutton={'forwardButton'}
-              // onClick={() => setIsModalOpen(true)}
-              onClick={(e) => handleForwardModalOpen(e)}
-              ref={buttonRef}>
-              <Icon src={forwardSvg} id={'forward'} className={'only-gray'} />
-              <span>{forwards}</span>
-            </button>
-            <div className={`${s['actions-info']} ${s['views']} `}>
-              <Icon src={viewsSvg} id={'views'} className={'only-gray'} />
-              <span>{views}</span>
-            </div>
           </div>
         )}
         {suggest && (
@@ -466,18 +611,6 @@ const Post: React.FC<PostProps> = ({
                 className={!postType.suggest?.isAnonym ? 'gray' : 'green'}
               />
             </div>
-            {/* <div className={s['media-action']} onClick={() => setIsRadioActive(!isRadioActive)}>
-              <div className={s['radio-btn']}>
-                <input
-                  type="checkbox"
-                  className={`${s['inp-disabled']}`}
-                  checked={isRadioActive}
-                  onChange={() => setIsRadioActive(!isRadioActive)}
-                />
-                <div className={`${s['custom-btn']}`}></div>
-              </div>
-              <div className={s['text']}>Добавить медиа в сообщество</div>
-            </div> */}
           </div>
         )}
       </div>

@@ -1,6 +1,16 @@
-import { BelongsTo, Column, DataType, ForeignKey, Table, Model } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  Table,
+  Model,
+  HasMany,
+} from 'sequelize-typescript';
 import { Group } from 'src/groups/models/group.model';
 import { User } from 'src/users/models/users.model';
+import { Like } from '../../likes/models/like.model';
+import { Comment } from '../../comments/models/comment.model';
 
 interface PostCreationAttrs {
   user_id?: number;
@@ -41,11 +51,17 @@ export class Post extends Model<Post, PostCreationAttrs> {
   postCreator: User;
 
   @BelongsTo(() => User, 'user_referer_id')
-  userReferer: Group;
+  userReferer: User;
 
   @BelongsTo(() => Group, 'group_id')
   group: Group;
 
   @BelongsTo(() => Post, 'id')
   forwardedPost: Post;
+
+  @HasMany(() => Like)
+  likes: Like;
+
+  @HasMany(() => Comment)
+  comments: Comment;
 }

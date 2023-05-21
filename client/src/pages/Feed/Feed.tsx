@@ -35,6 +35,7 @@ import Wall from '../../components/Wall/Wall';
 import Icon from '../../components/UI/Icon/Icon';
 import SideContent from '../../components/SideContent/SideContent';
 import useAuth from '../../hooks/useAuth';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const Feed: React.FC = () => {
   useSetPageTitle('Новости');
@@ -53,6 +54,7 @@ const Feed: React.FC = () => {
       {
         id: 1,
         name: 'Все записи',
+        link: '/feed',
         iconSettings: {
           src: allSvg,
           iconId: 'all',
@@ -62,6 +64,7 @@ const Feed: React.FC = () => {
       {
         id: 2,
         name: 'Записи друзей',
+        link: '/feed?filter=friends',
         iconSettings: {
           src: friendsSvg,
           iconId: 'friends',
@@ -71,6 +74,7 @@ const Feed: React.FC = () => {
       {
         id: 3,
         name: 'Записи сообществ',
+        link: '/feed?filter=groups',
         iconSettings: {
           src: groupsSvg,
           iconId: 'groups',
@@ -78,48 +82,54 @@ const Feed: React.FC = () => {
         },
       },
     ],
-    content: [
-      {
-        id: 1,
-        name: 'Все медиа',
-        iconSettings: {
-          src: allSvg,
-          iconId: 'all',
-          className: 'all',
-        },
-      },
-      {
-        id: 2,
-        name: 'Фотографии',
-        iconSettings: {
-          src: photosSvg,
-          iconId: 'photos',
-          className: 'photos',
-        },
-      },
-      {
-        id: 3,
-        name: 'Видео',
-        iconSettings: {
-          src: videosSvg,
-          iconId: 'videos',
-          className: 'videos',
-        },
-      },
-    ],
+    // content: [
+    //   {
+    //     id: 1,
+    //     name: 'Все медиа',
+    //     iconSettings: {
+    //       src: allSvg,
+    //       iconId: 'all',
+    //       className: 'all',
+    //     },
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Фотографии',
+    //     iconSettings: {
+    //       src: photosSvg,
+    //       iconId: 'photos',
+    //       className: 'photos',
+    //     },
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Видео',
+    //     iconSettings: {
+    //       src: videosSvg,
+    //       iconId: 'videos',
+    //       className: 'videos',
+    //     },
+    //   },
+    // ],
   };
 
-  const [typeIndex, setTypeIndex] = useState(0);
+  const [params, setParams] = useSearchParams();
+
+  const [typeIndex, setTypeIndex] = useState(
+    params.get('filter') === 'friends' ? 1 : params.get('filter') === 'groups' ? 2 : 0,
+  );
+
   const [contentIndex, setContentIndex] = useState(0);
 
   const children = [
     <div className={`${sideContentS['options']}`} key={1}>
       <div className={sideContentS['group']}>
-        {settings.type.map(({ id, name, iconSettings }, index) => (
-          <div
+        {settings.type.map(({ id, name, iconSettings, link }, index) => (
+          <Link
             className={`${sideContentS['option']} ${
               typeIndex === index ? sideContentS['active'] : ''
             }`}
+            to={link}
             onClick={() => setTypeIndex(index)}
             key={id}>
             <div className={sideContentS['option-icon']}>
@@ -139,10 +149,10 @@ const Feed: React.FC = () => {
               id={''}
               type={'radio'}
             />
-          </div>
+          </Link>
         ))}
       </div>
-      <h2 className={sideContentS['title']}>Настройки контента</h2>
+      {/* <h2 className={sideContentS['title']}>Настройки контента</h2>
       <div className={sideContentS['group']}>
         {settings.content.map(({ id, name, iconSettings }, index) => (
           <div
@@ -170,7 +180,7 @@ const Feed: React.FC = () => {
             />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>,
   ];
 

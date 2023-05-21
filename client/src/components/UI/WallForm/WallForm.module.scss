@@ -128,16 +128,16 @@
 .send {
   margin-left: auto;
   position: relative;
-  &::after {
-    content: '';
-    width: 0.2rem;
-    position: absolute;
-    left: -1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 1.5rem;
-    background: $sub-bg;
-  }
+  // &::after {
+  //   content: '';
+  //   width: 0.2rem;
+  //   position: absolute;
+  //   left: -1rem;
+  //   top: 50%;
+  //   transform: translateY(-50%);
+  //   height: 1.5rem;
+  //   background: $sub-bg;
+  // }
   &:hover svg path {
     fill: $white;
   }

@@ -17,6 +17,8 @@ import { PhotosModule } from './photos/photos.module';
 import { ThematicsModule } from './thematics/thematics.module';
 import { VideosModule } from './videos/videos.module';
 import { PostsModule } from './posts/posts.module';
+import { LikesModule } from './likes/likes.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -43,6 +45,8 @@ import { PostsModule } from './posts/posts.module';
     ThematicsModule,
     VideosModule,
     PostsModule,
+    LikesModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],

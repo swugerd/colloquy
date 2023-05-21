@@ -7,9 +7,12 @@ import {
   Table,
   Model,
   BelongsToMany,
+  HasMany,
 } from 'sequelize-typescript';
 import { City } from 'src/cities/models/cities.model';
+import { Friends } from 'src/friends/models/friends.model';
 import { GroupMember } from 'src/groups/models/group-members.model';
+import { Group } from 'src/groups/models/group.model';
 import { Role } from 'src/roles/models/roles.model';
 import { UserRoles } from 'src/roles/models/user-roles.model';
 
@@ -87,6 +90,12 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @BelongsTo(() => City)
   city: City;
+
+  @HasMany(() => GroupMember)
+  groups: GroupMember[];
+
+  @HasMany(() => Friends)
+  friends: Friends[];
 
   @BelongsToMany(() => Role, () => UserRoles)
   roles: Role[];

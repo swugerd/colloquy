@@ -15,6 +15,9 @@ import { BlacklistDto } from 'src/groups/dto/blacklist.dto';
 import { Blacklist } from 'src/groups/models/blacklist.model';
 import { Friends } from 'src/friends/models/friends.model';
 import { GroupMember } from 'src/groups/models/group-members.model';
+import { Group } from 'src/groups/models/group.model';
+import { Role } from 'src/roles/models/roles.model';
+import { City } from 'src/cities/models/cities.model';
 
 @Injectable()
 export class UsersService {
@@ -89,7 +92,9 @@ export class UsersService {
   }
 
   async getUserById(id: number) {
-    const user = await this.userRepository.findByPk(id, { include: { all: true } });
+    const user = await this.userRepository.findByPk(id, {
+      include: { all: true },
+    });
     return user;
   }
 

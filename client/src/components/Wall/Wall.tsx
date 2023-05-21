@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import s from './Wall.module.scss';
 import paperclipSvg from '../../assets/img/icons/paperclip.svg';
 import smileSvg from '../../assets/img/icons/smile.svg';
@@ -15,6 +15,12 @@ import Icon from '../UI/Icon/Icon';
 import WallForm from '../UI/WallForm/WallForm';
 import { Post as PostType } from '../../types';
 import Preloader from '../Preloader/Preloader';
+import { useAxios } from '../../hooks/useAxios';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/auth/selector';
+import NotFoundBlock from '../NotFoundBlock/NotFoundBlock';
+import axios from 'axios';
 
 type WallProps = {
   className: string;
@@ -25,228 +31,162 @@ type WallProps = {
 };
 
 const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin, withoutForm }) => {
-  // const posts: PostType[] = [
-  //   {
-  //     id: 1,
-  //     user: { id: 1, name: 'Пашок Кубыркин', img },
-  //     date: 'Вчера',
-  //     content: {
-  //       text: 'ьууп бу п тыц тут буп буп буп тыц  втфыивтфыdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsadsadsadsadasdsaивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
-  //       images: [
-  //         { id: 1, img },
-  //         { id: 2, img },
-  //         { id: 3, img },
-  //         { id: 4, img },
-  //         { id: 5, img },
-  //         { id: 6, img },
-  //         { id: 7, img },
-  //         { id: 8, img },
-  //       ],
-  //       videos: [
-  //         { id: 1, video, time: 5002 },
-  //         { id: 2, video, time: 5122 },
-  //         { id: 3, video, time: 1502 },
-  //         { id: 4, video, time: 1502 },
-  //         { id: 5, video, time: 1502 },
-  //         { id: 6, video, time: 1502 },
-  //       ],
-  //       circles: [
-  //         { id: 1, circle, time: 123 },
-  //         { id: 2, circle, time: 51 },
-  //         { id: 3, circle, time: 12 },
-  //         { id: 4, circle, time: 12 },
-  //         { id: 5, circle, time: 12 },
-  //       ],
-  //       voices: [
-  //         { id: 1, voice, time: 123 },
-  //         { id: 2, voice, time: 51 },
-  //         { id: 3, voice, time: 12 },
-  //         { id: 4, voice, time: 12 },
-  //         { id: 5, voice, time: 12 },
-  //         { id: 6, voice, time: 12 },
-  //       ],
-  //       music: [
-  //         {
-  //           id: 1,
-  //           track,
-  //           time: 123,
-  //           name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-  //           author: 'NaRk0PaShOk21rus',
-  //         },
-  //         { id: 2, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 3, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 4, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 5, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 6, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       ],
-  //     },
-  //     likes: 2812,
-  //     forwards: 12,
-  //     comments: 4,
-  //     views: 12,
-  //   },
-  //   {
-  //     id: 2,
-  //     user: { id: 2, name: 'Пашок Кубыркин', img },
-  //     date: 'Вчера',
-  //     forwardPost: {
-  //       id: 1,
-  //       user: { id: 1, name: 'Павлентий Кубышкин', img },
-  //       date: '01.03.2023',
-  //       content: {
-  //         text: 'ьууп бу п тыц тут буп буп буп тыц  втфыивтфыdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsadsadsadsadasdsaивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
-  //         images: [
-  //           { id: 1, img },
-  //           { id: 2, img },
-  //           { id: 3, img },
-  //           { id: 4, img },
-  //           { id: 5, img },
-  //           { id: 6, img },
-  //           { id: 7, img },
-  //           { id: 8, img },
-  //         ],
-  //         videos: [
-  //           { id: 1, video, time: 5002 },
-  //           { id: 2, video, time: 5122 },
-  //           { id: 3, video, time: 1502 },
-  //           { id: 4, video, time: 1502 },
-  //           { id: 5, video, time: 1502 },
-  //           { id: 6, video, time: 1502 },
-  //         ],
-  //         music: [
-  //           {
-  //             id: 1,
-  //             track,
-  //             time: 123,
-  //             name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-  //             author: 'NaRk0PaShOk21rus',
-  //           },
-  //           { id: 2, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //           { id: 3, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //           { id: 4, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //           { id: 5, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //           { id: 6, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         ],
-  //       },
-  //     },
-  //     content: {
-  //       text: 'ьууп бу п тыц тут буп буп буп тыц цуц тсфиыиыфивифывтфыивтфыивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
-  //       // music: [
-  //       //   {
-  //       //     id: 1,
-  //       //     track,
-  //       //     time: 123,
-  //       //     name: 'трек',
-  //       //     author: 'NaRk0PaShOk21rus',
-  //       //   },
-  //       //   { id: 2, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       //   { id: 3, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       //   { id: 4, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       //   { id: 5, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       //   { id: 6, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       // ],
-  //     },
-  //     likes: 2812,
-  //     forwards: 12,
-  //     comments: 4,
-  //     views: 12,
-  //   },
-  //   {
-  //     id: 3,
-  //     user: { id: 3, name: 'Пашок Кубыркин', img },
-  //     date: 'Вчера',
-  //     content: {
-  //       images: [
-  //         { id: 1, img },
-  //         { id: 2, img },
-  //         { id: 3, img },
-  //         { id: 4, img },
-  //         { id: 5, img },
-  //         { id: 6, img },
-  //         { id: 7, img },
-  //         { id: 8, img },
-  //       ],
-  //     },
-  //     likes: 2812,
-  //     forwards: 12,
-  //     comments: 4,
-  //     views: 12,
-  //   },
-  //   {
-  //     id: 4,
-  //     user: { id: 4, name: 'Пашок Кубыркин', img },
-  //     date: 'Вчера',
-  //     content: {
-  //       text: 'ьууп бу п тыц тут буп буп буп тыц цуц тсфиыиыфивифывтфыивтфыивфтывифывт я сегодня поел кашку жескую вкусную сегодня приду нажарю пельменей',
-  //       images: [
-  //         { id: 1, img },
-  //         { id: 2, img },
-  //         { id: 3, img },
-  //         { id: 4, img },
-  //         { id: 5, img },
-  //         { id: 6, img },
-  //         { id: 7, img },
-  //         { id: 8, img },
-  //       ],
-  //       videos: [
-  //         { id: 1, video, time: 5002 },
-  //         { id: 2, video, time: 5122 },
-  //         { id: 3, video, time: 1502 },
-  //         { id: 4, video, time: 1502 },
-  //         { id: 5, video, time: 1502 },
-  //         { id: 6, video, time: 1502 },
-  //       ],
-  //       music: [
-  //         {
-  //           id: 1,
-  //           track,
-  //           time: 123,
-  //           name: 'трек',
-  //           author: 'NaRk0PaShOk21rus',
-  //         },
-  //         { id: 2, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 3, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 4, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 5, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //         { id: 6, track, time: 123, name: 'best dubstep', author: 'best author' },
-  //       ],
-  //     },
-  //     likes: 2812,
-  //     forwards: 12,
-  //     comments: 4,
-  //     views: 12,
-  //   },
-  // ];
-  const posts: any = [];
-  const isPostAdmin = true;
-  const isLoading = true;
+  const { pathname } = useLocation();
+
+  const userOrGroupRoute = pathname.split('/')[pathname.split('/').length - 1];
+
+  const {
+    user: { id: userId },
+  } = useSelector(selectIsAuth);
+
+  const {
+    response: user,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useAxios({
+    method: 'get',
+    url:
+      page === 'profile'
+        ? `${process.env.REACT_APP_HOSTNAME}/api/users/getByNickname/${userOrGroupRoute}`
+        : '',
+  });
+
+  const [postPage, setPostPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const limit = 10;
+  const [posts, setPosts] = useState<any>([]);
+  const [isPostsLoading, setIsPostsLoading] = useState(true);
+
+  const {
+    response: group,
+    isLoading: isGroupLoading,
+    error: groupError,
+  } = useAxios({
+    method: 'get',
+    url:
+      page === 'group'
+        ? `${process.env.REACT_APP_HOSTNAME}/api/groups/getByAdress/${userOrGroupRoute}`
+        : '',
+  });
+
+  const [params, setParams] = useSearchParams();
+
+  // const [getPostsLink, setPostsLink] = useState('');
+
+  // useEffect(() => {
+  //   setPostsLink(
+  //     user || group
+  //       ? `${process.env.REACT_APP_HOSTNAME}/api/posts/${
+  //           user ? user.id : group.id
+  //         }?page=${postPage}&limit=${limit}&type=${user ? 'user_referer' : 'group'}`
+  //       : page === 'feed' && userId
+  //       ? `${
+  //           process.env.REACT_APP_HOSTNAME
+  //         }/api/posts/feed/${userId}?page=${postPage}&limit=${limit}${
+  //           params.get('filter') ? `&filter=${params.get('filter')}` : ''
+  //         }`
+  //       : '',
+  //   );
+  // }, [params, user, group, userId, page, postPage]);
+
+  const getPostsLink =
+    user || group
+      ? `${process.env.REACT_APP_HOSTNAME}/api/posts/${
+          user ? user.id : group.id
+        }?page=${postPage}&limit=${limit}&type=${user ? 'user_referer' : 'group'}`
+      : page === 'feed' && userId
+      ? `${
+          process.env.REACT_APP_HOSTNAME
+        }/api/posts/feed/${userId}?page=${postPage}&limit=${limit}${
+          params.get('filter') ? `&filter=${params.get('filter')}` : ''
+        }`
+      : '';
+
+  useEffect(() => {
+    if (isPostsLoading && getPostsLink) {
+      const response = axios
+        .get(getPostsLink)
+        .then((response) => {
+          setPosts([...posts, ...response.data.posts]);
+          setTotalCount(response.data.totalCount);
+
+          if (response.data.totalCount >= 10) {
+            setPostPage((prevPage) => prevPage + 1);
+          }
+        })
+        .finally(() => setIsPostsLoading(false));
+    }
+  }, [isPostsLoading, getPostsLink]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && posts.length < totalCount) {
+        setIsPostsLoading(true);
+      }
+    });
+
+    const sentinel = document.querySelector('#sentinel');
+
+    sentinel && observer.observe(sentinel);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isPostsLoading]);
+
   return (
     <div className={`${s['wall']} ${s[className]}`}>
       {!withoutForm && (
-        <WallForm page={page} className={''} placeholder={placeholder} isAdmin={isAdmin} />
+        <WallForm
+          page={page}
+          className={''}
+          placeholder={placeholder}
+          isAdmin={isAdmin}
+          user={page === 'profile' ? user : null}
+          group={page === 'group' ? group : null}
+          postsApiLink={getPostsLink}
+          currentUserId={userId}
+          setPosts={setPosts}
+          posts={posts}
+        />
       )}
 
-      {posts &&
+      {posts && !posts.length && !isPostsLoading && (
+        <NotFoundBlock className={'profile'} text={'Записей ещё нет'} />
+      )}
+
+      {!!posts ? (
         posts.map((post: any) => (
           <Post
             id={post.id}
-            user={post.user}
-            content={post.content}
+            user={post.postCreator}
+            group={post.group_id ? post.group : {}}
+            content={{ text: post.post_text }}
             key={post.id}
             isForwardPost={false}
-            isAdmin={isPostAdmin}
+            isAdmin={
+              (page === 'profile' &&
+                (userId === post.postCreator.id || userId === post.user_referer_id)) ||
+              (page === 'group' && (group.creator_id === userId || userId === post.postCreator.id))
+            }
             postType={{
               feed: {
-                date: post.date,
+                date: post.createdAt,
                 likes: post.likes,
-                forwards: post.forwards,
                 comments: post.comments,
-                views: post.views,
               },
             }}
             page={page}
+            postsApiLink={getPostsLink}
+            setPosts={setPosts}
+            isAnonym={post.is_anonym}
+            posts={posts}
           />
-        ))}
+        ))
+      ) : (
+        <Preloader className="profile" />
+      )}
+      {posts && posts.length && <div id="sentinel" />}
     </div>
   );
 };
