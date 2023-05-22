@@ -9,7 +9,6 @@ import { Op, Sequelize } from 'sequelize';
 import { UploadedFile } from 'src/files/files.service';
 import { FriendsService } from 'src/friends/friends.service';
 import { UserQueryParams } from './validators/user-query.validator';
-import * as moment from 'moment';
 import { FriendsRequests } from 'src/friends/models/friend-requests.model';
 import { BlacklistDto } from 'src/groups/dto/blacklist.dto';
 import { Blacklist } from 'src/groups/models/blacklist.model';
@@ -251,8 +250,18 @@ export class UsersService {
       ...{
         user_birthdate: {
           [Op.between]: [
-            moment(`${ageFromTimestamp}-01-01`).format('YYYY-MM-DD HH:mm:ssZ'),
-            moment(`${ageToTimestamp}-12-31`).format('YYYY-MM-DD HH:mm:ssZ'),
+            `${new Date(`${ageFromTimestamp}-01-01`).getFullYear()}-${String(
+              new Date(`${ageFromTimestamp}-01-01`).getMonth() + 1,
+            ).padStart(2, '0')}-${String(new Date(`${ageFromTimestamp}-01-01`).getDate()).padStart(
+              2,
+              '0',
+            )} 00:00:00`,
+            `${new Date(`${ageToTimestamp}-12-31`).getFullYear()}-${String(
+              new Date(`${ageToTimestamp}-12-31`).getMonth() + 1,
+            ).padStart(2, '0')}-${String(new Date(`${ageToTimestamp}-12-31`).getDate()).padStart(
+              2,
+              '0',
+            )} 00:00:00`,
           ],
         },
       },
