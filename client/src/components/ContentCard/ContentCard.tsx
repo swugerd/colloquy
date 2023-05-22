@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import SquareButton from '../UI/SquareButton/SquareButton';
 import s from './ContentCard.module.scss';
@@ -19,7 +19,6 @@ import { useAppDispatch } from './../../redux/store';
 import { setConfirmModalType, setIsConfirmModalOpen } from '../../redux/modal/slice';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { User } from '../../hooks/useAuth';
 import axios from 'axios';
 import wordDeclension from '../../utils/wordDeclension';
 
@@ -59,6 +58,8 @@ const ContentCard: React.FC<ContentCardProps> = ({
   group,
 }) => {
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const handleConfirmModalOpen = (
     e: any,
@@ -149,6 +150,12 @@ const ContentCard: React.FC<ContentCardProps> = ({
       });
       setResponse && setResponse(users.data);
     }
+  };
+
+  // сообщение
+
+  const handleMessage = async () => {
+    navigate(`/messages/${currentUser.id}`);
   };
 
   // группы
@@ -359,6 +366,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
               icon={messagesSvg}
               id={'messages'}
               hasLock={false}
+              onClick={handleMessage}
             />
             <SquareButton
               className={'friend-button'}

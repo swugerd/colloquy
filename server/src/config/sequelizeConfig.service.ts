@@ -19,6 +19,9 @@ import { GroupSuggest } from 'src/groups/models/group-suggest.model';
 import { Post } from 'src/posts/models/post.model';
 import { Like } from 'src/likes/models/like.model';
 import { Comment } from 'src/comments/models/comment.model';
+import { Message } from 'src/messages/models/message.model';
+import { Chat } from 'src/messages/models/chat.model';
+import { UnreadMessage } from 'src/messages/models/unread-message.model';
 
 @Injectable()
 export class SequelizeConfigService implements SequelizeOptionsFactory {
@@ -55,6 +58,9 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
         Post,
         Like,
         Comment,
+        Message,
+        Chat,
+        UnreadMessage,
       ],
       autoLoadModels: true,
       synchronize: true,

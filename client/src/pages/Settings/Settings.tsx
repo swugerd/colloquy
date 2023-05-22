@@ -28,7 +28,7 @@ import ContentCard from '../../components/ContentCard/ContentCard';
 import { useAxios } from '../../hooks/useAxios';
 import useAuth from './../../hooks/useAuth';
 import Preloader from '../../components/Preloader/Preloader';
-import { setIsAuth, setUserName, setUserNickname } from '../../redux/auth/slice';
+import { setUserName, setUserNickname } from '../../redux/auth/slice';
 import axios from 'axios';
 import Input from '../../components/UI/Input/Input';
 import { PatternFormat } from 'react-number-format';
@@ -88,26 +88,26 @@ const Settings: React.FC<SettingsProps> = ({ page }) => {
         className: 'profile',
       },
     },
-    {
-      id: 2,
-      name: 'Приватность',
-      path: '/settings/privacy',
-      iconSettings: {
-        src: lockSvg,
-        iconId: 'lock',
-        className: 'lock',
-      },
-    },
-    {
-      id: 3,
-      name: 'Чёрный список',
-      path: '/settings/blacklist',
-      iconSettings: {
-        src: blacklistSvg,
-        iconId: 'block',
-        className: 'block',
-      },
-    },
+    // {
+    //   id: 2,
+    //   name: 'Приватность',
+    //   path: '/settings/privacy',
+    //   iconSettings: {
+    //     src: lockSvg,
+    //     iconId: 'lock',
+    //     className: 'lock',
+    //   },
+    // },
+    // {
+    //   id: 3,
+    //   name: 'Чёрный список',
+    //   path: '/settings/blacklist',
+    //   iconSettings: {
+    //     src: blacklistSvg,
+    //     iconId: 'block',
+    //     className: 'block',
+    //   },
+    // },
   ];
 
   const privacySettings = [

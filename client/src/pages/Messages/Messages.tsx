@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Icon from '../../components/UI/Icon/Icon';
 import Input from '../../components/UI/Input/Input';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
-import ebalo from '../../assets/uploads/test/ebalo.png';
-import img from '../../assets/uploads/cool.jpg';
-import cat from '../../assets/uploads/test/cat.webp';
-import video from '../../assets/videos/video.mp4';
-import video2 from '../../assets/videos/video2.mp4';
-import video3 from '../../assets/videos/video3.mp4';
-import audio from '../../assets/sounds/cq.mp3';
-import paperClipSvg from '../../assets/img/icons/paperclip.svg';
 import createChatSvg from '../../assets/img/icons/create-chat.svg';
 import s from './Messages.module.scss';
 import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
 import HeaderAvatar from '../../components/UI/HeaderAvatar/HeaderAvatar';
-import FastMessagesChat from '../../components/FastMessages/FastMessagesDropDown/FastMessagesChat/FastMessagesChat';
 import Message from '../../components/Message/Message';
 import useWindowSize from '../../hooks/useWindowResize';
 import { useAppDispatch } from '../../redux/store';
 import { setChatId } from '../../redux/mobile/slice';
-import { Message as MessageType } from '../../types';
 import MediaToUpload from '../../components/MediaToUpload/MediaToUpload';
 import {
   setCreateBaseModalType,
@@ -27,6 +17,11 @@ import {
   setIsMediaListModalOpen,
   setMediaListModalType,
 } from '../../redux/modal/slice';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/auth/selector';
+import { SocketContext } from '../../contexts/SocketContext';
+import moment from 'moment';
 
 type MessagesProps = {
   isChatSelected: boolean;
@@ -37,16 +32,12 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
   const { chatId } = useParams<{ chatId: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const myId = 1;
-  const firstUser = 2;
-  const secondUser = 3;
-  const thirdUser = 4;
-  const fourthUser = 5;
-  const fifthUser = 6;
-  const sixthUser = 7;
-  const seventhUser = 8;
 
-  const hasAnimation = true;
+  const {
+    user: { id: myId },
+  } = useSelector(selectIsAuth);
+
+  const hasAnimation = false;
 
   const handleCreateModalOpen = (e: any) => {
     e.stopPropagation();
@@ -60,313 +51,58 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
     dispatch(setMediaListModalType(modalType));
   };
 
-  const chats: {
-    chatId: number;
-    userId: number;
-    messages: MessageType[];
-  }[] = [
-    {
-      chatId: 1,
-      userId: firstUser,
-      messages: [
-        {
-          id: 1,
-          senderId: firstUser,
-          forwardMessage: { id: 2, messageId: 2 },
-          message:
-            'dsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdshakdashkdsbajkdashkjdsha',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 2,
-          senderId: firstUser,
-          message: '',
-          forwardMessage: { id: 1, messageId: 1 },
-          images: [
-            { id: 1, img },
-            { id: 2, img },
-            { id: 3, img },
-            { id: 4, img },
-            { id: 5, img },
-            { id: 6, img },
-          ],
-          videos: [
-            { id: 1, video },
-            { id: 2, video },
-            { id: 3, video },
-          ],
-          audios: [
-            {
-              id: 1,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-            {
-              id: 2,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-            {
-              id: 3,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-            {
-              id: 4,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-            {
-              id: 5,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-            {
-              id: 6,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-          ],
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 3,
-          senderId: myId,
-          message: 'у меня всё хорошо',
-          audios: [
-            {
-              id: 3,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-          ],
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 4,
-          senderId: myId,
-          message: 'а че бро',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 5,
-          senderId: firstUser,
-          message: 'ыыыыыыыыыы',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 6,
-          senderId: firstUser,
-          message: 'ладно тогда делай не отвлекаю!',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 7,
-          senderId: myId,
-          message: 'я просто что-то пишу!',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 8,
-          senderId: myId,
-          message: 'пошли в апекс играть е',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 9,
-          senderId: myId,
-          message: 'почему меня игнорируют(',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 10,
-          senderId: firstUser,
-          message: 'lf ,kz ye gbpltw ejhjxt ) sjn nde sjn b ;bdtv)',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 11,
-          senderId: firstUser,
-          message:
-            'Kdjsakldj kajsdkl jskadj ksajd ksajd ksad sahjdh sjd sajhd sjadh ksjahdsahdj hjkd shajd hsajd hajsdh asjdh jashdjk a hjddgasj hdjsa hdjsa h dksja   jdaksjl dksa jldsajdk sajld sjadk sakd jsa dkjsakl djaskld sjadk jsal jsakd jsakd ljsalkd jsd jaskld jaskld jaskdjaskdj asklj askdj ask',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-      ],
-    },
-    {
-      chatId: 2,
-      userId: secondUser,
-      messages: [
-        {
-          id: 1,
-          senderId: secondUser,
-          message: 'Здароыв ролег есть деловок е пркдложение',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 2,
-          senderId: myId,
-          message: 'трусы авито?',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 3,
-          senderId: secondUser,
-          message:
-            'Не)ю=ЮБЬТ, ебани мне там этот ну типа сайтик простой там главное чтобы вот эта хуйня рвботала ну  админ там бля рег авт нцу ты апонол',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 4,
-          senderId: myId,
-          message: 'пиздец',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 5,
-          senderId: myId,
-          message: 'ну давай обсудим всё, договоримся)',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 6,
-          senderId: secondUser,
-          message: '1500 ustroit?',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-        {
-          id: 7,
-          senderId: myId,
-          message: 'знакомая ситуация)',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-        {
-          id: 8,
-          senderId: myId,
-          message: 'ну я думаю, да) успешно)',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-      ],
-    },
-    {
-      chatId: 3,
-      userId: thirdUser,
-      messages: [
-        {
-          id: 1,
-          senderId: thirdUser,
-          message: 'ку',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: true,
-        },
-        {
-          id: 2,
-          senderId: myId,
-          message: 'даров броу',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: true,
-        },
-      ],
-    },
-    {
-      chatId: 4,
-      userId: fourthUser,
-      messages: [
-        {
-          id: 1,
-          senderId: myId,
-          message: 'ку',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-      ],
-    },
-    {
-      chatId: 5,
-      userId: fifthUser,
-      messages: [
-        {
-          id: 1,
-          senderId: myId,
-          message: 'выфолвыфолвдыф',
-          images: [
-            { id: 1, img: cat },
-            { id: 2, img },
-          ],
-          videos: [
-            { id: 1, video },
-            // { id: 2, video: video2 },
-            // { id: 3, video: video3 },
-          ],
-          audios: [
-            {
-              id: 1,
-              audio,
-              time: 123,
-              name: 'трек анбеливабл демонстрейшн дота оф эншнс)',
-              author: 'NaRk0PaShOk21rus',
-            },
-          ],
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-        },
-      ],
-    },
-    {
-      chatId: 6,
-      userId: sixthUser,
-      messages: [
-        {
-          id: 1,
-          senderId: myId,
-          message: 'ку',
-          timestamp: new Date().toTimeString().split(' ')[0].slice(0, 5),
-          unread: false,
-        },
-      ],
-    },
-  ];
+  const [chatPage, setChatPage] = useState(1);
+  const [messagePage, setMessagePage] = useState(1);
+  const [totalChatCount, setTotalChatCount] = useState(0);
+  const [totalMessageCount, setTotalMessageCount] = useState(0);
+  const limit = 10;
+  const [chats, setChats] = useState<any>([]);
+  const [messages, setMessages] = useState<any>([]);
+  const [isChatsLoading, setIsChatsLoading] = useState(true);
+  const [isMessagesLoading, setIsMessagesLoading] = useState(true);
 
-  const isDisscusion = true;
+  const getChatsLink = myId
+    ? `${process.env.REACT_APP_HOSTNAME}/api/messages/chats/${myId}?page=${chatPage}&limit=${limit}`
+    : '';
+
+  const getMessagesLink =
+    chatId && myId
+      ? `${process.env.REACT_APP_HOSTNAME}/api/messages/${chatId}?page=${messagePage}&limit=${limit}&currentUserId=${myId}`
+      : '';
+
+  useEffect(() => {
+    if (getChatsLink) {
+      const response = axios.get(getChatsLink).then((response) => {
+        setChats([...response.data]);
+      });
+    }
+  }, [getChatsLink]);
+
+  useEffect(() => {
+    if (getMessagesLink) {
+      const response = axios.get(getMessagesLink).then((response) => {
+        setMessages([...response.data]);
+      });
+    }
+  }, [getMessagesLink]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && messages.length < totalMessageCount) {
+        setIsMessagesLoading(true);
+      }
+    });
+
+    const sentinel = document.querySelector('#sentinel');
+
+    sentinel && observer.observe(sentinel);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isMessagesLoading]);
 
   const { width } = useWindowSize();
-
-  const forwardMessage = (message: any, fromChat: any, toChat: any) => {
-    // Retrieve the original message
-    let originalMessage = fromChat.messages.find((m: any) => m.id === message.id);
-
-    // Create a new message object
-    let forwardedMessage = {
-      id: new Date(),
-      sender: originalMessage.sender,
-      message: originalMessage.message,
-      timestamp: originalMessage.timestamp,
-      isForwarded: true,
-    };
-
-    // Append the new message object to the target chat
-    toChat.messages.push(forwardedMessage);
-  };
 
   const countUnreadMessages = (messages: any) => {
     let unreadCount = 0;
@@ -396,6 +132,8 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       navigate('/messages');
+      setMessages([]);
+      setPotentialUser(null);
     }
   };
 
@@ -414,6 +152,78 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
 
   const hasMediaToUpload = false;
 
+  const currentChat =
+    chatId &&
+    chats &&
+    chats.find((chat: any) => chat.user1_id === Number(chatId) || chat.user2_id === Number(chatId));
+
+  const currentChatUser =
+    currentChat && currentChat[`user${currentChat.user1_id === myId ? 2 : 1}`];
+
+  useEffect(() => {
+    if (!currentChatUser && chatId) {
+      const response = axios
+        .get(`${process.env.REACT_APP_HOSTNAME}/api/users/getById/${chatId}`)
+        .then((response) => {
+          setPotentialUser(response.data);
+        });
+    } else {
+      setPotentialUser(null);
+    }
+  }, [chatId, currentChatUser]);
+
+  const [potentialUser, setPotentialUser] = useState<any>({});
+
+  const [messageText, setMessageText] = useState({ message_text: '' });
+
+  const handleMessageInput = (fields: any) => {
+    setMessageText((prev: any) => {
+      return { ...prev, ...fields };
+    });
+  };
+
+  const socket = useContext(SocketContext);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (socket && chatId && myId) {
+      socket.emit('sendMessage', {
+        id: chatId,
+        message_text: messageText.message_text,
+        currentUserId: myId,
+      });
+    }
+    setMessageText({ message_text: '' });
+  };
+
+  useEffect(() => {
+    if (socket && chatId) {
+      socket.emit('joinRoom', chatId);
+      socket.on('sendMessage', (data) => {
+        if (data.chat) {
+          setChats((prevChats: any) => {
+            return [...prevChats, data.chat];
+          });
+        }
+        setMessages((prevMessages: any) => {
+          return [...prevMessages, data.createdMessage];
+        });
+      });
+      return () => {
+        socket.emit('leaveRoom', chatId);
+        socket.off('sendMessage');
+      };
+    }
+  }, [socket, chatId]);
+
+  const messagesContainerRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className={`${s['messages']} ${chatId ? s['selected'] : ''}`}>
       {chatId && width <= 1150 ? null : (
@@ -428,130 +238,141 @@ const Messages: React.FC<MessagesProps> = ({ isChatSelected }) => {
               value={''}
               setValue={() => {}}
             />
-            <button className={s['create-chat']} onClick={(e) => handleCreateModalOpen(e)}>
+            {/* <button className={s['create-chat']} onClick={(e) => handleCreateModalOpen(e)}>
               <Icon src={createChatSvg} id={'createChat'} className={'create-chat'} />
-            </button>
+            </button> */}
           </div>
           <ul className={s['messages-list']}>
-            {chats.map(({ chatId, userId }, index) => (
-              <li className={s['chat-item']} key={chatId}>
-                <NavLink
-                  to={`/messages/${chatId}`}
-                  className={({ isActive }) =>
-                    isActive ? `${s['active']} ${s['chat-link']}` : s['chat-link']
-                  }>
-                  <>
-                    <HeaderAvatar
-                      className={'chat-avatar'}
-                      img={ebalo}
-                      title={'user'}
-                      indicatorClass={['md-indicator', 'border-sub-bg']}
-                      onlineType={'pc-online'}
-                      hasAnimation={hasAnimation}
-                    />
-                    <div className={s['chat-info']}>
-                      <div className={s['info-top']}>
-                        <span className={s['user-name']}>{userId}</span>
-                        <span className={s['message-time']}>
-                          <>{getLastMessage(chats[index]).timestamp}</>
-                        </span>
-                      </div>
-                      <div className={s['info-bottom']}>
-                        <div className={s['last-wrapper']}>
-                          {getLastMessage(chats[index]).senderId === myId && <span>Вы:</span>}
-                          <p className={s['last-message']}>
-                            {getLastMessage(chats[index]).message
-                              ? getLastMessage(chats[index]).message
-                              : (getLastMessage(chats[index]).images &&
-                                  getLastMessage(chats[index]).videos) ||
-                                (getLastMessage(chats[index]).images &&
-                                  getLastMessage(chats[index]).audios) ||
-                                (getLastMessage(chats[index]).videos &&
-                                  getLastMessage(chats[index]).audios)
-                              ? 'Медиа'
-                              : getLastMessage(chats[index]).images
-                              ? 'Фото'
-                              : getLastMessage(chats[index]).videos
-                              ? 'Видео'
-                              : getLastMessage(chats[index]).audios
-                              ? 'Аудио'
-                              : ''}
-                          </p>
+            {chats &&
+              chats.map((chat: any, index: number) => (
+                <li className={s['chat-item']} key={chat.id}>
+                  <NavLink
+                    to={`/messages/${chat[`user${chat.user1_id === myId ? 2 : 1}`].id}`}
+                    className={({ isActive }) =>
+                      isActive ? `${s['active']} ${s['chat-link']}` : s['chat-link']
+                    }>
+                    <>
+                      <HeaderAvatar
+                        className={'chat-avatar'}
+                        img={chat[`user${chat.user1_id === myId ? 2 : 1}`].user_avatar}
+                        title={chat[`user${chat.user1_id === myId ? 2 : 1}`].user_name}
+                        indicatorClass={['md-indicator', 'border-sub-bg']}
+                        onlineType={chat[`user${chat.user1_id === myId ? 2 : 1}`].online_type}
+                        hasAnimation={hasAnimation}
+                      />
+                      <div className={s['chat-info']}>
+                        <div className={s['info-top']}>
+                          <span className={s['user-name']}>
+                            {chat[`user${chat.user1_id === myId ? 2 : 1}`].user_name}
+                          </span>
+                          <span className={s['message-time']}>
+                            <>
+                              {moment(chat.messages[chat.messages.length - 1]?.createdAt).format(
+                                'HH:mm',
+                              )}
+                            </>
+                          </span>
                         </div>
-                        {countUnreadMessages(chats[index].messages) !== 0 && (
+                        <div className={s['info-bottom']}>
+                          <div className={s['last-wrapper']}>
+                            {chat.messages[chat.messages.length - 1].sender_id === myId && (
+                              <span>Вы:</span>
+                            )}
+                            <p className={s['last-message']}>
+                              {chat.messages[chat.messages.length - 1].sender_id === myId &&
+                                chat.messages[chat.messages.length - 1].message_text}
+                            </p>
+                          </div>
+                          {/* {countUnreadMessages(chats[index].messages) !== 0 && (
                           <div className={s['unread-messages']}>
                             {countUnreadMessages(chats[index].messages)}
                           </div>
-                        )}
+                        )} */}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                </NavLink>
-              </li>
-            ))}
+                    </>
+                  </NavLink>
+                </li>
+              ))}
           </ul>
         </div>
       )}
       {chatId ? (
         <div className={s['dialog']}>
           <div className={s['dialog-top']}>
-            {isDisscusion ? (
-              <button className={s['link']} onClick={(e) => handleMediaListModalOpen(e, 'info')}>
-                <div className={s['dialog-avatar']}>
-                  <img src={ebalo} alt="user" />
-                </div>
-                <span className={s['dialog-name']}>{chatId}</span>
-              </button>
+            {potentialUser ? (
+              <>
+                <Link className={s['link']} to={`/profile/${potentialUser?.user_nickname}`}>
+                  <div className={s['dialog-avatar']}>
+                    {potentialUser.user_avatar ? (
+                      <img
+                        src={`${process.env.REACT_APP_HOSTNAME}/${potentialUser.user_avatar}`}
+                        alt="user"
+                      />
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <span className={s['dialog-name']}>{potentialUser?.user_name}</span>
+                </Link>
+                <span className={s['dialog-online']}>
+                  {potentialUser?.online_type !== 'pc-offline' ? 'В сети' : ''}
+                </span>
+              </>
             ) : (
               <>
-                <Link className={s['link']} to={'/profile/swugerd'}>
+                <Link className={s['link']} to={`/profile/${currentChatUser?.user_nickname}`}>
                   <div className={s['dialog-avatar']}>
-                    <img src={ebalo} alt="user" />
+                    <img
+                      src={`${process.env.REACT_APP_HOSTNAME}/${currentChatUser?.user_avatar}`}
+                      alt="user"
+                    />
                   </div>
-                  <span className={s['dialog-name']}>{chatId}</span>
+                  <span className={s['dialog-name']}>{currentChatUser?.user_name}</span>
                 </Link>
-                <span className={s['dialog-online']}>В сети</span>
+                <span className={s['dialog-online']}>
+                  {currentChatUser?.online_type !== 'pc-offline' ? 'В сети' : ''}
+                </span>
               </>
             )}
-            <button
-              className={s['paperclip']}
-              onClick={(e) => handleMediaListModalOpen(e, 'media')}>
-              <Icon src={paperClipSvg} id={'paperclip'} className={'gray'} />
-            </button>
           </div>
           <div className={s['dialog-inner']}>
-            <div className={s['messages-wrapper']}>
-              {chatId &&
-                chats
-                  .find((chat) => chat.chatId === parseInt(chatId))
-                  ?.messages.map((chat, index, messages) => (
-                    <Message
-                      senderId={chat.senderId}
-                      message={chat}
-                      myId={myId}
-                      nextSenderId={messages[index + 1]?.senderId}
-                      className={'messages-page'}
-                      key={chat.id}
-                      page={'messages'}
-                    />
-                  ))}
+            <div className={s['messages-wrapper']} ref={messagesContainerRef}>
+              {messages &&
+                messages.map((message: any, index: number, messages: any) => (
+                  <Message
+                    senderId={message.sender_id}
+                    message={message}
+                    myId={myId}
+                    nextSenderId={messages[index + 1]?.sender_id}
+                    className={'messages-page'}
+                    key={message.id}
+                    page={'messages'}
+                    setMessages={setMessages}
+                    messages={messages}
+                    chatId={Number(chatId)}
+                  />
+                ))}
+              {messages && messages.length ? <div id="sentinel" /> : ''}
             </div>
-            <Input
-              className={'send-message'}
-              placeholder={'Введите сообщение'}
-              type={'text'}
-              inputType={'send'}
-              page="message"
-              isTextarea={true}
-              name={''}
-              value={''}
-              setValue={() => {}}
-              classOptions={{
-                paperclipIcon: 'message-paperclip',
-                smileIcon: 'message-smile',
-                sendIcon: 'message-send',
-              }}
-            />
+            <form onSubmit={handleSubmit}>
+              <Input
+                className={'send-message'}
+                placeholder={'Введите сообщение'}
+                type={'text'}
+                inputType={'send'}
+                page="message"
+                isTextarea={true}
+                name={'message_text'}
+                value={messageText.message_text}
+                setValue={handleMessageInput}
+                classOptions={{
+                  paperclipIcon: 'message-paperclip',
+                  smileIcon: 'message-smile',
+                  sendIcon: 'message-send',
+                }}
+              />
+            </form>
             {hasMediaToUpload && <MediaToUpload className={'message-page'} />}
           </div>
         </div>

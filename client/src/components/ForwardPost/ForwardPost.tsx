@@ -1,8 +1,5 @@
 import React from 'react';
 import Post from '../Post/Post';
-import img from '../../assets/uploads/pasha.png';
-import video from '../../assets/videos/video.mp4';
-import track from '../../assets/uploads/test/ebalo.png';
 
 type ForwardPostProps = {
   forwardPost: {

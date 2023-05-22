@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './GroupCreate.module.scss';
 import sideContentS from '../../components/SideContent/SideContent.module.scss';

@@ -9,7 +9,7 @@ import Icon from '../UI/Icon/Icon';
 const AchievesHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const achieveIndicator = 12;
+  const achieveIndicator = 0;
   useOnClickOutside(ref, () => setIsOpen(false));
 
   return (

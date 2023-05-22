@@ -43,6 +43,19 @@
   height: 10rem;
 }
 
+.dropdowns {
+  padding: 5rem;
+  & .image {
+    width: 10rem;
+    height: 10rem;
+  }
+  & .nothing-text {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+}
+
 .friends {
   & .image {
     width: 20rem;

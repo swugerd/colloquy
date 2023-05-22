@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/icons/logo.svg';
-import music from '../../assets/img/header/music.svg';
-import shop from '../../assets/img/header/shop.svg';
-import patterns from '../../assets/img/header/patterns.svg';
-import theme from '../../assets/img/header/theme.svg';
-import notify from '../../assets/img/header/notify.svg';
-import ebalo from '../../assets/uploads/test/image.png';
-import arrow from '../../assets/img/header/arrow.svg';
 
 import s from './Header.module.scss';
-import Notify from '../UI/Notify/Notify';
 import FastMessages from './../FastMessages/FastMessages';
-import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
-import MusicDropDown from '../MusicHeader/MusicDropDown/MusicDropDown';
 import MusicHeader from '../MusicHeader/MusicHeader';
 import ShopHeader from '../ShopHeader/ShopHeader';
 import PatternsHeader from '../PatternsHeader/PatternsHeader';

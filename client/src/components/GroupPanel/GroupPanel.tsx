@@ -1,18 +1,14 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Icon from '../UI/Icon/Icon';
 import backSvg from '../../assets/img/icons/back.svg';
-import ebalo from '../../assets/uploads/test/ebalo.png';
 import s from './GroupPanel.module.scss';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import useWindowSize from '../../hooks/useWindowResize';
 import SelectComponent from '../UI/SelectComponent/SelectComponent';
 import InputButton from '../UI/InputButton/InputButton';
-import track from '../../assets/uploads/test/ebalo.png';
-import img from '../../assets/uploads/test/ebalo.png';
 import closeSvg from '../../assets/img/icons/close.svg';
-import video from '../../assets/videos/video.mp4';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBackButtonType, setHasBackButton } from '../../redux/mobile/slice';
 import Post from '../Post/Post';
@@ -22,19 +18,6 @@ import axios from 'axios';
 import { useAxios } from '../../hooks/useAxios';
 import NotFoundBlock from '../NotFoundBlock/NotFoundBlock';
 import { selectIsAuth } from '../../redux/auth/selector';
-
-interface GroupData {
-  group_name: string;
-  group_avatar: string;
-  group_avatar_cache: string;
-  group_status: string;
-  group_about: string;
-  group_adress: string;
-  thematic_id: string;
-  creator_id: string;
-  city_id: string;
-  is_private: boolean;
-}
 
 type GroupPanelProps = {
   page: 'create' | 'edit' | 'suggest' | 'blacklist' | 'moderation' | 'requests';
@@ -304,7 +287,7 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
           </Link>
         )}
       </div>
-      {(page === 'create' || page === 'edit') && updateGroupData.group_avatar_cache && (
+      {(page === 'create' || page === 'edit') && (
         <form onSubmit={page === 'create' ? handleCreateSubmit : handleUpdateSubmit}>
           <div className={`${s['content']}`}>
             <div className={s['avatar-block']}>

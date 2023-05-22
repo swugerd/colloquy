@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './Message.module.scss';
-import playSvg from '../../assets/img/icons/play.svg';
-import img from '../../assets/uploads/test/ebalo.png';
-import video from '../../assets/videos/video.mp4';
-import audio from '../../assets/sounds/cq.mp3';
-import forwardSvg from '../../assets/img/icons/forward.svg';
-import ebalo from '../../assets/uploads/test/ebalo.png';
+import editSvg from '../../assets/img/icons/edit.svg';
+import trashSvg from '../../assets/img/icons/trash.svg';
 import Icon from '../UI/Icon/Icon';
-import { Message as MessageType } from '../../types/message';
-import classNames from 'classnames';
-import useWindowSize from '../../hooks/useWindowResize';
 import { Link } from 'react-router-dom';
-import formatTime from '../../utils/formatTime';
-import { setIsForwardModalOpen } from '../../redux/modal/slice';
-import { useAppDispatch } from './../../redux/store';
+import moment from 'moment';
+import axios from 'axios';
+import markSvg from '../../assets/img/icons/markdown.svg';
 
 type MessageProps = {
   senderId: number;
-  message: MessageType;
+  message: any;
   myId: number;
   nextSenderId: number | undefined;
   className?: string;
   hasAnimation?: boolean;
   page: 'messages' | 'fms';
+  setMessages: (messages: any) => void;
+  messages: any;
+  chatId: number;
 };
 
 const Message: React.FC<MessageProps> = ({
@@ -34,71 +30,62 @@ const Message: React.FC<MessageProps> = ({
   className,
   page,
   hasAnimation,
+  setMessages,
+  messages,
+  chatId,
 }) => {
-  const { message: messageText, timestamp, images, videos, audios, forwardMessage } = message;
+  const { message_text: messageText, user, createdAt: timestamp } = message;
+  const images = [1];
+  const videos = [1];
+  const audios = [1];
 
-  const dispatch = useAppDispatch();
-
-  const handleModalOpen = (e: any) => {
-    e.stopPropagation();
-    dispatch(setIsForwardModalOpen(true));
+  const handleEditMessage = async () => {
+    if (!changingText) return;
+    setChangingText(changingText);
+    setIsMessageChanging(!isMessageChanging);
+    const updatedMessage = await axios({
+      method: 'put',
+      url: `${process.env.REACT_APP_HOSTNAME}/api/messages/${message.id}`,
+      data: {
+        message_text: changingText,
+      },
+    });
   };
 
-  const { width } = useWindowSize();
+  const handleDeleteMessage = async () => {
+    const deletedMessage = await axios({
+      method: 'delete',
+      url: `${process.env.REACT_APP_HOSTNAME}/api/messages/${message.id}`,
+    });
 
-  const maxVisibleContent: {
-    images: number;
-    videos: number;
-    voices: number;
-    circles: number;
-    circlesSolo: number;
-    voicesSolo: number;
-    music: number;
-  } = {
-    images: 6,
-    videos: width <= 768 ? 1 : 3,
-    voices: 2,
-    circles: 2,
-    circlesSolo: width <= 768 ? 2 : 3,
-    voicesSolo: 2,
-    music: 1,
+    setMessages(messages.filter((message: any) => message.id !== deletedMessage.data.id));
   };
 
-  const forwardedMessage: {
-    id: number;
-    senderId: number;
-    message?: string;
-    images?: { id: number; img: string }[];
-    videos?: { id: number; video: string }[];
-    audios?: { id: number; audio: string; time: number; name: string; author: string }[];
-  } = {
-    id: 1,
-    senderId: 1,
-    message: '',
-    // images: [
-    //   { id: 1, img },
-    //   { id: 2, img },
-    // ],
-    // videos: [
-    //   { id: 1, video },
-    //   { id: 2, video },
-    // ],
-    audios: [
-      { id: 1, audio, time: 123, name: 'cringe', author: 'tiktok' },
-      { id: 2, audio, time: 123, name: 'cringe', author: 'tiktok' },
-    ],
+  const handleTextareaVisibility = () => {
+    setChangingText(changingText);
+    setIsMessageChanging(!isMessageChanging);
+  };
+
+  const [changingText, setChangingText] = useState(messageText ? messageText : '');
+  const [isMessageChanging, setIsMessageChanging] = useState(false);
+
+  const textAreaAdjust = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setChangingText(e.target.value);
+    e.target.style.height = '1px';
+    e.target.style.height = `${e.target.scrollHeight}px`;
+    if (e.target.value === '') {
+      e.target.style.height = '1px';
+    }
   };
 
   return (
     <div className={`${s['message-wrapper']} ${className ? s[className] : ''}`}>
       {senderId !== nextSenderId && (
-        <Link to="/profile/swugerd">
+        <Link to={`/profile/${user.user_avatar}`}>
           <HeaderAvatar
             className={page === 'fms' ? 'fm-chat-image' : 'messages-image'}
-            img={ebalo}
+            img={user.user_avatar}
             title={'image'}
-            onlineType="pc-offline"
-            hasAnimation={hasAnimation}
           />
         </Link>
       )}
@@ -108,18 +95,27 @@ const Message: React.FC<MessageProps> = ({
         } ${senderId === nextSenderId && s['left-margin']}`}>
         {page === 'messages' && (
           <div className={s['message-top']}>
-            <Link className={s['user-name']} to="/profile/swugerd">
-              {'гдз ёай 4 класс'}
-            </Link>
-            {myId !== senderId && (
-              <button className={s['forward']}>
-                <Icon src={forwardSvg} id={'forward'} className={'white'} />
-              </button>
+            <Link to={`/profile/${user.user_nickname}`}>{user.user_name}</Link>
+            {myId === senderId && (
+              <div className={s['flex']}>
+                {isMessageChanging ? (
+                  <button className={s['forward']} onClick={handleEditMessage}>
+                    <Icon src={markSvg} id={'markdown'} className={'white'} />
+                  </button>
+                ) : (
+                  <button className={s['forward']} onClick={handleTextareaVisibility}>
+                    <Icon src={editSvg} id={'edit'} className={'white'} />
+                  </button>
+                )}
+                <button className={s['forward']} onClick={handleDeleteMessage}>
+                  <Icon src={trashSvg} id={'trash'} className={'white'} />
+                </button>
+              </div>
             )}
           </div>
         )}
         <div className={`${s['content']} ${!!messageText ? s['no-text'] : ''}`}>
-          {!!forwardMessage && (
+          {/* {!!forwardMessage && (
             <div className={`${s['forward-wrapper']}`}>
               <div className={s['forward-line']}></div>
               {forwardedMessage.message ? (
@@ -176,8 +172,8 @@ const Message: React.FC<MessageProps> = ({
                 ''
               )}
             </div>
-          )}
-          {!!images && (
+          )} */}
+          {/* {!!images && (
             <div
               className={classNames({
                 [s['images']]: true,
@@ -188,7 +184,7 @@ const Message: React.FC<MessageProps> = ({
                 [s['images-five']]: images.length === 5,
                 [s['images-six']]: images.length >= maxVisibleContent.images,
               })}>
-              {images.map(({ id, img }, index) => (
+              {images.map(({ id, img }: any, index) => (
                 <div
                   className={`${s['image']} ${s[`grid-area-${index}`]}`}
                   key={id}
@@ -197,8 +193,8 @@ const Message: React.FC<MessageProps> = ({
                 </div>
               ))}
             </div>
-          )}
-          {!!videos && (
+          )} */}
+          {/* {!!videos && (
             <div
               className={classNames({
                 [s['videos']]: true,
@@ -207,7 +203,7 @@ const Message: React.FC<MessageProps> = ({
                 [s['videos-three']]: videos.length >= maxVisibleContent.videos && width > 768,
                 [s['videos-mobile']]: videos.length > maxVisibleContent.videos && width <= 768,
               })}>
-              {videos.map(({ id, video }, index) => (
+              {videos.map(({ id, video }: any, index) => (
                 <div
                   className={`${s['video']} ${s[`grid-area-${index}`]}`}
                   key={id}
@@ -219,10 +215,10 @@ const Message: React.FC<MessageProps> = ({
                 </div>
               ))}
             </div>
-          )}
-          {!!audios && (
+          )} */}
+          {/* {!!audios && (
             <div className={`${s['audios']}`}>
-              {audios.map(({ id, name, author, time }) => (
+              {audios.map(({ id, name, author, time }: any) => (
                 <div className={s['track']} key={id}>
                   <div className={s['track-left']}>
                     <button className={s['play-btn']}>
@@ -240,19 +236,26 @@ const Message: React.FC<MessageProps> = ({
                 </div>
               ))}
             </div>
-          )}
+          )} */}
         </div>
         <div
           className={`${s['row']} ${
             (!images && !videos) || audios || messageText ? '' : s['p-none']
           } ${(images || videos || audios) && !!messageText ? s['m-top'] : ''}`}>
-          <p className={s['text']}>{messageText}</p>
+          {!isMessageChanging ? (
+            <p className={s['text']}>{changingText}</p>
+          ) : (
+            <textarea
+              className={s['message-textarea']}
+              value={changingText}
+              onChange={(e) => textAreaAdjust(e)}></textarea>
+          )}
           <div
             className={`${s['message-action']} ${
               (!images && !videos) || audios || messageText ? '' : s['media-content']
             }`}>
-            <span className={s['message-time']}>{timestamp}</span>
-            <div className={s['read-status']}></div>
+            <span className={s['message-time']}>{moment(timestamp).format('HH:mm')}</span>
+            {/* <div className={s['read-status']}></div> */}
           </div>
         </div>
       </div>

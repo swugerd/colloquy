@@ -9,7 +9,6 @@ import { Blacklist } from './models/blacklist.model';
 import { GroupRequest } from './models/group-requests.model';
 import { GroupSuggest } from './models/group-suggest.model';
 import { PostsModule } from 'src/posts/posts.module';
-import { UsersModule } from 'src/users/users.module';
 
 @Module({
   controllers: [GroupsController],

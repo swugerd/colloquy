@@ -9,25 +9,15 @@ import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import convertMembers from '../../utils/convertMembers';
 import useWindowSize from '../../hooks/useWindowResize';
 import Icon from '../UI/Icon/Icon';
-import mediaSvg from '../../assets/img/icons/media.svg';
 import userSvg from '../../assets/img/icons/user.svg';
-import viewsSvg from '../../assets/img/icons/views.svg';
 import achievementSvg from '../../assets/img/icons/achieve.svg';
 import arrowSvg from '../../assets/img/icons/arrow.svg';
 import patternSvg from '../../assets/img/icons/patterns.svg';
 import gemSvg from '../../assets/img/icons/gem.svg';
 import classNames from 'classnames';
 import formatTime from '../../utils/formatTime';
-import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
-import UploadMediaModal from './../../Modals/UploadMediaModal/UploadMediaModal';
 import { useAppDispatch } from '../../redux/store';
-import {
-  setIsUploadFilesModalOpen,
-  setIsUploadMediaModalOpen,
-  setUploadMediaModalType,
-} from '../../redux/modal/slice';
-import { useSelector } from 'react-redux';
-import { selectIsAuth } from '../../redux/auth/selector';
+import { setIsUploadMediaModalOpen, setUploadMediaModalType } from '../../redux/modal/slice';
 import { useAxios } from '../../hooks/useAxios';
 import { User } from '../../hooks/useAuth';
 

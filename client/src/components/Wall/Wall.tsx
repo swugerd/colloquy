@@ -1,19 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './Wall.module.scss';
-import paperclipSvg from '../../assets/img/icons/paperclip.svg';
-import smileSvg from '../../assets/img/icons/smile.svg';
-import commentsSvg from '../../assets/img/icons/comment.svg';
-import microSvg from '../../assets/img/icons/voices.svg';
-import sendSvg from '../../assets/img/icons/send.svg';
 import Post from '../Post/Post';
-import img from '../../assets/uploads/pasha.png';
-import video from '../../assets/videos/video.mp4';
-import circle from '../../assets/videos/video.mp4';
-import voice from '../../assets/uploads/test/voice.png';
-import track from '../../assets/uploads/test/ebalo.png';
-import Icon from '../UI/Icon/Icon';
 import WallForm from '../UI/WallForm/WallForm';
-import { Post as PostType } from '../../types';
 import Preloader from '../Preloader/Preloader';
 import { useAxios } from '../../hooks/useAxios';
 import { useLocation, useSearchParams } from 'react-router-dom';
@@ -70,24 +58,6 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin, with
   });
 
   const [params, setParams] = useSearchParams();
-
-  // const [getPostsLink, setPostsLink] = useState('');
-
-  // useEffect(() => {
-  //   setPostsLink(
-  //     user || group
-  //       ? `${process.env.REACT_APP_HOSTNAME}/api/posts/${
-  //           user ? user.id : group.id
-  //         }?page=${postPage}&limit=${limit}&type=${user ? 'user_referer' : 'group'}`
-  //       : page === 'feed' && userId
-  //       ? `${
-  //           process.env.REACT_APP_HOSTNAME
-  //         }/api/posts/feed/${userId}?page=${postPage}&limit=${limit}${
-  //           params.get('filter') ? `&filter=${params.get('filter')}` : ''
-  //         }`
-  //       : '',
-  //   );
-  // }, [params, user, group, userId, page, postPage]);
 
   const getPostsLink =
     user || group
@@ -155,7 +125,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin, with
         <NotFoundBlock className={'profile'} text={'Записей ещё нет'} />
       )}
 
-      {!!posts ? (
+      {posts ? (
         posts.map((post: any) => (
           <Post
             id={post.id}
@@ -186,7 +156,7 @@ const Wall: React.FC<WallProps> = ({ className, page, placeholder, isAdmin, with
       ) : (
         <Preloader className="profile" />
       )}
-      {posts && posts.length && <div id="sentinel" />}
+      {posts && posts.length ? <div id="sentinel" /> : ''}
     </div>
   );
 };

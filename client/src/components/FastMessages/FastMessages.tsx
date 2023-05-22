@@ -1,13 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import s from '../Header/Header.module.scss';
 import sFM from './FastMessages.module.scss';
-import sIndicator from '../UI/OnlineIndicator/OnlineIndicator.module.scss';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import ebalo from '../../assets/uploads/test/image.png';
 import FastMessagesBtn from './FastMessagesBtn/FastMessagesBtn';
 import FastMessagesDropDown from './FastMessagesDropDown/FastMessagesDropDown';
-import Input from '../UI/Input/Input';
-import { Route, Routes } from 'react-router-dom';
 import { useAppDispatch } from './../../redux/store';
 import { setIsFmsOpen } from '../../redux/dropdowns/slice';
 import { useSelector } from 'react-redux';

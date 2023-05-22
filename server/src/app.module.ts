@@ -19,6 +19,7 @@ import { VideosModule } from './videos/videos.module';
 import { PostsModule } from './posts/posts.module';
 import { LikesModule } from './likes/likes.module';
 import { CommentsModule } from './comments/comments.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { CommentsModule } from './comments/comments.module';
     PostsModule,
     LikesModule,
     CommentsModule,
+    MessagesModule,
   ],
   controllers: [],
   providers: [],

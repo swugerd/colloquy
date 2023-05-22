@@ -20,13 +20,8 @@ const PatternsDropDown: React.FC = () => {
   ];
 
   return (
-    <DropDownLayout
-      title={'Шаблоны'}
-      myCount={3}
-      allCount={3}
-      link={'constructor'}
-      linkText={'Открыть конструктор'}>
-      <h6 className={s['heading']}>Все шаблоны</h6>
+    <DropDownLayout title={'Шаблоны'} myCount={0} allCount={0} link={''} linkText={''}>
+      {/* <h6 className={s['heading']}>Все шаблоны</h6>
       {patterns.length ? (
         ''
       ) : (
@@ -41,7 +36,8 @@ const PatternsDropDown: React.FC = () => {
         <div className={s['add-pattern']}>
           <Icon src={addSvg} id={'add'} className={'white'} />
         </div>
-      </div>
+      </div> */}
+      <NotFoundBlock className={'dropdowns'} text={'В разработке'} />
     </DropDownLayout>
   );
 };

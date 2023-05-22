@@ -1,8 +1,6 @@
-import { useAppDispatch } from './../redux/store';
 import { selectModal } from './../redux/modal/selector';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { setIsForwardModalOpen, setIsUploadFilesModalOpen } from '../redux/modal/slice';
 
 const useOnClickOutside = (ref: any, handler: (event: MouseEvent | KeyboardEvent) => void) => {
   const { modal } = useSelector(selectModal);

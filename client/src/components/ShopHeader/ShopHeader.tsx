@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import s from './ShopHeader.module.scss';
 import shopSvg from '../../assets/img/icons/shop.svg';
-import { Link } from 'react-router-dom';
 import ShopDropDown from './ShopDropDown/ShopDropDown';
 import useOnClickOutside from './../../hooks/useOnClickOutside';
 import Icon from '../UI/Icon/Icon';

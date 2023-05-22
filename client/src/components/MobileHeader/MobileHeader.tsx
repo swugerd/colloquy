@@ -7,9 +7,7 @@ import s from './MobileHeader.module.scss';
 import uploadSvg from '../../assets/img/icons/upload.svg';
 import backSvg from '../../assets/img/icons/back.svg';
 import arrowSvg from '../../assets/img/icons/arrow.svg';
-import ebalo from '../../assets/uploads/test/ebalo.png';
 import addSvg from '../../assets/img/icons/add.svg';
-import paperclipSvg from '../../assets/img/icons/paperclip.svg';
 import { useAppDispatch } from './../../redux/store';
 import Icon from '../UI/Icon/Icon';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -17,6 +15,7 @@ import { setIsMediaListModalOpen, setMediaListModalType } from '../../redux/moda
 import { useAxios } from '../../hooks/useAxios';
 import { selectIsAuth } from '../../redux/auth/selector';
 import { User } from '../../hooks/useAuth';
+import axios from 'axios';
 
 const MobileHeader: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,6 +46,11 @@ const MobileHeader: React.FC = () => {
 
   const userRoute = pathname.split('/')[pathname.split('/').length - 1];
 
+  const [chats, setChats] = useState<any>([]);
+  const [chatPage, setChatPage] = useState(1);
+  const [totalChatCount, setTotalChatCount] = useState(0);
+  const limit = 10;
+
   const {
     response: user,
     error: userError,
@@ -62,6 +66,42 @@ const MobileHeader: React.FC = () => {
   const {
     user: { id: currentUserId },
   } = useSelector(selectIsAuth);
+
+  const getChatsLink = currentUserId
+    ? `${process.env.REACT_APP_HOSTNAME}/api/messages/chats/${currentUserId}?page=${chatPage}&limit=${limit}`
+    : '';
+  useEffect(() => {
+    if (getChatsLink) {
+      const response = axios.get(getChatsLink).then((response) => {
+        setChats([...response.data]);
+      });
+    }
+  }, [getChatsLink]);
+
+  const currentChat =
+    mobile.chatId &&
+    chats &&
+    chats.find(
+      (chat: any) =>
+        chat.user1_id === Number(mobile.chatId) || chat.user2_id === Number(mobile.chatId),
+    );
+
+  const currentChatUser =
+    currentChat && currentChat[`user${currentChat.user1_id === currentUserId ? 2 : 1}`];
+
+  useEffect(() => {
+    if (!currentChatUser && mobile.chatId) {
+      const response = axios
+        .get(`${process.env.REACT_APP_HOSTNAME}/api/users/getById/${mobile.chatId}`)
+        .then((response) => {
+          setPotentialUser(response.data);
+        });
+    } else {
+      setPotentialUser(null);
+    }
+  }, [mobile.chatId, currentChatUser]);
+
+  const [potentialUser, setPotentialUser] = useState<any>({});
 
   return width <= 1150 ? (
     <header className={s['wrapper']}>
@@ -84,35 +124,61 @@ const MobileHeader: React.FC = () => {
             </button>
           </h2>
         )}
-        {!!mobile.chatId && (
+        {potentialUser ? (
           <>
             <Link className={s['arrow-link']} to="/messages">
               <div className={s['arrow-messages']}>
                 <Icon src={backSvg} id={'back'} className={'white'} />
               </div>
             </Link>
-            {isDisscusion ? (
-              <button className={s['link']} onClick={(e) => handleModalOpen(e, 'info')}>
+            <>
+              <Link to={`/profile/${potentialUser?.user_nickname}`} className={s['link']}>
                 <div className={s['user-img']}>
-                  <img src={ebalo} alt="user" />
+                  {potentialUser.user_avatar ? (
+                    <img
+                      src={`${process.env.REACT_APP_HOSTNAME}/${potentialUser?.user_avatar}`}
+                      alt="user"
+                    />
+                  ) : (
+                    ''
+                  )}
                 </div>
-                <span className={s['user-name']}>{mobile.chatId}</span>
-              </button>
-            ) : (
-              <>
-                <Link to={'/profile/swugerd'} className={s['link']}>
-                  <div className={s['user-img']}>
-                    <img src={ebalo} alt="user" />
-                  </div>
-                  <span className={s['user-name']}>{mobile.chatId}</span>
-                </Link>
-                <span className={s['online']}>В сети</span>
-              </>
-            )}
-            <button className={s['paperclip']} onClick={(e) => handleModalOpen(e, 'media')}>
-              <Icon src={paperclipSvg} id={'paperclip'} className={'white'} />
-            </button>
+                <span className={s['user-name']}>{potentialUser?.user_name}</span>
+              </Link>
+              <span className={s['online']}>
+                {potentialUser?.online_type !== 'pc-offline' ? 'В сети' : ''}
+              </span>
+            </>
           </>
+        ) : currentChatUser ? (
+          <>
+            <Link className={s['arrow-link']} to="/messages">
+              <div className={s['arrow-messages']}>
+                <Icon src={backSvg} id={'back'} className={'white'} />
+              </div>
+            </Link>
+            <>
+              <Link to={`/profile/swugerd/${currentChatUser?.user_nickname}`} className={s['link']}>
+                <div className={s['user-img']}>
+                  {currentChatUser.user_avatar ? (
+                    <img
+                      src={`${process.env.REACT_APP_HOSTNAME}/${currentChatUser?.user_avatar}`}
+                      alt="user"
+                    />
+                  ) : (
+                    ''
+                  )}
+                </div>
+                <span className={s['user-name']}>{currentChatUser?.user_name}</span>
+              </Link>
+              <span className={s['online']}>
+                {' '}
+                {currentChatUser?.online_type !== 'pc-offline' ? 'В сети' : ''}
+              </span>
+            </>
+          </>
+        ) : (
+          ''
         )}
         {mobile.hasArrowButton && (
           <button

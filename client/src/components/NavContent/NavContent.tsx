@@ -1,17 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './NavContent.module.scss';
 import findFriendsSvg from '../../assets/img/icons/find-friends.svg';
 import findGroupsSvg from '../../assets/img/icons/find-groups.svg';
 import backSvg from '../../assets/img/icons/back.svg';
 import createGroupSvg from '../../assets/img/icons/create-group.svg';
-import {
-  Link,
-  NavLink,
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Icon from '../UI/Icon/Icon';
 import Input from '../UI/Input/Input';
 import numberWithSpaces from '../../utils/numberWithSpaces';

@@ -4,7 +4,6 @@ import useSetPageTitle from '../../hooks/useSetPageTitle';
 import addSvg from '../../assets/img/icons/add.svg';
 import trashSvg from '../../assets/img/icons/trash.svg';
 import s from './Photos.module.scss';
-import photo from '../../assets/uploads/test/ebalo.png';
 import HeaderAvatar from '../../components/UI/HeaderAvatar/HeaderAvatar';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch } from './../../redux/store';

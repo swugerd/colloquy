@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef } from 'react';
 import musicSvg from '../../assets/img/icons/music.svg';
 import s from './MusicHeader.module.scss';
 import MusicDropDown from './MusicDropDown/MusicDropDown';

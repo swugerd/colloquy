@@ -7,10 +7,8 @@ import switchAccSvg from '../../../assets/img/icons/switch-acc.svg';
 import activitySvg from '../../../assets/img/icons/activity.svg';
 import exitSvg from '../../../assets/img/icons/exit.svg';
 import arrowSvg from '../../../assets/img/icons/arrow.svg';
-import { setIsAuth } from '../../../redux/auth/slice';
 import { useAppDispatch } from './../../../redux/store';
 import Icon from '../../UI/Icon/Icon';
-import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { SocketContext } from '../../../contexts/SocketContext';
@@ -70,14 +68,14 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = ({
             <span className={s['text']}>Настройки</span>
           </Link>
         </li>
-        <li className={`${s['item']} ${iconS['profile-hover']}`}>
+        {/* <li className={`${s['item']} ${iconS['profile-hover']}`}>
           <div className={s['link']} onClick={handleLogOut}>
             <div className={`${s['icon']} ${s['switch-acc']}`}>
               <Icon src={switchAccSvg} id={'switchAcc'} className={'white'} />
             </div>
             <span className={s['text']}>Смена аккаунта</span>
           </div>
-        </li>
+        </li> */}
         <li
           className={`${s['item']} ${s['activity-item']} ${iconS['profile-hover']}`}
           onClick={() => setIsOpen(!isOpen)}>

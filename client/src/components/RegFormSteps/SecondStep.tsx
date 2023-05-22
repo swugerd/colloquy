@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import Icon from '../UI/Icon/Icon';
+import React from 'react';
 import Input from '../UI/Input/Input';
 import s from './RegFormSteps.module.scss';
-import iconS from '../UI/Icon/Icon.module.scss';
 import maleSvg from '../../assets/img/icons/male.svg';
 import femaleSvg from '../../assets/img/icons/female.svg';
 import SelectComponent from '../UI/SelectComponent/SelectComponent';
 import GenderInput from '../UI/GenderInput/GenderInput';
 import Button from '../UI/Button/Button';
-import { useAxios } from '../../hooks/useAxios';
-
-// поменять типы
 
 type SecondStepProps = {
   user_name: string;

@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
-import { setIsAuth } from '../../redux/auth/slice';
 import s from './Login.module.scss';
 import { useAppDispatch } from './../../redux/store';
-import axios from 'axios';
 import Preloader from '../../components/Preloader/Preloader';
 import useAuth from './../../hooks/useAuth';
 

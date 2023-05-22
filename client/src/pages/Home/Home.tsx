@@ -1,9 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Button from '../../components/UI/Button/Button';
 import s from './Home.module.scss';
 import dotsSvg from '../../assets/img/icons/dots.svg';
-import img from '../../assets/uploads/test/image.png';
-import ModalLayout from '../../layouts/ModalLayout/ModalLayout';
 import AccountCard from '../../components/AccountCard/AccountCard';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import Icon from '../../components/UI/Icon/Icon';

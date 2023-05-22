@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './MobileSidebar.module.scss';
 import friendSvg from '../../assets/img/icons/friends.svg';
@@ -14,7 +14,6 @@ import switchAccSvg from '../../assets/img/icons/switch-acc.svg';
 import exitSvg from '../../assets/img/icons/exit.svg';
 import settingsSvg from '../../assets/img/icons/settings.svg';
 import closeSvg from '../../assets/img/icons/close.svg';
-import img from '../../assets/uploads/test/ebalo.png';
 import { Link, NavLink } from 'react-router-dom';
 import Notify from '../UI/Notify/Notify';
 import { useSelector } from 'react-redux';
@@ -221,14 +220,14 @@ const MobileSidebar: React.FC = () => {
                 to={'/notifies'}
               />
             </li>
-            <li className={s['nav-item']}>
+            {/* <li className={s['nav-item']}>
               <Link className={s['nav-link']} to="/" onClick={() => dispatch(setIsAuth(false))}>
                 <div className={`${s['nav-img']} ${s['switch-acc']}`}>
                   <Icon src={switchAccSvg} id={'switchAcc'} className={''} />
                 </div>
                 <span className={s['text']}>Смена аккаунта</span>
               </Link>
-            </li>
+            </li> */}
             <li className={s['nav-item']}>
               <Link className={s['nav-link']} to="/" onClick={handleLogOut}>
                 <div className={`${s['nav-img']} ${s['exit']}`}>

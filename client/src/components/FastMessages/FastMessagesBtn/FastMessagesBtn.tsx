@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React from 'react';
 import chatSvg from '../../../assets/img/icons/chat.svg';
 import Icon from '../../UI/Icon/Icon';
 import s from './FastMessagesBtn.module.scss';

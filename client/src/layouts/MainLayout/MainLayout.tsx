@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Header from '../../components/Header/Header';
 import MobileFooter from '../../components/MobileFooter/MobileFooter';
 import MobileHeader from '../../components/MobileHeader/MobileHeader';
 import MobileSidebar from '../../components/MobileSidebar/MobileSidebar';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import img from '../../assets/uploads/test/ebalo.png';
-import useWindowSize from '../../hooks/useWindowResize';
 import ForwardModal from '../../Modals/ForwardModal/ForwardModal';
-import MoreAccsModal from '../../Modals/MoreAccsModal/MoreAccsModal';
 import UploadFilesModal from '../../Modals/UploadFilesModal/UploadFilesModal';
 import UploadMediaModal from '../../Modals/UploadMediaModal/UploadMediaModal';
 import { selectMobile } from '../../redux/mobile/selector';
@@ -18,22 +15,18 @@ import {
   setIsForwardModalOpen,
   setIsMediaListModalOpen,
   setIsMembersModalOpen,
-  setIsMoreAccsModalOpen,
   setIsPostContentModalOpen,
   setIsUploadFilesModalOpen,
   setIsUploadMediaModalOpen,
 } from '../../redux/modal/slice';
 import { useAppDispatch } from '../../redux/store';
 import s from './MainLayout.module.scss';
-import PopUpNotify from '../../components/PopUpNotify/PopUpNotify';
-import { Notifies } from '../../types';
 import PostContentModal from './../../Modals/PostContentModal/PostContentModal';
 import CreateBaseModal from './../../Modals/CreateBaseModal/CreateBaseModal';
 import MembersModal from '../../Modals/MembersModal/MembersModal';
 import MediaListModal from './../../Modals/MediaListModal/MediaListModal';
 import ConfirmModal from '../../Modals/ConfirmModal/ConfirmModal';
-import { Socket, io } from 'socket.io-client';
-import { SocketContext, SocketProvider, socket } from '../../contexts/SocketContext';
+import { SocketProvider, socket } from '../../contexts/SocketContext';
 import useAuth from '../../hooks/useAuth';
 
 type MainLayoutProps = {

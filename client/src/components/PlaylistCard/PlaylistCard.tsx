@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './PlaylistCard.module.scss';
 import playSvg from '../../assets/img/icons/play.svg';
-import pauseSvg from '../../assets/img/icons/pause.svg';
 import musicSvg from '../../assets/img/icons/music.svg';
 import Icon from '../UI/Icon/Icon';
 

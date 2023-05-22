@@ -3,16 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import FirstStep from '../../components/RegFormSteps/FirstStep';
 import SecondStep from '../../components/RegFormSteps/SecondStep';
 import ThirdStep from '../../components/RegFormSteps/ThirdStep';
-import Button from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import { setIsAuth } from '../../redux/auth/slice';
 import s from './Register.module.scss';
 import { useAppDispatch } from './../../redux/store';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import Preloader from '../../components/Preloader/Preloader';
-import jwtDecode from 'jwt-decode';
-import { DecodedToken } from '../../hooks/useAuth';
 import { useAxios } from '../../hooks/useAxios';
 
 interface INITIAL_DATA_TYPE {

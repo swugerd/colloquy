@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import searchSvg from '../../../assets/img/icons/search.svg';
 import closeSvg from '../../../assets/img/icons/close.svg';
-import paperclipSvg from '../../../assets/img/icons/paperclip.svg';
-import smileSvg from '../../../assets/img/icons/smile.svg';
-import microSvg from '../../../assets/img/icons/micro.svg';
 import sendSvg from '../../../assets/img/icons/send.svg';
 import s from './Input.module.scss';
 import Icon from '../Icon/Icon';
 import { useAppDispatch } from '../../../redux/store';
-import { setIsUploadFilesModalOpen, setIsUploadMediaModalOpen } from '../../../redux/modal/slice';
+import { setIsUploadFilesModalOpen } from '../../../redux/modal/slice';
 
 type InputProps = {
   className: string;

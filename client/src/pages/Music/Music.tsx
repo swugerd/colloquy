@@ -6,7 +6,7 @@ import sideContentS from '../../components/SideContent/SideContent.module.scss';
 import MusicPlayer from '../../components/MusicPlayer/MusicPlayer';
 import Input from '../../components/UI/Input/Input';
 import uploadSvg from '../../assets/img/icons/upload.svg';
-import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import MyMusicDropDown from '../../components/MusicHeader/MyMusicDropDown/MyMusicDropDown';
 import PlaylistsDropDown from '../../components/MusicHeader/PlaylistsDropDown/PlaylistsDropDown';
 import RecsDropDown from '../../components/MusicHeader/RecsDropDown/RecsDropDown';
@@ -15,11 +15,10 @@ import ebalo from '../../assets/uploads/test/image2.png';
 import MusicTrack from '../../components/MusicTrack/MusicTrack';
 import HeaderAvatar from '../../components/UI/HeaderAvatar/HeaderAvatar';
 import { useAppDispatch } from '../../redux/store';
-import { useSelector } from 'react-redux';
-import { selectMobile } from '../../redux/mobile/selector';
 import { setHasArrowButton, setHasUploadButton } from '../../redux/mobile/slice';
 import useWindowSize from '../../hooks/useWindowResize';
 import { setIsUploadMediaModalOpen, setUploadMediaModalType } from '../../redux/modal/slice';
+import NotFoundBlock from '../../components/NotFoundBlock/NotFoundBlock';
 
 type MusicProps = {
   tab: 'list' | 'playlists' | 'recs';
@@ -135,48 +134,53 @@ const Music: React.FC<MusicProps> = ({ tab }) => {
       </ul>
     </div>,
   ];
+  // return (
+  //   <>
+  //     <div className={s['music']}>
+  //       {width > 550 && <MusicPlayer className={'page'} />}
+  //       <Input
+  //         className={'music-page'}
+  //         placeholder={'Искать музыку'}
+  //         type={'text'}
+  //         inputType={'search'}
+  //         name={''}
+  //         value={''}
+  //         setValue={() => {}}
+  //       />
+  //       <nav className={s['music-nav']}>
+  //         <ul className={s['links-list']}>
+  //           {links.map(({ id, name, path }) => (
+  //             <li className={s['link-item']} key={id}>
+  //               <NavLink
+  //                 to={path}
+  //                 className={({ isActive }) =>
+  //                   isActive ? `${s['active']} ${s['link']}` : s['link']
+  //                 }
+  //                 end={path === '/music'}>
+  //                 {name}
+  //               </NavLink>
+  //             </li>
+  //           ))}
+  //           {tab === 'list' && width > 550 && (
+  //             <li className={s['upload-button']}>
+  //               <button className={s['upload']} onClick={(e) => handleModalOpen(e)}>
+  //                 <Icon src={uploadSvg} id={'upload'} className={'white'} />
+  //               </button>
+  //             </li>
+  //           )}
+  //         </ul>
+  //       </nav>
+  //       {components.find(({ name }) => tab === name)?.component}
+  //     </div>
+  //     <SideContent titles={['Активность друзей']} className={'music'}>
+  //       {children}
+  //     </SideContent>
+  //   </>
+  // );
   return (
-    <>
-      <div className={s['music']}>
-        {width > 550 && <MusicPlayer className={'page'} />}
-        <Input
-          className={'music-page'}
-          placeholder={'Искать музыку'}
-          type={'text'}
-          inputType={'search'}
-          name={''}
-          value={''}
-          setValue={() => {}}
-        />
-        <nav className={s['music-nav']}>
-          <ul className={s['links-list']}>
-            {links.map(({ id, name, path }) => (
-              <li className={s['link-item']} key={id}>
-                <NavLink
-                  to={path}
-                  className={({ isActive }) =>
-                    isActive ? `${s['active']} ${s['link']}` : s['link']
-                  }
-                  end={path === '/music'}>
-                  {name}
-                </NavLink>
-              </li>
-            ))}
-            {tab === 'list' && width > 550 && (
-              <li className={s['upload-button']}>
-                <button className={s['upload']} onClick={(e) => handleModalOpen(e)}>
-                  <Icon src={uploadSvg} id={'upload'} className={'white'} />
-                </button>
-              </li>
-            )}
-          </ul>
-        </nav>
-        {components.find(({ name }) => tab === name)?.component}
-      </div>
-      <SideContent titles={['Активность друзей']} className={'music'}>
-        {children}
-      </SideContent>
-    </>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
+      <NotFoundBlock className={'friends'} text={'В разработке'} />
+    </div>
   );
 };
 

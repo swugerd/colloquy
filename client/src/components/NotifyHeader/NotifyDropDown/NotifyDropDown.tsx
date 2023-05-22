@@ -1,8 +1,8 @@
 import React from 'react';
 import DropDownLayout from '../../UI/DropDownLayout/DropDownLayout';
-import s from './NotifyDropDown.module.scss';
 import img from '../../../assets/uploads/test/image.png';
 import Notify from '../../Notify/Notify';
+import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 
 type NotifyDropDownProps = {
   setIsActive: () => void;
@@ -46,11 +46,11 @@ const NotifyDropDown: React.FC<NotifyDropDownProps> = ({ setIsActive }) => {
   return (
     <DropDownLayout
       title="Уведомления"
-      link={'/notifies'}
-      linkText={'Просмотреть все'}
+      link={'/'}
+      linkText={''}
       isNotify={true}
       setIsActive={setIsActive}>
-      {notifies.map(({ id, img, name, action, date, content }) => (
+      {/* {notifies.map(({ id, img, name, action, date, content }) => (
         <Notify
           id={id}
           img={img}
@@ -62,7 +62,8 @@ const NotifyDropDown: React.FC<NotifyDropDownProps> = ({ setIsActive }) => {
           className={'dropdown'}
           type={'dropdown'}
         />
-      ))}
+      ))} */}
+      <NotFoundBlock className={'dropdowns'} text={'В разработке'} />
     </DropDownLayout>
   );
 };

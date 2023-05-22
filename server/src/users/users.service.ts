@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/users.model';
-import { ModelStatic, Op, Sequelize } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { UploadedFile } from 'src/files/files.service';
 import { FriendsService } from 'src/friends/friends.service';
 import { UserQueryParams } from './validators/user-query.validator';
@@ -15,9 +15,6 @@ import { BlacklistDto } from 'src/groups/dto/blacklist.dto';
 import { Blacklist } from 'src/groups/models/blacklist.model';
 import { Friends } from 'src/friends/models/friends.model';
 import { GroupMember } from 'src/groups/models/group-members.model';
-import { Group } from 'src/groups/models/group.model';
-import { Role } from 'src/roles/models/roles.model';
-import { City } from 'src/cities/models/cities.model';
 
 @Injectable()
 export class UsersService {

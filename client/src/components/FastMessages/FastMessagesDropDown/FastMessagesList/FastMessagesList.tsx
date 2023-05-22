@@ -1,10 +1,8 @@
 import React from 'react';
 import FastMessagesItem from '../../FastMessagesItem/FastMessagesItem';
 import s from './FastMessagesList.module.scss';
-import inputS from '../../../UI/Input/Input.module.scss';
 import closeSvg from '../../../../assets/img/icons/close.svg';
 import Input from '../../../UI/Input/Input';
-import { Link } from 'react-router-dom';
 import NotFoundBlock from '../../../NotFoundBlock/NotFoundBlock';
 import Icon from '../../../UI/Icon/Icon';
 import { useAppDispatch } from './../../../../redux/store';

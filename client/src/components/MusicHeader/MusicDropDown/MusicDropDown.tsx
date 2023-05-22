@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
 import MusicPlayer from '../../MusicPlayer/MusicPlayer';
 import Input from '../../UI/Input/Input';
 import MyMusicDropDown from '../MyMusicDropDown/MyMusicDropDown';
@@ -10,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { selectDropdowns } from './../../../redux/dropdowns/selector';
 import { useAppDispatch } from './../../../redux/store';
 import { setIsMusicComponentIndex } from '../../../redux/dropdowns/slice';
+import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 
 const MusicDropDown: React.FC = () => {
   const buttons = [
@@ -29,7 +29,7 @@ const MusicDropDown: React.FC = () => {
 
   return (
     <div className={s['wrapper']}>
-      <MusicPlayer className={'dropdown'} />
+      {/* <MusicPlayer className={'dropdown'} />
       <Input
         className="music-dd-input"
         placeholder={'Искать музыку'}
@@ -51,7 +51,8 @@ const MusicDropDown: React.FC = () => {
           </button>
         ))}
       </div>
-      {components[dropdowns.musicComponentIndex]}
+      {components[dropdowns.musicComponentIndex]} */}
+      <NotFoundBlock className={'dropdowns'} text={'В разработке'} />
     </div>
   );
 };

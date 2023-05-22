@@ -4,7 +4,7 @@ import { Group } from './models/group.model';
 import { GroupMember } from './models/group-members.model';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { FilesService, UploadedFile } from '../files/files.service';
-import { Op, Sequelize, where } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { User } from 'src/users/models/users.model';
 import { GroupQueryParams } from './validators/group-query.validator';
 import { UpdateGroupDto } from './dto/update-group.dto';
@@ -17,7 +17,6 @@ import { GroupSuggest } from './models/group-suggest.model';
 import { PostsService } from 'src/posts/posts.service';
 import { Photo } from 'src/photos/models/photos.model';
 import { Video } from 'src/videos/models/video.model';
-import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class GroupsService {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './Notify.module.scss';
-import ping from '../../assets/img/icons/ping.svg';
 import notificationTypes from '../../constants/notificationTypes';
 import Icon from '../UI/Icon/Icon';
 

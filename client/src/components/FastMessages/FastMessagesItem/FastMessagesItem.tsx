@@ -1,9 +1,7 @@
 import React from 'react';
 import HeaderAvatar from '../../UI/HeaderAvatar/HeaderAvatar';
 import s from './FastMessagesItem.module.scss';
-import sIndicator from '../../UI/OnlineIndicator/OnlineIndicator.module.scss';
 import ebalo from '../../../assets/uploads/test/image.png';
-import { Link } from 'react-router-dom';
 import { useAppDispatch } from './../../../redux/store';
 import { setFmsComponentIndex } from '../../../redux/dropdowns/slice';
 

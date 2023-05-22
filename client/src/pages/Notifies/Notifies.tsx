@@ -10,7 +10,6 @@ import pushSvg from '../../assets/img/icons/push.svg';
 import forwardSvg from '../../assets/img/icons/forward.svg';
 import commentsSvg from '../../assets/img/icons/comment.svg';
 import likesSvg from '../../assets/img/icons/like.svg';
-import achievesSvg from '../../assets/img/icons/achieve.svg';
 import suggestSvg from '../../assets/img/icons/suggest.svg';
 import requestsSvg from '../../assets/img/icons/request.svg';
 import { useState, useEffect } from 'react';
@@ -18,6 +17,7 @@ import Notify from '../../components/Notify/Notify';
 import img from '../../assets/uploads/test/image.png';
 import { useAppDispatch } from './../../redux/store';
 import { setHasArrowButton } from '../../redux/mobile/slice';
+import NotFoundBlock from '../../components/NotFoundBlock/NotFoundBlock';
 
 const Notifies: React.FC = () => {
   useSetPageTitle('Уведомления');
@@ -175,33 +175,38 @@ const Notifies: React.FC = () => {
     </div>,
   ];
 
+  // return (
+  //   <>
+  //     <div className={s['notifies']}>
+  //       <h4 className={s['title']}>Уведомления</h4>
+  //       <ul className={s['list']}>
+  //         {notifies.map(({ id, img, name, action, date, content, text, media }) => (
+  //           <li className={s['notify']} key={id}>
+  //             <Notify
+  //               id={id}
+  //               img={img}
+  //               name={name}
+  //               action={action}
+  //               content={content}
+  //               date={date}
+  //               className={'page'}
+  //               text={text}
+  //               media={media}
+  //               type={'page'}
+  //             />
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     </div>
+  //     <SideContent className={'notifies'} titles={['Фильтр уведомлений']}>
+  //       {children}
+  //     </SideContent>
+  //   </>
+  // );
   return (
-    <>
-      <div className={s['notifies']}>
-        <h4 className={s['title']}>Уведомления</h4>
-        <ul className={s['list']}>
-          {notifies.map(({ id, img, name, action, date, content, text, media }) => (
-            <li className={s['notify']} key={id}>
-              <Notify
-                id={id}
-                img={img}
-                name={name}
-                action={action}
-                content={content}
-                date={date}
-                className={'page'}
-                text={text}
-                media={media}
-                type={'page'}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-      <SideContent className={'notifies'} titles={['Фильтр уведомлений']}>
-        {children}
-      </SideContent>
-    </>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
+      <NotFoundBlock className={'friends'} text={'В разработке'} />
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ContentCard from '../../components/ContentCard/ContentCard';
 import NavContent from '../../components/NavContent/NavContent';
-import ebalo from '../../assets/uploads/test/ebalo.png';
 import s from './GroupMembers.module.scss';
 import SelectComponent from '../../components/UI/SelectComponent/SelectComponent';
 import GenderInput from '../../components/UI/GenderInput/GenderInput';
@@ -18,7 +17,6 @@ import {
   setHasBackButton,
   setMembersCount,
 } from '../../redux/mobile/slice';
-import { selectMobile } from '../../redux/mobile/selector';
 import { useSelector } from 'react-redux';
 import { useAxios } from '../../hooks/useAxios';
 import { useLocation, useSearchParams } from 'react-router-dom';

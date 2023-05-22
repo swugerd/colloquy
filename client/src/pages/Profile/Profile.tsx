@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useSetPageTitle from '../../hooks/useSetPageTitle';
 import s from './Profile.module.scss';
 import moreSvg from '../../assets/img/icons/dots.svg';
@@ -11,8 +11,6 @@ import { useAppDispatch } from './../../redux/store';
 import { setChatId, setIsInfoName } from '../../redux/mobile/slice';
 import Wall from '../../components/Wall/Wall';
 import ava from '../../assets/uploads/ava.png';
-import img from '../../assets/uploads/pasha.png';
-import video from '../../assets/videos/video.mp4';
 import useWindowSize from './../../hooks/useWindowResize';
 import ProfileContent from '../../components/ProfileContent/ProfileContent';
 import Icon from '../../components/UI/Icon/Icon';
@@ -109,6 +107,12 @@ const Profile: React.FC = () => {
     response ? `${response.user_name} ${response.user_surname}` : 'Пользователь не найден',
     response,
   );
+
+  const navigate = useNavigate();
+
+  const handleMessage = () => {
+    navigate(`/messages/${(user as User).id}`);
+  };
 
   const {
     response: groups,
@@ -622,7 +626,9 @@ const Profile: React.FC = () => {
                       <Icon src={moreSvg} id={'dots'} className={'profile-dots'} />
                     </button>
                     <div className={`${s['actions']} ${isActionsOpen ? s['active'] : ''}`}>
-                      <button className={`${s['more-btn']} ${s['list-btn']}`}>
+                      <button
+                        className={`${s['more-btn']} ${s['list-btn']}`}
+                        onClick={handleMessage}>
                         <Icon src={chatSvg} id={'messages'} className={'profile-action'} />
                       </button>
                       {actionIcon && (

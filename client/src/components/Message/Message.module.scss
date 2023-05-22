@@ -6,7 +6,8 @@
   margin-bottom: 1rem;
 }
 
-.message-text {
+.message-text,
+.message-textarea {
   font-family: 'OpenSans';
   color: $white;
   border-radius: 1rem;
@@ -19,6 +20,28 @@
   word-break: break-all;
   overflow-wrap: break-word;
 }
+
+.message-textarea {
+  background: $green-main;
+  border: none;
+  border-bottom: 0.3rem solid $white;
+  border-radius: 0;
+  resize: none;
+  min-height: 3rem;
+  height: 1px;
+  outline: none;
+  width: 100%;
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 1rem solid rgba(0, 0, 0, 0);
+    background-color: $green-main;
+    border-radius: 1rem;
+  }
+}
+
 .read-status {
   width: 0.5rem;
   height: 0.5rem;
@@ -60,7 +83,15 @@
 .forward {
   width: 1.5rem;
   height: 1.5rem;
-  transform: scaleX(-1);
+  & + & {
+    margin-left: 1rem;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
 }
 
 .user-name {

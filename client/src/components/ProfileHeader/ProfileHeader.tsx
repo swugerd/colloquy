@@ -1,18 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HeaderAvatar from '../UI/HeaderAvatar/HeaderAvatar';
 import s from './ProfileHeader.module.scss';
-import ebalo from '../../assets/uploads/test/ebalo.png';
 import arrowSvg from '../../assets/img/icons/arrow.svg';
 import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import Icon from '../UI/Icon/Icon';
 import useAuth from '../../hooks/useAuth';
 import { useAppDispatch } from '../../redux/store';
-import { useAxios } from '../../hooks/useAxios';
 import { setUserName } from '../../redux/auth/slice';
 import { selectIsAuth } from '../../redux/auth/selector';
 import { useSelector } from 'react-redux';
-import { SocketContext } from '../../contexts/SocketContext';
 
 const ProfileHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

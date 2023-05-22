@@ -7,7 +7,7 @@ import NotifyDropDown from './NotifyDropDown/NotifyDropDown';
 import Icon from '../UI/Icon/Icon';
 
 const NotifyHeader: React.FC = () => {
-  const notifies = 99;
+  const notifies = 0;
   const [isOpen, setisOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => setisOpen(false));

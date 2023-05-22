@@ -9,8 +9,6 @@ import { Comment } from 'src/comments/models/comment.model';
 import { Group } from 'src/groups/models/group.model';
 import { UsersService } from 'src/users/users.service';
 import { Op } from 'sequelize';
-import { GroupsService } from 'src/groups/groups.service';
-import { Response } from 'express';
 
 @Injectable()
 export class PostsService {

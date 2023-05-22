@@ -23,7 +23,6 @@ import { useSelector } from 'react-redux';
 
 const Sidebar: React.FC = () => {
   const { width } = useWindowSize();
-  // const id = 'swugerd';
 
   const { isLoading, user } = useAuth();
 

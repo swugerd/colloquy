@@ -1,12 +1,10 @@
 import React from 'react';
 import HeaderAvatar from '../../../UI/HeaderAvatar/HeaderAvatar';
 import ebalo from '../../../../assets/uploads/test/ebalo.png';
-import ebalo2 from '../../../../assets/uploads/test/ebalo2.png';
 import fullChatSvg from '../../../../assets/img/icons/chat-full.svg';
 import arrowSvg from '../../../../assets/img/icons/back.svg';
 import s from './FastMessagesChat.module.scss';
-import inputS from '../../../UI/Input/Input.module.scss';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Input from '../../../UI/Input/Input';
 import Icon from '../../../UI/Icon/Icon';
 import Message from '../../../Message/Message';
@@ -114,6 +112,11 @@ const FastMessagesChat: React.FC<FastMessagesChatProps> = ({ userId }) => {
             className={'fm'}
             page={'fms'}
             key={message.id}
+            setMessages={function (messages: any): void {
+              throw new Error('Function not implemented.');
+            }}
+            messages={undefined}
+            chatId={0}
           />
         ))}
       </div>

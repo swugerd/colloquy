@@ -7,6 +7,7 @@ import patternsSvg from '../../../assets/img/icons/patterns.svg';
 import questionSvg from '../../../assets/img/icons/question.svg';
 import Achievement from '../../Achievement/Achievement';
 import Icon from '../../UI/Icon/Icon';
+import NotFoundBlock from '../../NotFoundBlock/NotFoundBlock';
 
 const AchievesDropDown: React.FC = () => {
   const achievements: {
@@ -79,13 +80,8 @@ const AchievesDropDown: React.FC = () => {
     .sort((a, b) => b.percentage - a.percentage)[0];
 
   return (
-    <DropDownLayout
-      title={'Достижения'}
-      myCount={5}
-      allCount={achievements.length}
-      link={'/achievements'}
-      linkText={'Показать все'}>
-      <h6 className={s['heading']}>Ближайшее</h6>
+    <DropDownLayout title={'Достижения'} myCount={0} allCount={0} link={'/'} linkText={''}>
+      {/* <h6 className={s['heading']}>Ближайшее</h6>
       <Achievement
         id={closestAchieve.id}
         type={closestAchieve.type}
@@ -95,8 +91,8 @@ const AchievesDropDown: React.FC = () => {
         myProgress={closestAchieve.myProgress}
         allProgress={closestAchieve.allProgress}
         reward={closestAchieve.reward}
-      />
-      <h6 className={s['heading']}>Все</h6>
+      /> */}
+      {/* <h6 className={s['heading']}>Все</h6>
       {achievements.map(({ id, type, img, name, desc, myProgress, allProgress, reward }) => (
         <Achievement
           id={id}
@@ -109,7 +105,8 @@ const AchievesDropDown: React.FC = () => {
           reward={reward}
           key={id}
         />
-      ))}
+      ))} */}
+      <NotFoundBlock className={'dropdowns'} text={'В разработке'} />
     </DropDownLayout>
   );
 };

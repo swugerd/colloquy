@@ -12,9 +12,6 @@ import {
   UseInterceptors,
   Delete,
   Query,
-  ValidationPipe,
-  ParseIntPipe,
-  ParseBoolPipe,
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';

@@ -1,9 +1,5 @@
-import {
-  BadRequestException,
-  HttpException,
-  InternalServerErrorException,
-} from '@nestjs/common/exceptions';
-import { Injectable, HttpStatus } from '@nestjs/common';
+import { BadRequestException, InternalServerErrorException } from '@nestjs/common/exceptions';
+import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as uuid from 'uuid';
