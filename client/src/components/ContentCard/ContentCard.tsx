@@ -384,6 +384,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
               icon={messagesSvg}
               id={'messages'}
               hasLock={false}
+              onClick={handleMessage}
             />
             <SquareButton
               className={'friend-button'}
@@ -516,6 +517,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
                 icon={messagesSvg}
                 id={'messages'}
                 hasLock={false}
+                onClick={handleMessage}
               />
             </>
           )}

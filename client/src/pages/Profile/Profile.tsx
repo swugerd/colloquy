@@ -286,7 +286,12 @@ const Profile: React.FC = () => {
                         <Icon src={moreSvg} id={'dots'} className={'profile-dots'} />
                       </button>
                       <div className={`${s['actions']} ${isActionsOpen ? s['active'] : ''}`}>
-                        <SquareButton className={'more-btn'} icon={chatSvg} id={'messages'} />
+                        <SquareButton
+                          className={'more-btn'}
+                          icon={chatSvg}
+                          id={'messages'}
+                          onClick={handleMessage}
+                        />
                         {actionIcon && (
                           <SquareButton
                             className={'more-btn'}

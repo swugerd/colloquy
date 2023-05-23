@@ -375,8 +375,10 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
                     noOptionsMessage={'Город не найден'}
                     className={'side-select'}
                     name={'city_id'}
-                    value={String(group?.city_id)}
-                    setValue={updateGroupFields ? updateGroupFields : () => {}}
+                    value={groupData ? String(groupData?.city_id) : String(group?.city_id)}
+                    setValue={
+                      updateFields ? updateFields : updateGroupFields ? updateGroupFields : () => {}
+                    }
                   />
                 </div>
                 <div className={s['mobile-block']}>
@@ -387,8 +389,10 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
                     noOptionsMessage={'Тема не найдена'}
                     className={'side-select'}
                     name={'thematic_id'}
-                    value={String(group?.thematic_id)}
-                    setValue={updateGroupFields ? updateGroupFields : () => {}}
+                    value={groupData ? String(groupData?.thematic_id) : String(group?.thematic_id)}
+                    setValue={
+                      updateFields ? updateFields : updateGroupFields ? updateGroupFields : () => {}
+                    }
                   />
                 </div>
                 <div className={s['mobile-block']}>
@@ -399,8 +403,10 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
                     type={'text'}
                     inputType="default"
                     name={'group_adress'}
-                    value={updateGroupData.group_adress}
-                    setValue={updateGroupFields ? updateGroupFields : () => {}}
+                    value={groupData ? groupData?.group_adress : updateGroupData?.group_adress}
+                    setValue={
+                      updateFields ? updateFields : updateGroupFields ? updateGroupFields : () => {}
+                    }
                   />
                 </div>
                 {width > 550 && (
@@ -409,14 +415,15 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
                       page === 'edit' ? s['edit'] : ''
                     }`}>
                     <InputButton
-                      checked={undefined}
-                      onChange={undefined}
-                      name={''}
-                      id="online"
+                      checked={groupData?.is_private ? true : false}
+                      onChange={updateFields}
+                      name={'is_private'}
+                      id="is_private"
                       type={'checkbox'}
                       className={'side-online'}
+                      value="true"
                     />
-                    <label htmlFor="online">Закрытое сообщество</label>
+                    <label htmlFor="is_private">Закрытое сообщество</label>
                   </div>
                 )}
               </div>
@@ -442,14 +449,15 @@ const GroupPanel: React.FC<GroupPanelProps> = ({
                   page === 'edit' ? s['edit'] : ''
                 }`}>
                 <InputButton
-                  checked={undefined}
-                  onChange={undefined}
-                  name={''}
-                  id="online"
+                  checked={groupData?.is_private ? true : false}
+                  onChange={updateFields}
+                  name={'is_private'}
+                  id="is_private"
                   type={'checkbox'}
                   className={'side-online'}
+                  value="true"
                 />
-                <label htmlFor="online">Закрытое сообщество</label>
+                <label htmlFor="is_private">Закрытое сообщество</label>
               </div>
             )}
           </div>
