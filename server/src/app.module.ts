@@ -28,7 +28,7 @@ import { MessagesModule } from './messages/messages.module';
       load: [databaseConfig],
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.resolve(__dirname, '..', 'src', 'static'),
+      rootPath: path.resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
