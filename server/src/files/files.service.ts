@@ -51,18 +51,16 @@ export class FilesService {
         writeStream.end();
       });
       if (userId || groupId) {
-        await fs.promises.unlink(
-          path.join(
-            filePath,
-            userId
-              ? (
-                  await this.userRepository.findByPk(userId)
-                ).user_avatar
-              : (
-                  await this.groupRepository.findByPk(groupId)
-                ).group_avatar,
-          ),
-        );
+        const fileName = userId
+          ? (await this.userRepository.findByPk(userId)).user_avatar
+          : (await this.groupRepository.findByPk(groupId)).group_avatar;
+
+        const filePathToDelete = path.join(filePath, fileName);
+
+        const fileExists = fs.existsSync(filePathToDelete);
+        if (fileExists) {
+          await fs.promises.unlink(filePathToDelete);
+        }
       }
     } catch (error) {
       throw new InternalServerErrorException(`Ошибка записи файла: ${error.message}`);
@@ -74,8 +72,15 @@ export class FilesService {
   async deleteFile(fileName: string) {
     const filePath = path.resolve(__dirname, '..', '..', 'src', 'static');
 
-    const deletedFile = await fs.promises.unlink(path.join(filePath, fileName));
+    const filePathToDelete = path.join(filePath, fileName);
+    const fileExists = fs.existsSync(filePathToDelete);
 
-    return deletedFile;
+    if (fileExists) {
+      const deletedFile = await fs.promises.unlink(filePathToDelete);
+
+      return deletedFile;
+    }
+
+    return null;
   }
 }

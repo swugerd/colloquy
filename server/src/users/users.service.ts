@@ -129,6 +129,7 @@ export class UsersService {
           },
         },
       });
+
       if (candidate) {
         throw new HttpException(
           'Пользователь с такими данными уже существует (никнейм, номер телефона или телеграм)',
